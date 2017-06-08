@@ -1,0 +1,26 @@
+.jsr
+{
+    position: relative;
+    z-index: 1;
+
+    display: block;
+
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px;
+}
+
+.jsr_rail
+{
+    position: relative;
+
+    height: 20px;
+
+    background: rgb(230, 230, 230);
+    background-image: linear-gradient(red, red);
+    background-repeat: no-repeat;
+    /* background-position: 40% 0; */
+    /* background-size: 40% 100%; */
+}
+
+
