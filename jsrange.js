@@ -70,29 +70,32 @@ class JSRange {
   }
 
   // _update returns all methods available to use to update things
-  // it tries to use the buffering-variable (_updateObject)
+  // it tries to use the buffering-variable (_updateObject) to not recreate this big object
   get _update () {
     var _this = this;
     return _this._updateObject || {
-      all: function () {
-        this.rail()
-        this.info()
-      },
-      rail: function () {
-        // Update rail color
-        let railStart = _this.selected.min / _this.options.max * 100
-        let railEnd = _this.selected.max / _this.options.max * 100
-        _this._setRail(railStart, railEnd)
-      },
-      info: function () {
+      _toUpdate: ['rail', 'info'],
 
+      all: function () {
+        this._toUpdate.forEach((item) => {
+          this[item]() // Call certain update function
+        })
+      },
+
+      rail: function ( min = _this.selected.min, max = _this.selected.max ) {
+        // Update rail color
+        let start = min / _this.options.max * 100
+        let end = max / _this.options.max * 100
+
+        // Sets colored part of rail
+        // Expects percentages without % sign
+        _this.body.rail.style.backgroundPosition = `${start}% 0`
+        _this.body.rail.style.backgroundSize = `${end - start}% 100%`
+      },
+
+      info: function () {
+        
       }
     }
-  }
-  // Sets colored part of rail
-  // Expects percentages without % sign
-  _setRail (start, end) {
-    this.body.rail.style.backgroundPosition = `${start}% 0`
-    this.body.rail.style.backgroundSize = `${end - start}% 100%`
   }
 }
