@@ -1,5 +1,7 @@
 class JSRange {
   constructor (el, options) {
+    this._updateObject = this._update
+
     this.options = options
     this.selected = {
       min: this.options.min,
@@ -7,23 +9,24 @@ class JSRange {
     }
 
     this._createBody(el)
-    this._updateState()
+    this.update()
   }
 
+  // Propably we want to update everything
   update () {
-    this._updateState()
+    this._update.all()
   }
 
   set (hash = {}) {
-  	if (hash.min) {
-  		this.selected.min = hash.min
-  	}
+    if (hash.min) {
+      this.selected.min = hash.min
+    }
 
-  	if (hash.max) {
-  		this.selected.max = hash.max
-  	}
+    if (hash.max) {
+      this.selected.max = hash.max
+    }
 
-  	this._updateState()
+    this.update()
   }
  
   _createBody (el) {
@@ -66,13 +69,26 @@ class JSRange {
     })
   }
 
-  _updateState () {
-    // Update rail color
-    let railStart = this.selected.min / this.options.max * 100
-    let railEnd = this.selected.max / this.options.max * 100
-    this._setRail(railStart, railEnd)
-  }
+  // _update returns all methods available to use to update things
+  // it tries to use the buffering-variable (_updateObject)
+  get _update () {
+    var _this = this;
+    return _this._updateObject || {
+      all: function () {
+        this.rail()
+        this.info()
+      },
+      rail: function () {
+        // Update rail color
+        let railStart = _this.selected.min / _this.options.max * 100
+        let railEnd = _this.selected.max / _this.options.max * 100
+        _this._setRail(railStart, railEnd)
+      },
+      info: function () {
 
+      }
+    }
+  }
   // Sets colored part of rail
   // Expects percentages without % sign
   _setRail (start, end) {
