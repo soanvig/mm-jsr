@@ -14,6 +14,18 @@ class JSRange {
     this._updateState()
   }
 
+  set (hash = {}) {
+  	if (hash.min) {
+  		this.selected.min = hash.min
+  	}
+
+  	if (hash.max) {
+  		this.selected.max = hash.max
+  	}
+
+  	this._updateState()
+  }
+ 
   _createBody (el) {
     this.body = {}
 
