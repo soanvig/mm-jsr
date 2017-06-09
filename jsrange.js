@@ -74,8 +74,8 @@ class JSRange {
   get _update () {
     var _this = this;
     return _this._updateObject || {
-      _toUpdate: ['rail', 'info'],
-
+      // Here goes every function which should be updated via .all()
+      _toUpdate: ['rail', 'info'], 
       all: function () {
         this._toUpdate.forEach((item) => {
           this[item]() // Call certain update function
@@ -83,7 +83,7 @@ class JSRange {
       },
 
       rail: function ( min = _this.selected.min, max = _this.selected.max ) {
-        // Update rail color
+        // Calc rail color position
         let start = min / _this.options.max * 100
         let end = max / _this.options.max * 100
 
@@ -94,7 +94,10 @@ class JSRange {
       },
 
       info: function () {
-        
+        _this.body.info.min.innerHTML = _this.options.min
+        _this.body.info.max.innerHTML = _this.options.max
+        _this.body.info.actualMin.innerHTML = _this.selected.min
+        _this.body.info.actualMax.innerHTML = _this.selected.max
       }
     }
   }
