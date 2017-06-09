@@ -7,20 +7,53 @@
 
     box-sizing: border-box;
     width: 100%;
-    padding: 20px;
 }
 
 .jsr_rail
 {
-    position: relative;
-
     height: 20px;
 
     background: rgb(230, 230, 230);
     background-image: linear-gradient(red, red);
     background-repeat: no-repeat;
-    /* background-position: 40% 0; */
-    /* background-size: 40% 100%; */
+}
+
+.jsr_slider {
+	width: 3px;
+	height: 25px;
+	position: absolute;
+	left: 0;
+	top: calc((20px - 25px) / 2);
+	background: #000;
+	cursor: pointer;
+}
+
+.jsr_slider--min {
+	transform: translateX(50px);
+}
+
+.jsr_slider--max {
+	transform: translateX(100px);
+}
+
+.jsr_info {
+
+}
+
+.jsr_info--min {
+
+}
+
+.jsr_info--max {
+
+}
+
+.jsr_info--actualMin {
+
+}
+
+.jsr_info--actualMax {
+
 }
 
 
