@@ -1,6 +1,7 @@
 class JSRange {
   constructor (el, options) {
     this._updateObject = this._update
+    this._eventsObject = this._events
 
     this.options = options
     this.selected = {
@@ -9,6 +10,7 @@ class JSRange {
     }
 
     this._createBody(el)
+    this._bindEvents()
     this.update()
   }
 
@@ -69,8 +71,36 @@ class JSRange {
     })
   }
 
+  _bindEvents () {
+    this.body.sliders.min.addEventListener('mousedown', this._events.sliderMouseDown)
+    this.body.sliders.max.addEventListener('mousedown', this._events.sliderMouseDown)
+    this.body.sliders.min.addEventListener('mousemove', this._events.sliderMouseMove)
+    this.body.sliders.max.addEventListener('mousemove', this._events.sliderMouseMove)
+    document.addEventListener('mouseup', this._events.sliderMouseUp)
+  }
+
+  // _update returns all events available to use
+  // it tries to use the buffering-variable (_eventsObject) to not recreate this big object every time
+  get _events () {
+    var _this = this;
+    return _this._eventsObject || {
+      sliderMouseDown: function(event) {
+        event.preventDefault() // prevents selecting text
+        event.target.dataset.inmove = 'true'
+      },
+      sliderMouseUp: function(event) {
+        _this.body.sliders.min.dataset.inmove = 'false'
+        _this.body.sliders.max.dataset.inmove = 'false'
+      },
+      sliderMouseMove: function(event) {
+        if (event.target.dataset.inmove === 'true') {
+        }
+      }
+    }
+  }
+
   // _update returns all methods available to use to update things
-  // it tries to use the buffering-variable (_updateObject) to not recreate this big object
+  // it tries to use the buffering-variable (_updateObject) to not recreate this big object every time
   get _update () {
     var _this = this;
     return _this._updateObject || {
@@ -103,6 +133,7 @@ class JSRange {
       sliders: function (min = _this.selected.min, max = _this.selected.max) {
         let startWidthRatio = _this.body.sliders.min.offsetWidth / _this.body.rail.offsetWidth
         let endWidthRatio = _this.body.sliders.max.offsetWidth / _this.body.rail.offsetWidth
+        // widthRatio is used to place middle point of slider in the right point
         let start = min / _this.options.max - startWidthRatio / 2
         let end = max / _this.options.max - endWidthRatio / 2
 
