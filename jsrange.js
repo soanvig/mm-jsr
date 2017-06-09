@@ -43,8 +43,10 @@ class JSRange {
     this.body.sliders = {}
     this.body.sliders.min = document.createElement('div')
     this.body.sliders.min.classList.add('jsr_slider', 'jsr_slider--min')
+    this.body.sliders.min.dataset.jsrType = 'min'
     this.body.sliders.max = document.createElement('div')
     this.body.sliders.max.classList.add('jsr_slider', 'jsr_slider--max')
+    this.body.sliders.max.dataset.jsrType = 'max'
 
     this.body.info = {}
     this.body.info.min = document.createElement('span')
@@ -74,8 +76,7 @@ class JSRange {
   _bindEvents () {
     this.body.sliders.min.addEventListener('mousedown', this._events.sliderMouseDown)
     this.body.sliders.max.addEventListener('mousedown', this._events.sliderMouseDown)
-    this.body.sliders.min.addEventListener('mousemove', this._events.sliderMouseMove)
-    this.body.sliders.max.addEventListener('mousemove', this._events.sliderMouseMove)
+    document.addEventListener('mousemove', this._events.sliderMouseMove)
     document.addEventListener('mouseup', this._events.sliderMouseUp)
   }
 
@@ -86,14 +87,20 @@ class JSRange {
     return _this._eventsObject || {
       sliderMouseDown: function(event) {
         event.preventDefault() // prevents selecting text
-        event.target.dataset.inmove = 'true'
+        window.jsrMoveObject = event.target
       },
       sliderMouseUp: function(event) {
-        _this.body.sliders.min.dataset.inmove = 'false'
-        _this.body.sliders.max.dataset.inmove = 'false'
+        window.jsrMoveObject = null
       },
       sliderMouseMove: function(event) {
-        if (event.target.dataset.inmove === 'true') {
+        if (window.jsrMoveObject) {
+          let type = window.jsrMoveObject.dataset.jsrType
+          let mouseX = event.clientX
+          let railLeft = _this.body.rail.getBoundingClientRect().left
+          let diff = mouseX - railLeft
+          let newSelected = diff / _this.body.rail.offsetWidth * _this.options.max
+          _this.selected[type] = parseInt(newSelected)
+          _this.update()
         }
       }
     }
