@@ -19,7 +19,7 @@
 }
 
 .jsr_slider {
-	width: 3px;
+	width: 5px;
 	height: 25px;
 	position: absolute;
 	left: 0;
@@ -29,15 +29,13 @@
 }
 
 .jsr_slider--min {
-	transform: translateX(50px);
 }
 
 .jsr_slider--max {
-	transform: translateX(100px);
 }
 
 .jsr_info {
-
+	position: ;
 }
 
 .jsr_info--min {

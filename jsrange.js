@@ -75,21 +75,21 @@ class JSRange {
     var _this = this;
     return _this._updateObject || {
       // Here goes every function which should be updated via .all()
-      _toUpdate: ['rail', 'info'], 
+      _toUpdate: ['rail', 'info', 'sliders'], 
       all: function () {
         this._toUpdate.forEach((item) => {
           this[item]() // Call certain update function
         })
       },
 
-      rail: function ( min = _this.selected.min, max = _this.selected.max ) {
+      rail: function (min = _this.selected.min, max = _this.selected.max) {
         // Calc rail color position
         let start = min / _this.options.max * 100
         let end = max / _this.options.max * 100
 
         // Sets colored part of rail
         // Expects percentages without % sign
-        _this.body.rail.style.backgroundPosition = `${start}% 0`
+        _this.body.rail.style.backgroundPosition = `${end}% 0`
         _this.body.rail.style.backgroundSize = `${end - start}% 100%`
       },
 
@@ -98,6 +98,16 @@ class JSRange {
         _this.body.info.max.innerHTML = _this.options.max
         _this.body.info.actualMin.innerHTML = _this.selected.min
         _this.body.info.actualMax.innerHTML = _this.selected.max
+      },
+
+      sliders: function (min = _this.selected.min, max = _this.selected.max) {
+        let startWidthRatio = _this.body.sliders.min.offsetWidth / _this.body.rail.offsetWidth
+        let endWidthRatio = _this.body.sliders.max.offsetWidth / _this.body.rail.offsetWidth
+        let start = min / _this.options.max - startWidthRatio / 2
+        let end = max / _this.options.max - endWidthRatio / 2
+
+        _this.body.sliders.min.style.left = `${start * 100}%`
+        _this.body.sliders.max.style.left = `${end * 100}%`
       }
     }
   }
