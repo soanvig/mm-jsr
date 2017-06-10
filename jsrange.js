@@ -80,6 +80,30 @@ class JSRange {
     document.addEventListener('mouseup', this._events.sliderMouseUp)
   }
 
+  _validateAndSave (type, value) {
+    if (type === 'min') {
+      if (value < this.options.min) {
+        value = this.options.min
+      }
+
+      if (value > this.selected.max) {
+        value = this.selected.max
+      }
+    }
+
+    if (type === 'max') {
+      if (value > this.options.max) {
+        value = this.options.max
+      }
+
+      if (value < this.selected.min) {
+        value = this.selected.min
+      }
+    }
+
+    this.selected[type] = value
+  }
+
   // _update returns all events available to use
   // it tries to use the buffering-variable (_eventsObject) to not recreate this big object every time
   get _events () {
@@ -98,8 +122,8 @@ class JSRange {
           let mouseX = event.clientX
           let railLeft = _this.body.rail.getBoundingClientRect().left
           let diff = mouseX - railLeft
-          let newSelected = diff / _this.body.rail.offsetWidth * _this.options.max
-          _this.selected[type] = parseInt(newSelected)
+          let newSelected = parseInt(diff / _this.body.rail.offsetWidth * _this.options.max)
+          _this._validateAndSave(type, newSelected)
           _this.update()
         }
       }
