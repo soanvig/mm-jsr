@@ -19,7 +19,7 @@
 }
 
 .jsr_slider {
-	width: 1px;
+	width: 5px;
 	height: 25px;
 	position: absolute;
 	left: 0;
@@ -35,15 +35,15 @@
 }
 
 .jsr_info {
-	position: ;
+    position: absolute;
 }
 
 .jsr_info--min {
-
+    left: 0;
 }
 
 .jsr_info--max {
-
+    right: 0;
 }
 
 .jsr_info--actualMin {

@@ -136,7 +136,8 @@ class JSRange {
     var _this = this;
     return _this._updateObject || {
       // Here goes every function which should be updated via .all()
-      _toUpdate: ['rail', 'info', 'sliders'], 
+      // 'info' should be after 'sliders'
+      _toUpdate: ['rail', 'sliders', 'info'], 
       all: function () {
         this._toUpdate.forEach((item) => {
           this[item]() // Call certain update function
@@ -161,6 +162,12 @@ class JSRange {
         _this.body.info.max.innerHTML = _this.options.max
         _this.body.info.actualMin.innerHTML = _this.selected.min
         _this.body.info.actualMax.innerHTML = _this.selected.max
+
+        // minWidth and maxWidth include widths of sliders
+        let minWidth = _this.body.info.actualMin.offsetWidth - _this.body.sliders.min.offsetWidth
+        let maxWidth = _this.body.info.actualMax.offsetWidth - _this.body.sliders.max.offsetWidth
+        _this.body.info.actualMin.style.left = `calc(${_this.body.sliders.min.style.left} - ${minWidth}px / 2)`
+        _this.body.info.actualMax.style.left = `calc(${_this.body.sliders.max.style.left} - ${maxWidth}px / 2)`
       },
 
       sliders: function (min = _this.selected.min, max = _this.selected.max) {
