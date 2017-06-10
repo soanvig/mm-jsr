@@ -121,13 +121,15 @@ class JSRange {
 
       rail: function (min = _this.selected.min, max = _this.selected.max) {
         // Calc rail color position
-        let start = min / _this.options.max * 100
-        let end = max / _this.options.max * 100
+        let start = min / _this.options.max
+        let end = max / _this.options.max
+        // Calc real start (because of weird percentage work)
+        let realStart = start / (1 - (end - start))
 
         // Sets colored part of rail
         // Expects percentages without % sign
-        _this.body.rail.style.backgroundPosition = `${end}% 0`
-        _this.body.rail.style.backgroundSize = `${end - start}% 100%`
+        _this.body.rail.style.backgroundPosition = `${realStart * 100}% 0`
+        _this.body.rail.style.backgroundSize = `${(end - start) * 100}% 100%`
       },
 
       info: function () {
