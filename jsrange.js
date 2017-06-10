@@ -73,13 +73,6 @@ class JSRange {
     })
   }
 
-  _bindEvents () {
-    this.body.sliders.min.addEventListener('mousedown', this._events.sliderMouseDown)
-    this.body.sliders.max.addEventListener('mousedown', this._events.sliderMouseDown)
-    document.addEventListener('mousemove', this._events.sliderMouseMove)
-    document.addEventListener('mouseup', this._events.sliderMouseUp)
-  }
-
   _validateAndSave (type, value) {
     if (type === 'min') {
       if (value < this.options.min) {
@@ -104,19 +97,28 @@ class JSRange {
     this.selected[type] = value
   }
 
+  _bindEvents () {
+    this.body.sliders.min.addEventListener('mousedown', this._events.sliderMouseDown)
+    this.body.sliders.max.addEventListener('mousedown', this._events.sliderMouseDown)
+    document.addEventListener('mousemove', this._events.sliderMouseMove)
+    document.addEventListener('mouseup', this._events.sliderMouseUp)
+
+    this.body.rail.addEventListener('click', this._events.railClick)
+  }
+
   // _update returns all events available to use
   // it tries to use the buffering-variable (_eventsObject) to not recreate this big object every time
   get _events () {
     var _this = this;
     return _this._eventsObject || {
-      sliderMouseDown: function(event) {
+      sliderMouseDown: function (event) {
         event.preventDefault() // prevents selecting text
         window.jsrMoveObject = event.target
       },
-      sliderMouseUp: function(event) {
+      sliderMouseUp: function (event) {
         window.jsrMoveObject = null
       },
-      sliderMouseMove: function(event) {
+      sliderMouseMove: function (event) {
         if (window.jsrMoveObject) {
           let type = window.jsrMoveObject.dataset.jsrType
           let mouseX = event.clientX
@@ -126,6 +128,25 @@ class JSRange {
           _this._validateAndSave(type, newSelected)
           _this.update()
         }
+      },
+      railClick: function (event) {
+        // determine closer to which slider it was closer
+        let mouseX = event.clientX
+        let railLeft = _this.body.rail.getBoundingClientRect().left
+        let diff = mouseX - railLeft
+        let clickedValue = parseInt(diff / _this.body.rail.offsetWidth * _this.options.max)
+
+        // compare absolute distance between clickedValue and selected.min/max
+        // closer to zero, means closer to min/max
+        if (Math.abs(_this.selected.min - clickedValue) < Math.abs(_this.selected.max - clickedValue)) {
+          // closer to min
+          _this.selected.min = clickedValue
+        } else {
+          // closer to max
+          _this.selected.max = clickedValue
+        }
+
+        _this.update()
       }
     }
   }

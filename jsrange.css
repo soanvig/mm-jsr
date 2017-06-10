@@ -16,6 +16,8 @@
     background: rgb(230, 230, 230);
     background-image: linear-gradient(red, red);
     background-repeat: no-repeat;
+
+    cursor: pointer;
 }
 
 .jsr_slider {
