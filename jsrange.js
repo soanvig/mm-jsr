@@ -57,6 +57,8 @@ class JSRange {
     this.body.info.from.classList.add('jsr_info', 'jsr_info--from')
     this.body.info.to = document.createElement('span')
     this.body.info.to.classList.add('jsr_info', 'jsr_info--to')
+    this.body.info.single = document.createElement('span')
+    this.body.info.single.classList.add('jsr_info', 'jsr_info--single')
 
     let elements = [
       this.body.rail,
@@ -65,7 +67,8 @@ class JSRange {
       this.body.info.min,
       this.body.info.max,
       this.body.info.from,
-      this.body.info.to
+      this.body.info.to,
+      this.body.info.single
     ]
 
     elements.forEach((element) => {
@@ -179,10 +182,13 @@ class JSRange {
       },
 
       info: function () {
-        _this.body.info.min.innerHTML = _this.options.min
-        _this.body.info.max.innerHTML = _this.options.max
-        _this.body.info.from.innerHTML = _this.selected.from
-        _this.body.info.to.innerHTML = _this.selected.to
+        _this.body.info.min.innerHTML     = _this.options.min
+        _this.body.info.max.innerHTML     = _this.options.max
+        _this.body.info.from.innerHTML    = _this.selected.from
+        _this.body.info.to.innerHTML      = _this.selected.to
+        _this.body.info.single.innerHTML  = (_this.selected.from === _this.selected.to )
+                                            ? _this.selected.from
+                                            : `${_this.selected.from} - ${_this.selected.to}`
 
         // minWidth and maxWidth include widths of sliders
         let minWidth = _this.body.info.from.offsetWidth - _this.body.sliders.from.offsetWidth
