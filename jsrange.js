@@ -2,6 +2,7 @@ class JSRange {
   constructor (el, options) {
     this._updateObject = this._update
     this._eventsObject = this._events
+    this._mousemoveThrottle = false
 
     this.options = options
     this.selected = {
@@ -128,7 +129,11 @@ class JSRange {
         window.jsrMoveObject = null
       },
       sliderMouseMove: function (event) {
-        if (window.jsrMoveObject) {
+        if (window.jsrMoveObject && !_this._mousemoveThrottle) {
+          // throttling function
+          _this._mousemoveThrottle = true
+          setTimeout(() => { _this._mousemoveThrottle = false}, 20)
+
           let type = window.jsrMoveObject.dataset.jsrType
           let newSelected = _this._getValueOfPosition(event.clientX)
           _this._validateAndSave(type, newSelected)
