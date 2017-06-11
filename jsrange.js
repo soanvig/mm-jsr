@@ -116,6 +116,20 @@ class JSRange {
     return parseInt(diff / this.body.rail.offsetWidth * this.options.max)
   }
 
+  // returns center of element relatively to rail
+  _getCenterOf (element) {
+    let left = parseFloat(element.style.left) / 100 // should be %
+    let widthRatio = this._getWidthOf(element)
+    return (left + widthRatio / 2)
+  }
+
+  // returns width of element relatively to rail
+  _getWidthOf (element) {
+    let width = parseFloat(element.offsetWidth)
+    let widthRatio = width / parseFloat(this.body.rail.offsetWidth)
+    return widthRatio
+  }
+
   // _update returns all events available to use
   // it tries to use the buffering-variable (_eventsObject) to not recreate this big object every time
   get _events () {
@@ -173,10 +187,10 @@ class JSRange {
         })
       },
 
-      rail: function (min = _this.selected.from, max = _this.selected.to) {
+      rail: function () {
         // Calc rail color position
-        let start     = min / _this.options.max
-        let end       = max / _this.options.max
+        let start     = _this.selected.from / _this.options.max
+        let end       = _this.selected.to / _this.options.max
         // Calc real start (because of weird percentage work)
         let realStart = start / (1 - (end - start))
 
@@ -186,12 +200,12 @@ class JSRange {
         _this.body.rail.style.backgroundSize      = `${(end - start) * 100}% 100%`
       },
 
-      sliders: function (min = _this.selected.from, max = _this.selected.to) {
-        let startWidthRatio = _this.body.sliders.from.offsetWidth / _this.body.rail.offsetWidth
-        let endWidthRatio   = _this.body.sliders.to.offsetWidth / _this.body.rail.offsetWidth
+      sliders: function () {
+        let startWidthRatio = _this._getWidthOf(_this.body.sliders.from)
+        let endWidthRatio   = _this._getWidthOf(_this.body.sliders.to)
         // widthRatio is used to place middle point of slider in the right point
-        let start           = min / _this.options.max - startWidthRatio / 2
-        let end             = max / _this.options.max - endWidthRatio / 2
+        let start           = _this.selected.from / _this.options.max - startWidthRatio / 2
+        let end             = _this.selected.to / _this.options.max - endWidthRatio / 2
 
         _this.body.sliders.from.style.left  = `${start * 100}%`
         _this.body.sliders.to.style.left    = `${end * 100}%`
@@ -207,13 +221,15 @@ class JSRange {
                                             : `${_this.selected.from} - ${_this.selected.to}`
 
         // position infos
-        // ! variables are CSS expressions (due to mix of % and px values)
-        let fromSliderCenter  = `(${_this.body.sliders.from.style.left} + ${_this.body.sliders.from.offsetWidth}px / 2)`
-        let toSliderCenter    = `(${_this.body.sliders.to.style.left} + ${_this.body.sliders.to.offsetWidth}px / 2)`
+        let fromInfo = _this._getCenterOf(_this.body.sliders.from) - _this._getWidthOf(_this.body.info.from) / 2
+        let toInfo = _this._getCenterOf(_this.body.sliders.to) - _this._getWidthOf(_this.body.info.to) / 2
+        let singleInfo = (
+            _this._getCenterOf(_this.body.sliders.from) + _this._getCenterOf(_this.body.sliders.to)   
+          ) / 2 - _this._getWidthOf(_this.body.info.single) / 2
 
-        _this.body.info.from.style.left = `calc(${fromSliderCenter} - ${_this.body.info.from.offsetWidth}px / 2)`
-        _this.body.info.to.style.left = `calc(${toSliderCenter} - ${_this.body.info.to.offsetWidth}px / 2)`
-        _this.body.info.single.style.left = `calc((${fromSliderCenter} + ${toSliderCenter}) / 2 - ${_this.body.info.single.offsetWidth}px / 2)`
+        _this.body.info.from.style.left = `${fromInfo * 100}%`
+        _this.body.info.to.style.left = `${toInfo * 100}%`
+        _this.body.info.single.style.left = `${singleInfo * 100}%`
       }
     }
   }
