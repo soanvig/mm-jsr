@@ -60,7 +60,7 @@ class JSRange {
     this.body.info.single = document.createElement('span')
     this.body.info.single.classList.add('jsr_info', 'jsr_info--single')
 
-    [
+    let elements = [
       this.body.rail,
       this.body.sliders.from,
       this.body.sliders.to,
@@ -69,7 +69,9 @@ class JSRange {
       this.body.info.from,
       this.body.info.to,
       this.body.info.single
-    ].forEach((element) => {
+    ]
+
+    elements.forEach((element) => {
       this.body.parent.appendChild(element)
     })
   }
@@ -158,7 +160,7 @@ class JSRange {
     var _this = this;
     return _this._updateObject || {
       // Here goes every function which should be updated via .all()
-      // 'info' should be after 'sliders'
+      // 'info' should be after 'sliders' because it depends on their value
       _toUpdate: ['rail', 'sliders', 'info'], 
       all: function () {
         this._toUpdate.forEach((item) => {
@@ -179,22 +181,6 @@ class JSRange {
         _this.body.rail.style.backgroundSize      = `${(end - start) * 100}% 100%`
       },
 
-      info: function () {
-        _this.body.info.min.innerHTML     = _this.options.min
-        _this.body.info.max.innerHTML     = _this.options.max
-        _this.body.info.from.innerHTML    = _this.selected.from
-        _this.body.info.to.innerHTML      = _this.selected.to
-        _this.body.info.single.innerHTML  = (_this.selected.from === _this.selected.to )
-                                            ? _this.selected.from
-                                            : `${_this.selected.from} - ${_this.selected.to}`
-
-        // minWidth and maxWidth include widths of sliders
-        let minWidth = _this.body.info.from.offsetWidth - _this.body.sliders.from.offsetWidth
-        let maxWidth = _this.body.info.to.offsetWidth - _this.body.sliders.to.offsetWidth
-        _this.body.info.from.style.left = `calc(${_this.body.sliders.from.style.left} - ${minWidth}px / 2)`
-        _this.body.info.to.style.left = `calc(${_this.body.sliders.to.style.left} - ${maxWidth}px / 2)`
-      },
-
       sliders: function (min = _this.selected.from, max = _this.selected.to) {
         let startWidthRatio = _this.body.sliders.from.offsetWidth / _this.body.rail.offsetWidth
         let endWidthRatio   = _this.body.sliders.to.offsetWidth / _this.body.rail.offsetWidth
@@ -204,6 +190,25 @@ class JSRange {
 
         _this.body.sliders.from.style.left  = `${start * 100}%`
         _this.body.sliders.to.style.left    = `${end * 100}%`
+      },
+
+      info: function () {
+        _this.body.info.min.innerHTML     = _this.options.min
+        _this.body.info.max.innerHTML     = _this.options.max
+        _this.body.info.from.innerHTML    = _this.selected.from
+        _this.body.info.to.innerHTML      = _this.selected.to
+        _this.body.info.single.innerHTML  = (_this.selected.from === _this.selected.to )
+                                            ? _this.selected.from
+                                            : `${_this.selected.from} - ${_this.selected.to}`
+
+        // position infos
+        // ! variables are CSS expressions (due to mix of % and px values)
+        let fromSliderCenter  = `(${_this.body.sliders.from.style.left} + ${_this.body.sliders.from.offsetWidth}px / 2)`
+        let toSliderCenter    = `(${_this.body.sliders.to.style.left} + ${_this.body.sliders.to.offsetWidth}px / 2)`
+
+        _this.body.info.from.style.left = `calc(${fromSliderCenter} - ${_this.body.info.from.offsetWidth}px / 2)`
+        _this.body.info.to.style.left = `calc(${toSliderCenter} - ${_this.body.info.to.offsetWidth}px / 2)`
+        _this.body.info.single.style.left = `calc((${fromSliderCenter} + ${toSliderCenter}) / 2 - ${_this.body.info.single.offsetWidth}px / 2)`
       }
     }
   }
