@@ -16,8 +16,6 @@
     background: rgb(230, 230, 230);
     background-image: linear-gradient(red, red);
     background-repeat: no-repeat;
-
-    cursor: pointer;
 }
 
 .jsr_slider {
@@ -30,10 +28,10 @@
 	cursor: pointer;
 }
 
-.jsr_slider--min {
+.jsr_slider--from {
 }
 
-.jsr_slider--max {
+.jsr_slider--to {
 }
 
 .jsr_info {
@@ -48,11 +46,11 @@
     right: 0;
 }
 
-.jsr_info--actualMin {
+.jsr_info--from {
 
 }
 
-.jsr_info--actualMax {
+.jsr_info--to {
 
 }
 

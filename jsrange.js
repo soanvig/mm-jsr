@@ -5,8 +5,8 @@ class JSRange {
 
     this.options = options
     this.selected = {
-      min: this.options.min,
-      max: this.options.max
+      from: this.options.min,
+      to: this.options.max
     }
 
     this._createBody(el)
@@ -20,12 +20,12 @@ class JSRange {
   }
 
   set (hash = {}) {
-    if (hash.min) {
-      this.selected.min = hash.min
+    if (hash.from) {
+      this.selected.from = hash.from
     }
 
-    if (hash.max) {
-      this.selected.max = hash.max
+    if (hash.to) {
+      this.selected.to = hash.to
     }
 
     this.update()
@@ -41,31 +41,31 @@ class JSRange {
     this.body.rail.classList.add('jsr_rail')
 
     this.body.sliders = {}
-    this.body.sliders.min = document.createElement('div')
-    this.body.sliders.min.classList.add('jsr_slider', 'jsr_slider--min')
-    this.body.sliders.min.dataset.jsrType = 'min'
-    this.body.sliders.max = document.createElement('div')
-    this.body.sliders.max.classList.add('jsr_slider', 'jsr_slider--max')
-    this.body.sliders.max.dataset.jsrType = 'max'
+    this.body.sliders.from = document.createElement('div')
+    this.body.sliders.from.classList.add('jsr_slider', 'jsr_slider--from')
+    this.body.sliders.from.dataset.jsrType = 'from'
+    this.body.sliders.to = document.createElement('div')
+    this.body.sliders.to.classList.add('jsr_slider', 'jsr_slider--to')
+    this.body.sliders.to.dataset.jsrType = 'to'
 
     this.body.info = {}
     this.body.info.min = document.createElement('span')
     this.body.info.min.classList.add('jsr_info', 'jsr_info--min')
     this.body.info.max = document.createElement('span')
     this.body.info.max.classList.add('jsr_info', 'jsr_info--max')
-    this.body.info.actualMin = document.createElement('span')
-    this.body.info.actualMin.classList.add('jsr_info', 'jsr_info--actualMin')
-    this.body.info.actualMax = document.createElement('span')
-    this.body.info.actualMax.classList.add('jsr_info', 'jsr_info--actualMax')
+    this.body.info.from = document.createElement('span')
+    this.body.info.from.classList.add('jsr_info', 'jsr_info--from')
+    this.body.info.to = document.createElement('span')
+    this.body.info.to.classList.add('jsr_info', 'jsr_info--to')
 
     let elements = [
       this.body.rail,
-      this.body.sliders.min,
-      this.body.sliders.max,
+      this.body.sliders.from,
+      this.body.sliders.to,
       this.body.info.min,
       this.body.info.max,
-      this.body.info.actualMin,
-      this.body.info.actualMax
+      this.body.info.from,
+      this.body.info.to
     ]
 
     elements.forEach((element) => {
@@ -74,23 +74,23 @@ class JSRange {
   }
 
   _validateAndSave (type, value) {
-    if (type === 'min') {
+    if (type === 'from') {
       if (value < this.options.min) {
         value = this.options.min
       }
 
-      if (value > this.selected.max) {
-        value = this.selected.max
+      if (value > this.selected.to) {
+        value = this.selected.to
       }
     }
 
-    if (type === 'max') {
+    if (type === 'to') {
       if (value > this.options.max) {
         value = this.options.max
       }
 
-      if (value < this.selected.min) {
-        value = this.selected.min
+      if (value < this.selected.from) {
+        value = this.selected.from
       }
     }
 
@@ -98,8 +98,8 @@ class JSRange {
   }
 
   _bindEvents () {
-    this.body.sliders.min.addEventListener('mousedown', this._events.sliderMouseDown)
-    this.body.sliders.max.addEventListener('mousedown', this._events.sliderMouseDown)
+    this.body.sliders.from.addEventListener('mousedown', this._events.sliderMouseDown)
+    this.body.sliders.to.addEventListener('mousedown', this._events.sliderMouseDown)
     document.addEventListener('mousemove', this._events.sliderMouseMove)
     document.addEventListener('mouseup', this._events.sliderMouseUp)
 
@@ -136,14 +136,14 @@ class JSRange {
         // determine closer to which slider it was closer
         let clickedValue = _this._getValueOfPosition(event.clientX)
 
-        // compare absolute distance between clickedValue and selected.min/max
+        // compare absolute distance between clickedValue and selected.from/max
         // closer to zero, means closer to min/max
-        if (Math.abs(_this.selected.min - clickedValue) < Math.abs(_this.selected.max - clickedValue)) {
+        if (Math.abs(_this.selected.from - clickedValue) < Math.abs(_this.selected.to - clickedValue)) {
           // closer to min
-          _this.selected.min = clickedValue
+          _this.selected.from = clickedValue
         } else {
           // closer to max
-          _this.selected.max = clickedValue
+          _this.selected.to = clickedValue
         }
 
         _this.update()
@@ -165,7 +165,7 @@ class JSRange {
         })
       },
 
-      rail: function (min = _this.selected.min, max = _this.selected.max) {
+      rail: function (min = _this.selected.from, max = _this.selected.to) {
         // Calc rail color position
         let start = min / _this.options.max
         let end = max / _this.options.max
@@ -181,25 +181,25 @@ class JSRange {
       info: function () {
         _this.body.info.min.innerHTML = _this.options.min
         _this.body.info.max.innerHTML = _this.options.max
-        _this.body.info.actualMin.innerHTML = _this.selected.min
-        _this.body.info.actualMax.innerHTML = _this.selected.max
+        _this.body.info.from.innerHTML = _this.selected.from
+        _this.body.info.to.innerHTML = _this.selected.to
 
         // minWidth and maxWidth include widths of sliders
-        let minWidth = _this.body.info.actualMin.offsetWidth - _this.body.sliders.min.offsetWidth
-        let maxWidth = _this.body.info.actualMax.offsetWidth - _this.body.sliders.max.offsetWidth
-        _this.body.info.actualMin.style.left = `calc(${_this.body.sliders.min.style.left} - ${minWidth}px / 2)`
-        _this.body.info.actualMax.style.left = `calc(${_this.body.sliders.max.style.left} - ${maxWidth}px / 2)`
+        let minWidth = _this.body.info.from.offsetWidth - _this.body.sliders.from.offsetWidth
+        let maxWidth = _this.body.info.to.offsetWidth - _this.body.sliders.to.offsetWidth
+        _this.body.info.from.style.left = `calc(${_this.body.sliders.from.style.left} - ${minWidth}px / 2)`
+        _this.body.info.to.style.left = `calc(${_this.body.sliders.to.style.left} - ${maxWidth}px / 2)`
       },
 
-      sliders: function (min = _this.selected.min, max = _this.selected.max) {
-        let startWidthRatio = _this.body.sliders.min.offsetWidth / _this.body.rail.offsetWidth
-        let endWidthRatio = _this.body.sliders.max.offsetWidth / _this.body.rail.offsetWidth
+      sliders: function (min = _this.selected.from, max = _this.selected.to) {
+        let startWidthRatio = _this.body.sliders.from.offsetWidth / _this.body.rail.offsetWidth
+        let endWidthRatio = _this.body.sliders.to.offsetWidth / _this.body.rail.offsetWidth
         // widthRatio is used to place middle point of slider in the right point
         let start = min / _this.options.max - startWidthRatio / 2
         let end = max / _this.options.max - endWidthRatio / 2
 
-        _this.body.sliders.min.style.left = `${start * 100}%`
-        _this.body.sliders.max.style.left = `${end * 100}%`
+        _this.body.sliders.from.style.left = `${start * 100}%`
+        _this.body.sliders.to.style.left = `${end * 100}%`
       }
     }
   }
