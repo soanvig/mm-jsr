@@ -116,9 +116,23 @@ class JSRange {
     return parseInt(diff / this.body.rail.offsetWidth * this.options.max)
   }
 
+  // returns left of element relatively to rail
+  _getLeftOf (element) {
+    let railLeft = parseFloat(this.body.rail.getBoundingClientRect().left)
+    let elLeft = parseFloat(element.getBoundingClientRect().left)
+    let elRelativeLeft = elLeft - railLeft
+    let railWidth = parseFloat(this.body.rail.offsetWidth)
+    return elRelativeLeft / railWidth
+  }
+
+  // returns right of element (from style + width)
+  _getRightOf (element) {
+    return this._getLeftOf(element) + this._getWidthOf(element)
+  }
+
   // returns center of element relatively to rail
   _getCenterOf (element) {
-    let left = parseFloat(element.style.left) / 100 // should be %
+    let left = this._getLeftOf(element)
     let widthRatio = this._getWidthOf(element)
     return (left + widthRatio / 2)
   }
@@ -223,13 +237,38 @@ class JSRange {
         // position infos
         let fromInfo = _this._getCenterOf(_this.body.sliders.from) - _this._getWidthOf(_this.body.info.from) / 2
         let toInfo = _this._getCenterOf(_this.body.sliders.to) - _this._getWidthOf(_this.body.info.to) / 2
-        let singleInfo = (
-            _this._getCenterOf(_this.body.sliders.from) + _this._getCenterOf(_this.body.sliders.to)   
-          ) / 2 - _this._getWidthOf(_this.body.info.single) / 2
+        let slidersMiddle = (_this._getCenterOf(_this.body.sliders.from) + _this._getCenterOf(_this.body.sliders.to)) / 2
+        let singleInfo = slidersMiddle - _this._getWidthOf(_this.body.info.single) / 2
 
         _this.body.info.from.style.left = `${fromInfo * 100}%`
         _this.body.info.to.style.left = `${toInfo * 100}%`
         _this.body.info.single.style.left = `${singleInfo * 100}%`
+
+        // determine infos overlap, and hide them
+        // 'from' and 'to' overlaps
+        if (_this._getRightOf(_this.body.info.from) > _this._getLeftOf(_this.body.info.to)) {
+          _this.body.info.from.style.visibility = 'hidden'
+          _this.body.info.to.style.visibility = 'hidden'
+          _this.body.info.single.style.visibility = 'visible'
+        } else {
+          _this.body.info.from.style.visibility = 'visible'
+          _this.body.info.to.style.visibility = 'visible'
+          _this.body.info.single.style.visibility = 'hidden'
+        }
+
+        // 'min' and 'from' overlaps
+        if (_this._getRightOf(_this.body.info.min) > _this._getLeftOf(_this.body.info.from)) {
+          _this.body.info.min.style.visibility = 'hidden'
+        } else {
+          _this.body.info.min.style.visibility = 'visible'
+        }
+
+        // 'max' and 'to' overlaps
+        if (_this._getRightOf(_this.body.info.to) > _this._getLeftOf(_this.body.info.max)) {
+          _this.body.info.max.style.visibility = 'hidden'
+        } else {
+          _this.body.info.max.style.visibility = 'visible'
+        }
       }
     }
   }
