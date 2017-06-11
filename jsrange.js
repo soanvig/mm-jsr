@@ -60,7 +60,7 @@ class JSRange {
     this.body.info.single = document.createElement('span')
     this.body.info.single.classList.add('jsr_info', 'jsr_info--single')
 
-    let elements = [
+    [
       this.body.rail,
       this.body.sliders.from,
       this.body.sliders.to,
@@ -69,9 +69,7 @@ class JSRange {
       this.body.info.from,
       this.body.info.to,
       this.body.info.single
-    ]
-
-    elements.forEach((element) => {
+    ].forEach((element) => {
       this.body.parent.appendChild(element)
     })
   }
@@ -170,15 +168,15 @@ class JSRange {
 
       rail: function (min = _this.selected.from, max = _this.selected.to) {
         // Calc rail color position
-        let start = min / _this.options.max
-        let end = max / _this.options.max
+        let start     = min / _this.options.max
+        let end       = max / _this.options.max
         // Calc real start (because of weird percentage work)
         let realStart = start / (1 - (end - start))
 
         // Sets colored part of rail
         // Expects percentages without % sign
-        _this.body.rail.style.backgroundPosition = `${realStart * 100}% 0`
-        _this.body.rail.style.backgroundSize = `${(end - start) * 100}% 100%`
+        _this.body.rail.style.backgroundPosition  = `${realStart * 100}% 0`
+        _this.body.rail.style.backgroundSize      = `${(end - start) * 100}% 100%`
       },
 
       info: function () {
@@ -199,13 +197,13 @@ class JSRange {
 
       sliders: function (min = _this.selected.from, max = _this.selected.to) {
         let startWidthRatio = _this.body.sliders.from.offsetWidth / _this.body.rail.offsetWidth
-        let endWidthRatio = _this.body.sliders.to.offsetWidth / _this.body.rail.offsetWidth
+        let endWidthRatio   = _this.body.sliders.to.offsetWidth / _this.body.rail.offsetWidth
         // widthRatio is used to place middle point of slider in the right point
-        let start = min / _this.options.max - startWidthRatio / 2
-        let end = max / _this.options.max - endWidthRatio / 2
+        let start           = min / _this.options.max - startWidthRatio / 2
+        let end             = max / _this.options.max - endWidthRatio / 2
 
-        _this.body.sliders.from.style.left = `${start * 100}%`
-        _this.body.sliders.to.style.left = `${end * 100}%`
+        _this.body.sliders.from.style.left  = `${start * 100}%`
+        _this.body.sliders.to.style.left    = `${end * 100}%`
       }
     }
   }
