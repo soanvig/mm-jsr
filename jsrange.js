@@ -106,6 +106,12 @@ class JSRange {
     this.body.rail.addEventListener('click', this._events.railClick)
   }
 
+  _getValueOfPosition (mouseX) {
+    let railLeft = this.body.rail.getBoundingClientRect().left
+    let diff = mouseX - railLeft
+    return parseInt(diff / this.body.rail.offsetWidth * this.options.max)
+  }
+
   // _update returns all events available to use
   // it tries to use the buffering-variable (_eventsObject) to not recreate this big object every time
   get _events () {
@@ -121,20 +127,14 @@ class JSRange {
       sliderMouseMove: function (event) {
         if (window.jsrMoveObject) {
           let type = window.jsrMoveObject.dataset.jsrType
-          let mouseX = event.clientX
-          let railLeft = _this.body.rail.getBoundingClientRect().left
-          let diff = mouseX - railLeft
-          let newSelected = parseInt(diff / _this.body.rail.offsetWidth * _this.options.max)
+          let newSelected = _this._getValueOfPosition(event.clientX)
           _this._validateAndSave(type, newSelected)
           _this.update()
         }
       },
       railClick: function (event) {
         // determine closer to which slider it was closer
-        let mouseX = event.clientX
-        let railLeft = _this.body.rail.getBoundingClientRect().left
-        let diff = mouseX - railLeft
-        let clickedValue = parseInt(diff / _this.body.rail.offsetWidth * _this.options.max)
+        let clickedValue = _this._getValueOfPosition(event.clientX)
 
         // compare absolute distance between clickedValue and selected.min/max
         // closer to zero, means closer to min/max
