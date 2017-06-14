@@ -279,8 +279,8 @@ class JSRange {
         _this.body.info.to.innerHTML          = _this.selected.to
         _this.body.info.singleFrom.innerHTML  = _this.selected.from
         _this.body.info.singleTo.innerHTML    = _this.selected.to
-
-        if (_this.selected.from === _this.selected.to) {
+        console.log(_this.selected.from, _this.selected.to)
+        if (_this.selected.from == _this.selected.to) {
           _this.body.info.singleTo.style.display = 'none'
         } else {
           _this.body.info.singleTo.style.display = 'inline'
