@@ -70,14 +70,25 @@ class JSRange {
     this.body.info.min.classList.add('jsr_info', 'jsr_info--min')
     this.body.info.max = document.createElement('span')
     this.body.info.max.classList.add('jsr_info', 'jsr_info--max')
+    
     this.body.info.from = document.createElement('span')
     this.body.info.from.classList.add('jsr_info', 'jsr_info--from')
     this.body.info.from.dataset.jsrType = 'from'
     this.body.info.to = document.createElement('span')
     this.body.info.to.classList.add('jsr_info', 'jsr_info--to')
     this.body.info.to.dataset.jsrType = 'to'
+    
     this.body.info.single = document.createElement('span')
     this.body.info.single.classList.add('jsr_info', 'jsr_info--single')
+    this.body.info.singleFrom = document.createElement('span')
+    this.body.info.singleFrom.classList.add('jsr_info_singleFrom')
+    this.body.info.singleFrom.dataset.jsrType = 'from'
+    this.body.info.singleTo = document.createElement('span')
+    this.body.info.singleTo.classList.add('jsr_info_singleTo')
+    this.body.info.singleTo.dataset.jsrType = 'to'
+
+    this.body.info.single.appendChild(this.body.info.singleFrom)
+    this.body.info.single.appendChild(this.body.info.singleTo)
 
     let elements = [
       this.body.rail,
@@ -127,6 +138,8 @@ class JSRange {
     this.body.sliders.to.addEventListener('mousedown', this._events.sliderMouseDown)
     this.body.info.from.addEventListener('mousedown', this._events.sliderMouseDown)
     this.body.info.to.addEventListener('mousedown', this._events.sliderMouseDown)
+    this.body.info.singleFrom.addEventListener('mousedown', this._events.sliderMouseDown)
+    this.body.info.singleTo.addEventListener('mousedown', this._events.sliderMouseDown)
     document.addEventListener('mousemove', this._events.sliderMouseMove)
     document.addEventListener('mouseup', this._events.sliderMouseUp)
 
@@ -260,13 +273,18 @@ class JSRange {
       },
 
       info: function () {
-        _this.body.info.min.innerHTML     = _this.options.min
-        _this.body.info.max.innerHTML     = _this.options.max
-        _this.body.info.from.innerHTML    = _this.selected.from
-        _this.body.info.to.innerHTML      = _this.selected.to
-        _this.body.info.single.innerHTML  = (_this.selected.from === _this.selected.to )
-                                            ? _this.selected.from
-                                            : `${_this.selected.from} - ${_this.selected.to}`
+        _this.body.info.min.innerHTML         = _this.options.min
+        _this.body.info.max.innerHTML         = _this.options.max
+        _this.body.info.from.innerHTML        = _this.selected.from
+        _this.body.info.to.innerHTML          = _this.selected.to
+        _this.body.info.singleFrom.innerHTML  = _this.selected.from
+        _this.body.info.singleTo.innerHTML    = _this.selected.to
+
+        if (_this.selected.from === _this.selected.to) {
+          _this.body.info.singleTo.style.display = 'none'
+        } else {
+          _this.body.info.singleTo.style.display = 'inline'
+        }
 
         // position infos
         let fromInfo = _this._getCenterOf(_this.body.sliders.from) - _this._getWidthOf(_this.body.info.from) / 2
