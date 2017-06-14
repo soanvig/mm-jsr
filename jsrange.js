@@ -1,16 +1,19 @@
 class JSRange {
   // Note about setting "step" with "min"/"max": it is allowed to use "min"/"max" not matching step
-  // Step option is best used with powers of 10
-  constructor (el, options) {
-    this.input = document.querySelector(el)
-    this._updateObject = this._update
-    this._eventsObject = this._events
+  // Step option is best used with powers of 10 (including negative powers) or regular numbers like 2
+  // -------
+  // Options for JSRange are retrieved for supplied input min
+  constructor (inputMin, inputMax, options) {
+    this.inputMin           = document.querySelector(inputMin)
+    this.inputMax           = document.querySelector(inputMax)
+    this._updateObject      = this._update
+    this._eventsObject      = this._events
     this._mousemoveThrottle = false
 
     this.options      = {}
-    this.options.min  = options.min   || this.input.getAttribute('min')
-    this.options.max  = options.max   || this.input.getAttribute('max')
-    this.options.step = options.step  || this.input.getAttribute('step')
+    this.options.min  = options.min   || this.inputMin.getAttribute('min')
+    this.options.max  = options.max   || this.inputMin.getAttribute('max')
+    this.options.step = options.step  || this.inputMin.getAttribute('step')
     this.options.stepDecimals = this._calculateDecimals(this.options.step)
 
     this.selected = {
@@ -18,7 +21,7 @@ class JSRange {
       to: this.options.max
     }
 
-    this._createBody(el)
+    this._createBody()
     this._bindEvents()
     this.update()
   }
@@ -42,8 +45,9 @@ class JSRange {
     this.update()
   }
  
-  _createBody (el) {
-    this.input.style.display = 'none'
+  _createBody () {
+    this.inputMin.style.display = 'none'
+    this.inputMax.style.display = 'none'
 
     this.body = {}
 
@@ -91,7 +95,7 @@ class JSRange {
     })
 
     // https://stackoverflow.com/questions/4793604/how-to-do-insert-after-in-javascript-without-using-a-library
-    this.input.parentNode.insertBefore(this.body.parent, this.input.nextSibling);
+    this.inputMax.parentNode.insertBefore(this.body.parent, this.inputMax.nextSibling);
   }
 
   _validateAndSave (type, value) {
@@ -224,7 +228,7 @@ class JSRange {
     return _this._updateObject || {
       // Here goes every function which should be updated via .all()
       // 'info' should be after 'sliders' because it depends on their value
-      _toUpdate: ['rail', 'sliders', 'info'], 
+      _toUpdate: ['rail', 'sliders', 'info', 'values'], 
       all: function () {
         this._toUpdate.forEach((item) => {
           this[item]() // Call certain update function
@@ -299,6 +303,11 @@ class JSRange {
         } else {
           _this.body.info.max.style.visibility = 'visible'
         }
+      },
+
+      values: function () {
+        _this.inputMin.setAttribute('value', _this.selected.from)
+        _this.inputMax.setAttribute('value', _this.selected.to)
       }
     }
   }
