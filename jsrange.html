@@ -6,12 +6,13 @@
     <link rel="stylesheet" href="jsrange.css">
 </head>
 <body style="padding: 20px;">
-    <input id="applyjsrangehere" type="range" min="0" max="200" />
+    <input id="applyjsrangehere" type="range" min="0" max="200" step="0.1">
     <script src="jsrange.js"></script>
     <script>
         var range = new JSRange('#applyjsrangehere', {
-            min: 0,
-            max: 200
+            // min: 0,
+            // max: 200
+            step: 0.1
         }).set({
         	from: 50,
         	to: 100

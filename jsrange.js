@@ -1,10 +1,18 @@
 class JSRange {
+  // Note about setting "step" with "min"/"max": it is allowed to use "min"/"max" not matching step
+  // Step option is best used with powers of 10
   constructor (el, options) {
+    this.input = document.querySelector(el)
     this._updateObject = this._update
     this._eventsObject = this._events
     this._mousemoveThrottle = false
 
-    this.options = options
+    this.options      = {}
+    this.options.min  = options.min   || this.input.getAttribute('min')
+    this.options.max  = options.max   || this.input.getAttribute('max')
+    this.options.step = options.step  || this.input.getAttribute('step')
+    this.options.stepDecimals = this._calculateDecimals(this.options.step)
+
     this.selected = {
       from: this.options.min,
       to: this.options.max
@@ -35,7 +43,6 @@ class JSRange {
   }
  
   _createBody (el) {
-    this.input = document.querySelector(el)
     this.input.style.display = 'none'
 
     this.body = {}
@@ -122,10 +129,20 @@ class JSRange {
     this.body.rail.addEventListener('click', this._events.railClick)
   }
 
+  _calculateDecimals (float) {
+    let string = float.toString()
+    return string.split('.')[1].length
+  }
+
   _getValueOfPosition (mouseX) {
     let railLeft = this.body.rail.getBoundingClientRect().left
     let diff = mouseX - railLeft
-    return parseInt(diff / this.body.rail.offsetWidth * this.options.max)
+    let value = parseFloat(diff / this.body.rail.offsetWidth * this.options.max)
+    value = Math.round(value / this.options.step) * this.options.step
+    // let's make finish rounding: move decimal point to the left (*), then to the right (/)
+    let stepDecimalsPow = Math.pow(10, this.options.stepDecimals)
+    value = Math.round(value * stepDecimalsPow) / stepDecimalsPow
+    return value
   }
 
   // returns left of element relatively to rail
