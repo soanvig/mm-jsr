@@ -1,5 +1,5 @@
 class JSRange {
-  // Note about setting "step" with "min"/"max": it is allowed to use "min"/"max" not matching step
+  // Note about setting "step" with "from"/"to": it is allowed to use "from"/"to" not matching step
   // Step option is best used with powers of 10 (including negative powers) or regular numbers like 2
   // -------
   // Options for JSRange are retrieved for supplied input min
