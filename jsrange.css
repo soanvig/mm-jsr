@@ -11,20 +11,21 @@
 
 .jsr_rail
 {
-    height: 20px;
+    height: 5px;
 
     background: rgb(230, 230, 230);
-    background-image: linear-gradient(red, red);
+    background-image: linear-gradient(rgb(30, 140, 20), rgb(30, 140, 20));
     background-repeat: no-repeat;
 }
 
 .jsr_slider {
-	width: 5px;
-	height: 25px;
+	width: 15px;
+	height: 15px;
+    border-radius: 50%;
 	position: absolute;
 	left: 0;
-	top: calc((20px - 25px) / 2);
-	background: #000;
+	top: calc((5px - 15px) / 2);
+	background: rgb(30, 140, 20);
 	cursor: pointer;
 }
 
@@ -36,7 +37,7 @@
 
 .jsr_info {
     position: absolute;
-    top: 30px;
+    top: 18px;
 }
 
 .jsr_info--min {
@@ -61,8 +62,27 @@
 }
 
 .jsr_info--from,
-.jsr_info--to {
+.jsr_info--to,
+.jsr_info--single {
     cursor: pointer;
+    background: rgb(30, 140, 20);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 3px;
+}
+
+.jsr_info--from::before,
+.jsr_info--to::before,
+.jsr_info--single::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 5px 6px 5px;
+    border-color: transparent transparent rgb(30, 140, 20) transparent;
+    top: -6px;
+    left: calc(50% - 5px);
+    position: absolute;
 }
 
 .jsr_info--single {
