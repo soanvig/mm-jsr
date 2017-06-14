@@ -20,6 +20,8 @@ class JSRange {
     this._update.all()
   }
 
+  // Sets values:
+  // from, to
   set (hash = {}) {
     if (hash.from) {
       this.selected.from = hash.from
@@ -33,9 +35,12 @@ class JSRange {
   }
  
   _createBody (el) {
+    this.input = document.querySelector(el)
+    this.input.style.display = 'none'
+
     this.body = {}
 
-    this.body.parent = document.querySelector(el)
+    this.body.parent = document.createElement('div')
     this.body.parent.classList.add('jsr')
 
     this.body.rail = document.createElement('div')
@@ -75,6 +80,9 @@ class JSRange {
     elements.forEach((element) => {
       this.body.parent.appendChild(element)
     })
+
+    // https://stackoverflow.com/questions/4793604/how-to-do-insert-after-in-javascript-without-using-a-library
+    this.input.parentNode.insertBefore(this.body.parent, this.input.nextSibling);
   }
 
   _validateAndSave (type, value) {
@@ -160,7 +168,8 @@ class JSRange {
         if (window.jsrMoveObject && !_this._mousemoveThrottle) {
           // throttling function
           _this._mousemoveThrottle = true
-          setTimeout(() => { _this._mousemoveThrottle = false}, 20)
+          setTimeout(() => { _this._mousemoveThrottle = false }, 20)
+          // ./ throttling
 
           let type = window.jsrMoveObject.dataset.jsrType
           let newSelected = _this._getValueOfPosition(event.clientX)

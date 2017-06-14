@@ -36,6 +36,7 @@
 
 .jsr_info {
     position: absolute;
+    top: 30px;
 }
 
 .jsr_info--min {
@@ -55,7 +56,7 @@
 }
 
 .jsr_info--single {
-    
+
 }
 
 
