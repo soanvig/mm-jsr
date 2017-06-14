@@ -61,8 +61,10 @@ class JSRange {
     this.body.info.max.classList.add('jsr_info', 'jsr_info--max')
     this.body.info.from = document.createElement('span')
     this.body.info.from.classList.add('jsr_info', 'jsr_info--from')
+    this.body.info.from.dataset.jsrType = 'from'
     this.body.info.to = document.createElement('span')
     this.body.info.to.classList.add('jsr_info', 'jsr_info--to')
+    this.body.info.to.dataset.jsrType = 'to'
     this.body.info.single = document.createElement('span')
     this.body.info.single.classList.add('jsr_info', 'jsr_info--single')
 
@@ -112,6 +114,8 @@ class JSRange {
   _bindEvents () {
     this.body.sliders.from.addEventListener('mousedown', this._events.sliderMouseDown)
     this.body.sliders.to.addEventListener('mousedown', this._events.sliderMouseDown)
+    this.body.info.from.addEventListener('mousedown', this._events.sliderMouseDown)
+    this.body.info.to.addEventListener('mousedown', this._events.sliderMouseDown)
     document.addEventListener('mousemove', this._events.sliderMouseMove)
     document.addEventListener('mouseup', this._events.sliderMouseUp)
 
