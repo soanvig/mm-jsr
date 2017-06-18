@@ -68,10 +68,10 @@
     cursor: pointer;
     background: rgb(30, 140, 20);
     color: #fff;
-    padding: 3px 10px;
     border-radius: 3px;
 }
 
+/* Triangles */
 .jsr_info--from::before,
 .jsr_info--to::before {
     content: '';
@@ -92,11 +92,27 @@
 .jsr_info_singleFrom,
 .jsr_info_singleTo {
     cursor: pointer;
+    display: inline-block;
 }
 
 .jsr_info_singleTo::before {
     content: ' - ';
     pointer-events: none;
+}
+
+.jsr_info--from,
+.jsr_info--to,
+.jsr_info_singleFrom,
+.jsr_info_singleTo {
+    padding: 3px 10px;
+}
+
+.jsr_info_singleFrom:not([data-jsr-type='single']) {
+    padding-right: 0;
+}
+
+.jsr_info_singleTo {
+    padding-left: 0;
 }
 
 

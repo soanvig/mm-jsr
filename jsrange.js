@@ -112,20 +112,37 @@ class JSRange {
   }
 
   _solveMove (type, value) {
+    // Let's say somebody want to move a label...
     if (type == 'from') {
       // but it can't move behind 'to'!
       this.selected.from = (value > this.selected.to) ? (this.selected.to) : value
     } else if (type == 'to') {
-      // but it can't move before 'from'!
+      // also it can't move before 'from'!
       this.selected.to = (value < this.selected.from) ? (this.selected.from) : value
+    // we should be safe now
+    // ...
+    } else if (type == 'single') {
+      // But if, and ONLY IF, hypothetical, somebody would want to move SINGLE label
+      // (single means selected values are equal)
+      // we need to determine whether he or she is moving it to the LEFT or to the RIGHT,
+      // then set the corresponding value and move object to proper label.
+      // But who would want to do such a thing?
+      if (value < this.selected.from) {
+        this.selected.from == value
+        window.jsrMoveObject = this.body.info.from
+      } else if (value > this.selected.to) {
+        this.selected.to == value
+        window.jsrMoveObject = this.body.info.to
+      }
+      // No, seriously, who?
     }
 
-    // Definitely it can't
+    // Definitely it can't:
     if (this.selected.from <= this.options.min) {
-      // move behind min
+      // move behind min,
       this.selected.from = this.options.min
     } else if (this.selected.to >= this.options.max) {
-      // or behind max
+      // and behind max
       this.selected.to = this.options.max
     }
   }
@@ -142,7 +159,9 @@ class JSRange {
       this.body.info.singleTo,
       // Following handle moving slider to min or max
       this.body.info.min,
-      this.body.info.max
+      this.body.info.max,
+      // Following just prevents selecting text
+      this.body.info.single
     ]
 
     mouseDownElements.forEach((element) => {
@@ -208,17 +227,19 @@ class JSRange {
         event.preventDefault() // prevents selecting text
 
         let type = event.target.dataset.jsrType
-        if (type == 'min') {
-          _this.selected.from = _this.options.min
-        } else if (type == 'max') {
-          _this.selected.to = _this.options.max
-        } else {
-          window.jsrMoveObject = event.target
-          return
+        // Handle only move of handled item - type determines if it is handled
+        if (type) {
+          if (type == 'min') {
+            _this.selected.from = _this.options.min
+          } else if (type == 'max') {
+            _this.selected.to = _this.options.max
+          } else {
+            window.jsrMoveObject = event.target
+            return
+          }
+          // Update after setting values
+          _this.update()
         }
-        
-        // Update after setting to min/max
-        _this.update()
       },
       sliderMouseUp: function (event) {
         window.jsrMoveObject = null
