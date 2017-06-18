@@ -8,6 +8,8 @@
 <body style="padding: 20px;">
     <input id="jsrangeMin" name="range[min]" type="range" min="0" max="100" step="1" value="50">
     <input id="jsrangeMax" name="range[max]" type="range" value="75">
+    <input id="jsrangeMin2" name="range[min]" type="range" min="0" max="200" step="1" value="25">
+    <input id="jsrangeMax2" name="range[max]" type="range" value="140">
     <script src="jsrange.js"></script>
     <script>
         var range = new JSRange('#jsrangeMin', '#jsrangeMax', {
@@ -18,6 +20,9 @@
         	// from: 50,
         	// to: 75
         });
+
+        // Second range is not working (some problems with sharing resources)
+        // var range2 = new JSRange('#jsrangeMin2', '#jsrangeMax2', {});
     </script>
 </body>
 </html>

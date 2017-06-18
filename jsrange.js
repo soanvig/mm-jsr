@@ -1,4 +1,5 @@
 // Author: Mortimer from http://mortmortis.pl
+// https://github.com/soanvig/js-range
 // Script uses ES6
 class JSRange {
   // Note about setting "step" with "from"/"to": it is allowed to use "from"/"to" not matching step
