@@ -141,7 +141,9 @@ class JSRange {
     if (this.selected.from <= this.options.min) {
       // move behind min,
       this.selected.from = this.options.min
-    } else if (this.selected.to >= this.options.max) {
+    }
+
+    if (this.selected.to >= this.options.max) {
       // and behind max
       this.selected.to = this.options.max
     }
@@ -349,14 +351,25 @@ class JSRange {
         }
 
         // position infos
-        let fromInfo = _this._getCenterOf(_this.body.sliders.from) - _this._getWidthOf(_this.body.info.from) / 2
-        let toInfo = _this._getCenterOf(_this.body.sliders.to) - _this._getWidthOf(_this.body.info.to) / 2
+        let toInfoWidth =_this._getWidthOf(_this.body.info.to)
+        let fromInfoLeft = _this._getCenterOf(_this.body.sliders.from) - _this._getWidthOf(_this.body.info.from) / 2
+        let toInfoLeft = _this._getCenterOf(_this.body.sliders.to) - toInfoWidth / 2
         let slidersMiddle = (_this._getCenterOf(_this.body.sliders.from) + _this._getCenterOf(_this.body.sliders.to)) / 2
-        let singleInfo = slidersMiddle - _this._getWidthOf(_this.body.info.single) / 2
+        let singleInfoLeft = slidersMiddle - _this._getWidthOf(_this.body.info.single) / 2
 
-        _this.body.info.from.style.left = `${fromInfo * 100}%`
-        _this.body.info.to.style.left = `${toInfo * 100}%`
-        _this.body.info.single.style.left = `${singleInfo * 100}%`
+        // if something exceeds parent, we need to fix stuff
+        let parentLeft = _this._getLeftOf(_this.body.parent)
+        let parentRight = _this._getRightOf(_this.body.parent)
+        if (fromInfoLeft < parentLeft) {
+          fromInfoLeft = parentLeft
+        }
+        if (toInfoLeft + toInfoWidth > parentRight) {
+          toInfoLeft = parentRight - toInfoWidth
+        }
+
+        _this.body.info.from.style.left = `${fromInfoLeft * 100}%`
+        _this.body.info.to.style.left = `${toInfoLeft * 100}%`
+        _this.body.info.single.style.left = `${singleInfoLeft * 100}%`
 
         // determine infos overlap, and hide them
         // 'from' and 'to' overlaps
