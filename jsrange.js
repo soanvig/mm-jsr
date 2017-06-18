@@ -25,9 +25,9 @@ class JSRange {
     this._eventsObject  = this._events
 
     this.options        = {}
-    this.options.min    = options.min    || this.inputMin.getAttribute('min')
-    this.options.max    = options.max    || this.inputMin.getAttribute('max')
-    this.options.step   = options.step   || this.inputMin.getAttribute('step')
+    this.options.min    = options.min    || parseFloat(this.inputMin.getAttribute('min'))
+    this.options.max    = options.max    || parseFloat(this.inputMin.getAttribute('max'))
+    this.options.step   = options.step   || parseFloat(this.inputMin.getAttribute('step'))
     this.options.single = options.single || false
     this.options.value  = options.value  || parseFloat(this.inputMin.getAttribute('value'))
     this.options.stepDecimals = this._calculateDecimals(this.options.step)
@@ -223,7 +223,7 @@ class JSRange {
   _getValueOfPosition (mouseX) {
     let railLeft = this.body.rail.getBoundingClientRect().left
     let diff = mouseX - railLeft
-    let value = parseFloat(diff / this.body.rail.offsetWidth * this.options.max)
+    let value = parseFloat(diff / this.body.rail.offsetWidth * (this.options.max - this.options.min) + this.options.min)
     value = Math.round(value / this.options.step) * this.options.step
     // let's make finish rounding: move decimal point to the left (*), then to the right (/)
     let stepDecimalsPow = Math.pow(10, this.options.stepDecimals)
@@ -336,8 +336,8 @@ class JSRange {
 
       rail: function () {
         // Calc rail color position
-        let start     = _this.selected.from / _this.options.max
-        let end       = _this.selected.to / _this.options.max
+        let start = (_this.selected.from - _this.options.min) / (_this.options.max  - _this.options.min)
+        let end   = (_this.selected.to  - _this.options.min) / (_this.options.max  - _this.options.min)
         // Calc real start (because of weird percentage work)
         let realStart = start / (1 - (end - start))
 
@@ -351,8 +351,10 @@ class JSRange {
         let startWidthRatio = _this._getWidthOf(_this.body.sliders.from)
         let endWidthRatio   = _this._getWidthOf(_this.body.sliders.to)
         // widthRatio is used to place middle point of slider in the right point
-        let start           = _this.selected.from / _this.options.max - startWidthRatio / 2
-        let end             = _this.selected.to / _this.options.max - endWidthRatio / 2
+        let start = (_this.selected.from - _this.options.min) / (_this.options.max  - _this.options.min)
+        start     = start - startWidthRatio / 2
+        let end   = (_this.selected.to  - _this.options.min) / (_this.options.max  - _this.options.min)
+        end       = end - endWidthRatio / 2
 
         _this.body.sliders.from.style.left  = `${start * 100}%`
         _this.body.sliders.to.style.left    = `${end * 100}%`

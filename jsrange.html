@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="jsrange.css">
 </head>
 <body style="padding: 20px;">
-    <input id="jsrangeMin" name="range[min]" type="range" min="0" max="100" step="1" value="50">
-    <input id="jsrangeMax" name="range[max]" type="range" value="75">
+    <input id="jsrangeMin" name="range[min]" type="range" min="100" max="200" step="1" value="150">
+    <input id="jsrangeMax" name="range[max]" type="range" value="175">
     <input id="jsrangeMin2" name="range[min]" type="range" min="0" max="200" step="1" value="25">
+    <input id="jsrangeMin3" name="range[min]" type="range" min="-100" max="100" step="1" value="-50">
+    <input id="jsrangeMax3" name="range[max]" type="range" value="-10">
     <script src="jsrange.js"></script>
     <script>
         var range = new JSRange('#jsrangeMin', '#jsrangeMax', {
@@ -23,6 +25,9 @@
         var range2 = new JSRange('#jsrangeMin2', '', {
             single: true,
             value: 50
+        });
+
+        var range3 = new JSRange('#jsrangeMin3', '#jsrangeMax3', {
         });
     </script>
 </body>
