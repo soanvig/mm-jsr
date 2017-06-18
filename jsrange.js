@@ -111,7 +111,7 @@ class JSRange {
     this.inputMax.parentNode.insertBefore(this.body.parent, this.inputMax.nextSibling);
   }
 
-  _solveMove (type, value) {
+  _solveMove (type, value, clientX) {
     // Let's say somebody want to move a label...
     if (type == 'from') {
       // but it can't move behind 'to'!
@@ -127,10 +127,11 @@ class JSRange {
       // we need to determine whether he or she is moving it to the LEFT or to the RIGHT,
       // then set the corresponding value and move object to proper label.
       // But who would want to do such a thing?
-      if (value < this.selected.from) {
+      let direction = clientX - window.jsrClickX // negative = left, positive = right
+      if (direction < 0) {
         this.selected.from == value
         window.jsrMoveObject = this.body.info.from
-      } else if (value > this.selected.to) {
+      } else if (direction > 0) {
         this.selected.to == value
         window.jsrMoveObject = this.body.info.to
       }
@@ -235,6 +236,7 @@ class JSRange {
             _this.selected.to = _this.options.max
           } else {
             window.jsrMoveObject = event.target
+            window.jsrClickX = event.clientX
             return
           }
           // Update after setting values
@@ -253,7 +255,7 @@ class JSRange {
 
           let type = window.jsrMoveObject.dataset.jsrType
           let newSelected = _this._getValueOfPosition(event.clientX)
-          _this._solveMove(type, newSelected)
+          _this._solveMove(type, newSelected, event.clientX)
           _this.update()
         }
       },
