@@ -218,14 +218,14 @@ class JSRange {
       railClick: function (event) {
         // determine closer to which slider it was closer
         let clickedValue = _this._getValueOfPosition(event.clientX)
+        let selectedAverage = (_this.selected.from + _this.selected.to) / 2
 
-        // compare absolute distance between clickedValue and selected.from/max
-        // closer to zero, means closer to min/max
-        if (Math.abs(_this.selected.from - clickedValue) < Math.abs(_this.selected.to - clickedValue)) {
-          // closer to min
+        // determine side of click
+        if (clickedValue < selectedAverage) {
+          // clicked on the left side of average, move 'from'
           _this.selected.from = clickedValue
         } else {
-          // closer to max
+          // clicked on the right side of average, move 'to'
           _this.selected.to = clickedValue
         }
 
