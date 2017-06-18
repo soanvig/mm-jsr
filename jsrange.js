@@ -15,19 +15,29 @@ class JSRange {
     this.meta.throttle = {}
 
     this.inputMin       = document.querySelector(inputMin)
-    this.inputMax       = document.querySelector(inputMax)
+    if (options.single) {
+      // this is only fallback
+      this.inputMax     = this.inputMin
+    } else {
+      this.inputMax     = document.querySelector(inputMax)
+    }
     this._updateObject  = this._update
     this._eventsObject  = this._events
 
     this.options        = {}
-    this.options.min    = options.min   || this.inputMin.getAttribute('min')
-    this.options.max    = options.max   || this.inputMin.getAttribute('max')
-    this.options.step   = options.step  || this.inputMin.getAttribute('step')
+    this.options.min    = options.min    || this.inputMin.getAttribute('min')
+    this.options.max    = options.max    || this.inputMin.getAttribute('max')
+    this.options.step   = options.step   || this.inputMin.getAttribute('step')
+    this.options.single = options.single || false
+    this.options.value  = options.value  || parseFloat(this.inputMin.getAttribute('value'))
     this.options.stepDecimals = this._calculateDecimals(this.options.step)
 
-    this.selected = {
-      from: parseFloat(this.inputMin.getAttribute('value')) || this.options.min,
-      to: parseFloat(this.inputMax.getAttribute('value')) || this.options.max
+    this.selected = {}
+    if (this.options.single) {
+      this.selected.from = this.selected.to = this.options.value
+    } else {
+      this.selected.from = parseFloat(this.inputMin.getAttribute('value')) || this.options.min,
+      this.selected.to = parseFloat(this.inputMax.getAttribute('value')) || this.options.max
     }
 
     this._createBody()
@@ -122,8 +132,19 @@ class JSRange {
 
   _solveMove (type, value, clientX) {
     // Let's say somebody want to move a label...
+
+    // Definitely it can't:
+    if (value < this.options.min) {
+      // move behind min,
+      value = this.options.min
+    }
+    if (value > this.options.max) {
+      // and behind max
+      value = this.options.max
+    }
+
     if (type == 'from') {
-      // but it can't move behind 'to'!
+      // He or she can't move it behind 'to'!
       this.selected.from = (value > this.selected.to) ? (this.selected.to) : value
     } else if (type == 'to') {
       // also it can't move before 'from'!
@@ -147,15 +168,8 @@ class JSRange {
       // No, seriously, who?
     }
 
-    // Definitely it can't:
-    if (this.selected.from <= this.options.min) {
-      // move behind min,
-      this.selected.from = this.options.min
-    }
-
-    if (this.selected.to >= this.options.max) {
-      // and behind max
-      this.selected.to = this.options.max
+    if (this.options.single) {
+      this.selected.from = this.selected.to = value
     }
   }
 
