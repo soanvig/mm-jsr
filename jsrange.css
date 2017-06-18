@@ -7,6 +7,8 @@
 
     box-sizing: border-box;
     width: 100%;
+    margin-top: 10px;
+    margin-bottom: 40px;
 }
 
 .jsr_rail
@@ -18,84 +20,84 @@
     background-repeat: no-repeat;
 }
 
-.jsr_slider {
-	width: 15px;
-	height: 15px;
+.jsr_slider
+{
+    position: absolute;
+    top: calc((5px - 15px) / 2);
+    left: 0;
+
+    width: 15px;
+    height: 15px;
+
+    cursor: pointer;
+
     border-radius: 50%;
-	position: absolute;
-	left: 0;
-	top: calc((5px - 15px) / 2);
-	background: rgb(30, 140, 20);
-	cursor: pointer;
+    background: rgb(30, 140, 20);
 }
 
-.jsr_slider--from {
-}
-
-.jsr_slider--to {
-}
-
-.jsr_info {
+.jsr_info
+{
     position: absolute;
     top: 18px;
 }
 
-.jsr_info--min {
+.jsr_info--min
+{
     left: 0;
 }
 
-.jsr_info--max {
+.jsr_info--max
+{
     right: 0;
 }
 
 .jsr_info--min,
-.jsr_info--max {
-    color: #999;
+.jsr_info--max
+{
     cursor: pointer;
-}
 
-.jsr_info--from {
-
-}
-
-.jsr_info--to {
-
+    color: #999;
 }
 
 .jsr_info--from,
 .jsr_info--to,
-.jsr_info--single {
+.jsr_info--single
+{
     cursor: pointer;
-    background: rgb(30, 140, 20);
+
     color: #fff;
     border-radius: 3px;
+    background: rgb(30, 140, 20);
 }
 
 /* Triangles */
 .jsr_info--from::before,
-.jsr_info--to::before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 5px 6px 5px;
-    border-color: transparent transparent rgb(30, 140, 20) transparent;
+.jsr_info--to::before
+{
+    position: absolute;
     top: -6px;
     left: calc(50% - 5px);
-    position: absolute;
-}
 
-.jsr_info--single {
+    width: 0;
+    height: 0;
 
+    content: '';
+
+    border-width: 0 5px 6px 5px;
+    border-style: solid;
+    border-color: transparent transparent rgb(30, 140, 20) transparent;
 }
 
 .jsr_info_singleFrom,
-.jsr_info_singleTo {
-    cursor: pointer;
+.jsr_info_singleTo
+{
     display: inline-block;
+
+    cursor: pointer;
 }
 
-.jsr_info_singleTo::before {
+.jsr_info_singleTo::before
+{
     content: ' - ';
     pointer-events: none;
 }
@@ -103,16 +105,17 @@
 .jsr_info--from,
 .jsr_info--to,
 .jsr_info_singleFrom,
-.jsr_info_singleTo {
+.jsr_info_singleTo
+{
     padding: 3px 10px;
 }
 
-.jsr_info_singleFrom:not([data-jsr-type='single']) {
+.jsr_info_singleFrom:not([data-jsr-type='single'])
+{
     padding-right: 0;
 }
 
-.jsr_info_singleTo {
+.jsr_info_singleTo
+{
     padding-left: 0;
 }
-
-

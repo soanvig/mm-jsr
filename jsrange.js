@@ -1,18 +1,18 @@
 class JSRange {
   // Note about setting "step" with "from"/"to": it is allowed to use "from"/"to" not matching step
-  // Step option is best used with powers of 10 (including negative powers) or regular numbers like 2
+  // Step option is best used with powers of 10 (including negative powers) or regular numbers like 2 (but not 3)
   // -------
-  // Options for JSRange are retrieved for supplied input min
+  // Options for JSRange are retrieved from supplied 'inputMin'
   constructor (inputMin, inputMax, options) {
-    this.inputMin               = document.querySelector(inputMin)
-    this.inputMax               = document.querySelector(inputMax)
-    this._updateObject          = this._update
-    this._eventsObject          = this._events
+    this.inputMin       = document.querySelector(inputMin)
+    this.inputMax       = document.querySelector(inputMax)
+    this._updateObject  = this._update
+    this._eventsObject  = this._events
 
-    this.options      = {}
-    this.options.min  = options.min   || this.inputMin.getAttribute('min')
-    this.options.max  = options.max   || this.inputMin.getAttribute('max')
-    this.options.step = options.step  || this.inputMin.getAttribute('step')
+    this.options        = {}
+    this.options.min    = options.min   || this.inputMin.getAttribute('min')
+    this.options.max    = options.max   || this.inputMin.getAttribute('max')
+    this.options.step   = options.step  || this.inputMin.getAttribute('step')
     this.options.stepDecimals = this._calculateDecimals(this.options.step)
 
     this.selected = {
@@ -176,9 +176,22 @@ class JSRange {
     this.body.rail.addEventListener('click', this._events.railClick)
   }
 
-  _calculateDecimals (float) {
-    let string = float.toString()
-    return string.split('.')[1].length
+  _calculateDecimals (number) {
+    let string = number.toString().split('.')
+    if (string[1]) {
+      return string[1].length
+    } else {
+      return 0
+    }
+  }
+
+  _getStringWithDecimals (number) {
+    let decimals = this._calculateDecimals(number)
+    let stepDecimals = this._calculateDecimals(this.options.step)
+    let string = number.toString().split('.')
+    let zeros = Array(1 + (stepDecimals - decimals)).join('0')
+    let secondPart = string[1] ? string[1] : ''
+    return (string[0] + '.' + secondPart) + zeros
   }
 
   _getValueOfPosition (mouseX) {
@@ -320,12 +333,12 @@ class JSRange {
       },
 
       info: function () {
-        _this.body.info.min.innerHTML         = _this.options.min
-        _this.body.info.max.innerHTML         = _this.options.max
-        _this.body.info.from.innerHTML        = _this.selected.from
-        _this.body.info.to.innerHTML          = _this.selected.to
-        _this.body.info.singleFrom.innerHTML  = _this.selected.from
-        _this.body.info.singleTo.innerHTML    = _this.selected.to
+        _this.body.info.min.innerHTML         = _this._getStringWithDecimals(_this.options.min)
+        _this.body.info.max.innerHTML         = _this._getStringWithDecimals(_this.options.max)
+        _this.body.info.from.innerHTML        = _this._getStringWithDecimals(_this.selected.from)
+        _this.body.info.to.innerHTML          = _this._getStringWithDecimals(_this.selected.to)
+        _this.body.info.singleFrom.innerHTML  = _this._getStringWithDecimals(_this.selected.from)
+        _this.body.info.singleTo.innerHTML    = _this._getStringWithDecimals(_this.selected.to)
 
         if (_this.selected.from == _this.selected.to) {
           _this.body.info.singleTo.style.display = 'none'
