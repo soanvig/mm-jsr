@@ -9,6 +9,7 @@ class JSRange {
     this._updateObject      = this._update
     this._eventsObject      = this._events
     this._mousemoveThrottle = false
+    this._windowResizeThrottle = false
 
     this.options      = {}
     this.options.min  = options.min   || this.inputMin.getAttribute('min')
@@ -169,6 +170,8 @@ class JSRange {
       element.addEventListener('mousedown', this._events.sliderMouseDown)
     })
 
+    window.addEventListener('resize', this._events.windowResize)
+
     document.addEventListener('mousemove', this._events.sliderMouseMove)
     document.addEventListener('mouseup', this._events.sliderMouseUp)
 
@@ -224,6 +227,17 @@ class JSRange {
   get _events () {
     var _this = this;
     return _this._eventsObject || {
+      windowResize: function (event) {
+        if (!_this._windowResizeThrottle) {
+          // throttling function
+          _this._windowResizeThrottle = true
+          setTimeout(() => { _this._windowResizeThrottle = false }, 50)
+          // ./ throttling
+
+          _this.update()
+        }
+      },
+
       sliderMouseDown: function (event) {
         event.preventDefault() // prevents selecting text
 
