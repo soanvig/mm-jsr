@@ -1,3 +1,5 @@
+// Author: Mortimer from http://mortmortis.pl
+// Script uses ES6
 class JSRange {
   // Note about setting "step" with "from"/"to": it is allowed to use "from"/"to" not matching step
   // Step option is best used with powers of 10 (including negative powers) or regular numbers like 2 (but not 3)
@@ -16,8 +18,8 @@ class JSRange {
     this.options.stepDecimals = this._calculateDecimals(this.options.step)
 
     this.selected = {
-      from: this.options.min,
-      to: this.options.max
+      from: parseFloat(this.inputMin.getAttribute('value')) || this.options.min,
+      to: parseFloat(this.inputMax.getAttribute('value')) || this.options.max
     }
 
     this._createBody()
