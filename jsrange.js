@@ -202,8 +202,7 @@ class JSRange {
     let stepDecimals = this._calculateDecimals(this.options.step)
     let string = number.toString().split('.')
     let zeros = Array(1 + (stepDecimals - decimals)).join('0')
-    let secondPart = string[1] ? string[1] : ''
-    return (string[0] + '.' + secondPart) + zeros
+    return (string[0] + (string[1] ? '.' + string[1] : '')) + zeros
   }
 
   _getValueOfPosition (mouseX) {
