@@ -7,6 +7,13 @@ class JSRange {
   // -------
   // Options for JSRange are retrieved from supplied 'inputMin'
   constructor (inputMin, inputMax, options) {
+    // cross-object informations:
+    this.meta = {}
+    this.meta.moveObject = null
+    this.meta.clientX = null
+    this.meta.clickX = null
+    this.meta.throttle = {}
+
     this.inputMin       = document.querySelector(inputMin)
     this.inputMax       = document.querySelector(inputMax)
     this._updateObject  = this._update
@@ -129,13 +136,13 @@ class JSRange {
       // we need to determine whether he or she is moving it to the LEFT or to the RIGHT,
       // then set the corresponding value and move object to proper label.
       // But who would want to do such a thing?
-      let direction = clientX - window.jsrClickX // negative = left, positive = right
+      let direction = clientX - this.meta.clickX // negative = left, positive = right
       if (direction < 0) {
         this.selected.from == value
-        window.jsrMoveObject = this.body.info.from
+        this.meta.moveObject = this.body.info.from
       } else if (direction > 0) {
         this.selected.to == value
-        window.jsrMoveObject = this.body.info.to
+        this.meta.moveObject = this.body.info.to
       }
       // No, seriously, who?
     }
@@ -260,8 +267,8 @@ class JSRange {
           } else if (type == 'max') {
             _this.selected.to = _this.options.max
           } else {
-            window.jsrMoveObject = event.target
-            window.jsrClickX = event.clientX
+            _this.meta.moveObject = event.target
+            _this.meta.clickX = event.clientX
             return
           }
           // Update after setting values
@@ -269,12 +276,12 @@ class JSRange {
         }
       },
       sliderMouseUp: function (event) {
-        window.jsrMoveObject = null
-        window.jsrClickX = null
+        _this.meta.moveObject = null
+        _this.meta.clickX = null
       },
       sliderMouseMove: function (event) {
-        if (window.jsrMoveObject && _this._throttle('mousemove', 20)) {
-          let type = window.jsrMoveObject.dataset.jsrType
+        if (_this.meta.moveObject && _this._throttle('mousemove', 20)) {
+          let type = _this.meta.moveObject.dataset.jsrType
           let newSelected = _this._getValueOfPosition(event.clientX)
           _this._solveMove(type, newSelected, event.clientX)
           _this.update()
@@ -410,21 +417,16 @@ class JSRange {
 
   // Enables throttling for 'variable' in a 'time' [ms]
   _throttle (name, time) {
-    // Create throttle for the first time
-    if (!window.jsrThrottle) {
-      window.jsrThrottle = {}
-    }
-
     // Create named throttle for the first time
-    if (typeof window.jsrThrottle[name] === 'undefined') {
-      window.jsrThrottle[name] = false
+    if (typeof this.meta.throttle[name] === 'undefined') {
+      this.meta.throttle[name] = false
     }
 
-    if (window.jsrThrottle[name]) {
+    if (this.meta.throttle[name]) {
       return false // don't allow execution
     } else {
-      window.jsrThrottle[name] = true
-      setTimeout(() => { window.jsrThrottle[name] = false }, time)
+      this.meta.throttle[name] = true
+      setTimeout(() => { this.meta.throttle[name] = false }, time)
       return true
     }
   }
