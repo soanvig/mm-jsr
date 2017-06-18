@@ -151,7 +151,7 @@ class JSRange {
 
   _bindEvents () {
     let mouseDownElements = [
-    // Following handle moving basic from/to sliders (dots [sliders] and labels [info])
+      // Following handle moving basic from/to sliders (dots [sliders] and labels [info])
       this.body.sliders.from,
       this.body.sliders.to,
       this.body.info.from,
@@ -228,12 +228,7 @@ class JSRange {
     var _this = this;
     return _this._eventsObject || {
       windowResize: function (event) {
-        if (!_this._windowResizeThrottle) {
-          // throttling function
-          _this._windowResizeThrottle = true
-          setTimeout(() => { _this._windowResizeThrottle = false }, 50)
-          // ./ throttling
-
+        if (_this._throttle('windowResize', 50)) {
           _this.update()
         }
       },
@@ -262,12 +257,7 @@ class JSRange {
         window.jsrClickX = null
       },
       sliderMouseMove: function (event) {
-        if (window.jsrMoveObject && !_this._mousemoveThrottle) {
-          // throttling function
-          _this._mousemoveThrottle = true
-          setTimeout(() => { _this._mousemoveThrottle = false }, 20)
-          // ./ throttling
-
+        if (window.jsrMoveObject && _this._throttle('mousemove', 20)) {
           let type = window.jsrMoveObject.dataset.jsrType
           let newSelected = _this._getValueOfPosition(event.clientX)
           _this._solveMove(type, newSelected, event.clientX)
@@ -388,6 +378,27 @@ class JSRange {
         _this.inputMin.setAttribute('value', _this.selected.from)
         _this.inputMax.setAttribute('value', _this.selected.to)
       }
+    }
+  }
+
+  // Enables throttling for 'variable' in a 'time' [ms]
+  _throttle (name, time) {
+    // Create throttle for the first time
+    if (!window.jsrThrottle) {
+      window.jsrThrottle = {}
+    }
+
+    // Create named throttle for the first time
+    if (typeof window.jsrThrottle[name] === 'undefined') {
+      window.jsrThrottle[name] = false
+    }
+
+    if (window.jsrThrottle[name]) {
+      return false // don't allow execution
+    } else {
+      window.jsrThrottle[name] = true
+      setTimeout(() => { window.jsrThrottle[name] = false }, time)
+      return true
     }
   }
 }
