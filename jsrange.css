@@ -99,7 +99,7 @@
 
 .jsr_info_singleTo::before
 {
-    content: ' - ';
+    content: ' \2014  ';
     pointer-events: none;
 }
 
