@@ -111,28 +111,23 @@ class JSRange {
     this.inputMax.parentNode.insertBefore(this.body.parent, this.inputMax.nextSibling);
   }
 
-  _validateAndSave (type, value) {
-    if (type === 'from') {
-      if (value < this.options.min) {
-        value = this.options.min
-      }
-
-      if (value > this.selected.to) {
-        value = this.selected.to
-      }
+  _solveMove (type, value) {
+    if (type == 'from') {
+      // but it can't move behind 'to'!
+      this.selected.from = (value > this.selected.to) ? (this.selected.to) : value
+    } else if (type == 'to') {
+      // but it can't move before 'from'!
+      this.selected.to = (value < this.selected.from) ? (this.selected.from) : value
     }
 
-    if (type === 'to') {
-      if (value > this.options.max) {
-        value = this.options.max
-      }
-
-      if (value < this.selected.from) {
-        value = this.selected.from
-      }
+    // Definitely it can't
+    if (this.selected.from <= this.options.min) {
+      // move behind min
+      this.selected.from = this.options.min
+    } else if (this.selected.to >= this.options.max) {
+      // or behind max
+      this.selected.to = this.options.max
     }
-
-    this.selected[type] = value
   }
 
   _bindEvents () {
@@ -215,7 +210,6 @@ class JSRange {
         let type = event.target.dataset.jsrType
         if (type == 'min') {
           _this.selected.from = _this.options.min
-          _this.update()
         } else if (type == 'max') {
           _this.selected.to = _this.options.max
         } else {
@@ -238,7 +232,7 @@ class JSRange {
 
           let type = window.jsrMoveObject.dataset.jsrType
           let newSelected = _this._getValueOfPosition(event.clientX)
-          _this._validateAndSave(type, newSelected)
+          _this._solveMove(type, newSelected)
           _this.update()
         }
       },
@@ -309,8 +303,10 @@ class JSRange {
 
         if (_this.selected.from == _this.selected.to) {
           _this.body.info.singleTo.style.display = 'none'
+          _this.body.info.singleFrom.dataset.jsrType = 'single'
         } else {
           _this.body.info.singleTo.style.display = 'inline'
+          _this.body.info.singleFrom.dataset.jsrType = 'from'
         }
 
         // position infos
