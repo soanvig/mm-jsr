@@ -4,12 +4,12 @@ class JSRange {
   // -------
   // Options for JSRange are retrieved for supplied input min
   constructor (inputMin, inputMax, options) {
-    this.inputMin           = document.querySelector(inputMin)
-    this.inputMax           = document.querySelector(inputMax)
-    this._updateObject      = this._update
-    this._eventsObject      = this._events
-    this._mousemoveThrottle = false
-    this._windowResizeThrottle = false
+    this.inputMin               = document.querySelector(inputMin)
+    this.inputMax               = document.querySelector(inputMax)
+    this._updateObject          = this._update
+    this._eventsObject          = this._events
+    this._mousemoveThrottle     = false
+    this._windowResizeThrottle  = false
 
     this.options      = {}
     this.options.min  = options.min   || this.inputMin.getAttribute('min')
@@ -259,6 +259,7 @@ class JSRange {
       },
       sliderMouseUp: function (event) {
         window.jsrMoveObject = null
+        window.jsrClickX = null
       },
       sliderMouseMove: function (event) {
         if (window.jsrMoveObject && !_this._mousemoveThrottle) {
