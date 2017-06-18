@@ -68,8 +68,10 @@ class JSRange {
     this.body.info = {}
     this.body.info.min = document.createElement('span')
     this.body.info.min.classList.add('jsr_info', 'jsr_info--min')
+    this.body.info.min.dataset.jsrType = 'min'
     this.body.info.max = document.createElement('span')
     this.body.info.max.classList.add('jsr_info', 'jsr_info--max')
+    this.body.info.max.dataset.jsrType = 'max'
     
     this.body.info.from = document.createElement('span')
     this.body.info.from.classList.add('jsr_info', 'jsr_info--from')
@@ -134,12 +136,24 @@ class JSRange {
   }
 
   _bindEvents () {
-    this.body.sliders.from.addEventListener('mousedown', this._events.sliderMouseDown)
-    this.body.sliders.to.addEventListener('mousedown', this._events.sliderMouseDown)
-    this.body.info.from.addEventListener('mousedown', this._events.sliderMouseDown)
-    this.body.info.to.addEventListener('mousedown', this._events.sliderMouseDown)
-    this.body.info.singleFrom.addEventListener('mousedown', this._events.sliderMouseDown)
-    this.body.info.singleTo.addEventListener('mousedown', this._events.sliderMouseDown)
+    let mouseDownElements = [
+    // Following handle moving basic from/to sliders (dots [sliders] and labels [info])
+      this.body.sliders.from,
+      this.body.sliders.to,
+      this.body.info.from,
+      this.body.info.to,
+      // Following handle moving single slider
+      this.body.info.singleFrom,
+      this.body.info.singleTo,
+      // Following handle moving slider to min or max
+      this.body.info.min,
+      this.body.info.max
+    ]
+
+    mouseDownElements.forEach((element) => {
+      element.addEventListener('mousedown', this._events.sliderMouseDown)
+    })
+
     document.addEventListener('mousemove', this._events.sliderMouseMove)
     document.addEventListener('mouseup', this._events.sliderMouseUp)
 
@@ -197,7 +211,20 @@ class JSRange {
     return _this._eventsObject || {
       sliderMouseDown: function (event) {
         event.preventDefault() // prevents selecting text
-        window.jsrMoveObject = event.target
+
+        let type = event.target.dataset.jsrType
+        if (type == 'min') {
+          _this.selected.from = _this.options.min
+          _this.update()
+        } else if (type == 'max') {
+          _this.selected.to = _this.options.max
+        } else {
+          window.jsrMoveObject = event.target
+          return
+        }
+        
+        // Update after setting to min/max
+        _this.update()
       },
       sliderMouseUp: function (event) {
         window.jsrMoveObject = null
@@ -279,7 +306,7 @@ class JSRange {
         _this.body.info.to.innerHTML          = _this.selected.to
         _this.body.info.singleFrom.innerHTML  = _this.selected.from
         _this.body.info.singleTo.innerHTML    = _this.selected.to
-        
+
         if (_this.selected.from == _this.selected.to) {
           _this.body.info.singleTo.style.display = 'none'
         } else {

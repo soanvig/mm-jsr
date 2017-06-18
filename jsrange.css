@@ -51,6 +51,7 @@
 .jsr_info--min,
 .jsr_info--max {
     color: #999;
+    cursor: pointer;
 }
 
 .jsr_info--from {
