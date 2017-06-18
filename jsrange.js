@@ -8,8 +8,6 @@ class JSRange {
     this.inputMax               = document.querySelector(inputMax)
     this._updateObject          = this._update
     this._eventsObject          = this._events
-    this._mousemoveThrottle     = false
-    this._windowResizeThrottle  = false
 
     this.options      = {}
     this.options.min  = options.min   || this.inputMin.getAttribute('min')
