@@ -89,6 +89,11 @@
     border-color: transparent transparent rgb(30, 140, 20) transparent;
 } */
 
+.jsr_info--single
+{
+    white-space: nowrap;
+}
+
 .jsr_info_singleFrom,
 .jsr_info_singleTo
 {
@@ -99,7 +104,7 @@
 
 .jsr_info_singleTo::before
 {
-    content: ' \2014  ';
+    content: '\00a0\2014\00a0';
     pointer-events: none;
 }
 

@@ -283,6 +283,9 @@ class JSRange {
           } else {
             _this.meta.moveObject = event.target
             _this.meta.clickX = event.clientX
+            let center = _this.meta.moveObject.getBoundingClientRect().left + _this.meta.moveObject.offsetWidth / 2
+            let diff   = _this.meta.clickX - center
+            _this.meta.distanceFromCenter = diff
             return
           }
           // Update after setting values
@@ -291,13 +294,13 @@ class JSRange {
       },
       sliderMouseUp: function (event) {
         _this.meta.moveObject = null
-        _this.meta.clickX = null
+        _this.meta.clickX     = null
       },
       sliderMouseMove: function (event) {
         if (_this.meta.moveObject && _this._throttle('mousemove', 20)) {
-          let type = _this.meta.moveObject.dataset.jsrType
-          let newSelected = _this._getValueOfPosition(event.clientX)
-          _this._solveMove(type, newSelected, event.clientX)
+          let type   = _this.meta.moveObject.dataset.jsrType
+          let value  = _this._getValueOfPosition(event.clientX - _this.meta.distanceFromCenter)
+          _this._solveMove(type, value, event.clientX)
           _this.update()
         }
       },
@@ -377,35 +380,50 @@ class JSRange {
         }
 
         // position infos
-        let toInfoWidth =_this._getWidthOf(_this.body.info.to)
-        let fromInfoLeft = _this._getCenterOf(_this.body.sliders.from) - _this._getWidthOf(_this.body.info.from) / 2
-        let toInfoLeft = _this._getCenterOf(_this.body.sliders.to) - toInfoWidth / 2
-        let slidersMiddle = (_this._getCenterOf(_this.body.sliders.from) + _this._getCenterOf(_this.body.sliders.to)) / 2
-        let singleInfoLeft = slidersMiddle - _this._getWidthOf(_this.body.info.single) / 2
+        let fromInfoWidth   = _this._getWidthOf(_this.body.info.from)
+        let toInfoWidth     = _this._getWidthOf(_this.body.info.to)
+        let singleInfoWidth = _this._getWidthOf(_this.body.info.single)
+        let fromInfoLeft    = _this._getCenterOf(_this.body.sliders.from) - fromInfoWidth / 2
+        let toInfoLeft      = _this._getCenterOf(_this.body.sliders.to) - toInfoWidth / 2
+        let slidersMiddle   = (_this._getCenterOf(_this.body.sliders.from) + _this._getCenterOf(_this.body.sliders.to)) / 2
+        let singleInfoLeft  = slidersMiddle - singleInfoWidth / 2
 
         // if something exceeds parent, we need to fix stuff
-        let parentLeft = _this._getLeftOf(_this.body.parent)
+        let parentLeft  = _this._getLeftOf(_this.body.parent)
         let parentRight = _this._getRightOf(_this.body.parent)
+
         if (fromInfoLeft < parentLeft) {
           fromInfoLeft = parentLeft
+        } else if (fromInfoLeft + fromInfoWidth > parentRight) {
+          fromInfoLeft = parentRight - fromInfoWidth
         }
-        if (toInfoLeft + toInfoWidth > parentRight) {
+
+        if (toInfoLeft < parentLeft) {
+          toInfoLeft = parentLeft
+        } else if (toInfoLeft + toInfoWidth > parentRight) {
           toInfoLeft = parentRight - toInfoWidth
         }
 
-        _this.body.info.from.style.left = `${fromInfoLeft * 100}%`
-        _this.body.info.to.style.left = `${toInfoLeft * 100}%`
+        if (singleInfoLeft < parentLeft) {
+          singleInfoLeft = parentLeft
+        } else if (singleInfoLeft + singleInfoWidth > parentRight) {
+          singleInfoLeft = parentRight - singleInfoWidth
+        }
+
+        // And now we can save it
+        _this.body.info.from.style.left   = `${fromInfoLeft * 100}%`
+        _this.body.info.to.style.left     = `${toInfoLeft * 100}%`
         _this.body.info.single.style.left = `${singleInfoLeft * 100}%`
 
         // determine infos overlap, and hide them
         // 'from' and 'to' overlaps
         if (_this._getRightOf(_this.body.info.from) > _this._getLeftOf(_this.body.info.to)) {
-          _this.body.info.from.style.visibility = 'hidden'
-          _this.body.info.to.style.visibility = 'hidden'
+          _this.body.info.from.style.visibility   = 'hidden'
+          _this.body.info.to.style.visibility     = 'hidden'
           _this.body.info.single.style.visibility = 'visible'
         } else {
-          _this.body.info.from.style.visibility = 'visible'
-          _this.body.info.to.style.visibility = 'visible'
+          _this.body.info.from.style.visibility   = 'visible'
+          _this.body.info.to.style.visibility     = 'visible'
           _this.body.info.single.style.visibility = 'hidden'
         }
 
