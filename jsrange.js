@@ -137,23 +137,25 @@ class JSRange {
 
   _solveMove (type, value, clientX) {
     // Let's say somebody want to move a label...
+    let testFrom = this._roundToStep(this.selected.from + value)
+    let testTo = this._roundToStep(this.selected.to + value)
 
     // Definitely it can't:
-    if (value < this.options.min) {
+    if (testFrom < this.options.min) {
       // move behind min,
-      value = this.options.min
+      testFrom = this.options.min
     }
-    if (value > this.options.max) {
+    if (testTo > this.options.max) {
       // and behind max
-      value = this.options.max
+      testTo = this.options.max
     }
 
     if (type == 'from') {
       // He or she can't move it behind 'to'!
-      this.selected.from = (value > this.selected.to) ? (this.selected.to) : value
+      this.selected.from = (testFrom > this.selected.to) ? (this.selected.to) : testFrom
     } else if (type == 'to') {
       // also it can't move before 'from'!
-      this.selected.to = (value < this.selected.from) ? (this.selected.from) : value
+      this.selected.to = (testTo < this.selected.from) ? (this.selected.from) : testTo
     // we should be safe now
     // ...
     } else if (type == 'single') {
@@ -225,15 +227,25 @@ class JSRange {
     return string[0] + (string[1].length + zeros.length > 0 ? '.' : '') + string[1] + zeros
   }
 
-  _getValueOfPosition (mouseX) {
+  // If we are dynamically getting value of position while moving cursor
+  _getValueOfPosition (mouseX, move = false) {
     let railLeft = this.body.rail.getBoundingClientRect().left
-    let diff = mouseX - railLeft
+    let diff
+    if (move) {
+      diff = mouseX - this.meta.clickX
+      this.meta.clickX = mouseX // override clickX to don't allow accumulate value
+    } else {
+      diff = mouseX - railLeft
+    }
     let value = parseFloat(diff / this.body.rail.offsetWidth * (this.options.max - this.options.min) + this.options.min)
-    value = Math.round(value / this.options.step) * this.options.step
-    // let's make finish rounding: move decimal point to the left (*), then to the right (/)
-    let stepDecimalsPow = Math.pow(10, this.options.stepDecimals)
-    value = Math.round(value * stepDecimalsPow) / stepDecimalsPow
+    
     return value
+  }
+
+  _roundToStep (float) {
+    float = Math.round(float / this.options.step) * this.options.step
+    let stepDecimalsPow = Math.pow(10, this.options.stepDecimals)
+    return Math.round(float * stepDecimalsPow) / stepDecimalsPow
   }
 
   // returns left of element relatively to rail
@@ -288,9 +300,6 @@ class JSRange {
           } else {
             _this.meta.moveObject = event.target
             _this.meta.clickX = event.clientX
-            let center = _this.meta.moveObject.getBoundingClientRect().left + _this.meta.moveObject.offsetWidth / 2
-            let diff   = _this.meta.clickX - center
-            _this.meta.distanceFromCenter = diff
             return
           }
           // Update after setting values
@@ -304,7 +313,7 @@ class JSRange {
       sliderMouseMove: function (event) {
         if (_this.meta.moveObject && _this._throttle('mousemove', 20)) {
           let type   = _this.meta.moveObject.dataset.jsrType
-          let value  = _this._getValueOfPosition(event.clientX - _this.meta.distanceFromCenter)
+          let value  = _this._getValueOfPosition(event.clientX, true)
           _this._solveMove(type, value, event.clientX)
           _this.update()
         }
@@ -312,6 +321,7 @@ class JSRange {
       railClick: function (event) {
         // determine closer to which slider it was closer
         let clickedValue = _this._getValueOfPosition(event.clientX)
+        clickedValue = _this._roundToStep(clickedValue)
         let selectedAverage = (_this.selected.from + _this.selected.to) / 2
 
         // determine side of click
