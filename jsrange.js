@@ -12,6 +12,7 @@ class JSRange {
     this.meta.moveObject = null
     this.meta.clientX = null
     this.meta.clickX = null
+    this.meta.distanceFromValue = null
     this.meta.throttle = {}
 
     this.inputMin       = document.querySelector(inputMin)
@@ -34,10 +35,11 @@ class JSRange {
 
     this.selected = {}
     if (this.options.single) {
-      this.selected.from = this.selected.to = this.options.value
+      this.selected.single = this.selected.from = this.selected.to = this.options.value
     } else {
       this.selected.from = parseFloat(this.inputMin.getAttribute('value')) || this.options.min,
       this.selected.to = parseFloat(this.inputMax.getAttribute('value')) || this.options.max
+      this.selected.single = this.selected.from
     }
 
     this._createBody()
@@ -135,65 +137,6 @@ class JSRange {
     this.inputMax.parentNode.insertBefore(this.body.parent, this.inputMax.nextSibling);
   }
 
-  _solveMove (type, value, clientX) {
-    // Let's say somebody want to move a label...
-    let testFrom = this.selected.from + value
-    let testTo = this.selected.to + value
-    let cursorPos = this._getValueOfPosition(clientX)
-
-    // lock movement behind range, not for single mode
-    if (
-      (!this.options.single)
-      && (this.selected.to == this.selected.from)
-      && ((type == 'from' && cursorPos > this.selected.to)
-          || (type == 'to' && cursorPos < this.selected.from))
-    ) {
-      return
-    }
-
-    // Definitely it can't:
-    if (testFrom < this.options.min) {
-      // move behind min,
-      testFrom = this.options.min
-    }
-    if (testTo > this.options.max) {
-      // and behind max
-      testTo = this.options.max
-    }
-
-    if (type == 'from') {
-      // He or she can't move it behind 'to'!
-      this.selected.from = (testFrom > this.selected.to) ? (this.selected.to) : testFrom
-    } else if (type == 'to') {
-      // also it can't move before 'from'!
-      this.selected.to = (testTo < this.selected.from) ? (this.selected.from) : testTo
-    // we should be safe now
-    // ...
-    } else if (type == 'single') {
-      // But if, and ONLY IF, hypothetical, somebody would want to move SINGLE label
-      // (single means selected values are equal)
-      // we need to determine whether he or she is moving it to the LEFT or to the RIGHT,
-      // then set the corresponding value and move object to proper label.
-      // But who would want to do such a thing?
-      // value negative = left, positive = right
-      if (value < 0) {
-        this.selected.from += value
-        this.meta.moveObject = this.body.info.from
-      } else if (value > 0) {
-        this.selected.to += value
-        this.meta.moveObject = this.body.info.to
-      }
-      // No, seriously, who?
-    }
-
-    if (this.options.single) {
-      this.selected.from = this.selected.to = testTo
-    }
-
-    this.selected.from = this._roundToStep(this.selected.from)
-    this.selected.to   = this._roundToStep(this.selected.to)
-  }
-
   _bindEvents () {
     let mouseDownElements = [
       // Following handle moving basic from/to sliders (dots [sliders] and labels [info])
@@ -207,7 +150,6 @@ class JSRange {
       // Following handle moving slider to min or max
       this.body.info.min,
       this.body.info.max,
-      // Following just prevents selecting text
       this.body.info.single
     ]
 
@@ -242,21 +184,10 @@ class JSRange {
   }
 
   // relative - If we are dynamically getting value of position while moving cursor
-  _getValueOfPosition (mouseX, relative = false, relativeTo = null) {
+  _getValueOfPosition (mouseX) {
     let railLeft = this.body.rail.getBoundingClientRect().left
-    let diff
-    if (relative) {
-      diff = mouseX - this.meta.clickX
-      this.meta.clickX = mouseX // override clickX to don't allow accumulate value
-    } else {
-      diff = mouseX - railLeft
-    }
-
-    let value = parseFloat(diff / this.body.rail.offsetWidth * (this.options.max - this.options.min))
-    if (!relative) {
-      value += this.options.min
-    }
-    
+    let diff = mouseX - railLeft
+    let value = parseFloat(diff / this.body.rail.offsetWidth * (this.options.max - this.options.min) + this.options.min) 
     return value
   }
 
@@ -294,6 +225,53 @@ class JSRange {
     return widthRatio
   }
 
+  _solveMove (type, value, distance, clientX) {
+    // Let's say somebody want to move a label...
+
+    // but he or she clicked not in the center of label:
+    value -= distance
+
+    // Definitely it can't:
+    if (value < this.options.min) {
+      // move behind min,
+      value = this.options.min
+    }
+    if (value > this.options.max) {
+      // and behind max
+      value = this.options.max
+    }
+
+    if (type == 'from') {
+      // He or she can't move it behind 'to'!
+      this.selected.from = (value < this.selected.to) ? value : this.selected.to
+    } else if (type == 'to') {
+      // also it can't move before 'from'!
+      this.selected.to = (value > this.selected.from) ? value : this.selected.from
+    } else if (type == 'single') {
+      // But if, and ONLY IF, hypothetical, somebody would want to move SINGLE label
+      // (single means selected values are equal)
+      // we need to determine whether he or she is moving it to the LEFT or to the RIGHT,
+      // then set the corresponding value and move object to proper label.
+      // But who would want to do such a thing?
+      let direction = clientX - this.meta.clickX // negative = left, positive = right
+      if (direction < 0) {
+        this.selected.from = value
+        this.meta.moveObject = this.body.info.from
+      } else if (direction > 0) {
+        this.selected.to = value
+        this.meta.moveObject = this.body.info.to
+      }
+      // No, seriously, who?
+    }
+
+    this.selected.from = this._roundToStep(this.selected.from)
+    this.selected.to = this._roundToStep(this.selected.to)
+
+    if (this.options.single) {
+      this.selected.from = this.selected.to = this._roundToStep(value)
+    }
+  }
+
   // _update returns all events available to use
   // it tries to use the buffering-variable (_eventsObject) to not recreate this big object every time
   get _events () {
@@ -306,33 +284,44 @@ class JSRange {
       },
 
       sliderMouseDown: function (event) {
-        event.preventDefault() // prevents selecting text
-
         let type = event.target.dataset.jsrType
+
+        // Calculate distance
+        let valueOfType = (type == 'single') ? _this.selected.from : _this.selected[type]
+        _this.meta.distanceFromValue = _this._getValueOfPosition(event.clientX) - valueOfType
+
         // Handle only move of handled item - type determines if it is handled
         if (type) {
           if (type == 'min') {
             _this.selected.from = _this.options.min
+            if (_this.options.single) {
+              _this.selected.to = _this.selected.from
+            }
           } else if (type == 'max') {
             _this.selected.to = _this.options.max
+            if (_this.options.single) {
+              _this.selected.from = _this.selected.to
+            }
           } else {
             _this.meta.moveObject = event.target
             _this.meta.clickX = event.clientX
             return
           }
+
           // Update after setting values
           _this.update()
         }
       },
       sliderMouseUp: function (event) {
-        _this.meta.moveObject = null
-        _this.meta.clickX     = null
+        _this.meta.moveObject        = null
+        _this.meta.clickX            = null
+        _this.meta.distanceFromValue = null
       },
       sliderMouseMove: function (event) {
         if (_this.meta.moveObject && _this._throttle('mousemove', 20)) {
           let type   = _this.meta.moveObject.dataset.jsrType
-          let value  = _this._getValueOfPosition(event.clientX, true)
-          _this._solveMove(type, value, event.clientX)
+          let value  = _this._getValueOfPosition(event.clientX)
+          _this._solveMove(type, value, _this.meta.distanceFromValue, event.clientX)
           _this.update()
         }
       },
