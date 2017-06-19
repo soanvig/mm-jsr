@@ -137,8 +137,19 @@ class JSRange {
 
   _solveMove (type, value, clientX) {
     // Let's say somebody want to move a label...
-    let testFrom = this._roundToStep(this.selected.from + value)
-    let testTo = this._roundToStep(this.selected.to + value)
+    let testFrom = this.selected.from + value
+    let testTo = this.selected.to + value
+    let cursorPos = this._getValueOfPosition(clientX)
+
+    // lock movement behind range, not for single mode
+    if (
+      (!this.options.single)
+      && (this.selected.to == this.selected.from)
+      && ((type == 'from' && cursorPos > this.selected.to)
+          || (type == 'to' && cursorPos < this.selected.from))
+    ) {
+      return
+    }
 
     // Definitely it can't:
     if (testFrom < this.options.min) {
@@ -178,6 +189,9 @@ class JSRange {
     if (this.options.single) {
       this.selected.from = this.selected.to = testTo
     }
+
+    this.selected.from = this._roundToStep(this.selected.from)
+    this.selected.to   = this._roundToStep(this.selected.to)
   }
 
   _bindEvents () {
@@ -227,17 +241,21 @@ class JSRange {
     return string[0] + (string[1].length + zeros.length > 0 ? '.' : '') + string[1] + zeros
   }
 
-  // If we are dynamically getting value of position while moving cursor
-  _getValueOfPosition (mouseX, move = false) {
+  // relative - If we are dynamically getting value of position while moving cursor
+  _getValueOfPosition (mouseX, relative = false, relativeTo = null) {
     let railLeft = this.body.rail.getBoundingClientRect().left
     let diff
-    if (move) {
+    if (relative) {
       diff = mouseX - this.meta.clickX
       this.meta.clickX = mouseX // override clickX to don't allow accumulate value
     } else {
       diff = mouseX - railLeft
     }
-    let value = parseFloat(diff / this.body.rail.offsetWidth * (this.options.max - this.options.min) + this.options.min)
+
+    let value = parseFloat(diff / this.body.rail.offsetWidth * (this.options.max - this.options.min))
+    if (!relative) {
+      value += this.options.min
+    }
     
     return value
   }
