@@ -164,19 +164,19 @@ class JSRange {
       // we need to determine whether he or she is moving it to the LEFT or to the RIGHT,
       // then set the corresponding value and move object to proper label.
       // But who would want to do such a thing?
-      let direction = clientX - this.meta.clickX // negative = left, positive = right
-      if (direction < 0) {
-        this.selected.from = value
+      // value negative = left, positive = right
+      if (value < 0) {
+        this.selected.from += value
         this.meta.moveObject = this.body.info.from
-      } else if (direction > 0) {
-        this.selected.to = value
+      } else if (value > 0) {
+        this.selected.to += value
         this.meta.moveObject = this.body.info.to
       }
       // No, seriously, who?
     }
 
     if (this.options.single) {
-      this.selected.from = this.selected.to = value
+      this.selected.from = this.selected.to = testTo
     }
   }
 
