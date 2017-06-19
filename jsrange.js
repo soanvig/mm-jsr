@@ -107,9 +107,14 @@ class JSRange {
     this.body.info.singleTo = document.createElement('span')
     this.body.info.singleTo.classList.add('jsr_info_singleTo')
     this.body.info.singleTo.dataset.jsrType = 'to'
+    this.body.info.singleSingle = document.createElement('span')
+    this.body.info.singleSingle.classList.add('jsr_info_singleSingle')
+    this.body.info.singleSingle.dataset.jsrType = 'single'
+    this.body.info.singleSingle.style.display = 'none'
 
     this.body.info.single.appendChild(this.body.info.singleFrom)
     this.body.info.single.appendChild(this.body.info.singleTo)
+    this.body.info.single.appendChild(this.body.info.singleSingle)
 
     let elements = [
       this.body.rail,
@@ -159,10 +164,10 @@ class JSRange {
       // But who would want to do such a thing?
       let direction = clientX - this.meta.clickX // negative = left, positive = right
       if (direction < 0) {
-        this.selected.from == value
+        this.selected.from = value
         this.meta.moveObject = this.body.info.from
       } else if (direction > 0) {
-        this.selected.to == value
+        this.selected.to = value
         this.meta.moveObject = this.body.info.to
       }
       // No, seriously, who?
@@ -364,19 +369,22 @@ class JSRange {
       },
 
       info: function () {
-        _this.body.info.min.innerHTML         = _this._getStringWithDecimals(_this.options.min)
-        _this.body.info.max.innerHTML         = _this._getStringWithDecimals(_this.options.max)
-        _this.body.info.from.innerHTML        = _this._getStringWithDecimals(_this.selected.from)
-        _this.body.info.to.innerHTML          = _this._getStringWithDecimals(_this.selected.to)
-        _this.body.info.singleFrom.innerHTML  = _this._getStringWithDecimals(_this.selected.from)
-        _this.body.info.singleTo.innerHTML    = _this._getStringWithDecimals(_this.selected.to)
+        _this.body.info.min.innerHTML          = _this._getStringWithDecimals(_this.options.min)
+        _this.body.info.max.innerHTML          = _this._getStringWithDecimals(_this.options.max)
+        _this.body.info.from.innerHTML         = _this._getStringWithDecimals(_this.selected.from)
+        _this.body.info.to.innerHTML           = _this._getStringWithDecimals(_this.selected.to)
+        _this.body.info.singleFrom.innerHTML   = _this._getStringWithDecimals(_this.selected.from)
+        _this.body.info.singleTo.innerHTML     = _this._getStringWithDecimals(_this.selected.to)
+        _this.body.info.singleSingle.innerHTML = _this.body.info.singleTo.innerHTML // doesn't matter which one
 
         if (_this.selected.from == _this.selected.to) {
-          _this.body.info.singleTo.style.display = 'none'
-          _this.body.info.singleFrom.dataset.jsrType = 'single'
+          _this.body.info.singleFrom.style.display   = 'none'
+          _this.body.info.singleTo.style.display     = 'none'
+          _this.body.info.singleSingle.style.display = 'inline-block'
         } else {
-          _this.body.info.singleTo.style.display = 'inline'
-          _this.body.info.singleFrom.dataset.jsrType = 'from'
+          _this.body.info.singleFrom.style.display   = 'inline-block'
+          _this.body.info.singleTo.style.display     = 'inline-block'
+          _this.body.info.singleSingle.style.display = 'none'
         }
 
         // position infos

@@ -95,7 +95,8 @@
 }
 
 .jsr_info_singleFrom,
-.jsr_info_singleTo
+.jsr_info_singleTo,
+.jsr_info_singleSingle
 {
     display: inline-block;
 
@@ -111,7 +112,8 @@
 .jsr_info--from,
 .jsr_info--to,
 .jsr_info_singleFrom,
-.jsr_info_singleTo
+.jsr_info_singleTo,
+.jsr_info_singleSingle
 {
     padding: 3px 10px;
 }
