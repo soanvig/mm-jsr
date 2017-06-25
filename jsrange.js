@@ -485,14 +485,18 @@ class JSRange {
         }
 
         // 'min' and 'from' overlaps
-        if (_this._getRightOf(_this.body.info.min) > _this._getLeftOf(_this.body.info.from)) {
+        if (_this._getRightOf(_this.body.info.min) > _this._getLeftOf(_this.body.info.from)
+            || (_this._getRightOf(_this.body.info.min) > _this._getLeftOf(_this.body.info.single) 
+                && _this.body.info.single.style.visibility == 'visible')) {
           _this.body.info.min.style.visibility = 'hidden'
         } else {
           _this.body.info.min.style.visibility = 'visible'
         }
 
         // 'max' and 'to' overlaps
-        if (_this._getRightOf(_this.body.info.to) > _this._getLeftOf(_this.body.info.max)) {
+        if (_this._getRightOf(_this.body.info.to) > _this._getLeftOf(_this.body.info.max)
+            || (_this._getRightOf(_this.body.info.single) > _this._getLeftOf(_this.body.info.max)
+                && _this.body.info.single.style.visibility == 'visible')) {
           _this.body.info.max.style.visibility = 'hidden'
         } else {
           _this.body.info.max.style.visibility = 'visible'
