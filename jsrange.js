@@ -82,9 +82,13 @@ class JSRange {
     this.body.sliders.from = document.createElement('div')
     this.body.sliders.from.classList.add('jsr_slider', 'jsr_slider--from')
     this.body.sliders.from.dataset.jsrType = 'from'
+    this.body.sliders.from.setAttribute('tabindex', '0')
     this.body.sliders.to = document.createElement('div')
     this.body.sliders.to.classList.add('jsr_slider', 'jsr_slider--to')
     this.body.sliders.to.dataset.jsrType = 'to'
+    if (!this.options.single) {
+      this.body.sliders.to.setAttribute('tabindex', '0')
+    }
 
     this.body.info = {}
     this.body.info.min = document.createElement('span')
@@ -157,6 +161,8 @@ class JSRange {
       element.addEventListener('mousedown', this._events.sliderMouseDown)
     })
 
+    this.body.parent.addEventListener('keydown', this._events.keydown)
+
     window.addEventListener('resize', this._events.windowResize)
 
     document.addEventListener('mousemove', this._events.sliderMouseMove)
@@ -225,7 +231,8 @@ class JSRange {
     return widthRatio
   }
 
-  _solveMove (type, value, distance, clientX) {
+  // If solveMove is used with keyboard, provide distance = 0, clientX = 0 and direction = (-1 || 1)
+  _solveMove (type, value, distance, clientX, direction = null) {
     // Let's say somebody want to move a label...
 
     // but he or she clicked not in the center of label:
@@ -253,7 +260,9 @@ class JSRange {
       // we need to determine whether he or she is moving it to the LEFT or to the RIGHT,
       // then set the corresponding value and move object to proper label.
       // But who would want to do such a thing?
-      let direction = clientX - this.meta.clickX // negative = left, positive = right
+      if (!direction) {
+        direction = clientX - this.meta.clickX // negative = left, positive = right
+      }
       if (direction < 0) {
         this.selected.from = value
         this.meta.moveObject = this.body.info.from
@@ -340,6 +349,29 @@ class JSRange {
           _this.selected.to = clickedValue
         }
 
+        _this.update()
+      },
+      keydown: function (event) {
+        let type = event.target.dataset.jsrType
+        let keyCodes = {
+          left: 37,
+          right: 39
+        }
+
+        let value = _this.selected[type]
+        let direction
+
+        if (event.keyCode == keyCodes.left) {
+          value -= _this.options.step
+          direction = -1
+        } else if (event.keyCode == keyCodes.right) {
+          value += _this.options.step
+          direction = 1
+        } else {
+          return false
+        }
+
+        _this._solveMove(type, value, 0, 0, direction)
         _this.update()
       }
     }
