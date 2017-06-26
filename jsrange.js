@@ -83,12 +83,12 @@ class JSRange {
     this.body.sliders.from = document.createElement('div')
     this.body.sliders.from.classList.add('jsr_slider', 'jsr_slider--from')
     this.body.sliders.from.dataset.jsrType = 'from'
-    this.body.sliders.from.setAttribute('tabindex', '0')
     this.body.sliders.to = document.createElement('div')
     this.body.sliders.to.classList.add('jsr_slider', 'jsr_slider--to')
     this.body.sliders.to.dataset.jsrType = 'to'
+    this.body.sliders.to.setAttribute('tabindex', '0')
     if (!this.options.single) {
-      this.body.sliders.to.setAttribute('tabindex', '0')
+      this.body.sliders.from.setAttribute('tabindex', '0')
     }
 
     this.body.info = {}
