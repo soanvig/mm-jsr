@@ -7,6 +7,11 @@ class JSRange {
   // -------
   // Options for JSRange are retrieved from supplied 'inputMin'
   constructor (inputMin, inputMax, options) {
+    this._buffer = {
+      update: this._update,
+      events: this._events
+    }
+
     this.inputMin       = document.querySelector(inputMin)
     if (options.single) {
       // this is only fallback
@@ -14,8 +19,6 @@ class JSRange {
     } else {
       this.inputMax     = document.querySelector(inputMax)
     }
-    this._updateObject  = this._update
-    this._eventsObject  = this._events
 
     this.options        = {}
     this.options.min    = options.min    || parseFloat(this.inputMin.getAttribute('min'))
@@ -27,19 +30,19 @@ class JSRange {
 
     // cross-object informations:
     this.meta = {}
-    this.meta.moveObject = null
-    this.meta.clientX = null
-    this.meta.clickX = null
+    this.meta.moveObject        = null
+    this.meta.clientX           = null
+    this.meta.clickX            = null
     this.meta.distanceFromValue = null
-    this.meta.throttle = {}
-    this.meta.twentiethRange = this._roundToStep((this.options.max - this.options.min) / 20)
+    this.meta.throttle          = {}
+    this.meta.twentiethRange    = this._roundToStep((this.options.max - this.options.min) / 20)
 
     this.selected = {}
     if (this.options.single) {
       this.selected.single = this.selected.from = this.selected.to = this.options.value
     } else {
-      this.selected.from = parseFloat(this.inputMin.getAttribute('value')) || this.options.min,
-      this.selected.to = parseFloat(this.inputMax.getAttribute('value')) || this.options.max
+      this.selected.from   = parseFloat(this.inputMin.getAttribute('value')) || this.options.min,
+      this.selected.to     = parseFloat(this.inputMax.getAttribute('value')) || this.options.max
       this.selected.single = this.selected.from
     }
 
@@ -143,7 +146,7 @@ class JSRange {
   }
 
   _bindEvents () {
-    let mouseDownElements = [
+    const mouseDownElements = [
       // Following handle moving basic from/to sliders (dots [sliders] and labels [info])
       this.body.sliders.from,
       this.body.sliders.to,
@@ -234,7 +237,7 @@ class JSRange {
 
   // If solveMove is used with keyboard, provide distance = 0, clientX = 0 and direction = (-1 || 1)
   _solveMove (type, value, distance, clientX, direction = null) {
-    // Let's say somebody want to move a label...
+    // Let's say somebody wants to move a label...
 
     // but he or she clicked not in the center of label:
     value -= distance
@@ -243,17 +246,17 @@ class JSRange {
     if (value < this.options.min) {
       // move behind min,
       value = this.options.min
-    }
+    } 
     if (value > this.options.max) {
       // and behind max
       value = this.options.max
     }
 
     if (type == 'from') {
-      // He or she can't move it behind 'to'!
+      // He or she can't move 'from' behind 'to'!
       this.selected.from = (value < this.selected.to) ? value : this.selected.to
     } else if (type == 'to') {
-      // also it can't move before 'from'!
+      // also can't move 'to' before 'from'!
       this.selected.to = (value > this.selected.from) ? value : this.selected.from
     } else if (type == 'single') {
       // But if, and ONLY IF, hypothetical, somebody would want to move SINGLE label
@@ -286,7 +289,7 @@ class JSRange {
   // it tries to use the buffering-variable (_eventsObject) to not recreate this big object every time
   get _events () {
     var _this = this;
-    return _this._eventsObject || {
+    return (_this._buffer && _this._buffer.events) ? _this._buffer.events : {
       windowResize: function (event) {
         if (_this._throttle('windowResize', 50)) {
           _this.update()
@@ -390,7 +393,7 @@ class JSRange {
   // it tries to use the buffering-variable (_updateObject) to not recreate this big object every time
   get _update () {
     var _this = this;
-    return _this._updateObject || {
+    return (_this._buffer && _this._buffer.update) ? _this._buffer.update : {
       // Here goes every function which should be updated via .all()
       // 'info' should be after 'sliders' because it depends on their value
       _toUpdate: ['rail', 'sliders', 'info', 'values'], 
