@@ -15,7 +15,7 @@
 - fully and **easily** customizable through CSS,
 - prefixes, suffixes for labels (**not implemented yet**),
 - support for touch devices (**not implemented yet**),
-- support for keyboard (**not implemented yet**),
+- support for keyboard,
 - support for screen-readers (**not implemented yet**).
 
 ### Advantages
@@ -142,3 +142,13 @@ range.set({
     to: 75
 });
 ```
+
+### Keyboard
+
+JSR supports keyboard control. First of all one of two sliders needs to be focused. 
+
+- By clicking `left/right arrow` the value is changed by `options.step`. 
+- If the `CTRL` is pressed along with arrow, the value is changed by `options.step x10`.
+- If the `SHIFT` is pressed along with arrow, the values is changed by `range x5%` (by the 5% of whole range).
+
+NOTE: In case of `SHIFT` and `CTRL` keys pressed simultaneously, `SHIFT` takes priority.
