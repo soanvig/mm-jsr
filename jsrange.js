@@ -345,9 +345,15 @@ class JSRange {
         if (clickedValue < selectedAverage) {
           // clicked on the left side of average, move 'from'
           _this.selected.from = clickedValue
+          if (_this.options.single) {
+            _this.selected.to = _this.selected.from
+          }
         } else {
           // clicked on the right side of average, move 'to'
           _this.selected.to = clickedValue
+          if (_this.options.single) {
+            _this.selected.from = _this.selected.to
+          }
         }
 
         _this.update()
