@@ -7,14 +7,6 @@ class JSRange {
   // -------
   // Options for JSRange are retrieved from supplied 'inputMin'
   constructor (inputMin, inputMax, options) {
-    // cross-object informations:
-    this.meta = {}
-    this.meta.moveObject = null
-    this.meta.clientX = null
-    this.meta.clickX = null
-    this.meta.distanceFromValue = null
-    this.meta.throttle = {}
-
     this.inputMin       = document.querySelector(inputMin)
     if (options.single) {
       // this is only fallback
@@ -32,6 +24,15 @@ class JSRange {
     this.options.single = options.single || false
     this.options.value  = options.value  || parseFloat(this.inputMin.getAttribute('value'))
     this.options.stepDecimals = this._calculateDecimals(this.options.step)
+
+    // cross-object informations:
+    this.meta = {}
+    this.meta.moveObject = null
+    this.meta.clientX = null
+    this.meta.clickX = null
+    this.meta.distanceFromValue = null
+    this.meta.throttle = {}
+    this.meta.twentiethRange = this._roundToStep((this.options.max - this.options.min) / 20)
 
     this.selected = {}
     if (this.options.single) {
@@ -360,12 +361,14 @@ class JSRange {
 
         let value = _this.selected[type]
         let direction
+        let moveBy = (event.shiftKey ? _this.meta.twentiethRange : (
+                       event.ctrlKey ? _this.options.step * 10 : _this.options.step))
 
         if (event.keyCode == keyCodes.left) {
-          value -= _this.options.step
+          value -= moveBy
           direction = -1
         } else if (event.keyCode == keyCodes.right) {
-          value += _this.options.step
+          value += moveBy
           direction = 1
         } else {
           return false
