@@ -163,6 +163,8 @@ class JSRange {
 
     mouseDownElements.forEach((element) => {
       element.addEventListener('mousedown', this._events.sliderMouseDown)
+      element.addEventListener('touchstart', this._events.touchStart)
+      element.addEventListener('touchmove', this._events.touchMove)
     })
 
     this.body.parent.addEventListener('keydown', this._events.keydown)
@@ -295,7 +297,10 @@ class JSRange {
           _this.update()
         }
       },
-
+      touchStart: function (event) {
+        event.preventDefault()
+        _this._events.sliderMouseDown(event.targetTouches.item(0))
+      },
       sliderMouseDown: function (event) {
         let type = event.target.dataset.jsrType
 
@@ -329,6 +334,10 @@ class JSRange {
         _this.meta.moveObject        = null
         _this.meta.clickX            = null
         _this.meta.distanceFromValue = null
+      },
+      touchMove: function (event) {
+        event.preventDefault()
+        _this._events.sliderMouseMove(event.targetTouches.item(0))
       },
       sliderMouseMove: function (event) {
         if (_this.meta.moveObject && _this._throttle('mousemove', 20)) {

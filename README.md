@@ -14,7 +14,7 @@
 - collapsing labels,
 - fully and **easily** customizable through CSS,
 - prefixes, suffixes for labels (**not implemented yet**),
-- support for touch devices (**not implemented yet**),
+- support for touch devices (**not tested well yet**),
 - support for keyboard,
 - support for screen-readers (**not implemented yet**).
 
