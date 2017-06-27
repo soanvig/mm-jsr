@@ -13,7 +13,7 @@
 - double sliders (from-to values),
 - collapsing labels,
 - fully and **easily** customizable through CSS,
-- prefixes, suffixes for labels (**not implemented yet**),
+- prefixes, suffixes for labels,
 - support for touch devices (**not tested well yet**),
 - support for keyboard,
 - support for screen-readers (**not implemented yet**).
@@ -141,6 +141,34 @@ range.set({
     from: 50,
     to: 75
 });
+```
+
+### Prefixes and suffixes
+
+Prefixes and suffixes can be applied by CSS pseudoelements `::before` and `::after`, although it is possible to apply them through configuration.
+
+If you want to set affixes in options, you need to add to options hash respectively: `prefixes: {}` and `suffixes: {}`. Then you shall to define where you want these affixes, and what should they be. You can use:
+
+- `min` - minimum label
+- `max` - maximum label
+- `from` - from label
+- `to` - to label
+- `single` - single label (`from === to`)
+
+Example:
+
+```js
+new JSRange('#jsrMin', '#jsrMax', {
+    prefixes: {
+        min: '$ ',
+        from: '$ ',
+        single: '$ '
+    },
+    suffixes: {
+        max: ' $',
+        to: ' $'
+    }
+})
 ```
 
 ### Keyboard

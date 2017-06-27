@@ -27,6 +27,8 @@ class JSRange {
     this.options.single = options.single || false
     this.options.value  = options.value  || parseFloat(this.inputMin.getAttribute('value'))
     this.options.stepDecimals = this._calculateDecimals(this.options.step)
+    this.options.prefixes = options.prefixes || {}
+    this.options.suffixes = options.suffixes || {}
 
     // cross-object informations:
     this.meta = {}
@@ -141,7 +143,6 @@ class JSRange {
       this.body.parent.appendChild(element)
     })
 
-    // https://stackoverflow.com/questions/4793604/how-to-do-insert-after-in-javascript-without-using-a-library
     this.inputMax.parentNode.insertBefore(this.body.parent, this.inputMax.nextSibling);
   }
 
@@ -439,13 +440,13 @@ class JSRange {
       },
 
       info: function () {
-        _this.body.info.min.innerHTML          = _this._getStringWithDecimals(_this.options.min)
-        _this.body.info.max.innerHTML          = _this._getStringWithDecimals(_this.options.max)
-        _this.body.info.from.innerHTML         = _this._getStringWithDecimals(_this.selected.from)
-        _this.body.info.to.innerHTML           = _this._getStringWithDecimals(_this.selected.to)
-        _this.body.info.singleFrom.innerHTML   = _this._getStringWithDecimals(_this.selected.from)
-        _this.body.info.singleTo.innerHTML     = _this._getStringWithDecimals(_this.selected.to)
-        _this.body.info.singleSingle.innerHTML = _this.body.info.singleTo.innerHTML // doesn't matter which one
+        _this.body.info.min.innerHTML          = _this._addAffixes(_this._getStringWithDecimals(_this.options.min), 'min')
+        _this.body.info.max.innerHTML          = _this._addAffixes(_this._getStringWithDecimals(_this.options.max), 'max')
+        _this.body.info.from.innerHTML         = _this._addAffixes(_this._getStringWithDecimals(_this.selected.from), 'from')
+        _this.body.info.to.innerHTML           = _this._addAffixes(_this._getStringWithDecimals(_this.selected.to), 'to')
+        _this.body.info.singleFrom.innerHTML   = _this._addAffixes(_this._getStringWithDecimals(_this.selected.from), 'from')
+        _this.body.info.singleTo.innerHTML     = _this._addAffixes(_this._getStringWithDecimals(_this.selected.to), 'to')
+        _this.body.info.singleSingle.innerHTML = _this._addAffixes(_this._getStringWithDecimals(_this.selected.to), 'single') // doesn't matter which one
 
         if (_this.selected.from == _this.selected.to) {
           _this.body.info.singleFrom.style.display   = 'none'
@@ -529,6 +530,18 @@ class JSRange {
         _this.inputMax.setAttribute('value', _this.selected.to)
       }
     }
+  }
+
+  _addAffixes (value, type) {
+    if (this.options.prefixes[type]) {
+      value = this.options.prefixes[type] + value
+    }
+
+    if (this.options.suffixes[type]) {
+      value += this.options.suffixes[type]
+    }
+
+    return value
   }
 
   // Enables throttling for 'variable' in a 'time' [ms]
