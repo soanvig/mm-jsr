@@ -80,6 +80,7 @@ class JSRange {
 
     this.body.parent = document.createElement('div')
     this.body.parent.classList.add('jsr')
+    this.body.parent.setAttribute('aria-live', 'assertive')
 
     this.body.rail = document.createElement('div')
     this.body.rail.classList.add('jsr_rail')
@@ -341,6 +342,7 @@ class JSRange {
         _this._events.sliderMouseMove(event.targetTouches.item(0))
       },
       sliderMouseMove: function (event) {
+        event.preventDefault()
         if (_this.meta.moveObject && _this._throttle('mousemove', 20)) {
           let type   = _this.meta.moveObject.dataset.jsrType
           let value  = _this._getValueOfPosition(event.clientX)
@@ -372,6 +374,7 @@ class JSRange {
         _this.update()
       },
       keydown: function (event) {
+        event.preventDefault()
         let type = event.target.dataset.jsrType
         let keyCodes = {
           left: 37,
