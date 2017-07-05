@@ -300,7 +300,6 @@ class JSRange {
         }
       },
       touchStart: function (event) {
-        event.preventDefault()
         _this._events.sliderMouseDown(event.targetTouches.item(0))
       },
       sliderMouseDown: function (event) {
@@ -338,11 +337,9 @@ class JSRange {
         _this.meta.distanceFromValue = null
       },
       touchMove: function (event) {
-        event.preventDefault()
         _this._events.sliderMouseMove(event.targetTouches.item(0))
       },
       sliderMouseMove: function (event) {
-        event.preventDefault()
         if (_this.meta.moveObject && _this._throttle('mousemove', 20)) {
           let type   = _this.meta.moveObject.dataset.jsrType
           let value  = _this._getValueOfPosition(event.clientX)
