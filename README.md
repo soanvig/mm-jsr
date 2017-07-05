@@ -2,6 +2,8 @@
 
 **M&M JS Range** (*M&M JSR*) is library for JavaScript. It provides You with excellent solution for creating so-called *range-inputs*. Range input is form's field where one can choose a value from min-max *range*. Although HTML 5 comes with `input[type="range"]` its functionality lacks a lot of features. M&M JSR gives You anything You may need.
 
+Newest version: **0.0.1beta**
+
 ## Features and advantages
 
 ### Features
@@ -16,7 +18,8 @@
 - prefixes, suffixes for labels,
 - support for touch devices (**not tested well yet**),
 - support for keyboard,
-- support for screen-readers (**not implemented yet**).
+- support for screen-readers (**not implemented yet**),
+- grid/ruler representing values on slider (**not implemented yet**).
 
 ### Advantages
 
@@ -45,15 +48,15 @@
 
     In HTML `<head>` section:
 
-    `<link rel="stylesheet" href="[path_to_jsr]/jsrange.css">`
+    `<link rel="stylesheet" href="[path_to_jsr]/mm-jsr.css">`
 
     And in HTML scripts section (in example in the end of body:)
 
-    `<script src="[path_to_jsr]/jsrange.js></script>`
+    `<script src="[path_to_jsr]/mm-jsr.min.js></script>`
 
 ## Usage
 
-For simple implementation see `jsrange.html` in repository.
+For simple implementation see `mm-jsr-example.html` in repository.
 
 ### Single slider
 

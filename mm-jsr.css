@@ -83,26 +83,6 @@
     background: rgb(30, 140, 20);
 }
 
-/* Triangles */
-/* Disabled, because of `info label cannot exceed parent` feature
-   triangle may not be on middle, and it looks bad */
-/* .jsr_info--from::before,
-.jsr_info--to::before
-{
-    position: absolute;
-    top: -6px;
-    left: calc(50% - 5px);
-
-    width: 0;
-    height: 0;
-
-    content: '';
-
-    border-width: 0 5px 6px 5px;
-    border-style: solid;
-    border-color: transparent transparent rgb(30, 140, 20) transparent;
-} */
-
 .jsr_info--single
 {
     white-space: nowrap;
