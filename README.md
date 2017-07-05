@@ -40,7 +40,7 @@ Newest version: **0.0.1beta**
 
 1. Clone the repository:
 
-    `git clone https://github.com/soanvig/jsr.git`
+    `git clone https://github.com/mm-jsr/jsr.git`
 
     Or download it manually through GitHub site.
 
