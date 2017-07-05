@@ -374,11 +374,14 @@ class JSRange {
         _this.update()
       },
       keydown: function (event) {
-        event.preventDefault()
         let type = event.target.dataset.jsrType
         let keyCodes = {
           left: 37,
           right: 39
+        }
+
+        if (event.keyCode == keyCodes.left || event.keyCode == keyCodes.right) {
+          event.preventDefault()
         }
 
         let value = _this.selected[type]
