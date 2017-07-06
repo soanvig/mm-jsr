@@ -19,7 +19,7 @@ Newest version: **0.0.1beta**
 - support for touch devices (**not tested well yet**),
 - support for keyboard,
 - support for screen-readers (**not implemented yet**),
-- grid/ruler representing values on slider (**not implemented yet**).
+- grid/ruler representing values on slider.
 
 ### Advantages
 
@@ -183,3 +183,22 @@ JSR supports keyboard control. First of all one of two sliders needs to be focus
 - If the `SHIFT` is pressed along with arrow, the values is changed by `range x5%` (by the 5% of whole range).
 
 NOTE: In case of `SHIFT` and `CTRL` keys pressed simultaneously, `SHIFT` takes priority.
+
+### Grid
+
+Grid is a ruler placed beneath/over rail, which indicates values on the rail. It has few options to set via `grid` parameter:
+
+-  `step` -  every which (percent) of value, the grid marker (usually a vertical line) should be placed. `step: 0.05` means, that marker should be placed every 5% of range width, giving 20 markers.
+-  `bigStepNth` - describes, every which marker should be the bigger one. It basically only applies `jsr_grid_marker--big` CSS class. Setting it to `bigStepNth: 5` means, that every 5th marker (starting from first) will be big. It is advisible, that `100 / bigStepNth` gives integer, not float number.
+-  `disabled` - default to false. If you don't want grid to be displayed, set it to `true`.
+
+Example:
+
+```js
+new JSRange('#jsrMin', '#jsrMax', {
+    grid: {
+        step: 0.02,
+        bigStepNth: 10
+    }
+})
+```

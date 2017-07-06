@@ -20,15 +20,19 @@ class JSRange {
       this.inputMax     = document.querySelector(inputMax)
     }
 
-    this.options        = {}
-    this.options.min    = options.min    || parseFloat(this.inputMin.getAttribute('min'))
-    this.options.max    = options.max    || parseFloat(this.inputMin.getAttribute('max'))
-    this.options.step   = options.step   || parseFloat(this.inputMin.getAttribute('step'))
-    this.options.single = options.single || false
-    this.options.value  = options.value  || parseFloat(this.inputMin.getAttribute('value'))
-    this.options.stepDecimals = this._calculateDecimals(this.options.step)
-    this.options.prefixes = options.prefixes || {}
-    this.options.suffixes = options.suffixes || {}
+    let defaultOptions = {
+      min:          parseFloat(this.inputMin.getAttribute('min')),
+      max:          parseFloat(this.inputMin.getAttribute('max')),
+      step:         parseFloat(this.inputMin.getAttribute('step')),
+      value:        parseFloat(this.inputMin.getAttribute('value')),
+      single:       false,
+      prefixes:     {},
+      suffixes:     {},
+      grid:         { step: 0.02, bigstepNth: 5, disabled: false }
+    }
+    defaultOptions.stepDecimals = this._calculateDecimals(defaultOptions.step)
+
+    this.options = this._extend(true, defaultOptions, options)
 
     // cross-object informations:
     this.meta = {}
@@ -145,6 +149,33 @@ class JSRange {
     })
 
     this.inputMax.parentNode.insertBefore(this.body.parent, this.inputMax.nextSibling);
+
+    // Create grid
+    if (!this.options.grid.disabled) {
+      this.body.grid = document.createElement('div')
+      this.body.grid.classList.add('jsr_grid')
+
+      let markersNumber = 100 / (this.options.grid.step * 100) + 1
+      for (let i = 0; i < markersNumber; ++i) {
+        let marker = document.createElement('span')
+        marker.classList.add('jsr_grid_marker')
+
+        if (i % this.options.grid.bigstepNth == 0) {
+          marker.classList.add('jsr_grid_marker--big')
+        }
+
+        // If this is last marker it is best to set it's right to 0, insted of left
+        if (i == markersNumber - 1) {
+          marker.style.right = 0
+        } else {
+          marker.style.left = this.options.grid.step * 100 * i + '%'
+        }
+        
+        this.body.grid.appendChild(marker)
+      }
+
+      this.body.parent.appendChild(this.body.grid)
+    }
   }
 
   _bindEvents () {
@@ -177,6 +208,9 @@ class JSRange {
     document.addEventListener('mouseup', this._events.sliderMouseUp)
 
     this.body.rail.addEventListener('click', this._events.railClick)
+    if (!this.body.grid.disabled) {
+      this.body.grid.addEventListener('click', this._events.railClick)
+    }
   }
 
   _calculateDecimals (number) {
@@ -561,5 +595,45 @@ class JSRange {
       setTimeout(() => { this.meta.throttle[name] = false }, time)
       return true
     }
+  }
+
+  // Deep merge by https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
+  // Pass in the objects to merge as arguments.
+  // For a deep extend, set the first argument to `true`.
+  _extend () {
+    // Variables
+    var extended = {}
+    var deep = false
+    var i = 0
+    var length = arguments.length
+    var _this = this;
+
+    // Check if a deep merge
+    if ( Object.prototype.toString.call( arguments[0] ) === '[object Boolean]' ) {
+      deep = arguments[0]
+      i++
+    }
+
+    // Merge the object into the extended object
+    var merge = function (obj) {
+      for ( var prop in obj ) {
+        if ( Object.prototype.hasOwnProperty.call( obj, prop ) ) {
+          // If deep merge and property is an object, merge properties
+          if ( deep && Object.prototype.toString.call(obj[prop]) === '[object Object]' ) {
+            extended[prop] = _this._extend( true, extended[prop], obj[prop] )
+          } else {
+            extended[prop] = obj[prop]
+          }
+        }
+      }
+    };
+
+    // Loop through each object and conduct a merge
+    for ( ; i < length; i++ ) {
+      var obj = arguments[i]
+      merge(obj)
+    }
+
+    return extended
   }
 }
