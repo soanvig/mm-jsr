@@ -4,6 +4,27 @@
 
 Newest version: **0.0.2beta**
 
+## Table of content
+<!-- MarkdownTOC -->
+
+- [Features and advantages](#features-and-advantages)
+    - [Features](#features)
+    - [Advantages](#advantages)
+    - [Disadvantages](#disadvantages)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Single slider](#single-slider)
+    - [Double slider](#double-slider)
+    - [Setting options via HTML](#setting-options-via-html)
+    - [Setting options via JS](#setting-options-via-js)
+    - [Setting values of range programmatically](#setting-values-of-range-programmatically)
+    - [Prefixes and suffixes](#prefixes-and-suffixes)
+    - [Keyboard](#keyboard)
+    - [Grid](#grid)
+- [Demo](#demo)
+
+<!-- /MarkdownTOC -->
+
 ## Features and advantages
 
 ### Features
@@ -203,3 +224,7 @@ new JSRange('#jsrMin', '#jsrMax', {
     }
 })
 ```
+
+## Demo
+
+https://mm-jsr.github.io/#demo
