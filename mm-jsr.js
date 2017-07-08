@@ -53,6 +53,7 @@ class JSRange {
     }
 
     this._createBody()
+    this._parseLabels()
     this._bindEvents()
     this.update()
   }
@@ -175,6 +176,30 @@ class JSRange {
       }
 
       this.body.parent.appendChild(this.body.grid)
+    }
+  }
+
+  _parseLabels () {
+    var minLabel = document.querySelector('label[for=' + this.inputMin.id + ']')
+    if (!this.options.single) {
+      var maxLabel = document.querySelector('label[for=' + this.inputMax.id + ']')
+    }
+
+    if (minLabel) {
+      minLabel.addEventListener('click', () => {
+        if (!this.options.single) {
+          this.body.sliders.from.focus()
+        } else {
+          // Single sliders uses 'to' slider as leading, while using 'min' input
+          this.body.sliders.to.focus()
+        }
+      })
+    }
+
+    if (maxLabel) {
+      maxLabel.addEventListener('click', () => {
+        this.body.sliders.to.focus()
+      })
     }
   }
 
