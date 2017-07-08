@@ -124,6 +124,7 @@ class JSRange {
     
     this.body.info.single = document.createElement('span')
     this.body.info.single.classList.add('jsr_info', 'jsr_info--single')
+    this.body.info.single.dataset.jsrType = 'single'
     this.body.info.singleFrom = document.createElement('span')
     this.body.info.singleFrom.classList.add('jsr_info_singleFrom')
     this.body.info.singleFrom.dataset.jsrType = 'from'
