@@ -19,6 +19,7 @@ Newest version: **0.0.2beta**
 - support for touch devices (**not tested well yet**),
 - support for keyboard,
 - support for screen-readers (**not implemented yet**),
+- support for labels,
 - grid/ruler representing values on slider.
 
 ### Advantages
