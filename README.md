@@ -2,7 +2,7 @@
 
 **M&M JS Range** (*M&M JSR*) is library for JavaScript. It provides You with excellent solution for creating so-called *range-inputs*. Range input is form's field where one can choose a value from min-max *range*. Although HTML 5 comes with `input[type="range"]` its functionality lacks a lot of features. M&M JSR gives You anything You may need.
 
-Newest version: **0.0.1beta**
+Newest version: **0.0.2beta**
 
 ## Features and advantages
 
