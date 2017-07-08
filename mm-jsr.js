@@ -30,9 +30,9 @@ class JSRange {
       suffixes:     {},
       grid:         { step: 0.02, bigstepNth: 5, disabled: false }
     }
-    defaultOptions.stepDecimals = this._calculateDecimals(defaultOptions.step)
 
     this.options = this._extend(true, defaultOptions, options)
+    this.options.stepDecimals = this._calculateDecimals(this.options.step)
 
     // cross-object informations:
     this.meta = {}
@@ -265,6 +265,7 @@ class JSRange {
   }
 
   _roundToStep (float) {
+    // Round to precision of step
     float = Math.round(float / this.options.step) * this.options.step
     let stepDecimalsPow = Math.pow(10, this.options.stepDecimals)
     return Math.round(float * stepDecimalsPow) / stepDecimalsPow
