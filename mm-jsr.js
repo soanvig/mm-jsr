@@ -299,6 +299,14 @@ class JSRange {
     return widthRatio
   }
 
+  _focusSlider (type) {
+    if (this.options.single || type == 'max' || type == 'to') {
+      this.body.sliders.to.focus()
+    } else if (type == 'min' || type == 'from') {
+      this.body.sliders.from.focus()
+    }
+  }
+
   // If solveMove is used with keyboard, provide distance = 0, clientX = 0 and direction = (-1 || 1)
   _solveMove (type, value, distance, clientX, direction = null) {
     // Let's say somebody wants to move a label...
@@ -319,9 +327,11 @@ class JSRange {
     if (type == 'from') {
       // He or she can't move 'from' behind 'to'!
       this.selected.from = (value < this.selected.to) ? value : this.selected.to
+      this._focusSlider('from')
     } else if (type == 'to') {
       // also can't move 'to' before 'from'!
       this.selected.to = (value > this.selected.from) ? value : this.selected.from
+      this._focusSlider('to')
     } else if (type == 'single') {
       // But if, and ONLY IF, hypothetical, somebody would want to move SINGLE label
       // (single means selected values are equal)
@@ -339,6 +349,9 @@ class JSRange {
         this.meta.moveObject = this.body.info.to
       }
       // No, seriously, who?
+
+      // In single slider, 'to' is leading
+      this.body.sliders.to.focus()
     }
 
     this.selected.from = this._roundToStep(this.selected.from)
@@ -364,11 +377,13 @@ class JSRange {
       },
       sliderMouseDown: function (event) {
         let type = event.target.dataset.jsrType
+        event.preventDefault()
+
+        _this._focusSlider(type)
 
         // Calculate distance
         let valueOfType = (type == 'single') ? _this.selected.from : _this.selected[type]
         _this.meta.distanceFromValue = _this._getValueOfPosition(event.clientX) - valueOfType
-
         // Handle only move of handled item - type determines if it is handled
         if (type) {
           if (type == 'min') {
@@ -412,22 +427,26 @@ class JSRange {
         let clickedValue = _this._getValueOfPosition(event.clientX)
         clickedValue = _this._roundToStep(clickedValue)
         let selectedAverage = (_this.selected.from + _this.selected.to) / 2
+        let type
 
         // determine side of click
         if (clickedValue < selectedAverage) {
           // clicked on the left side of average, move 'from'
           _this.selected.from = clickedValue
+          type = 'from'
           if (_this.options.single) {
             _this.selected.to = _this.selected.from
           }
         } else {
           // clicked on the right side of average, move 'to'
           _this.selected.to = clickedValue
+          type = 'to'
           if (_this.options.single) {
             _this.selected.from = _this.selected.to
           }
         }
 
+        _this._focusSlider((_this.options.single ? 'single' : type))
         _this.update()
       },
       keydown: function (event) {
