@@ -1,8 +1,10 @@
-// Author: Mortimer from http://mortmortis.pl
-// https://github.com/soanvig/js-range
+// Author: Mortimer, http://mortmortis.pl
+// https://github.com/mm-jsr/jsr
+// For instructions see README in repository
 // Script uses ES6
 class JSRange {
   // Note about setting "step" with "from"/"to": it is allowed to use "from"/"to" not matching step
+  // this however may lead to unexpected results
   // Step option is best used with powers of 10 (including negative powers) or regular numbers like 2 (but not 3)
   // -------
   // Options for JSRange are retrieved from supplied 'inputMin'
@@ -12,12 +14,12 @@ class JSRange {
       events: this._events
     }
 
-    this.inputMin       = document.querySelector(inputMin)
+    this.inputMin   = document.querySelector(inputMin)
     if (options.single) {
       // this is only fallback
-      this.inputMax     = this.inputMin
+      this.inputMax = this.inputMin
     } else {
-      this.inputMax     = document.querySelector(inputMax)
+      this.inputMax = document.querySelector(inputMax)
     }
 
     let defaultOptions = {
@@ -31,17 +33,19 @@ class JSRange {
       grid:         { step: 0.02, bigstepNth: 5, disabled: false }
     }
 
-    this.options = this._extend(true, defaultOptions, options)
+    // Merge default options with supplied options
+    this.options              = this._extend(true, defaultOptions, options)
+    // Calculate number of decimals of step
     this.options.stepDecimals = this._calculateDecimals(this.options.step)
 
     // cross-object informations:
     this.meta = {}
-    this.meta.moveObject        = null
-    this.meta.clientX           = null
-    this.meta.clickX            = null
-    this.meta.distanceFromValue = null
-    this.meta.throttle          = {}
-    this.meta.twentiethRange    = this._roundToStep((this.options.max - this.options.min) / 20)
+    this.meta.moveObject        = null // object being moved
+    this.meta.clickX            = null // position of click
+    this.meta.distanceFromValue = null // difference between click position
+                                       // and the real value (the center usually) of label/slider
+    this.meta.throttle          = {}   // throttles database (used by _throttle())
+    this.meta.twentiethRange    = this._roundToStep((this.options.max - this.options.min) / 20) // buffered value of 1/20 of slider
 
     this.selected = {}
     if (this.options.single) {
@@ -77,6 +81,7 @@ class JSRange {
     this.update()
   }
  
+  // Creates body (all html elements) of slider
   _createBody () {
     this.inputMin.style.display = 'none'
     this.inputMax.style.display = 'none'
@@ -179,6 +184,8 @@ class JSRange {
     }
   }
 
+  // Parses labels, which enables focusing slider on label click event
+  // Since labels are not directly slider elements, they are not parsed in ._bindEvents()
   _parseLabels () {
     var minLabel = document.querySelector('label[for=' + this.inputMin.id + ']')
     if (!this.options.single) {
@@ -203,7 +210,9 @@ class JSRange {
     }
   }
 
+  // Applies events to all slider elements
   _bindEvents () {
+    // mouseDown also supports touch
     const mouseDownElements = [
       // Following handle moving basic from/to sliders (dots [sliders] and labels [info])
       this.body.sliders.from,
@@ -213,10 +222,10 @@ class JSRange {
       // Following handle moving single slider
       this.body.info.singleFrom,
       this.body.info.singleTo,
+      this.body.info.single,
       // Following handle moving slider to min or max
       this.body.info.min,
-      this.body.info.max,
-      this.body.info.single
+      this.body.info.max
     ]
 
     mouseDownElements.forEach((element) => {
@@ -238,6 +247,7 @@ class JSRange {
     }
   }
 
+  // Determines, how many decimal places the (float) number has
   _calculateDecimals (number) {
     let string = number.toString().split('.')
     if (string[1]) {
@@ -247,6 +257,10 @@ class JSRange {
     }
   }
 
+  // Creates string formatted with number of decimals equal to step decimals
+  // Example:
+  // Number: 10, step: 0.01 -> 10.00
+  // Number: 10.1, step: 0.01 -> 10.10
   _getStringWithDecimals (number) {
     let decimals = this._calculateDecimals(number)
     let stepDecimals = this._calculateDecimals(this.options.step)
@@ -256,7 +270,8 @@ class JSRange {
     return string[0] + (string[1].length + zeros.length > 0 ? '.' : '') + string[1] + zeros
   }
 
-  // relative - If we are dynamically getting value of position while moving cursor
+  // Returns the value in relevance to rail
+  // MouseX is the value relative to window
   _getValueOfPosition (mouseX) {
     let railLeft = this.body.rail.getBoundingClientRect().left
     let diff = mouseX - railLeft
@@ -264,14 +279,16 @@ class JSRange {
     return value
   }
 
+  // Rounds number to decimal places of step
   _roundToStep (float) {
     // Round to precision of step
     float = Math.round(float / this.options.step) * this.options.step
+
     let stepDecimalsPow = Math.pow(10, this.options.stepDecimals)
     return Math.round(float * stepDecimalsPow) / stepDecimalsPow
   }
 
-  // returns left of element relatively to rail
+  // Returns left of element relatively to rail
   _getLeftOf (element) {
     let railLeft = parseFloat(this.body.rail.getBoundingClientRect().left)
     let elLeft = parseFloat(element.getBoundingClientRect().left)
@@ -280,25 +297,27 @@ class JSRange {
     return elRelativeLeft / railWidth
   }
 
-  // returns right of element (from style + width)
+  // Returns right of element relatively to rail
   _getRightOf (element) {
     return this._getLeftOf(element) + this._getWidthOf(element)
   }
 
-  // returns center of element relatively to rail
+  // Returns center of element relatively to rail
   _getCenterOf (element) {
     let left = this._getLeftOf(element)
     let widthRatio = this._getWidthOf(element)
     return (left + widthRatio / 2)
   }
 
-  // returns width of element relatively to rail
+  // Returns width of element relatively to rail
   _getWidthOf (element) {
     let width = parseFloat(element.offsetWidth)
     let widthRatio = width / parseFloat(this.body.rail.offsetWidth)
     return widthRatio
   }
 
+  // Focuses slider
+  // type: from, to, min, max
   _focusSlider (type) {
     if (this.options.single || type == 'max' || type == 'to') {
       this.body.sliders.to.focus()
@@ -307,7 +326,13 @@ class JSRange {
     }
   }
 
+  // Calculates (sets values) and validates move (+ focuses sliders, because this function knows best what actually is happening)
   // If solveMove is used with keyboard, provide distance = 0, clientX = 0 and direction = (-1 || 1)
+  // type: type of element being moved (from, to, single)
+  // value: the new value of element
+  // distance: distance between center of label/slider and mouse position
+  // clientX: the actual position of cursor
+  // direction: the direction of move (if not provided, is calculated)
   _solveMove (type, value, distance, clientX, direction = null) {
     // Let's say somebody wants to move a label...
 
@@ -351,7 +376,7 @@ class JSRange {
       // No, seriously, who?
 
       // In single slider, 'to' is leading
-      this.body.sliders.to.focus()
+      this._focusSlider('to')
     }
 
     this.selected.from = this._roundToStep(this.selected.from)
@@ -381,25 +406,29 @@ class JSRange {
 
         _this._focusSlider(type)
 
-        // Calculate distance
-        let valueOfType = (type == 'single') ? _this.selected.from : _this.selected[type]
+        // Calculate distanceFromValue
+        let valueOfType = (type == 'single') ? _this.selected.from : _this.selected[type] // single value may use etheir 'from' or 'to' value
         _this.meta.distanceFromValue = _this._getValueOfPosition(event.clientX) - valueOfType
+
         // Handle only move of handled item - type determines if it is handled
         if (type) {
           if (type == 'min') {
+            // 'min' label was clicked
             _this.selected.from = _this.options.min
             if (_this.options.single) {
               _this.selected.to = _this.selected.from
             }
           } else if (type == 'max') {
+            // 'max' label was clicked
             _this.selected.to = _this.options.max
             if (_this.options.single) {
               _this.selected.from = _this.selected.to
             }
           } else {
+            // other label/slider was clicked
             _this.meta.moveObject = event.target
             _this.meta.clickX = event.clientX
-            return
+            return // don't execute .update(), because nothing to update
           }
 
           // Update after setting values
@@ -407,6 +436,7 @@ class JSRange {
         }
       },
       sliderMouseUp: function (event) {
+        // Clean data
         _this.meta.moveObject        = null
         _this.meta.clickX            = null
         _this.meta.distanceFromValue = null
@@ -423,24 +453,23 @@ class JSRange {
         }
       },
       railClick: function (event) {
-        // determine closer to which slider it was closer
+        // Determine which slider is closer to the clicked value
         let clickedValue = _this._getValueOfPosition(event.clientX)
         clickedValue = _this._roundToStep(clickedValue)
+        // Average is mid-point between sliders
         let selectedAverage = (_this.selected.from + _this.selected.to) / 2
-        let type
 
-        // determine side of click
         if (clickedValue < selectedAverage) {
           // clicked on the left side of average, move 'from'
           _this.selected.from = clickedValue
-          type = 'from'
+          var type = 'from'
           if (_this.options.single) {
             _this.selected.to = _this.selected.from
           }
         } else {
           // clicked on the right side of average, move 'to'
           _this.selected.to = clickedValue
-          type = 'to'
+          var type = 'to'
           if (_this.options.single) {
             _this.selected.from = _this.selected.to
           }
@@ -450,28 +479,31 @@ class JSRange {
         _this.update()
       },
       keydown: function (event) {
-        let type = event.target.dataset.jsrType
+        let type     = event.target.dataset.jsrType
         let keyCodes = {
           left: 37,
           right: 39
         }
 
+        // If the left or right arrow was pressed
         if (event.keyCode == keyCodes.left || event.keyCode == keyCodes.right) {
+          // Prevent default, to disable functions like selecting text
+          // Condition doesn't block other keys like TAB
           event.preventDefault()
         }
 
-        let value = _this.selected[type]
-        let direction
+        let value  = _this.selected[type]
         let moveBy = (event.shiftKey ? _this.meta.twentiethRange : (
                        event.ctrlKey ? _this.options.step * 10 : _this.options.step))
 
         if (event.keyCode == keyCodes.left) {
           value -= moveBy
-          direction = -1
+          var direction = -1
         } else if (event.keyCode == keyCodes.right) {
           value += moveBy
-          direction = 1
+          var direction = 1
         } else {
+          // other key was pressed, don't do anything
           return false
         }
 
@@ -509,27 +541,34 @@ class JSRange {
       },
 
       sliders: function () {
-        let startWidthRatio = _this._getWidthOf(_this.body.sliders.from)
-        let endWidthRatio   = _this._getWidthOf(_this.body.sliders.to)
+        let fromWidthRatio = _this._getWidthOf(_this.body.sliders.from)
+        let toWidthRatio   = _this._getWidthOf(_this.body.sliders.to)
         // widthRatio is used to place middle point of slider in the right point
-        let start = (_this.selected.from - _this.options.min) / (_this.options.max  - _this.options.min)
-        start     = start - startWidthRatio / 2
-        let end   = (_this.selected.to  - _this.options.min) / (_this.options.max  - _this.options.min)
-        end       = end - endWidthRatio / 2
+        let from = (_this.selected.from - _this.options.min) / (_this.options.max  - _this.options.min)
+        from     = from - fromWidthRatio / 2
+        let to   = (_this.selected.to  - _this.options.min) / (_this.options.max  - _this.options.min)
+        to       = to - toWidthRatio / 2
 
-        _this.body.sliders.from.style.left  = `${start * 100}%`
-        _this.body.sliders.to.style.left    = `${end * 100}%`
+        _this.body.sliders.from.style.left  = `${from * 100}%`
+        _this.body.sliders.to.style.left    = `${to * 100}%`
       },
 
       info: function () {
-        _this.body.info.min.innerHTML          = _this._addAffixes(_this._getStringWithDecimals(_this.options.min), 'min')
-        _this.body.info.max.innerHTML          = _this._addAffixes(_this._getStringWithDecimals(_this.options.max), 'max')
-        _this.body.info.from.innerHTML         = _this._addAffixes(_this._getStringWithDecimals(_this.selected.from), 'from')
-        _this.body.info.to.innerHTML           = _this._addAffixes(_this._getStringWithDecimals(_this.selected.to), 'to')
-        _this.body.info.singleFrom.innerHTML   = _this._addAffixes(_this._getStringWithDecimals(_this.selected.from), 'from')
-        _this.body.info.singleTo.innerHTML     = _this._addAffixes(_this._getStringWithDecimals(_this.selected.to), 'to')
-        _this.body.info.singleSingle.innerHTML = _this._addAffixes(_this._getStringWithDecimals(_this.selected.to), 'single') // doesn't matter which one
+        let min  = _this._getStringWithDecimals(_this.options.min)
+        let max  = _this._getStringWithDecimals(_this.options.max)
+        let from = _this._getStringWithDecimals(_this.selected.from)
+        let to   = _this._getStringWithDecimals(_this.selected.to)
 
+        // Update text
+        _this.body.info.min.innerHTML          = _this._addAffixes(min, 'min')
+        _this.body.info.max.innerHTML          = _this._addAffixes(max, 'max')
+        _this.body.info.from.innerHTML         = _this._addAffixes(from, 'from')
+        _this.body.info.to.innerHTML           = _this._addAffixes(to, 'to')
+        _this.body.info.singleFrom.innerHTML   = _this._addAffixes(from, 'from')
+        _this.body.info.singleTo.innerHTML     = _this._addAffixes(to, 'to')
+        _this.body.info.singleSingle.innerHTML = _this._addAffixes(to, 'single') // doesn't matter which one
+
+        // Hide singleFrom and singleTo if equal
         if (_this.selected.from == _this.selected.to) {
           _this.body.info.singleFrom.style.display   = 'none'
           _this.body.info.singleTo.style.display     = 'none'
@@ -540,7 +579,7 @@ class JSRange {
           _this.body.info.singleSingle.style.display = 'none'
         }
 
-        // position infos
+        // Position infos
         let fromInfoWidth   = _this._getWidthOf(_this.body.info.from)
         let toInfoWidth     = _this._getWidthOf(_this.body.info.to)
         let singleInfoWidth = _this._getWidthOf(_this.body.info.single)
@@ -549,7 +588,7 @@ class JSRange {
         let slidersMiddle   = (_this._getCenterOf(_this.body.sliders.from) + _this._getCenterOf(_this.body.sliders.to)) / 2
         let singleInfoLeft  = slidersMiddle - singleInfoWidth / 2
 
-        // if something exceeds parent, we need to fix stuff
+        // if info exceeds parent, we need to hold it in place
         let parentLeft  = _this._getLeftOf(_this.body.parent)
         let parentRight = _this._getRightOf(_this.body.parent)
 
@@ -576,7 +615,7 @@ class JSRange {
         _this.body.info.to.style.left     = `${toInfoLeft * 100}%`
         _this.body.info.single.style.left = `${singleInfoLeft * 100}%`
 
-        // determine infos overlap, and hide them
+        // Determine infos overlap, and hide them
         // 'from' and 'to' overlaps
         if (_this._getRightOf(_this.body.info.from) > _this._getLeftOf(_this.body.info.to)) {
           _this.body.info.from.style.visibility   = 'hidden'
@@ -608,12 +647,14 @@ class JSRange {
       },
 
       values: function () {
+        // Update inputs values
         _this.inputMin.setAttribute('value', _this.selected.from)
         _this.inputMax.setAttribute('value', _this.selected.to)
       }
     }
   }
 
+  // Add suffixed and affixes to text
   _addAffixes (value, type) {
     if (this.options.prefixes[type]) {
       value = this.options.prefixes[type] + value
