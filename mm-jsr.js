@@ -399,11 +399,13 @@ class JSRange {
         }
       },
       touchStart: function (event) {
-        _this._events.sliderMouseDown(event.targetTouches.item(0))
+        _this._events.sliderMouseDown(event.targetTouches.item(0), true)
       },
-      sliderMouseDown: function (event) {
+      sliderMouseDown: function (event, touch = false) {
         let type = event.target.dataset.jsrType
-        event.preventDefault()
+        if (!touch) {
+          event.preventDefault()
+        }
 
         _this._focusSlider(type)
 
