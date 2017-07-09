@@ -22,8 +22,8 @@
 {
     height: 5px;
 
-    background: rgb(230, 230, 230);
-    background-image: linear-gradient(rgb(30, 140, 20), rgb(30, 140, 20));
+    background: #333;
+    background-image: linear-gradient(#999, #999);
     background-repeat: no-repeat;
 }
 
@@ -40,12 +40,13 @@
     transition: background .1s ease-in-out;
 
     border-radius: 50%;
-    background: rgb(30, 140, 20);
+    background: #999;
+    outline: 0;
 }
 
 .jsr_slider:focus
 {
-    background: rgb(200, 50, 40);
+    background: #c00;
 }
 
 .jsr_info
@@ -54,6 +55,7 @@
     top: 18px;
     padding: 3px 10px;
     border-radius: 3px;
+    background: #444;
 }
 
 .jsr_info--min
@@ -72,7 +74,7 @@
     cursor: pointer;
 
     color: #999;
-    background: #eee;
+    background: #333;
 }
 
 .jsr_info--from,
@@ -82,7 +84,6 @@
     cursor: pointer;
 
     color: #fff;
-    background: rgb(30, 140, 20);
 }
 
 .jsr_info--single
