@@ -30,7 +30,7 @@ class JSRange {
       single:       false,
       prefixes:     {},
       suffixes:     {},
-      grid:         { step: 0.02, bigstepNth: 5, disabled: false }
+      grid:         { step: 0.02, bigstepNth: 5, disabled: false, values: true }
     }
 
     // Merge default options with supplied options
@@ -167,14 +167,19 @@ class JSRange {
       this.body.grid = document.createElement('div')
       this.body.grid.classList.add('jsr_grid')
 
-      let markersNumber = 100 / (this.options.grid.step * 100) + 1
+      this.body.gridMarkers = document.createElement('div')
+      this.body.gridMarkers.classList.add('jsr_grid_markers')
+
+      if (this.options.grid.values) {
+        this.body.gridValues = document.createElement('div')
+        this.body.gridValues.classList.add('jsr_grid_values')
+        var values = []
+      }
+
+      let markersNumber = 1 / this.options.grid.step + 1
       for (let i = 0; i < markersNumber; ++i) {
         let marker = document.createElement('span')
         marker.classList.add('jsr_grid_marker')
-
-        if (i % this.options.grid.bigstepNth == 0) {
-          marker.classList.add('jsr_grid_marker--big')
-        }
 
         // If this is last marker it is best to set it's right to 0, insted of left
         if (i == markersNumber - 1) {
@@ -182,11 +187,40 @@ class JSRange {
         } else {
           marker.style.left = this.options.grid.step * 100 * i + '%'
         }
+
+        if (i % this.options.grid.bigstepNth == 0) {
+          marker.classList.add('jsr_grid_marker--big')
+
+          if (this.options.grid.values) {
+            let value = document.createElement('span')
+            value.classList.add('jsr_grid_value')
+            value.innerHTML = (this.options.max - this.options.min) * this.options.grid.step * i + this.options.min
+            value.dataset.jsrMiddle = marker.style.left 
+            values.push(value)
+            this.body.gridValues.appendChild(value)
+          }
+        }
         
-        this.body.grid.appendChild(marker)
+        this.body.gridMarkers.appendChild(marker)
       }
 
+      this.body.grid.appendChild(this.body.gridMarkers)
+      if (this.options.grid.values) {
+        this.body.grid.appendChild(this.body.gridValues)
+      }
       this.body.parent.appendChild(this.body.grid)
+
+      // Position values
+      if (this.options.grid.values) {
+        values.forEach((value, index) => {
+          let width = this._getWidthOf(value) * 100
+          if (index == values.length - 1) {
+            value.style.right = (-width / 2) + '%'
+          } else {
+            value.style.left = parseFloat(value.dataset.jsrMiddle) - width / 2 + '%'
+          }
+        })
+      }
     }
   }
 
@@ -489,33 +523,29 @@ class JSRange {
       keydown: function (event) {
         let type     = event.target.dataset.jsrType
         let keyCodes = {
-          left: 37,
-          right: 39
+          '37': -1, // left 
+          '38': +1, // up
+          '39': +1, // right
+          '40': -1  // down
         }
 
-        // If the left or right arrow was pressed
-        if (event.keyCode == keyCodes.left || event.keyCode == keyCodes.right) {
-          // Prevent default, to disable functions like selecting text
-          // Condition doesn't block other keys like TAB
-          event.preventDefault()
+        // If the left, up, down or right arrow was pressed
+        let key = keyCodes[event.keyCode.toString()]
+        if (!key) {
+          return false
         }
+
+        // Prevent default, to disable functions like selecting text
+        // Condition doesn't block other keys like TAB
+        event.preventDefault()
 
         let value  = _this.selected[type]
         let moveBy = (event.shiftKey ? _this.meta.twentiethRange : (
                        event.ctrlKey ? _this.options.step * 10 : _this.options.step))
 
-        if (event.keyCode == keyCodes.left) {
-          value -= moveBy
-          var direction = -1
-        } else if (event.keyCode == keyCodes.right) {
-          value += moveBy
-          var direction = 1
-        } else {
-          // other key was pressed, don't do anything
-          return false
-        }
+        value += moveBy * key // the sign of key determines if it should be reduced or increased
 
-        _this._solveMove(type, value, 0, 0, direction)
+        _this._solveMove(type, value, 0, 0, key) // pass direction as 'key' (+1/-1)
         _this.update()
       }
     }
