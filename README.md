@@ -227,4 +227,4 @@ new JSRange('#jsrMin', '#jsrMax', {
 
 ## Demo
 
-https://mm-jsr.github.io/#demo
+https://mm-jsr.github.io/mm-jsr/#demo
