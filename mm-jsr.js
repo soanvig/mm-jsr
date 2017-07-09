@@ -60,6 +60,11 @@ class JSRange {
     this._parseLabels()
     this._bindEvents()
     this.update()
+
+    // Add delayed update
+    setTimeout(() => {
+      this.update()
+    }, 100)
   }
 
   // Propably we want to update everything
