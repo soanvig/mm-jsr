@@ -30,7 +30,7 @@ class JSRange {
       single:       false,
       prefixes:     {},
       suffixes:     {},
-      grid:         { step: 0.02, bigstepNth: 5, disabled: true, values: true }
+      grid:         { step: 0.02, bigstepNth: 5, disabled: true }
     }
 
     // Merge default options with supplied options
@@ -164,63 +164,68 @@ class JSRange {
 
     // Create grid
     if (!this.options.grid.disabled) {
-      this.body.grid = document.createElement('div')
-      this.body.grid.classList.add('jsr_grid')
+      this._createBodyGrid()
+    }
+  }
 
-      this.body.gridMarkers = document.createElement('div')
-      this.body.gridMarkers.classList.add('jsr_grid_markers')
+  _createBodyGrid() {
+    this.body.grid = document.createElement('div')
+    this.body.grid.classList.add('jsr_grid')
 
-      if (this.options.grid.values) {
-        this.body.gridValues = document.createElement('div')
-        this.body.gridValues.classList.add('jsr_grid_values')
-        var values = []
+    this.body.gridMarkers = document.createElement('div')
+    this.body.gridMarkers.classList.add('jsr_grid_markers')
+
+    if (this.options.grid.values) {
+      this.body.gridValues = document.createElement('div')
+      this.body.gridValues.classList.add('jsr_grid_values')
+      var values = []
+    }
+
+    let markersNumber = 1 / this.options.grid.step + 1
+    for (let i = 0; i < markersNumber; ++i) {
+      let marker = document.createElement('span')
+      marker.classList.add('jsr_grid_marker')
+
+      // If this is last marker it is best to set it's right to 0, insted of left
+      if (i == markersNumber - 1) {
+        marker.style.right = 0
+      } else {
+        marker.style.left = this.options.grid.step * 100 * i + '%'
       }
 
-      let markersNumber = 1 / this.options.grid.step + 1
-      for (let i = 0; i < markersNumber; ++i) {
-        let marker = document.createElement('span')
-        marker.classList.add('jsr_grid_marker')
+      if (i % this.options.grid.bigstepNth == 0) {
+        marker.classList.add('jsr_grid_marker--big')
 
-        // If this is last marker it is best to set it's right to 0, insted of left
-        if (i == markersNumber - 1) {
-          marker.style.right = 0
+        if (this.options.grid.values) {
+          let value = document.createElement('span')
+          value.classList.add('jsr_grid_value')
+          value.innerHTML = (this.options.max - this.options.min) * this.options.grid.step * i + this.options.min
+          value.dataset.jsrMiddle = marker.style.left 
+          values.push(value)
+          this.body.gridValues.appendChild(value)
+        }
+      }
+
+      this.body.gridMarkers.appendChild(marker)
+    }
+
+    this.body.grid.appendChild(this.body.gridMarkers)
+    if (this.options.grid.values) {
+      this.body.grid.appendChild(this.body.gridValues)
+    }
+    this.body.parent.appendChild(this.body.grid)
+
+
+    // Position values
+    if (this.options.grid.values) {
+      values.forEach((value, index) => {
+        let width = this._getWidthOf(value) * 100
+        if (index == values.length - 1) {
+          value.style.right = (-width / 2) + '%'
         } else {
-          marker.style.left = this.options.grid.step * 100 * i + '%'
+          value.style.left = parseFloat(value.dataset.jsrMiddle) - width / 2 + '%'
         }
-
-        if (i % this.options.grid.bigstepNth == 0) {
-          marker.classList.add('jsr_grid_marker--big')
-
-          if (this.options.grid.values) {
-            let value = document.createElement('span')
-            value.classList.add('jsr_grid_value')
-            value.innerHTML = (this.options.max - this.options.min) * this.options.grid.step * i + this.options.min
-            value.dataset.jsrMiddle = marker.style.left 
-            values.push(value)
-            this.body.gridValues.appendChild(value)
-          }
-        }
-        
-        this.body.gridMarkers.appendChild(marker)
-      }
-
-      this.body.grid.appendChild(this.body.gridMarkers)
-      if (this.options.grid.values) {
-        this.body.grid.appendChild(this.body.gridValues)
-      }
-      this.body.parent.appendChild(this.body.grid)
-
-      // Position values
-      if (this.options.grid.values) {
-        values.forEach((value, index) => {
-          let width = this._getWidthOf(value) * 100
-          if (index == values.length - 1) {
-            value.style.right = (-width / 2) + '%'
-          } else {
-            value.style.left = parseFloat(value.dataset.jsrMiddle) - width / 2 + '%'
-          }
-        })
-      }
+      })
     }
   }
 
@@ -282,7 +287,7 @@ class JSRange {
     document.addEventListener('mouseup', this._events.sliderMouseUp)
 
     this.body.rail.addEventListener('click', this._events.railClick)
-    if (!this.body.grid.disabled) {
+    if (!this.options.grid.disabled) {
       this.body.grid.addEventListener('click', this._events.railClick)
     }
   }
