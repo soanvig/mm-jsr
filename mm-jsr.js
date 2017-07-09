@@ -30,7 +30,7 @@ class JSRange {
       single:       false,
       prefixes:     {},
       suffixes:     {},
-      grid:         { step: 0.02, bigstepNth: 5, disabled: true }
+      grid:         { step: 0.02, bigstepNth: 5, disabled: true, values: false }
     }
 
     // Merge default options with supplied options
