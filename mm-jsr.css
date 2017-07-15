@@ -122,36 +122,13 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 20px;
+    top: 25px;
+    height: 12px;
     z-index: -1;
-}
-
-.jsr_grid_markers {
-    position: relative;
-    height: 15px;
-}
-
-.jsr_grid_marker {
-    position: absolute;
-    width: 1px;
-    height: 7px;
-    bottom: 0;
-    background: #ccc;
-}
-
-.jsr_grid_marker--big
-{
-    height: 15px;
-}
-
-.jsr_grid_values {
-    position: relative;
-    margin-top: 2px;
-}
-
-.jsr_grid_value {
-    position: absolute;
-    top: 0;
-    font-size: 0.7em;
     color: #ccc;
+    background-repeat: no-repeat;
+}
+
+.jsr_grid.redraw::before {
+    content: '';
 }
