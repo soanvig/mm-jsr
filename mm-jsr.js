@@ -32,9 +32,12 @@ class JSRange {
       suffixes:     {},
       grid:         { 
                       step: 0.02, 
-                      bigstepNth: 5, 
+                      primaryStepNth: 5, 
                       enabled: false, 
-                      color: null // color is later retrieved from CSS settings
+                      color: {
+                        secondary: null,
+                        primary: null
+                      } // color is later retrieved from CSS settings
                     }
     }
 
@@ -182,28 +185,56 @@ class JSRange {
   }
 
   _applyGridRuler () {
-    const markerColor = this.options.grid.color || window.getComputedStyle(this.body.grid).getPropertyValue('color') || '#999'
-    // All markers but last (the last is added after loop, because it has not transparency stop)
-    const markersNumber = 1 / this.options.grid.step
+    const markerColor = this.options.grid.color.secondary || window.getComputedStyle(this.body.grid).getPropertyValue('color') || '#999'
+    const primaryMarkerColor = this.options.grid.color.primary || window.getComputedStyle(this.body.grid).getPropertyValue('color') || '#999'
+    const markersNumber = 1 / this.options.grid.step + 1
     const markerWidth = 1 // px
     const gridWidth = this.body.grid.offsetWidth
     const spaceWidth = (gridWidth - markerWidth * markersNumber) / (markersNumber - 1)
 
-    var colorstops = []
+    var secondaryColorstops = []
+    var primaryMarkersStops = []
+    
+    // Generate secondary markers
     var stop = 0
     for (let i = 0; i < markersNumber; ++i) {
-      colorstops.push([markerColor, stop])
+      if (i % this.options.grid.primaryStepNth == 0) {
+        // Skip markers if it should be primary, save their position
+        primaryMarkersStops.push(stop)
+      } else {
+        secondaryColorstops.push([markerColor, stop])
+      }
+
       stop += markerWidth
-      colorstops.push(['transparent', stop])
+      secondaryColorstops.push([markerColor, stop])
+      secondaryColorstops.push(['transparent', stop])
+
       stop += spaceWidth
-      colorstops.push(['transparent', stop])
+      secondaryColorstops.push(['transparent', stop])
     }
 
-    colorstops = colorstops.map((colorstop) => {
+    // Generate primary markers
+    var primaryColorstops = []
+    primaryMarkersStops.forEach((stop, index) => {
+      primaryColorstops.push([primaryMarkerColor, stop])
+
+      stop += markerWidth
+      primaryColorstops.push([primaryMarkerColor, stop])
+      primaryColorstops.push(['transparent', stop])
+
+      let nextStop = primaryMarkersStops[index + 1] || 0
+      primaryColorstops.push(['transparent', nextStop])
+    })
+
+    secondaryColorstops = secondaryColorstops.map((colorstop) => {
       return `${colorstop[0]} ${colorstop[1]}px`
     }).join(',')
 
-    let gradient = `linear-gradient(to right, ${colorstops})`
+    primaryColorstops = primaryColorstops.map((colorstop) => {
+      return `${colorstop[0]} ${colorstop[1]}px`
+    }).join(',')
+
+    let gradient = `linear-gradient(to right, ${primaryColorstops}), linear-gradient(to right, ${secondaryColorstops})`
 
     this.body.grid.style.backgroundImage = gradient
   }
@@ -425,7 +456,9 @@ class JSRange {
       windowResize: function (event) {
         if (_this._throttle('windowResize', 50)) {
           _this.update()
-          _this._applyGridRuler()
+          if (_this.options.grid.enabled) {
+            _this._applyGridRuler()
+          }
         }
       },
       touchStart: function (event) {

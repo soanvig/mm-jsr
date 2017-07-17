@@ -5,25 +5,27 @@
 Newest version: **0.0.2beta**
 
 ## Table of content
-<!-- MarkdownTOC -->
+<!-- TOC -->
 
-- [Features and advantages](#features-and-advantages)
-    - [Features](#features)
-    - [Advantages](#advantages)
-    - [Disadvantages](#disadvantages)
-- [Installation](#installation)
-- [Usage](#usage)
-    - [Single slider](#single-slider)
-    - [Double slider](#double-slider)
-    - [Setting options via HTML](#setting-options-via-html)
-    - [Setting options via JS](#setting-options-via-js)
-    - [Setting values of range programmatically](#setting-values-of-range-programmatically)
-    - [Prefixes and suffixes](#prefixes-and-suffixes)
-    - [Keyboard](#keyboard)
-    - [Grid](#grid)
-- [Demo](#demo)
+- [Mort&Mortis JS Range (M&M JSR)](#mortmortis-js-range-mm-jsr)
+    - [Table of content](#table-of-content)
+    - [Features and advantages](#features-and-advantages)
+        - [Features](#features)
+        - [Advantages](#advantages)
+        - [Disadvantages](#disadvantages)
+    - [Installation](#installation)
+    - [Usage](#usage)
+        - [Single slider](#single-slider)
+        - [Double slider](#double-slider)
+        - [Setting options via HTML](#setting-options-via-html)
+        - [Setting options via JS](#setting-options-via-js)
+        - [Setting values of range programmatically](#setting-values-of-range-programmatically)
+        - [Prefixes and suffixes](#prefixes-and-suffixes)
+        - [Keyboard](#keyboard)
+        - [Grid](#grid)
+    - [Demo](#demo)
 
-<!-- /MarkdownTOC -->
+<!-- /TOC -->
 
 ## Features and advantages
 
@@ -208,11 +210,16 @@ NOTE: In case of `SHIFT` and `CTRL` keys pressed simultaneously, `SHIFT` takes p
 
 ### Grid
 
-Grid is a ruler placed beneath/over rail, which indicates values on the rail. It has few options to set via `grid` parameter:
+Grid is a ruler placed beneath/over rail, which indicates values on the rail.
 
--  `step` -  every which (percent) of value, the grid marker (usually a vertical line) should be placed. `step: 0.05` means, that marker should be placed every 5% of range width, giving 20 markers.
--  `bigStepNth` - describes, every which marker should be the bigger one. It basically only applies `jsr_grid_marker--big` CSS class. Setting it to `bigStepNth: 5` means, that every 5th marker (starting from first) will be big. It is advisible, that `100 / bigStepNth` gives integer, not float number.
--  `disabled` - default to false. If you don't want grid to be displayed, set it to `true`.
+It is created through two gradients: `background-image: linear-gradient(...), linear-gradient(...);`. The first one gradient is the *primary* markers set, the second one: *secondary* markers set. This way you can style those gradients by styling `background`. In example, to make secondary markers smaller than primary ones set: `background-size: 100% 100%, 100% 50%;` - secondary markers are now 50% height of primary markers.
+
+It has few options to set via `grid` parameter:
+
+-  `enabled` - defaults to false. If you want grid to be displayed, set it to `true`.
+-  `step` -  every which (percent) of value, the grid marker (vertical line) should be placed. `step: 0.05` means, that marker should be placed every 5% of range width, giving 20 markers.
+-  `primaryStepNth` - describes, every which marker should be the 'primary' one. Setting it to `primaryStepNth: 5` means, that every 5th marker (starting from first) will be primary. It is advisible, that `100 / primaryStepNth` gives integer, not float number.
+- `color` - this value contains two properties: `color.primary` (primary markers) and `color.secondary` (secondary markers). They can be set seperately. If one is not set, JSR tries to retrieve its color from `.jsr-grid` CSS `color` attribute. If it is not defined either, it uses default value, which is `#999`.
 
 Example:
 
@@ -220,7 +227,11 @@ Example:
 new JSRange('#jsrMin', '#jsrMax', {
     grid: {
         step: 0.02,
-        bigStepNth: 10
+        bigStepNth: 10,
+        color: {
+            primary: '#000',
+            secondary: '#555'
+        }
     }
 })
 ```

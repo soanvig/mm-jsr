@@ -127,8 +127,5 @@
     z-index: -1;
     color: #ccc;
     background-repeat: no-repeat;
-}
-
-.jsr_grid.redraw::before {
-    content: '';
+    background-size: 100% 100%, 100% 75%;
 }
