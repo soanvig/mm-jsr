@@ -173,43 +173,37 @@ class JSRange {
     }
   }
 
-  _createBodyGrid() {
+  _createBodyGrid () {
     this.body.grid = document.createElement('div')
     this.body.grid.classList.add('jsr_grid')
     this.body.parent.appendChild(this.body.grid)
 
-    var gradient = 'linear-gradient(to right,'
+    this._applyGridRuler()
+  }
 
+  _applyGridRuler () {
     const markerColor = this.options.grid.color || window.getComputedStyle(this.body.grid).getPropertyValue('color') || '#999'
     // All markers but last (the last is added after loop, because it has not transparency stop)
     const markersNumber = 1 / this.options.grid.step
-    const markerWidth = this._getWidthOf(1) // where param is in px unit
+    const markerWidth = 1 // px
+    const gridWidth = this.body.grid.offsetWidth
+    const spaceWidth = (gridWidth - markerWidth * markersNumber) / (markersNumber - 1)
 
-    // below some hardcore calculations, impossible to explain without drawing
-    const transparencyWidth = ((1 - (markersNumber + 1) * markerWidth) / markersNumber)
-
-    var previousStop = 0
+    var colorstops = []
+    var stop = 0
     for (let i = 0; i < markersNumber; ++i) {
-      let stop
-
-      gradient += `${markerColor} ${previousStop * 100}%,`
-
-      stop      = previousStop + markerWidth
-
-      gradient += `${markerColor} ${stop * 100}%,`
-      gradient += `transparent ${stop * 100}%,`
-
-      stop     += transparencyWidth
-
-      gradient += `transparent ${stop * 100}%,`
-
-      previousStop = stop
+      colorstops.push([markerColor, stop])
+      stop += markerWidth
+      colorstops.push(['transparent', stop])
+      stop += spaceWidth
+      colorstops.push(['transparent', stop])
     }
 
-    // The last marker
-    gradient += `${markerColor} ${previousStop * 100}%, ${markerColor}`
+    colorstops = colorstops.map((colorstop) => {
+      return `${colorstop[0]} ${colorstop[1]}px`
+    }).join(',')
 
-    gradient += ')' // closes linear-gradient formula
+    let gradient = `linear-gradient(to right, ${colorstops})`
 
     this.body.grid.style.backgroundImage = gradient
   }
@@ -431,6 +425,7 @@ class JSRange {
       windowResize: function (event) {
         if (_this._throttle('windowResize', 50)) {
           _this.update()
+          _this._applyGridRuler()
         }
       },
       touchStart: function (event) {
