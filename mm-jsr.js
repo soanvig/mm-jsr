@@ -30,7 +30,15 @@ class JSRange {
       single:       false,
       prefixes:     {},
       suffixes:     {},
-      grid:         { step: 0.02, bigstepNth: 5, disabled: true, values: false }
+      grid:         { 
+                      step: 0.02, 
+                      primaryStepNth: 5, 
+                      enabled: false, 
+                      color: {
+                        secondary: null,
+                        primary: null
+                      } // color is later retrieved from CSS settings
+                    }
     }
 
     // Merge default options with supplied options
@@ -163,70 +171,72 @@ class JSRange {
     this.inputMax.parentNode.insertBefore(this.body.parent, this.inputMax.nextSibling);
 
     // Create grid
-    if (!this.options.grid.disabled) {
+    if (this.options.grid.enabled) {
       this._createBodyGrid()
     }
   }
 
-  _createBodyGrid() {
+  _createBodyGrid () {
     this.body.grid = document.createElement('div')
     this.body.grid.classList.add('jsr_grid')
-
-    this.body.gridMarkers = document.createElement('div')
-    this.body.gridMarkers.classList.add('jsr_grid_markers')
-
-    if (this.options.grid.values) {
-      this.body.gridValues = document.createElement('div')
-      this.body.gridValues.classList.add('jsr_grid_values')
-      var values = []
-    }
-
-    let markersNumber = 1 / this.options.grid.step + 1
-    for (let i = 0; i < markersNumber; ++i) {
-      let marker = document.createElement('span')
-      marker.classList.add('jsr_grid_marker')
-
-      // If this is last marker it is best to set it's right to 0, insted of left
-      if (i == markersNumber - 1) {
-        marker.style.right = 0
-      } else {
-        marker.style.left = this.options.grid.step * 100 * i + '%'
-      }
-
-      if (i % this.options.grid.bigstepNth == 0) {
-        marker.classList.add('jsr_grid_marker--big')
-
-        if (this.options.grid.values) {
-          let value = document.createElement('span')
-          value.classList.add('jsr_grid_value')
-          value.innerHTML = (this.options.max - this.options.min) * this.options.grid.step * i + this.options.min
-          value.dataset.jsrMiddle = marker.style.left 
-          values.push(value)
-          this.body.gridValues.appendChild(value)
-        }
-      }
-
-      this.body.gridMarkers.appendChild(marker)
-    }
-
-    this.body.grid.appendChild(this.body.gridMarkers)
-    if (this.options.grid.values) {
-      this.body.grid.appendChild(this.body.gridValues)
-    }
     this.body.parent.appendChild(this.body.grid)
 
+    this._applyGridRuler()
+  }
 
-    // Position values
-    if (this.options.grid.values) {
-      values.forEach((value, index) => {
-        let width = this._getWidthOf(value) * 100
-        if (index == values.length - 1) {
-          value.style.right = (-width / 2) + '%'
-        } else {
-          value.style.left = parseFloat(value.dataset.jsrMiddle) - width / 2 + '%'
-        }
-      })
+  _applyGridRuler () {
+    const markerColor = this.options.grid.color.secondary || window.getComputedStyle(this.body.grid).getPropertyValue('color') || '#999'
+    const primaryMarkerColor = this.options.grid.color.primary || window.getComputedStyle(this.body.grid).getPropertyValue('color') || '#999'
+    const markersNumber = 1 / this.options.grid.step + 1
+    const markerWidth = 1 // px
+    const gridWidth = this.body.grid.offsetWidth
+    const spaceWidth = (gridWidth - markerWidth * markersNumber) / (markersNumber - 1)
+
+    var secondaryColorstops = []
+    var primaryMarkersStops = []
+    
+    // Generate secondary markers
+    var stop = 0
+    for (let i = 0; i < markersNumber; ++i) {
+      if (i % this.options.grid.primaryStepNth == 0) {
+        // Skip markers if it should be primary, save their position
+        primaryMarkersStops.push(stop)
+      } else {
+        secondaryColorstops.push([markerColor, stop])
+      }
+
+      stop += markerWidth
+      secondaryColorstops.push([markerColor, stop])
+      secondaryColorstops.push(['transparent', stop])
+
+      stop += spaceWidth
+      secondaryColorstops.push(['transparent', stop])
     }
+
+    // Generate primary markers
+    var primaryColorstops = []
+    primaryMarkersStops.forEach((stop, index) => {
+      primaryColorstops.push([primaryMarkerColor, stop])
+
+      stop += markerWidth
+      primaryColorstops.push([primaryMarkerColor, stop])
+      primaryColorstops.push(['transparent', stop])
+
+      let nextStop = primaryMarkersStops[index + 1] || 0
+      primaryColorstops.push(['transparent', nextStop])
+    })
+
+    secondaryColorstops = secondaryColorstops.map((colorstop) => {
+      return `${colorstop[0]} ${colorstop[1]}px`
+    }).join(',')
+
+    primaryColorstops = primaryColorstops.map((colorstop) => {
+      return `${colorstop[0]} ${colorstop[1]}px`
+    }).join(',')
+
+    let gradient = `linear-gradient(to right, ${primaryColorstops}), linear-gradient(to right, ${secondaryColorstops})`
+
+    this.body.grid.style.backgroundImage = gradient
   }
 
   // Parses labels, which enables focusing slider on label click event
@@ -287,7 +297,7 @@ class JSRange {
     document.addEventListener('mouseup', this._events.sliderMouseUp)
 
     this.body.rail.addEventListener('click', this._events.railClick)
-    if (!this.options.grid.disabled) {
+    if (this.options.grid.enabled) {
       this.body.grid.addEventListener('click', this._events.railClick)
     }
   }
@@ -355,8 +365,14 @@ class JSRange {
   }
 
   // Returns width of element relatively to rail
+  // element may be a number
   _getWidthOf (element) {
-    let width = parseFloat(element.offsetWidth)
+    if (typeof element == 'number') {
+      var width = parseFloat(element)
+    } else {
+      var width = parseFloat(element.offsetWidth)
+    }
+
     let widthRatio = width / parseFloat(this.body.rail.offsetWidth)
     return widthRatio
   }
@@ -440,6 +456,9 @@ class JSRange {
       windowResize: function (event) {
         if (_this._throttle('windowResize', 50)) {
           _this.update()
+          if (_this.options.grid.enabled) {
+            _this._applyGridRuler()
+          }
         }
       },
       touchStart: function (event) {

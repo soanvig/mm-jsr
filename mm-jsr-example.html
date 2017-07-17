@@ -40,7 +40,13 @@
         var range2 = new JSRange('#jsrMin2', '', {
             single: true,
             value: 50,
-            grid: false
+            grid: {
+                enabled: true,
+                color: {
+                    secondary: '#ccc',
+                    primary: '#aaa'
+                }
+            }
         });
 
         var range3 = new JSRange('#jsrMin3', '#jsrMax3', {
