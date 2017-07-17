@@ -4,6 +4,8 @@
 
 Newest version: **0.0.2beta**
 
+Browser support: Firefox, Chrome, others not tested (yet).
+
 ## Table of content
 <!-- TOC -->
 
@@ -23,6 +25,7 @@ Newest version: **0.0.2beta**
         - [Prefixes and suffixes](#prefixes-and-suffixes)
         - [Keyboard](#keyboard)
         - [Grid](#grid)
+    - [Known bugs](#known-bugs)
     - [Demo](#demo)
 
 <!-- /TOC -->
@@ -235,6 +238,10 @@ new JSRange('#jsrMin', '#jsrMax', {
     }
 })
 ```
+
+## Known bugs
+
+1. Sometimes some of the grid's marker may not be displayed (at least in Firefox). This is clearly rendering bug incredibly hard to reproduce.
 
 ## Demo
 
