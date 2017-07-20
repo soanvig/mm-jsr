@@ -525,6 +525,7 @@ class JSRange {
         _this.meta.distanceFromValue = null
       },
       touchMove: function (event) {
+        event.preventDefault()
         _this._events.sliderMouseMove(event.targetTouches.item(0))
       },
       sliderMouseMove: function (event) {
