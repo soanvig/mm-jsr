@@ -108,6 +108,10 @@ class JSRange {
     this.body.rail = document.createElement('div')
     this.body.rail.classList.add('jsr_rail')
 
+    this.body.range = document.createElement('div')
+    this.body.range.classList.add('jsr_range')
+    this.body.rail.appendChild(this.body.range);
+
     this.body.sliders = {}
     this.body.sliders.from = document.createElement('div')
     this.body.sliders.from.classList.add('jsr_slider', 'jsr_slider--from')
@@ -119,6 +123,9 @@ class JSRange {
     if (!this.options.single) {
       this.body.sliders.from.setAttribute('tabindex', '0')
     }
+
+    this.body.rail.appendChild(this.body.sliders.from)
+    this.body.rail.appendChild(this.body.sliders.to)
 
     this.body.info = {}
     this.body.info.min = document.createElement('span')
@@ -155,8 +162,6 @@ class JSRange {
 
     let elements = [
       this.body.rail,
-      this.body.sliders.from,
-      this.body.sliders.to,
       this.body.info.min,
       this.body.info.max,
       this.body.info.from,
@@ -582,24 +587,20 @@ class JSRange {
     return (_this._buffer && _this._buffer.update) ? _this._buffer.update : {
       // Here goes every function which should be updated via .all()
       // 'info' should be after 'sliders' because it depends on their value
-      _toUpdate: ['rail', 'sliders', 'info', 'values'], 
+      _toUpdate: ['range', 'sliders', 'info', 'values'], 
       all: function () {
         this._toUpdate.forEach((item) => {
           this[item]() // Call certain update function
         })
       },
 
-      rail: function () {
-        // Calc rail color position
+      range: function () {
+        // Calc range position
         let start = (_this.selected.from - _this.options.min) / (_this.options.max  - _this.options.min)
         let end   = (_this.selected.to  - _this.options.min) / (_this.options.max  - _this.options.min)
-        // Calc real start (because of weird percentage work)
-        let realStart = start / (1 - (end - start))
-
-        // Sets colored part of rail
-        // Expects percentages without % sign
-        _this.body.rail.style.backgroundPosition  = `${realStart * 100}% 0`
-        _this.body.rail.style.backgroundSize      = `${(end - start) * 100}% 100%`
+        
+        _this.body.range.style.left  = `${start * 100}%`
+        _this.body.range.style.width = `${(end - start) * 100}%`
       },
 
       sliders: function () {
