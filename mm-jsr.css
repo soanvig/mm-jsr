@@ -9,6 +9,8 @@
     width: 100%;
     height: 50px;
 
+    margin-bottom: 20px;
+
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
@@ -20,9 +22,9 @@
 
 .jsr_rail
 {
-    height: 15px;
-    padding: 5px 0;
-    box-sizing: border-box;
+    height: 5px;
+    padding: 10px 0;
+    box-sizing: content-box;
 
     position: relative;
 }
@@ -47,7 +49,7 @@
 .jsr_slider
 {
     position: absolute;
-    top: 0;
+    top: 5px;
     left: 0;
 
     width: 15px;
@@ -66,14 +68,22 @@
     background: #c00;
 }
 
+.jsr_row {
+    position: relative;
+}
+
 .jsr_info
 {
     position: absolute;
-    top: 18px;
     padding: 3px 10px;
     border-radius: 3px;
     background: #444;
     white-space: nowrap;
+}
+
+.jsr_info--hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .jsr_info--min
@@ -93,6 +103,7 @@
 
     color: #999;
     background: #333;
+    transition: opacity 0.2s ease-in-out;
 }
 
 .jsr_info--from,
@@ -139,7 +150,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 25px;
+    top: 8px;
     height: 12px;
     z-index: -1;
     color: #ccc;

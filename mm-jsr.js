@@ -105,6 +105,7 @@ class JSRange {
     this.body.parent.classList.add('jsr')
     this.body.parent.setAttribute('aria-live', 'assertive')
 
+    // Rail elements 
     this.body.rail = document.createElement('div')
     this.body.rail.classList.add('jsr_rail')
 
@@ -126,6 +127,13 @@ class JSRange {
 
     this.body.rail.appendChild(this.body.sliders.from)
     this.body.rail.appendChild(this.body.sliders.to)
+
+    this.body.parent.appendChild(this.body.rail)
+    // ./ Rail elements
+    
+    // Row elements
+    this.body.row = document.createElement('div')
+    this.body.row.classList.add('jsr_row')
 
     this.body.info = {}
     this.body.info.min = document.createElement('span')
@@ -160,8 +168,9 @@ class JSRange {
     this.body.info.single.appendChild(this.body.info.singleTo)
     this.body.info.single.appendChild(this.body.info.singleSingle)
 
+    this.body.row.appendChild(this.body.info.min)
+
     let elements = [
-      this.body.rail,
       this.body.info.min,
       this.body.info.max,
       this.body.info.from,
@@ -170,8 +179,11 @@ class JSRange {
     ]
 
     elements.forEach((element) => {
-      this.body.parent.appendChild(element)
+      this.body.row.appendChild(element)
     })
+
+    this.body.parent.appendChild(this.body.row)
+    // ./ Row elements
 
     this.inputMax.parentNode.insertBefore(this.body.parent, this.inputMax.nextSibling);
 
@@ -184,7 +196,7 @@ class JSRange {
   _createBodyGrid () {
     this.body.grid = document.createElement('div')
     this.body.grid.classList.add('jsr_grid')
-    this.body.parent.appendChild(this.body.grid)
+    this.body.row.appendChild(this.body.grid)
 
     this._applyGridRuler()
   }
@@ -681,31 +693,31 @@ class JSRange {
         // Determine infos overlap, and hide them
         // 'from' and 'to' overlaps
         if (_this._getRightOf(_this.body.info.from) > _this._getLeftOf(_this.body.info.to)) {
-          _this.body.info.from.style.visibility   = 'hidden'
-          _this.body.info.to.style.visibility     = 'hidden'
-          _this.body.info.single.style.visibility = 'visible'
+          _this.body.info.from.classList.add('jsr_info--hidden')
+          _this.body.info.to.classList.add('jsr_info--hidden')
+          _this.body.info.single.classList.remove('jsr_info--hidden')
         } else {
-          _this.body.info.from.style.visibility   = 'visible'
-          _this.body.info.to.style.visibility     = 'visible'
-          _this.body.info.single.style.visibility = 'hidden'
+          _this.body.info.from.classList.remove('jsr_info--hidden')
+          _this.body.info.to.classList.remove('jsr_info--hidden')
+          _this.body.info.single.classList.add('jsr_info--hidden')
         }
 
         // 'min' and 'from' overlaps
         if (_this._getRightOf(_this.body.info.min) > _this._getLeftOf(_this.body.info.from)
             || (_this._getRightOf(_this.body.info.min) > _this._getLeftOf(_this.body.info.single) 
-                && _this.body.info.single.style.visibility == 'visible')) {
-          _this.body.info.min.style.visibility = 'hidden'
+                && !_this.body.info.single.classList.has('jsr_info--hidden'))) {
+          _this.body.info.min.classList.add('jsr_info--hidden')
         } else {
-          _this.body.info.min.style.visibility = 'visible'
+          _this.body.info.min.classList.remove('jsr_info--hidden')
         }
 
         // 'max' and 'to' overlaps
         if (_this._getRightOf(_this.body.info.to) > _this._getLeftOf(_this.body.info.max)
             || (_this._getRightOf(_this.body.info.single) > _this._getLeftOf(_this.body.info.max)
-                && _this.body.info.single.style.visibility == 'visible')) {
-          _this.body.info.max.style.visibility = 'hidden'
+                && !_this.body.info.single.classList.has('jsr_info--hidden'))) {
+          _this.body.info.max.classList.add('jsr_info--hidden')
         } else {
-          _this.body.info.max.style.visibility = 'visible'
+          _this.body.info.max.classList.remove('jsr_info--hidden')
         }
       },
 
