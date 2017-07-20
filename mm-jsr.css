@@ -157,3 +157,10 @@
     background-repeat: no-repeat;
     background-size: 100% 100%, 100% 75%;
 }
+
+.jsr_lockscreen {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    position: fixed;
+}

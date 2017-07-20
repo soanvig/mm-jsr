@@ -312,6 +312,7 @@ class JSRange {
 
     document.addEventListener('mousemove', this._events.sliderMouseMove)
     document.addEventListener('mouseup', this._events.sliderMouseUp)
+    document.addEventListener('touchend', this._events.sliderMouseUp)
 
     this.body.rail.addEventListener('click', this._events.railClick)
     if (this.options.grid.enabled) {
@@ -479,6 +480,7 @@ class JSRange {
         }
       },
       touchStart: function (event) {
+        document.documentElement.classList.add('jsr_lockscreen')
         _this._events.sliderMouseDown(event.targetTouches.item(0), true)
       },
       sliderMouseDown: function (event, touch = false) {
@@ -520,12 +522,12 @@ class JSRange {
       },
       sliderMouseUp: function (event) {
         // Clean data
+        document.documentElement.classList.remove('jsr_lockscreen')
         _this.meta.moveObject        = null
         _this.meta.clickX            = null
         _this.meta.distanceFromValue = null
       },
       touchMove: function (event) {
-        event.preventDefault()
         _this._events.sliderMouseMove(event.targetTouches.item(0))
       },
       sliderMouseMove: function (event) {
