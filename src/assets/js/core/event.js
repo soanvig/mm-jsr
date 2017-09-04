@@ -1,6 +1,5 @@
 export default class {
-  constructor (context, callback) {
-    this._context = context;
+  constructor (callback) {
     this.callback = callback;
     this.enabled = true;
   }

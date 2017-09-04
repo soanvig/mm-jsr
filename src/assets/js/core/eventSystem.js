@@ -1,39 +1,38 @@
 import Event from './event.js';
 
+const events = {};
+
+function createNewEvent (name) {
+  if (events[name]) {
+    return;
+  }
+
+  events[name] = [];
+}
+
+function addListener (name, callback) {
+  const event = new Event(callback);
+  events[name].push(event);
+  return event;
+}
+
+function dispatchEvent (name, ...args) {
+  if (!events[name]) {
+    return false;
+  }
+
+  const length = events[name].length;
+  for (let i = 0; i < length; i += 1) {
+    events[name][i].trigger(...args);
+  }
+}
+
 export default {
-  _events: {},
-
-  _createNewEvent (name) {
-    if (this._events[name]) {
-      return;
-    }
-
-    this._events[name] = [];
-  },
-
-  _addListener (name, callback) {
-    const event = new Event(this, callback);
-    this._events[name].push(event);
-    return event;
-  },
-
-  _dispatchEvent (name, ...args) {
-    if (!this._events[name]) {
-      return false;
-    }
-
-    const length = this._events[name].length;
-    for (let i = 0; i < length; i += 1) {
-      this._events[name][i].trigger(...args);
-    }
-  },
-
-  /* Public */
   register (name, callback) {
-    this._createNewEvent(name);
-    return this._addListener(name, callback);
+    createNewEvent(name);
+    return ddListener(name, callback);
   },
   trigger (name, ...args) {
-    this._dispatchEvent(name, ...args);
+    dispatchEvent(name, ...args);
   }
 };
