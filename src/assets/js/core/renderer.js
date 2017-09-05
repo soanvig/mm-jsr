@@ -80,8 +80,13 @@ function flattenBody() {
 
 function bindEvents(eventizer) {
   eventizer.register('view/slider:click', (event) => {
-    console.log('Slider clicked');
+    console.log(event);
   });
+  body.sliders.forEach((slider) => {
+    slider.addEventListener('click', (event) => {
+      eventizer.trigger('view/slider:click', event);
+    })
+  })
 }
 
 export default {
