@@ -4,7 +4,7 @@ module.exports = function (grunt) {
   var babel = require('rollup-plugin-babel');
   var resolve = require('rollup-plugin-node-resolve');
   var commonjs = require('rollup-plugin-commonjs');
-
+  var eslint = require('rollup-plugin-eslint');
 
   var paths = {
     source: 'src/',
@@ -19,9 +19,8 @@ module.exports = function (grunt) {
         browser: 'firefox',
         bsFiles: {
           src : [
-            paths.source + '**/*.css',
-            paths.source + '**/*.html',
-            paths.source + '**/*.js'
+            paths.public + '**/*',
+            paths.temp + '**/*'
           ]
         },
         options: {
@@ -105,6 +104,11 @@ module.exports = function (grunt) {
         src: [
           paths.buildTarget + 'assets/css/*.css'
         ]
+      },
+      js: {
+        src: [
+          paths.buildTarget + 'main.js'
+        ]
       }
     },
 
@@ -158,6 +162,9 @@ module.exports = function (grunt) {
         options: {
           plugins: function() {
             return [
+              eslint({
+                throwOnError: true
+              }),
               resolve({
                 jsnext: true,
                 main: true,
@@ -192,10 +199,6 @@ module.exports = function (grunt) {
           'dest': paths.buildTarget + 'main.js'
         }],
       }
-    },
-
-    eslint: {
-      src: [paths.source + 'assets/js/**/*.js']
     }
   }
 
@@ -212,9 +215,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-version-assets');
   grunt.loadNpmTasks('grunt-contrib-pug');
-  grunt.loadNpmTasks('gruntify-eslint');
   grunt.loadNpmTasks('grunt-rollup');
  
-  grunt.registerTask('dev', ['sass:dev', 'pug:dev', 'rollup:dev', 'browserSync', 'watch']);
-  grunt.registerTask('dist', ['eslint', 'clean:dist', 'mkdir:dist', 'copy:dist', 'sass:dist', 'pug:dist', 'rollup:dist', 'versioning']);
+  grunt.registerTask('dev', ['rollup:dev', 'sass:dev', 'pug:dev', 'browserSync', 'watch']);
+  grunt.registerTask('dist', ['clean:dist', 'mkdir:dist', 'copy:dist', 'sass:dist', 'pug:dist', 'rollup:dist', 'versioning']);
 };
