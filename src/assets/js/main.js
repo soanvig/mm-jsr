@@ -17,19 +17,17 @@ class JSR {
       eventizer: {}
     }
 
-    const defaults = {
-      strict: true
-    }
+    const defaults = {}
 
     this.options = merge(defaults, options);
     this.input = document.querySelector(input);
 
-    if (!this.input && this.options.strict) {
-      throw `JSR: Invalid 'input' parameter. Couldn't find '${input}' element`;
+    if (this.input) {
+      this._build(this.modules, this.moduleOptions);
+      this._init();
+    } else {
+      console.error(`JSR: Invalid 'input' parameter. Couldn't find '${input}' element.`);
     }
-
-    this._build(this.modules, this.moduleOptions);
-    this._init();
   }
 
   /* Build every module passing other modules and module-specific options as arguments */
@@ -38,9 +36,9 @@ class JSR {
       const build = modules[moduleName].build;
       if (build) {
         build({ modules }, moduleOptions[moduleName]);
-        console.info(`Module ${moduleName} builded.`);
+        console.info(`JSR: Module ${moduleName} builded.`);
       } else {
-        console.warn(`Module ${moduleName} skipped. No .build() method.`);
+        console.warn(`JSR: Module ${moduleName} skipped. No .build() method.`);
       }
     }
   }
@@ -51,4 +49,4 @@ class JSR {
   }
 }
 
-new JSR('#range');
+new JSR('#range-1');
