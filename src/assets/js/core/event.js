@@ -17,4 +17,4 @@ export default class {
       this.callback(...args);
     }
   }
-};
+}

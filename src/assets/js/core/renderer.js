@@ -1,7 +1,7 @@
 const data = {
   modules: null,
   eventsLoaded: false
-}
+};
 
 const body = {};
 const bodyStructure = {
@@ -39,14 +39,14 @@ function createElement (elName) {
 
   if (count <= 0) {
     return createdElements;
-  } else {
-    body[elName] = body[elName] || [];
-    for (let i = 0; i < count; i += 1) {
-      const el = document.createElement('div');
-      el.classList.add(...structEl.classes);
-      body[elName].push(el);
-      createdElements.push(el);
-    }
+  }
+
+  body[elName] = body[elName] || [];
+  for (let i = 0; i < count; i += 1) {
+    const el = document.createElement('div');
+    el.classList.add(...structEl.classes);
+    body[elName].push(el);
+    createdElements.push(el);
   }
 
   // If there is any child
@@ -70,7 +70,7 @@ function createElement (elName) {
 }
 
 /* Flattens body (if there is only one element, make it no-array) */
-function flattenBody() {
+function flattenBody () {
   for (const elName in body) {
     if (body[elName].length === 1) {
       body[elName] = body[elName][0];
@@ -78,15 +78,15 @@ function flattenBody() {
   }
 }
 
-function bindEvents(eventizer) {
+function bindEvents (eventizer) {
   eventizer.register('view/slider:click', (event) => {
     console.log(event);
   });
   body.sliders.forEach((slider) => {
     slider.addEventListener('click', (event) => {
       eventizer.trigger('view/slider:click', event);
-    })
-  })
+    });
+  });
 }
 
 export default {

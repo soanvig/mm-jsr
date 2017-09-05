@@ -9,15 +9,15 @@ class JSR {
       eventizer,
       core,
       renderer
-    }
+    };
 
     this.moduleOptions = {
       core: {},
       renderer: {},
       eventizer: {}
-    }
+    };
 
-    const defaults = {}
+    const defaults = {};
 
     this.options = merge(defaults, options);
     this.input = document.querySelector(input);

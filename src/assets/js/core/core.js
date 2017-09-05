@@ -1,6 +1,6 @@
 const data = {
   modules: null
-}
+};
 
 export default {
   build ({ modules }) {
