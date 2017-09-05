@@ -1,3 +1,8 @@
+const data = {
+  modules: null,
+  eventsLoaded: false
+}
+
 const body = {};
 const bodyStructure = {
   root: {
@@ -82,10 +87,26 @@ function bindEvents(eventizer) {
 export default {
   build ({ modules }) {
     // Create body starting from root
-    const eventizer = modules.eventizer;
+    data.modules = modules || data.modules;
+    const eventizer = data.modules.eventizer;
     
     createElement('root');
     flattenBody();
-    bindEvents(eventizer);
+    if (!data.eventsLoaded) {
+      bindEvents(eventizer);
+    }
+  },
+  
+  structure () {
+    return bodyStructure;
+  },
+
+  update () {
+    this.build();
+  },
+
+  appendRoot (target) {
+    target = document.querySelector(target);
+    target.appendChild(body.root);
   }
 };

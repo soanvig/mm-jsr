@@ -30,7 +30,7 @@ function dispatchEvent (name, ...args) {
 export default {
   register (name, callback) {
     createNewEvent(name);
-    return ddListener(name, callback);
+    return addListener(name, callback);
   },
   trigger (name, ...args) {
     dispatchEvent(name, ...args);
