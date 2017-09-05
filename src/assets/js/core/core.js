@@ -10,6 +10,7 @@ export default {
   },
 
   init () {
+    console.info('JSR: Core initiated.');
     data.modules.renderer.appendRoot('body');
   }
 };

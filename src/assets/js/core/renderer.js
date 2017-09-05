@@ -1,6 +1,6 @@
 const data = {
   modules: null,
-  eventsLoaded: false
+  eventsLoaded: false,
 };
 
 const body = {};
@@ -78,14 +78,41 @@ function flattenBody () {
   }
 }
 
-function bindEvents (eventizer) {
-  eventizer.register('view/slider:click', (event) => {
-    console.log(event);
-  });
-  body.sliders.forEach((slider) => {
-    slider.addEventListener('click', (event) => {
-      eventizer.trigger('view/slider:click', event);
+// Handle binding events even if multiple elements */
+function addEventListener (element, event, callback, remove) {
+  if (remove) {
+    element.removeEventListener(event);
+  }
+
+  element.addEventListener(event, callback);
+}
+
+function listenOn (elements, event, callback, remove = false) {
+  if (elements instanceof Array) {
+    elements.forEach((element) => {
+      addEventListener(element, event, callback, remove);
     });
+  } else {
+    addEventListener(elements, event, callback, remove);
+  }
+}
+// ./
+
+function bindEvents (eventizer) {
+  // Slider click
+  eventizer.register('view/slider:click', () => {
+    console.log('JSR: Slider clicked.');
+  });
+  listenOn(body.sliders, 'click', (event) => {
+    eventizer.trigger('view/slider:click', event);
+  });
+
+  // Rail click
+  eventizer.register('view/rail:click', () => {
+    console.log('JSR: Rail clicked.');
+  });
+  listenOn(body.rail, 'click', (event) => {
+    eventizer.trigger('view/rail:click', event);
   });
 }
 
