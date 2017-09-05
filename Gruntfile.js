@@ -2,6 +2,9 @@ module.exports = function (grunt) {
   // Rollup specific plugins
   var uglify = require('rollup-plugin-uglify');
   var babel = require('rollup-plugin-babel');
+  var resolve = require('rollup-plugin-node-resolve');
+  var commonjs = require('rollup-plugin-commonjs');
+
 
   var paths = {
     source: 'src/',
@@ -151,12 +154,31 @@ module.exports = function (grunt) {
         files: [{
           'src': paths.source + 'assets/js/main.js',
           'dest': paths.temp + 'main.js'
-        }]
+        }],
+        options: {
+          plugins: function() {
+            return [
+              resolve({
+                jsnext: true,
+                main: true,
+                browser: true
+              }),
+              commonjs()
+              // Eslint can go here
+            ];
+          }
+        }
       },
       dist: {
         options: {
           plugins: function() {
             return [
+              resolve({
+                jsnext: true,
+                main: true,
+                browser: true
+              }),
+              commonjs(),
               babel({
                 exclude: './node_modules/**'
               }),
