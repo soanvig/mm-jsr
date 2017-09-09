@@ -12,5 +12,6 @@ export default {
   init () {
     console.info('JSR: Core initiated.');
     data.modules.renderer.appendRoot('body');
+    data.modules.renderer.setSliderValue(1, 0.5);
   }
 };

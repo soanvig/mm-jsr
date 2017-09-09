@@ -150,5 +150,14 @@ export default {
   appendRoot (target) {
     target = document.querySelector(target);
     target.appendChild(body.root);
+  },
+
+  setSliderValue (sliderNum, value) {
+    const slider = body.sliders[sliderNum];
+    const left = `calc(${value * 100}% - ${slider.offsetWidth}px / 2)`;
+
+    console.log(`JSR: Slider no. ${sliderNum} set to value: ${value}.`);
+
+    slider.style.left = left;
   }
 };
