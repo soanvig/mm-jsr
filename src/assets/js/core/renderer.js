@@ -108,10 +108,20 @@ function bindEvents (eventizer) {
   });
 
   // Rail click
-  eventizer.register('view/rail:click', () => {
+  eventizer.register('view/rail:click', (event) => {
     console.log('JSR: Rail clicked.');
+    console.log(event);
   });
-  listenOn(body.rail, 'click', (event) => {
+  listenOn(body.railOuter, 'click', (event) => {
+    const clickX = event.clientX;
+    const railLeft = body.railOuter.getBoundingClientRect().left;
+    const clickRelative = clickX - railLeft;
+    const ratio = clickRelative / body.railOuter.offsetWidth;
+
+    event.data = {
+      clickRelative,
+      clickRatio: ratio
+    };
     eventizer.trigger('view/rail:click', event);
   });
 }
