@@ -7,13 +7,9 @@ module.exports = {
     sourceType: 'module'
   },
   env: {
-    browser: true,
+    'browser': true,
+    'es6': true
   },
-  // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
-  // required to lint *.vue files
-  plugins: [
-    'html'
-  ],
   // add your custom rules here
   'rules': {
     // allow async-await
@@ -109,7 +105,6 @@ module.exports = {
     'no-negated-condition': 'error',
     'no-plusplus': 'error',
     'no-tabs': 'error',
-    'no-trailing-spaces': 'warn',
     'no-unneeded-ternary': 'error',
     'no-whitespace-before-property': 'error',
     'nonblock-statement-body-position': 'error',
