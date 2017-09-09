@@ -100,18 +100,12 @@ function listenOn (elements, event, callback, remove = false) {
 
 function bindEvents (eventizer) {
   // Slider click
-  eventizer.register('view/slider:click', () => {
-    console.log('JSR: Slider clicked.');
-  });
   listenOn(body.sliders, 'click', (event) => {
+    event.stopPropagation();
     eventizer.trigger('view/slider:click', event);
   });
 
   // Rail click
-  eventizer.register('view/rail:click', (event) => {
-    console.log('JSR: Rail clicked.');
-    console.log(event);
-  });
   listenOn(body.railOuter, 'click', (event) => {
     const clickX = event.clientX;
     const railLeft = body.railOuter.getBoundingClientRect().left;
