@@ -1,5 +1,9 @@
 const data = {
   modules: null,
+  config: {
+    min: 50,
+    max: 150
+  },
   values: []
 };
 
@@ -24,33 +28,49 @@ function setValue (value, id = null) {
 
   data.values[id] = value;
   data.modules.renderer.setSliderValue(id, value);
+
+  data.modules.eventizer.trigger('core/value:update', id, value);
 }
 
 function bindEvents (eventizer) {
-  eventizer.register('view/slider:click', (event) => {
-    console.log('JSR: Slider clicked.');
+  eventizer.register('view/slider:mousedown', (event) => {
+    console.log('JSR: Slider mousedown.');
+    console.log(event);
+  });
+
+  eventizer.register('view/slider:mousemove', (event, id) => {
+    console.log('JSR: Slider mousemove.');
+    console.log(event);
+    setValue(event.data.ratio, id);
+  });
+
+  eventizer.register('view/slider:mouseup', (event) => {
+    console.log('JSR: Slider mouseup.');
     console.log(event);
   });
 
   eventizer.register('view/rail:click', (event) => {
     console.log('JSR: Rail clicked.');
     console.log(event);
-    setValue(event.data.clickRatio);
+    setValue(event.data.ratio);
   });
 }
 
 export default {
   build ({ modules }) {
-    if (!data.modules) {
-      data.modules = modules;
-    }
+    data.modules = modules || data.modules;
   },
 
-  init () {
+  init ({ values }) {
     bindEvents(data.modules.eventizer);
     data.modules.renderer.appendRoot('body');
-    setValue(0.33, 0);
-    setValue(0.66, 1);
+    setValue(values[0], 0);
+    setValue(values[1], 1);
     console.info('JSR: Core initiated.');
+  },
+
+  getValue (id) {
+    const value = data.values[id];
+    return (data.config.max - data.config.min) * value + data.config.min;
   }
 };

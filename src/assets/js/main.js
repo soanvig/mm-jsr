@@ -1,5 +1,5 @@
 import core from './core/core.js';
-import renderer from './core/renderer.js';
+import renderer from './renderer/renderer.js';
 import eventizer from './core/eventSystem.js';
 import merge from 'deepmerge';
 
@@ -45,7 +45,10 @@ class JSR {
 
   _init () {
     this.input.style.display = 'none';
-    this.modules.core.init();
+    this.modules.core.init({
+      values: [0.33, 0.66]
+    });
+    console.log(this.modules.core.getValue(0));
   }
 }
 
