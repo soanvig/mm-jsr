@@ -1,3 +1,4 @@
+let logger = null;
 const data = {
   modules: null,
   config: {
@@ -24,7 +25,25 @@ function findClosestValue (lookupVal) {
 }
 
 function setValue (value, id = null) {
-  id = (id === null) ? findClosestValue(value) : id;
+  id = (id === null) ? findClosestValue(value) : parseInt(id);
+
+  // Value cannot exceed min/max
+  if (value < 0) {
+    value = 0;
+  }
+
+  if (value > 1) {
+    value = 1;
+  }
+
+  // Value cannot exceed neighbour values
+  if ((typeof data.values[id - 1] !== 'undefined') && value < data.values[id - 1]) {
+    value = data.values[id - 1];
+  }
+  
+  if ((typeof data.values[id + 1] !== 'undefined') && value > data.values[id + 1]) {
+    value = data.values[id + 1];
+  }
 
   data.values[id] = value;
   data.modules.renderer.setSliderValue(id, value);
@@ -34,31 +53,32 @@ function setValue (value, id = null) {
 
 function bindEvents (eventizer) {
   eventizer.register('view/slider:mousedown', (event) => {
-    console.log('JSR: Slider mousedown.');
-    console.log(event);
+    logger.debug('JSR: Slider mousedown.');
+    logger.debug(event);
   });
 
   eventizer.register('view/slider:mousemove', (event, id) => {
-    console.log('JSR: Slider mousemove.');
-    console.log(event);
+    logger.debug('JSR: Slider mousemove.');
+    logger.debug(event);
     setValue(event.data.ratio, id);
   });
 
   eventizer.register('view/slider:mouseup', (event) => {
-    console.log('JSR: Slider mouseup.');
-    console.log(event);
+    logger.debug('JSR: Slider mouseup.');
+    logger.debug(event);
   });
 
   eventizer.register('view/rail:click', (event) => {
-    console.log('JSR: Rail clicked.');
-    console.log(event);
+    logger.debug('JSR: Rail clicked.');
+    logger.debug(event);
     setValue(event.data.ratio);
   });
 }
 
 export default {
-  build ({ modules }) {
+  build ({ modules, log }) {
     data.modules = modules || data.modules;
+    logger = log;
   },
 
   init ({ values }) {
@@ -66,7 +86,7 @@ export default {
     data.modules.renderer.appendRoot('body');
     setValue(values[0], 0);
     setValue(values[1], 1);
-    console.info('JSR: Core initiated.');
+    logger.info('JSR: Core initiated.');
   },
 
   getValue (id) {

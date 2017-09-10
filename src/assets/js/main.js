@@ -2,9 +2,14 @@ import core from './core/core.js';
 import renderer from './renderer/renderer.js';
 import eventizer from './core/eventSystem.js';
 import merge from 'deepmerge';
+import logger from 'js-logger';
 
 class JSR {
   constructor (input, options = {}) {
+    this.logger = logger;
+    this.logger.useDefaults();
+    this.logger.setLevel(logger.INFO);
+
     this.modules = {
       eventizer,
       core,
@@ -26,7 +31,7 @@ class JSR {
       this._build(this.modules, this.moduleOptions);
       this._init();
     } else {
-      console.error(`JSR: Invalid 'input' parameter. Couldn't find '${input}' element.`);
+      logger.error(`JSR: Invalid 'input' parameter. Couldn't find '${input}' element.`);
     }
   }
 
@@ -35,10 +40,10 @@ class JSR {
     for (const moduleName in modules) {
       const build = modules[moduleName].build;
       if (build) {
-        build({ modules }, moduleOptions[moduleName]);
-        console.info(`JSR: Module ${moduleName} builded.`);
+        build({ modules, log: this.logger }, moduleOptions[moduleName]);
+        logger.info(`JSR: Module ${moduleName} builded.`);
       } else {
-        console.warn(`JSR: Module ${moduleName} skipped. No .build() method.`);
+        logger.info(`JSR: Module ${moduleName} skipped. No .build() method.`);
       }
     }
   }
@@ -46,9 +51,8 @@ class JSR {
   _init () {
     this.input.style.display = 'none';
     this.modules.core.init({
-      values: [0.33, 0.66]
+      values: [0.33, 0.66],
     });
-    console.log(this.modules.core.getValue(0));
   }
 }
 

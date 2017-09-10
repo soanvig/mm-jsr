@@ -26,6 +26,7 @@
     "rollup-plugin-uglify": "^2.0.1"
   },
   "dependencies": {
-    "deepmerge": "^1.5.1"
+    "deepmerge": "^1.5.1",
+    "js-logger": "^1.4.1"
   }
 }

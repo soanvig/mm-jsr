@@ -1,6 +1,8 @@
 import structureParser from './structureParser.js';
 import { listenOn } from '../helpers.js';
 
+let logger = null;
+
 const data = {
   modules: null,
   eventsLoaded: false,
@@ -83,10 +85,11 @@ function bindEvents (eventizer) {
 }
 
 export default {
-  build ({ modules }) {
+  build ({ modules, log }) {
     // Create body starting from root
     data.modules = modules || data.modules;
     const eventizer = data.modules.eventizer;
+    logger = log;
     
     body = structureParser(bodyStructure, 'root');
 
@@ -112,7 +115,7 @@ export default {
     const slider = body.sliders[sliderNum];
     const left = `calc(${value * 100}% - ${slider.offsetWidth}px / 2)`;
 
-    console.log(`JSR: Slider no. ${sliderNum} set to value: ${value}.`);
+    logger.debug(`JSR: Slider no. ${sliderNum} set to value: ${value}.`);
 
     slider.style.left = left;
   }
