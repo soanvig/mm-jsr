@@ -1,3 +1,5 @@
+import { throttle } from '../helpers.js';
+
 let logger = null;
 const data = {
   modules: null,
@@ -58,9 +60,11 @@ function bindEvents (eventizer) {
   });
 
   eventizer.register('view/slider:mousemove', (event, id) => {
-    logger.debug('JSR: Slider mousemove.');
-    logger.debug(event);
-    setValue(event.data.ratio, id);
+    throttle('slider-mousemove', 20, () => {
+      logger.debug('JSR: Slider mousemove.');
+      logger.debug(event);
+      setValue(event.data.ratio, id);
+    });
   });
 
   eventizer.register('view/slider:mouseup', (event) => {

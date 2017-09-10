@@ -1,3 +1,17 @@
+const throttling = {};
+function throttle (name, time, func) {
+  if (throttling[name]) {
+    return false;
+  }
+
+  throttling[name] = func;
+  setTimeout(() => {
+    throttling[name]();
+    throttling[name] = false;
+  }, time);
+  return true;
+}
+
 // Handle binding events even if multiple elements */
 function attachEventListener (element, event, callback) {
   element.addEventListener(event, callback);
@@ -15,5 +29,6 @@ function listenOn (elements, event, callback) {
 }
 
 export {
-  listenOn
+  listenOn,
+  throttle
 };
