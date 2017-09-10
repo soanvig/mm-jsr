@@ -1,3 +1,5 @@
+const elIds = {};
+
 function createElement (elName, bodyStructure, body) {
   const structEl = bodyStructure[elName];
   const count = structEl.count;
@@ -26,6 +28,8 @@ function createElement (elName, bodyStructure, body) {
         // And for each child created
         children.forEach((child) => {
           // Add it to parent
+          elIds[childName] = typeof elIds[childName] === 'undefined' ? 0 : elIds[childName] + 1;
+          child.dataset.jsrId = elIds[childName];
           body[elName][i].appendChild(child);
         });
       }

@@ -43,7 +43,7 @@ function bindEvents (eventizer) {
   });
   listenOn(body.sliders, 'mousedown', (event) => {
     // TODO: determine, how the slider id should be retrieved.
-    data.sliderInMove = 0;
+    data.sliderInMove = event.target.dataset.jsrId;
     eventizer.trigger('view/slider:mousedown', event);
   });
   listenOn(document, 'mousemove', (event) => {

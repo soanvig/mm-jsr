@@ -151,8 +151,7 @@ module.exports = function (grunt) {
 
     rollup: {
       options: {
-        format: 'iife',
-        sourceMap: 'inline'
+        format: 'iife'
       },
       dev: {
         files: [{
@@ -171,9 +170,9 @@ module.exports = function (grunt) {
                 browser: true
               }),
               commonjs()
-              // Eslint can go here
             ];
-          }
+          },
+          sourceMap: 'inline'
         }
       },
       dist: {
@@ -191,7 +190,8 @@ module.exports = function (grunt) {
               }),
               uglify()
             ];
-          }
+          },
+          sourceMap: false
         },
 
         files: [{
