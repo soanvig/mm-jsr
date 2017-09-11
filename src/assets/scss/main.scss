@@ -1,5 +1,8 @@
-.jsr
-{
+$jsr-rail-height: 5px;
+$jsr-rail-padding: 10px;
+$jsr-slider-height: 15px;
+
+.jsr {
     position: relative;
     z-index: 1;
 
@@ -21,20 +24,11 @@
 
 .jsr_rail-outer {
     position: relative;
-    padding: 5px 0;
+    padding: $jsr-rail-padding 0;
 }
 
-.jsr_rail
-{
-    height: 5px;
-}
-
-.jsr_rail::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 5px;
+.jsr_rail {
+    height: $jsr-rail-height;
     background: #444;
 }
 
@@ -46,24 +40,25 @@
     background-color: #999;
 }
 
-.jsr_slider
-{
+.jsr_slider {
     position: absolute;
-    top: 0;
+    top: calc(
+        (#{$jsr-rail-height} / 2 + #{$jsr-rail-padding})
+        - #{$jsr-slider-height} / 2
+    );
     left: 0;
 
     width: 15px;
     height: 15px;
 
     cursor: pointer;
-    transition: background .1s ease-in-out;
+    transition: background 0.1s ease-in-out;
 
     border-radius: 50%;
     background: #999;
     outline: 0;
 }
 
-.jsr_slider:focus
-{
+.jsr_slider:focus {
     background: #c00;
 }
