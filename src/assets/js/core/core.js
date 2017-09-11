@@ -6,18 +6,18 @@ const data = {
   config: {
     min: 50,
     max: 150,
-    step: 1
+    step: 10
   },
   values: []
 };
 
 // Converts real value to ratio value used by script 
-function realToRatio (value, min, max) {
+function realToRatio (value, min = data.config.min, max = data.config.max) {
   return (value - min) / (max - min); 
 }
 
 // Converts ratio value used by script to real value from min/max
-function ratioToReal (value, min, max) {
+function ratioToReal (value, min = data.config.min, max = data.config.max) {
   return (max - min) * value + min;
 }
 
@@ -78,11 +78,15 @@ function setValue (value, id = null) {
     value = data.values[id + 1];
   }
 
-  value = roundToStep(value, data.stepRatio, data.stepRatioDecimals);
-  data.values[id] = value;
-  data.modules.renderer.setSliderValue(id, value);
+  const roundedValue = roundToStep(value, data.stepRatio, data.stepRatioDecimals);
+  if (roundedValue === data.values[id]) {
+    return;
+  }
 
-  data.modules.eventizer.trigger('core/value:update', id, value);
+  data.values[id] = roundedValue;
+  data.modules.renderer.setSliderValue(id, roundedValue);
+
+  data.modules.eventizer.trigger('core/value:update', id, ratioToReal(roundedValue));
 }
 
 function bindEvents (eventizer) {
@@ -124,8 +128,8 @@ export default {
     // Renderer should be applied to body before setting values.
     data.modules.renderer.appendRoot('body');
 
-    values[0] = realToRatio(values[0], data.config.min, data.config.max);
-    values[1] = realToRatio(values[1], data.config.min, data.config.max);
+    values[0] = realToRatio(values[0]);
+    values[1] = realToRatio(values[1]);
     setValue(values[0], 0);
     setValue(values[1], 1);
     
