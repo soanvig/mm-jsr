@@ -56,8 +56,20 @@ class JSR {
       values: [50, 120],
     });
   }
+
+  addEventListener (event, callback) {
+    const eventNames = {
+      'update': 'core/value:update'
+    };
+
+    this.modules.eventizer.register(eventNames[event], callback);
+  }
 }
 
-new JSR('#range-1', {
+const jsr = new JSR('#range-1', {
   log: 'info'
+});
+
+jsr.addEventListener('update', (slider, value) => {
+  console.log(value);
 });
