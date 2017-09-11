@@ -6,10 +6,20 @@ const data = {
   config: {
     min: 50,
     max: 150,
-    step: 10
+    step: 1
   },
   values: []
 };
+
+// Converts real value to ratio value used by script 
+function realToRatio (value, min, max) {
+  return (value - min) / (max - min); 
+}
+
+// Converts ratio value used by script to real value from min/max
+function ratioToReal (value, min, max) {
+  return (max - min) * value + min;
+}
 
 // Determines, how many decimal places the (float) number has
 function calculateDecimals (number) {
@@ -111,15 +121,21 @@ export default {
     data.stepRatio = calculateStepRatio(data.config.step, data.config.min, data.config.max);
     data.stepRatioDecimals = calculateDecimals(data.stepRatio);
 
-    bindEvents(data.modules.eventizer);
+    // Renderer should be applied to body before setting values.
     data.modules.renderer.appendRoot('body');
+
+    values[0] = realToRatio(values[0], data.config.min, data.config.max);
+    values[1] = realToRatio(values[1], data.config.min, data.config.max);
     setValue(values[0], 0);
     setValue(values[1], 1);
+    
+    bindEvents(data.modules.eventizer);
+
     logger.info('JSR: Core initiated.');
   },
 
   getValue (id) {
     const value = data.values[id];
-    return (data.config.max - data.config.min) * value + data.config.min;
+    return ratioToReal(value, data.config.min, data.config.max);
   }
 };
