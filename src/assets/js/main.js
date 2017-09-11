@@ -1,13 +1,12 @@
 import core from './core/core.js';
 import renderer from './renderer/renderer.js';
 import eventizer from './core/eventSystem.js';
-import merge from 'deepmerge';
 import logger from './logger.js';
+import merge from 'deepmerge';
 
 class JSR {
   constructor (input, options = {}) {
     this.logger = logger;
-    this.logger.setLevel('debug');
 
     this.modules = {
       eventizer,
@@ -18,13 +17,17 @@ class JSR {
     this.moduleOptions = {
       core: {},
       renderer: {},
-      eventizer: {}
+      eventizer: {},
     };
 
-    const defaults = {};
+    const defaults = {
+      log: 'error'
+    };
 
     this.options = merge(defaults, options);
     this.input = document.querySelector(input);
+
+    this.logger.setLevel(this.options.log);
 
     if (this.input) {
       this._build(this.modules, this.moduleOptions);
@@ -55,4 +58,6 @@ class JSR {
   }
 }
 
-new JSR('#range-1');
+new JSR('#range-1', {
+  log: 'info'
+});
