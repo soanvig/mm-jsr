@@ -64,6 +64,10 @@ class JSR {
 
     this.modules.eventizer.register(eventNames[event], callback);
   }
+  
+  setValue (id, value) {
+    this.modules.core.setValue(id, value);
+  }
 }
 
 const jsr = new JSR('#range-1', {
@@ -73,3 +77,5 @@ const jsr = new JSR('#range-1', {
 jsr.addEventListener('update', (slider, value) => {
   console.log(value);
 });
+
+jsr.setValue(0, 70);

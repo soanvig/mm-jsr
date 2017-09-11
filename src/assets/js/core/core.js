@@ -141,5 +141,9 @@ export default {
   getValue (id) {
     const value = data.values[id];
     return ratioToReal(value, data.config.min, data.config.max);
+  },
+
+  setValue (id, value) {
+    setValue(value, id);
   }
 };
