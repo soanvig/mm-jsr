@@ -2,13 +2,12 @@ import core from './core/core.js';
 import renderer from './renderer/renderer.js';
 import eventizer from './core/eventSystem.js';
 import merge from 'deepmerge';
-import logger from 'js-logger';
+import logger from './logger.js';
 
 class JSR {
   constructor (input, options = {}) {
     this.logger = logger;
-    this.logger.useDefaults();
-    this.logger.setLevel(logger.INFO);
+    this.logger.setLevel('debug');
 
     this.modules = {
       eventizer,
