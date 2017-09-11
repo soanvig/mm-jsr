@@ -27,9 +27,14 @@ function createElement (elName, bodyStructure, body) {
         const children = createElement(childName, bodyStructure, body);
         // And for each child created
         children.forEach((child) => {
-          // Add it to parent
+          // Set params
+          // element id is unique for each element type (name), starting from 0
           elIds[childName] = typeof elIds[childName] === 'undefined' ? 0 : elIds[childName] + 1;
           child.dataset.jsrId = elIds[childName];
+          for (const attrName in bodyStructure[childName].attributes) {
+            child.setAttribute(attrName, bodyStructure[childName].attributes[attrName]);
+          }
+          // Add it to parent
           body[elName][i].appendChild(child);
         });
       }

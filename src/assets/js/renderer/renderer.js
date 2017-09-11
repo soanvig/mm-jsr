@@ -30,6 +30,9 @@ const bodyStructure = {
   sliders: {
     classes: ['jsr_slider'],
     children: [],
+    attributes: {
+      tabindex: 0
+    },
     count: 2
   },
   ranges: {
