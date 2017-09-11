@@ -51,7 +51,7 @@ class JSR {
   _init () {
     this.input.style.display = 'none';
     this.modules.core.init({
-      values: [0.33, 0.66],
+      values: [0.04, 0.66],
     });
   }
 }
