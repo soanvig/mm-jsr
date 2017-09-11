@@ -53,7 +53,7 @@ class JSR {
   _init () {
     this.input.style.display = 'none';
     this.modules.core.init({
-      values: [50, 120],
+      values: [70, 120],
     });
   }
 
@@ -78,4 +78,4 @@ jsr.addEventListener('update', (slider, value) => {
   console.log(value);
 });
 
-jsr.setValue(0, 70);
+jsr.setValue(0, 100);

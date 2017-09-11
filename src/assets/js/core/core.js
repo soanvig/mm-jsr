@@ -144,6 +144,7 @@ export default {
   },
 
   setValue (id, value) {
+    value = realToRatio(value);
     setValue(value, id);
   }
 };
