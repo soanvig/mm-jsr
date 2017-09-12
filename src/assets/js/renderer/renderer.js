@@ -142,6 +142,10 @@ function bindEvents (eventizer) {
 }
 
 function updateBars (sliderNum, value) {
+  if (!body.bars) {
+    return;
+  }
+
   const leftBar = body.bars[sliderNum - 1];
   const rightBar = body.bars[sliderNum];
 
@@ -155,12 +159,14 @@ function updateBars (sliderNum, value) {
 }
 
 export default {
-  build ({ modules, log }) {
-    // Create body starting from root
+  build ({ modules, log, config }) {
     data.modules = modules || data.modules;
     const eventizer = data.modules.eventizer;
     logger = log;
+    bodyStructure.sliders.count = config.sliders || 1;
+    bodyStructure.bars.count = bodyStructure.sliders.count - 1;
     
+    // Create body starting from root
     body = structureParser(bodyStructure, 'root');
 
     if (!data.eventsLoaded) {

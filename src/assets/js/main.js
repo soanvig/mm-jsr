@@ -14,23 +14,24 @@ class JSR {
       renderer
     };
 
-    this.moduleOptions = {
-      core: {},
-      renderer: {},
-      eventizer: {},
-    };
-
     const defaults = {
-      log: 'error'
+      log: 'error',
+      sliders: 2,
+      min: 0,
+      max: 100,
+      step: 1,
+      values: [25, 75]
     };
-
-    this.options = merge(defaults, options);
+    
+    this.config = merge(defaults, options, {
+      arrayMerge: (destinationArray, sourceArray) => sourceArray
+    });
     this.input = document.querySelector(input);
 
-    this.logger.setLevel(this.options.log);
+    this.logger.setLevel(this.config.log);
 
     if (this.input) {
-      this._build(this.modules, this.moduleOptions);
+      this._build(this.modules, this.config);
       this._init();
     } else {
       logger.error(`JSR: Invalid 'input' parameter. Couldn't find '${input}' element.`);
@@ -38,11 +39,11 @@ class JSR {
   }
 
   /* Build every module passing other modules and module-specific options as arguments */
-  _build (modules, moduleOptions) {
+  _build (modules, config) {
     for (const moduleName in modules) {
       const build = modules[moduleName].build;
       if (build) {
-        build({ modules, log: this.logger }, moduleOptions[moduleName]);
+        build({ modules, log: this.logger, config });
         logger.info(`JSR: Module ${moduleName} builded.`);
       } else {
         logger.info(`JSR: Module ${moduleName} skipped. No .build() method.`);
@@ -52,9 +53,7 @@ class JSR {
 
   _init () {
     this.input.style.display = 'none';
-    this.modules.core.init({
-      values: [70, 120],
-    });
+    this.modules.core.init(this.config.values, this.input);
   }
 
   addEventListener (event, callback) {
@@ -70,12 +69,26 @@ class JSR {
   }
 }
 
-const jsr = new JSR('#range-1', {
+new JSR('#range-1', {
+  sliders: 1,
+  values: [50],
   log: 'info'
 });
 
-jsr.addEventListener('update', (slider, value) => {
-  console.log(`Custom events test: New value set: ${slider}/${value}`);
+new JSR('#range-2', {
+  sliders: 2,
+  values: [25, 75],
+  log: 'info'
 });
 
-jsr.setValue(0, 100);
+new JSR('#range-3', {
+  sliders: 3,
+  values: [25, 50, 75],
+  log: 'info'
+});
+
+// jsr.addEventListener('update', (slider, value) => {
+//   console.log(`Custom events test: New value set: ${slider}/${value}`);
+// });
+
+// jsr.setValue(0, 40);

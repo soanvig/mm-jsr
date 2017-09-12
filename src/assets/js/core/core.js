@@ -3,11 +3,7 @@ import { throttle } from '../helpers.js';
 let logger = null;
 const data = {
   modules: null,
-  config: {
-    min: 50,
-    max: 150,
-    step: 1
-  },
+  config: {},
   values: []
 };
 
@@ -126,22 +122,25 @@ function bindEvents (eventizer) {
 }
 
 export default {
-  build ({ modules, log }) {
-    data.modules = modules || data.modules;
-    logger = log;
+  build (options) {
+    data.config.min = options.config.min;
+    data.config.max = options.config.max;
+    data.config.step = options.config.step;
+
+    data.modules = options.modules || data.modules;
+    logger = options.log;
   },
 
-  init ({ values }) {
+  init (values) {
     data.stepRatio = calculateStepRatio(data.config.step);
     data.stepRatioDecimals = calculateDecimals(data.stepRatio);
 
     // Renderer should be applied to body before setting values.
     data.modules.renderer.appendRoot('body');
-
-    values[0] = realToRatio(values[0]);
-    values[1] = realToRatio(values[1]);
-    setValue(values[0], 0);
-    setValue(values[1], 1);
+    
+    values.forEach((value, index) => {
+      this.setValue(index, value);
+    });
     
     bindEvents(data.modules.eventizer);
 
