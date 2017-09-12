@@ -45,9 +45,9 @@ function createElement (elName, bodyStructure, body) {
 }
 
 /* Flattens body (if there is only one element, make it no-array) */
-function flattenBody (body) {
+function flattenBody (body, bodyStructure) {
   for (const elName in body) {
-    if (body[elName].length === 1) {
+    if (body[elName].length === 1 && !bodyStructure[elName].alwaysArray) {
       body[elName] = body[elName][0];
     }
   }
@@ -56,7 +56,7 @@ function flattenBody (body) {
 export default function (structure, element) {
   const body = {};
   createElement(element, structure, body);
-  flattenBody(body);
+  flattenBody(body, structure);
 
   return body;
 }

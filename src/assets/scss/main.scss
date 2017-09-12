@@ -30,14 +30,14 @@ $jsr-slider-height: 15px;
 .jsr_rail {
     height: $jsr-rail-height;
     background: #444;
+    z-index: 1;
 }
 
-.jsr_range {
+.jsr_bar {
     position: absolute;
-    left: 0;
-    width: 0;
     height: 5px;
     background-color: #999;
+    z-index: 2;
 }
 
 .jsr_slider {
@@ -57,6 +57,8 @@ $jsr-slider-height: 15px;
     border-radius: 50%;
     background: #999;
     outline: 0;
+
+    z-index: 3;
 }
 
 .jsr_slider:focus {

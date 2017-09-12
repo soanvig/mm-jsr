@@ -75,7 +75,7 @@ const jsr = new JSR('#range-1', {
 });
 
 jsr.addEventListener('update', (slider, value) => {
-  console.log(value);
+  console.log(`Custom events test: New value set: ${slider}/${value}`);
 });
 
 jsr.setValue(0, 100);

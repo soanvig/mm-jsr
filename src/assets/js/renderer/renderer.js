@@ -24,7 +24,7 @@ const bodyStructure = {
   },
   rail: {
     classes: ['jsr_rail'],
-    children: ['sliders', 'ranges'],
+    children: ['sliders', 'bars'],
     count: 1
   },
   sliders: {
@@ -33,12 +33,14 @@ const bodyStructure = {
     attributes: {
       tabindex: 0
     },
-    count: 2
+    count: 2,
+    alwaysArray: true
   },
-  ranges: {
-    classes: ['jsr_range'],
+  bars: {
+    classes: ['jsr_bar'],
     children: [],
-    count: 1
+    count: 1,
+    alwaysArray: true
   }
 };
 
@@ -139,6 +141,19 @@ function bindEvents (eventizer) {
   });
 }
 
+function updateBars (sliderNum, value) {
+  const leftBar = body.bars[sliderNum - 1];
+  const rightBar = body.bars[sliderNum];
+
+  if (leftBar) {
+    leftBar.style.right = `${(1 - value) * 100}%`;
+  }
+
+  if (rightBar) {
+    rightBar.style.left = `${value * 100}%`;
+  }
+}
+
 export default {
   build ({ modules, log }) {
     // Create body starting from root
@@ -174,5 +189,7 @@ export default {
 
     data.values[sliderNum] = value;
     slider.style.left = left;
+
+    updateBars(sliderNum, value);
   }
 };
