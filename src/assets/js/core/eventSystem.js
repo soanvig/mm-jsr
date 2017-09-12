@@ -1,38 +1,45 @@
 import Event from './event.js';
 
-const events = {};
-
-function createNewEvent (name) {
-  if (events[name]) {
-    return;
+export default class {
+  constructor () {
+    this.store = {};
   }
 
-  events[name] = [];
-}
-
-function addListener (name, callback) {
-  const event = new Event(callback);
-  events[name].push(event);
-  return event;
-}
-
-function dispatchEvent (name, ...args) {
-  if (!events[name]) {
-    return false;
+  /* Adds new events store (store === event name) */
+  _createNewStore (name) {
+    if (this.store[name]) {
+      return;
+    }
+  
+    this.store[name] = [];
+  }
+  
+  /* Adds new event to existing store */
+  _addListener (name, callback) {
+    this._createNewStore(name);
+    const event = new Event(callback);
+    this.store[name].push(event);
+    return event;
   }
 
-  const length = events[name].length;
-  for (let i = 0; i < length; i += 1) {
-    events[name][i].trigger(...args);
+  /* Triggers all events in store */
+  _dispatchEvent (name, ...args) {
+    if (!this.store[name]) {
+      return false;
+    }
+  
+    const length = this.store[name].length;
+    for (let i = 0; i < length; i += 1) {
+      this.store[name][i].trigger(...args);
+    }
   }
-}
 
-export default {
+  /* API */
   register (name, callback) {
-    createNewEvent(name);
-    return addListener(name, callback);
-  },
-  trigger (name, ...args) {
-    dispatchEvent(name, ...args);
+    return this._addListener(name, callback);
   }
-};
+
+  trigger (name, ...args) {
+    this._dispatchEvent(name, ...args);
+  }
+}

@@ -47,7 +47,6 @@ module.exports = {
     'no-global-assign': 'error',
     'no-implicit-coercion': 'error',
     'no-implicit-globals': 'error',
-    'no-invalid-this': 'error',
     'no-lone-blocks': 'error',
     'no-loop-func': 'error',
     // Need to test it

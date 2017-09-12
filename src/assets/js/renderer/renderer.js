@@ -1,17 +1,7 @@
 import structureParser from './structureParser.js';
 import { listenOn } from '../helpers.js';
 
-let logger = null;
-
-const data = {
-  modules: null,
-  eventsLoaded: false,
-  sliderInMove: null,
-  values: []
-};
-
-let body = {};
-const bodyStructure = {
+const defaultBodyStructure = {
   root: {
     classes: ['jsr'],
     children: ['railOuter'],
@@ -44,11 +34,14 @@ const bodyStructure = {
   }
 };
 
+/* Private methods. Require to be called with .call(this, ...args) */
+
+// Returns ids of sliders with the same value as slider with sliderNum id
 function getSlidersWithSameValue (sliderNum) {
   const sliders = [];
 
-  data.values.forEach((value, index) => {
-    if (value === data.values[sliderNum]) {
+  this.values.forEach((value, index) => {
+    if (value === this.values[sliderNum]) {
       sliders.push(index);
     }
   });
@@ -56,146 +49,161 @@ function getSlidersWithSameValue (sliderNum) {
   return sliders;
 }
 
-function bindEvents (eventizer) {
-  // Slider
-  listenOn(body.sliders, 'click', (event) => {
-    event.stopPropagation();
-  });
-  listenOn(body.sliders, 'mousedown', (event) => {
-    data.sliderInMove = event.target.dataset.jsrId;
-    const slidersWithSameValue = getSlidersWithSameValue(data.sliderInMove);
-    if (slidersWithSameValue.length > 1) {
-      data.sliderInMove = slidersWithSameValue;
-      data.sliderClickX = event.clientX;
-    }
-    eventizer.trigger('view/slider:mousedown', event);
-  });
-  listenOn(document, 'mousemove', (event) => {
-    if (data.sliderInMove !== null) {
-      if (data.sliderInMove instanceof Array) {
-        // This situation means, that there is more than one slider in one position
-        // Determine direction of move and select good slider
-        if (event.clientX < data.sliderClickX) {
-          // Move to left, take first slider
-          data.sliderInMove = data.sliderInMove[0];
-        } else {
-          // Move to right, take last slider
-          data.sliderInMove = data.sliderInMove[data.sliderInMove.length - 1];
-        }
-      }
+export default class {
+  constructor () {
+    // This lists all available in-object variables
+    this.logger = null;
+    this.config = {};
+    this.modules = {};
+    this.sliderInMove = null;
+    this.sliderClickX = 0;
+    this.values = [];
+    this.body = {};
+    this.bodyStructure = defaultBodyStructure;
+  }
 
-      const clientX = event.clientX;
-      const railLeft = body.railOuter.getBoundingClientRect().left;
-      const clickRelative = clientX - railLeft;
-      const ratio = clickRelative / body.railOuter.offsetWidth;
-      
+  _bindEvents () {
+    const eventizer = this.modules.eventizer;
+    
+    // Slider click
+    listenOn(this.body.sliders, 'click', (event) => {
+      event.stopPropagation();
+    });
+    listenOn(this.body.sliders, 'mousedown', (event) => {
+      this.sliderInMove = event.target.dataset.jsrId;
+      const slidersWithSameValue = getSlidersWithSameValue.call(this, this.sliderInMove);
+      if (slidersWithSameValue.length > 1) {
+        this.sliderInMove = slidersWithSameValue;
+        this.sliderClickX = event.clientX;
+      }
+      eventizer.trigger('view/slider:mousedown', event);
+    });
+    listenOn(document, 'mousemove', (event) => {
+      if (this.sliderInMove !== null) {
+        if (this.sliderInMove instanceof Array) {
+          // This situation means, that there is more than one slider in one position
+          // Determine direction of move and select good slider
+          if (event.clientX < this.sliderClickX) {
+            // Move to left, take first slider
+            this.sliderInMove = data.sliderInMove[0];
+          } else {
+            // Move to right, take last slider
+            this.sliderInMove = this.sliderInMove[this.sliderInMove.length - 1];
+          }
+        }
+  
+        const clientX = event.clientX;
+        const railLeft = this.body.railOuter.getBoundingClientRect().left;
+        const clickRelative = clientX - railLeft;
+        const ratio = clickRelative / this.body.railOuter.offsetWidth;
+        
+        event.data = {
+          clickRelative,
+          ratio
+        };
+        eventizer.trigger('view/slider:mousemove', event, this.sliderInMove);
+      }
+    });
+    listenOn(document, 'mouseup', (event) => {
+      if (this.sliderInMove !== null) {
+        eventizer.trigger('view/slider:mouseup', event, this.sliderInMove);
+        this.sliderInMove = null;
+      }
+    });
+    // ./ Slider
+  
+    // Rail
+    listenOn(this.body.railOuter, 'click', (event) => {
+      const clickX = event.clientX;
+      const railLeft = this.body.railOuter.getBoundingClientRect().left;
+      const clickRelative = clickX - railLeft;
+      const ratio = clickRelative / this.body.railOuter.offsetWidth;
+  
       event.data = {
         clickRelative,
         ratio
       };
-      eventizer.trigger('view/slider:mousemove', event, data.sliderInMove);
-    }
-  });
-  listenOn(document, 'mouseup', (event) => {
-    if (data.sliderInMove !== null) {
-      eventizer.trigger('view/slider:mouseup', event, data.sliderInMove);
-      data.sliderInMove = null;
-    }
-  });
-
-  // Rail click
-  listenOn(body.railOuter, 'click', (event) => {
-    const clickX = event.clientX;
-    const railLeft = body.railOuter.getBoundingClientRect().left;
-    const clickRelative = clickX - railLeft;
-    const ratio = clickRelative / body.railOuter.offsetWidth;
-
-    event.data = {
-      clickRelative,
-      ratio
-    };
-    eventizer.trigger('view/rail:click', event);
-  });
-
-  // Keyboard
-  listenOn(body.root, 'keydown', (event) => {
-    // Its slider presumably, cuz only slider can have focus
-    const sliderId = event.target.dataset.jsrId;
-    const keyCodes = {
-      '37': -1, // left 
-      '38': +1, // up
-      '39': +1, // right
-      '40': -1 // down
-    };
-
-    // If the left, up, down or right arrow was pressed
-    const key = keyCodes[event.keyCode.toString()];
-    if (!key) {
-      return false;
-    }
-
-    // Prevent default, to disable functions like selecting text
-    // Because of condition above it doesn't block other keys like TAB
-    event.preventDefault();
-    eventizer.trigger('view/root:arrow', event, sliderId, key);
-  });
-}
-
-function updateBars (sliderNum, value) {
-  if (!body.bars) {
-    return;
+      eventizer.trigger('view/rail:click', event);
+    });
+    // ./ Rail
+  
+    // Keyboard
+    listenOn(this.body.root, 'keydown', (event) => {
+      // Its slider presumably, cuz only slider can have focus
+      const sliderId = event.target.dataset.jsrId;
+      const keyCodes = {
+        '37': -1, // left 
+        '38': +1, // up
+        '39': +1, // right
+        '40': -1 // down
+      };
+  
+      // If the left, up, down or right arrow was pressed
+      const key = keyCodes[event.keyCode.toString()];
+      if (!key) {
+        return false;
+      }
+  
+      // Prevent default, to disable functions like selecting text
+      // Because of condition above it doesn't block other keys like TAB
+      event.preventDefault();
+      eventizer.trigger('view/root:arrow', event, sliderId, key);
+    });
+    // ./ Keyboard
   }
 
-  const leftBar = body.bars[sliderNum - 1];
-  const rightBar = body.bars[sliderNum];
-
-  if (leftBar) {
-    leftBar.style.right = `${(1 - value) * 100}%`;
+  // Updates bars which are neighbour to sliderNum (value is this slider value).
+  _updateBars (sliderNum, value) {
+    if (!this.body.bars) {
+      return;
+    }
+  
+    const leftBar = this.body.bars[sliderNum - 1];
+    const rightBar = this.body.bars[sliderNum];
+  
+    if (leftBar) {
+      leftBar.style.right = `${(1 - value) * 100}%`;
+    }
+  
+    if (rightBar) {
+      rightBar.style.left = `${value * 100}%`;
+    }
   }
 
-  if (rightBar) {
-    rightBar.style.left = `${value * 100}%`;
-  }
-}
+  /* API */
+  build ({ modules, logger, config }) {
+    this.modules = modules;
+    this.logger = logger;
+    this.config = config;
 
-export default {
-  build ({ modules, log, config }) {
-    data.modules = modules || data.modules;
-    const eventizer = data.modules.eventizer;
-    logger = log;
-    bodyStructure.sliders.count = config.sliders || 1;
-    bodyStructure.bars.count = bodyStructure.sliders.count - 1;
+    this.bodyStructure.sliders.count = this.config.sliders || 1;
+    this.bodyStructure.bars.count = this.bodyStructure.sliders.count - 1;
     
     // Create body starting from root
-    body = structureParser(bodyStructure, 'root');
+    this.body = structureParser(this.bodyStructure, 'root');
 
-    if (!data.eventsLoaded) {
-      bindEvents(eventizer);
-    }
-  },
-  
-  structure () {
-    return bodyStructure;
-  },
+    this._bindEvents();
+  }
 
-  update () {
-    this.build();
-  },
+  get structure () {
+    return this.bodyStructure;
+  }
 
+  // Appends root after target
+  // @target should be HTML element
   appendRoot (target) {
-    target = document.querySelector(target);
-    target.appendChild(body.root);
-  },
+    target.parentNode.insertBefore(this.body.root, target.nextSibling);
+  }
 
-  setSliderValue (sliderNum, value) {
-    const slider = body.sliders[sliderNum];
+  setSliderValue (value, sliderNum) {
+    const slider = this.body.sliders[sliderNum];
     const left = `calc(${value * 100}% - ${slider.offsetWidth}px / 2)`;
 
-    logger.debug(`JSR: Slider no. ${sliderNum} set to value: ${value}.`);
+    this.logger.debug(`JSR: Slider no. ${sliderNum} set to value: ${value}.`);
 
-    data.values[sliderNum] = value;
+    this.values[sliderNum] = value;
     slider.style.left = left;
 
-    updateBars(sliderNum, value);
+    this._updateBars(sliderNum, value);
   }
-};
+}

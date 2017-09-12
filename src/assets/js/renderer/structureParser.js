@@ -1,6 +1,4 @@
-const elIds = {};
-
-function createElement (elName, bodyStructure, body) {
+function createElement (elName, bodyStructure, body, elIds) {
   const structEl = bodyStructure[elName];
   const count = structEl.count;
   const createdElements = [];
@@ -24,7 +22,7 @@ function createElement (elName, bodyStructure, body) {
       // And for each parent
       for (let i = 0; i < count; i += 1) {
         // Create `child.count` children
-        const children = createElement(childName, bodyStructure, body);
+        const children = createElement(childName, bodyStructure, body, elIds);
         // And for each child created
         children.forEach((child) => {
           // Set params
@@ -55,7 +53,9 @@ function flattenBody (body, bodyStructure) {
 
 export default function (structure, element) {
   const body = {};
-  createElement(element, structure, body);
+  const elIds = {};
+  
+  createElement(element, structure, body, elIds);
   flattenBody(body, structure);
 
   return body;

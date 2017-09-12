@@ -1,61 +1,70 @@
-import core from './core/core.js';
-import renderer from './renderer/renderer.js';
-import eventizer from './core/eventSystem.js';
-import logger from './logger.js';
+import Core from './core/core.js';
+import Renderer from './renderer/renderer.js';
+import Eventizer from './core/eventSystem.js';
+import Logger from './logger.js';
 import merge from 'deepmerge';
 
 class JSR {
   constructor (input, options = {}) {
-    this.logger = logger;
-
-    this.modules = {
-      eventizer,
-      core,
-      renderer
-    };
-
     const defaults = {
       log: 'error',
       sliders: 2,
       min: 0,
       max: 100,
       step: 1,
-      values: [25, 75]
+      values: [25, 75],
+      modules: {
+        eventizer: Eventizer,
+        core: Core,
+        renderer: Renderer,
+      }
     };
-    
     this.config = merge(defaults, options, {
+      // This will overwrite arrays, instead merging them.
       arrayMerge: (destinationArray, sourceArray) => sourceArray
     });
-    this.input = document.querySelector(input);
+    
+    // Create modules
+    this.modules = {};
+    for (const moduleName in this.config.modules) {
+      this.modules[moduleName] = new this.config.modules[moduleName];
+    }
 
+    this.logger = Logger;
     this.logger.setLevel(this.config.log);
 
+    this.input = document.querySelector(input);
     if (this.input) {
-      this._build(this.modules, this.config);
+      this._buildModules();
       this._init();
     } else {
       logger.error(`JSR: Invalid 'input' parameter. Couldn't find '${input}' element.`);
     }
   }
 
-  /* Build every module passing other modules and module-specific options as arguments */
-  _build (modules, config) {
-    for (const moduleName in modules) {
-      const build = modules[moduleName].build;
+  /* Builds every module */
+  _buildModules () {
+    for (const moduleName in this.modules) {
+      const build = this.modules[moduleName].build;
       if (build) {
-        build({ modules, log: this.logger, config });
-        logger.info(`JSR: Module ${moduleName} builded.`);
+        build.call(this.modules[moduleName], {
+          modules: this.modules,
+          logger: this.logger,
+          config: this.config
+        });
+        this.logger.info(`JSR: Module ${moduleName} builded.`);
       } else {
-        logger.info(`JSR: Module ${moduleName} skipped. No .build() method.`);
+        this.logger.info(`JSR: Module ${moduleName} skipped. No .build() method.`);
       }
     }
   }
 
   _init () {
     this.input.style.display = 'none';
-    this.modules.core.init(this.config.values, this.input);
+    this.modules.core.init(this.input, this.config.values);
   }
 
+  /* API */
   addEventListener (event, callback) {
     const eventNames = {
       'update': 'core/value:update'
