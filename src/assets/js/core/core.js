@@ -6,7 +6,7 @@ const data = {
   config: {
     min: 50,
     max: 150,
-    step: 10
+    step: 1
   },
   values: []
 };
@@ -31,7 +31,7 @@ function calculateDecimals (number) {
   return 0;
 }
 
-function calculateStepRatio (step, min, max) {
+function calculateStepRatio (step, min = data.config.min, max = data.config.max) {
   return (step / (max - min));
 }
 
@@ -113,6 +113,16 @@ function bindEvents (eventizer) {
     logger.debug(event);
     setValue(event.data.ratio);
   });
+
+  eventizer.register('view/root:arrow', (event, id, direction) => {
+    const actualValue = data.values[id];
+    const twentiethRange = 0.05;
+    const increaseBy = event.shiftKey ? twentiethRange
+      : (event.ctrlKey ? data.stepRatio * 10 : data.stepRatio);
+
+    const newValue = actualValue + increaseBy * direction;
+    setValue(newValue, id);
+  });
 }
 
 export default {
@@ -122,7 +132,7 @@ export default {
   },
 
   init ({ values }) {
-    data.stepRatio = calculateStepRatio(data.config.step, data.config.min, data.config.max);
+    data.stepRatio = calculateStepRatio(data.config.step);
     data.stepRatioDecimals = calculateDecimals(data.stepRatio);
 
     // Renderer should be applied to body before setting values.
@@ -140,7 +150,7 @@ export default {
 
   getValue (id) {
     const value = data.values[id];
-    return ratioToReal(value, data.config.min, data.config.max);
+    return ratioToReal(value);
   },
 
   setValue (id, value) {

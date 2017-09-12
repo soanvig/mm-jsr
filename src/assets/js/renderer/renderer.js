@@ -114,6 +114,29 @@ function bindEvents (eventizer) {
     };
     eventizer.trigger('view/rail:click', event);
   });
+
+  // Keyboard
+  listenOn(body.root, 'keydown', (event) => {
+    // Its slider presumably, cuz only slider can have focus
+    const sliderId = event.target.dataset.jsrId;
+    const keyCodes = {
+      '37': -1, // left 
+      '38': +1, // up
+      '39': +1, // right
+      '40': -1 // down
+    };
+
+    // If the left, up, down or right arrow was pressed
+    const key = keyCodes[event.keyCode.toString()];
+    if (!key) {
+      return false;
+    }
+
+    // Prevent default, to disable functions like selecting text
+    // Because of condition above it doesn't block other keys like TAB
+    event.preventDefault();
+    eventizer.trigger('view/root:arrow', event, sliderId, key);
+  });
 }
 
 export default {
