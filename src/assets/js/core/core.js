@@ -64,20 +64,26 @@ export default class {
     };
     this.modules = {};
     this.values = [];
+    this.valueInMove = 0;
     this.step = 0;
     this.stepRatio = 0;
     this.stepRatioDecimals = 0;
   }
 
-  _setValue (value, id = null) {
+  // If diff is set to true, then it calculates the value using:
+  // - this.valueInMove (which is value saved during click).
+  // - value (which is the difference between position during click and new mouse position).
+  _setValue (value, id = null, diff = false) {
     id = (id === null) ? findClosestValue.call(this, value) : parseInt(id);
+
+    if (diff) {
+      value = this.valueInMove + value;
+    }
 
     // Value cannot exceed min/max
     if (value < 0) {
       value = 0;
-    }
-  
-    if (value > 1) {
+    } else if (value > 1) {
       value = 1;
     }
   
@@ -105,16 +111,19 @@ export default class {
   _bindEvents () {
     const eventizer = this.modules.eventizer;
 
-    eventizer.register('view/slider:mousedown', (event) => {
+    eventizer.register('view/slider:mousedown', (event, sliderClicked) => {
       this.logger.debug('JSR: Slider mousedown.');
       this.logger.debug(event);
+
+      this.valueInMove = this.values[sliderClicked];
     });
   
-    eventizer.register('view/slider:mousemove', (event, id) => {
+    eventizer.register('view/slider:mousemove', (event, id, diff) => {
       throttle('slider-mousemove', 10, () => {
         this.logger.debug('JSR: Slider mousemove.');
         this.logger.debug(event);
-        this._setValue(event.data.ratio, id);
+
+        this._setValue(diff, id, true);
       });
     });
   
@@ -123,10 +132,10 @@ export default class {
       this.logger.debug(event);
     });
   
-    eventizer.register('view/rail:click', (event) => {
+    eventizer.register('view/rail:click', (event, value) => {
       this.logger.debug('JSR: Rail clicked.');
       this.logger.debug(event);
-      this._setValue(event.data.ratio);
+      this._setValue(value);
     });
   
     eventizer.register('view/root:arrow', (event, id, direction) => {

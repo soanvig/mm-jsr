@@ -71,12 +71,14 @@ export default class {
     });
     listenOn(this.body.sliders, 'mousedown', (event) => {
       this.sliderInMove = event.target.dataset.jsrId;
+      this.sliderClickX = event.clientX;
+
+      eventizer.trigger('view/slider:mousedown', event, this.sliderInMove);
+
       const slidersWithSameValue = getSlidersWithSameValue.call(this, this.sliderInMove);
       if (slidersWithSameValue.length > 1) {
         this.sliderInMove = slidersWithSameValue;
-        this.sliderClickX = event.clientX;
       }
-      eventizer.trigger('view/slider:mousedown', event);
     });
     listenOn(document, 'mousemove', (event) => {
       if (this.sliderInMove !== null) {
@@ -85,23 +87,17 @@ export default class {
           // Determine direction of move and select good slider
           if (event.clientX < this.sliderClickX) {
             // Move to left, take first slider
-            this.sliderInMove = data.sliderInMove[0];
+            this.sliderInMove = this.sliderInMove[0];
           } else {
             // Move to right, take last slider
             this.sliderInMove = this.sliderInMove[this.sliderInMove.length - 1];
           }
         }
-  
-        const clientX = event.clientX;
-        const railLeft = this.body.railOuter.getBoundingClientRect().left;
-        const clickRelative = clientX - railLeft;
-        const ratio = clickRelative / this.body.railOuter.offsetWidth;
-        
-        event.data = {
-          clickRelative,
-          ratio
-        };
-        eventizer.trigger('view/slider:mousemove', event, this.sliderInMove);
+
+        const diff = event.clientX - this.sliderClickX;
+        const diffRatio = diff / this.body.railOuter.offsetWidth;
+
+        eventizer.trigger('view/slider:mousemove', event, this.sliderInMove, diffRatio);
       }
     });
     listenOn(document, 'mouseup', (event) => {
@@ -119,11 +115,7 @@ export default class {
       const clickRelative = clickX - railLeft;
       const ratio = clickRelative / this.body.railOuter.offsetWidth;
   
-      event.data = {
-        clickRelative,
-        ratio
-      };
-      eventizer.trigger('view/rail:click', event);
+      eventizer.trigger('view/rail:click', event, ratio);
     });
     // ./ Rail
   
