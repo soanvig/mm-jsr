@@ -25,6 +25,7 @@ $jsr-slider-height: 15px;
 .jsr_rail-outer {
     position: relative;
     padding: $jsr-rail-padding 0;
+    cursor: pointer;
 }
 
 .jsr_rail {
@@ -38,6 +39,7 @@ $jsr-slider-height: 15px;
     height: 5px;
     background-color: #999;
     z-index: 2;
+    cursor: move;
 }
 
 .jsr_slider {
@@ -51,7 +53,7 @@ $jsr-slider-height: 15px;
     width: 15px;
     height: 15px;
 
-    cursor: pointer;
+    cursor: col-resize;
     transition: background 0.1s ease-in-out;
 
     border-radius: 50%;
