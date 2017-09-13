@@ -65,7 +65,7 @@ export default class {
   _bindEvents () {
     const eventizer = this.modules.eventizer;
     
-    // Slider click
+    // Slider
     listenOn(this.body.sliders, 'click', (event) => {
       event.stopPropagation();
     });
@@ -107,6 +107,18 @@ export default class {
       }
     });
     // ./ Slider
+
+    // Bar
+    // listenOn(this.body.bars, 'mousedown', (event) => {
+      
+    // });
+    // listenOn(document, 'mousemove', (event) => {
+      
+    // });
+    // listenOn(document, 'mouseup', (event) => {
+      
+    // });
+    // ./ Bar
   
     // Rail
     listenOn(this.body.railOuter, 'click', (event) => {
