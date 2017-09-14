@@ -2,6 +2,7 @@ import Core from './core/core.js';
 import Renderer from './renderer/renderer.js';
 import Eventizer from './core/eventSystem.js';
 import Logger from './logger.js';
+import InputUpdater from './inputUpdater.js';
 import merge from 'deepmerge';
 
 class JSR {
@@ -17,12 +18,19 @@ class JSR {
         eventizer: Eventizer,
         core: Core,
         renderer: Renderer,
+        inputUpdater: InputUpdater
       }
     };
     this.config = merge(defaults, options, {
       // This will overwrite arrays, instead merging them.
       arrayMerge: (destinationArray, sourceArray) => sourceArray
     });
+    this.specificConfig = {
+      eventizer: {},
+      core: {},
+      renderer: {},
+      inputUpdater: {}
+    };
     
     // Create modules
     this.modules = {};
@@ -34,6 +42,8 @@ class JSR {
     this.logger.setLevel(this.config.log);
 
     this.input = document.querySelector(input);
+    this.specificConfig.inputUpdater.input = this.input;
+
     if (this.input) {
       this._buildModules();
       this._init();
@@ -51,7 +61,7 @@ class JSR {
           modules: this.modules,
           logger: this.logger,
           config: this.config
-        });
+        }, this.specificConfig[moduleName]);
         this.logger.info(`JSR: Module ${moduleName} builded.`);
       } else {
         this.logger.info(`JSR: Module ${moduleName} skipped. No .build() method.`);
@@ -67,7 +77,7 @@ class JSR {
   /* API */
   addEventListener (event, callback) {
     const eventNames = {
-      'update': 'core/value:update'
+      'update': 'input/value:update'
     };
 
     this.modules.eventizer.register(eventNames[event], callback);
