@@ -1,4 +1,3 @@
-let level = 0;
 const levels = {
   debug: 0,
   info: 1,
@@ -7,48 +6,52 @@ const levels = {
   disable: 4
 };
 
-export default {
+export default class {
+  constructor () {
+    this.level = 1;
+  }
+
   setLevel (levelName) {
-    level = levels[levelName];
-  },
+    this.level = levels[levelName];
+  }
 
   debug (...args) {
-    if (level > 0) {
+    if (this.level > 0) {
       return;
     }
 
     console.log(...args);
-  },
+  }
 
   log (...args) {
-    if (level > 1) {
+    if (this.level > 1) {
       return;
     }
 
     console.log(...args);
-  },
+  }
 
   info (...args) {
-    if (level > 1) {
+    if (this.level > 1) {
       return;
     }
 
     console.info(...args);
-  },
+  }
   
   warn (...args) {
-    if (level > 2) {
+    if (this.level > 2) {
       return;
     }
 
     console.warn(...args);
-  },
+  }
 
   error (...args) {
-    if (level > 3) {
+    if (this.level > 3) {
       return;
     }
 
     console.error(...args);
   }
-};
+}

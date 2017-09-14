@@ -30,7 +30,7 @@ class JSR {
       this.modules[moduleName] = new this.config.modules[moduleName];
     }
 
-    this.logger = Logger;
+    this.logger = new Logger;
     this.logger.setLevel(this.config.log);
 
     this.input = document.querySelector(input);

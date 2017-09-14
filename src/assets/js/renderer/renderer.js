@@ -55,8 +55,12 @@ export default class {
     this.logger = null;
     this.config = {};
     this.modules = {};
-    this.sliderInMove = null;
-    this.sliderClickX = 0;
+    this.temp = {
+      sliderInMove: null,
+      sliderClickX: 0,
+      barInMove: null,
+      barClickX: 0
+    };
     this.values = [];
     this.body = {};
     this.bodyStructure = defaultBodyStructure;
@@ -70,54 +74,93 @@ export default class {
       event.stopPropagation();
     });
     listenOn(this.body.sliders, 'mousedown', (event) => {
-      this.sliderInMove = event.target.dataset.jsrId;
-      this.sliderClickX = event.clientX;
+      event.stopPropagation();
 
-      eventizer.trigger('view/slider:mousedown', event, this.sliderInMove);
+      this.temp.sliderInMove = parseInt(event.target.dataset.jsrId);
+      this.temp.sliderClickX = event.clientX;
 
-      const slidersWithSameValue = getSlidersWithSameValue.call(this, this.sliderInMove);
+      eventizer.trigger('view/slider:mousedown', event, this.temp.sliderInMove);
+
+      const slidersWithSameValue = getSlidersWithSameValue.call(this, this.temp.sliderInMove);
       if (slidersWithSameValue.length > 1) {
-        this.sliderInMove = slidersWithSameValue;
+        this.temp.sliderInMove = slidersWithSameValue;
       }
     });
     listenOn(document, 'mousemove', (event) => {
-      if (this.sliderInMove !== null) {
-        if (this.sliderInMove instanceof Array) {
-          // This situation means, that there is more than one slider in one position
-          // Determine direction of move and select good slider
-          if (event.clientX < this.sliderClickX) {
-            // Move to left, take first slider
-            this.sliderInMove = this.sliderInMove[0];
-          } else {
-            // Move to right, take last slider
-            this.sliderInMove = this.sliderInMove[this.sliderInMove.length - 1];
-          }
-        }
+      event.stopPropagation();
 
-        const diff = event.clientX - this.sliderClickX;
-        const diffRatio = diff / this.body.railOuter.offsetWidth;
-
-        eventizer.trigger('view/slider:mousemove', event, this.sliderInMove, diffRatio);
+      if (this.temp.sliderInMove === null) {
+        return;
       }
+
+      if (this.temp.sliderInMove instanceof Array) {
+        // This situation means, that there is more than one slider in one position
+        // Determine direction of move and select good slider
+        if (event.clientX < this.temp.sliderClickX) {
+          // Move to left, take first slider
+          this.temp.sliderInMove = this.temp.sliderInMove[0];
+        } else {
+          // Move to right, take last slider
+          this.temp.sliderInMove = this.temp.sliderInMove.pop();
+        }
+      }
+
+      // Now, if its certain which slider should be move, focus it!
+      this.body.sliders[this.temp.sliderInMove].focus();
+
+      // Calculate the difference between the position where slider was clicked and where the mouse cursor is now.
+      // Plus convert it into rationed value.
+      const diff = event.clientX - this.temp.sliderClickX;
+      const diffRatio = diff / this.body.railOuter.offsetWidth;
+
+      eventizer.trigger('view/slider:mousemove', event, this.temp.sliderInMove, diffRatio);
     });
     listenOn(document, 'mouseup', (event) => {
-      if (this.sliderInMove !== null) {
-        eventizer.trigger('view/slider:mouseup', event, this.sliderInMove);
-        this.sliderInMove = null;
+      if (this.temp.sliderInMove === null) {
+        return;
       }
+
+      eventizer.trigger('view/slider:mouseup', event, this.temp.sliderInMove);
+      this.temp.sliderInMove = null;
     });
     // ./ Slider
 
     // Bar
-    // listenOn(this.body.bars, 'mousedown', (event) => {
-      
-    // });
-    // listenOn(document, 'mousemove', (event) => {
-      
-    // });
-    // listenOn(document, 'mouseup', (event) => {
-      
-    // });
+    if (this.body.bars) {
+      listenOn(this.body.bars, 'click', (event) => {
+        if (this.temp.barClickX !== event.clientX) {
+          // Stop propagation into rail click if mouse position differs from bar click position
+          // Ergo - cursor was moved
+          event.stopPropagation();
+        }
+      });
+      listenOn(this.body.bars, 'mousedown', (event) => {
+        this.temp.barInMove = parseInt(event.target.dataset.jsrId);
+        this.temp.barClickX = event.clientX;
+
+        eventizer.trigger('view/bar:mousedown', event, this.temp.barInMove);
+      });
+      listenOn(document, 'mousemove', (event) => {
+        if (this.temp.barInMove === null) {
+          return;
+        }
+  
+        // Calculate the difference between the position where bar was clicked and where the mouse cursor is now.
+        // Plus convert it into rationed value.
+        const diff = event.clientX - this.temp.barClickX;
+        const diffRatio = diff / this.body.railOuter.offsetWidth;
+  
+        eventizer.trigger('view/bar:mousemove', event, this.temp.barInMove, diffRatio);
+      });
+      listenOn(document, 'mouseup', (event) => {
+        if (this.temp.barInMove === null) {
+          return;
+        }
+  
+        eventizer.trigger('view/bar:mouseup', event, this.temp.barInMove);
+        this.temp.barInMove = null;
+      });
+    }
     // ./ Bar
   
     // Rail

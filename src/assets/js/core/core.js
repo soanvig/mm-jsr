@@ -64,7 +64,7 @@ export default class {
     };
     this.modules = {};
     this.values = [];
-    this.valueInMove = 0;
+    this.valueInMove = [];
     this.step = 0;
     this.stepRatio = 0;
     this.stepRatioDecimals = 0;
@@ -77,7 +77,7 @@ export default class {
     id = (id === null) ? findClosestValue.call(this, value) : parseInt(id);
 
     if (diff) {
-      value = this.valueInMove + value;
+      value = this.valueInMove[id] + value;
     }
 
     // Value cannot exceed min/max
@@ -115,7 +115,7 @@ export default class {
       this.logger.debug('JSR: Slider mousedown.');
       this.logger.debug(event);
 
-      this.valueInMove = this.values[sliderClicked];
+      this.valueInMove[sliderClicked] = this.values[sliderClicked];
     });
   
     eventizer.register('view/slider:mousemove', (event, id, diff) => {
@@ -146,6 +146,29 @@ export default class {
   
       const newValue = actualValue + increaseBy * direction;
       this._setValue(newValue, id);
+    });
+
+    eventizer.register('view/bar:mousedown', (event, id) => {
+      this.logger.debug('JSR: Bar mousedown.');
+      this.logger.debug(event);
+      
+      this.valueInMove[id] = this.values[id];
+      this.valueInMove[id + 1] = this.values[id + 1];
+    });
+  
+    eventizer.register('view/bar:mousemove', (event, id, diff) => {
+      throttle('bar-mousemove', 10, () => {
+        this.logger.debug('JSR: Bar mousemove.');
+        this.logger.debug(event);
+
+        this._setValue(diff, id, true);
+        this._setValue(diff, id + 1, true);
+      });
+    });
+  
+    eventizer.register('view/bar:mouseup', (event) => {
+      this.logger.debug('JSR: Bar mouseup.');
+      this.logger.debug(event);
     });
   }
 
