@@ -1,39 +1,6 @@
 import structureParser from './structureParser.js';
 import { listenOn } from '../helpers.js';
 
-const defaultBodyStructure = {
-  root: {
-    classes: ['jsr'],
-    children: ['railOuter'],
-    count: 1
-  },
-  railOuter: {
-    classes: ['jsr_rail-outer'],
-    children: ['rail'],
-    count: 1
-  },
-  rail: {
-    classes: ['jsr_rail'],
-    children: ['sliders', 'bars'],
-    count: 1
-  },
-  sliders: {
-    classes: ['jsr_slider'],
-    children: [],
-    attributes: {
-      tabindex: 0
-    },
-    count: 2,
-    alwaysArray: true
-  },
-  bars: {
-    classes: ['jsr_bar'],
-    children: [],
-    count: 1,
-    alwaysArray: true
-  }
-};
-
 /* Private methods. Require to be called with .call(this, ...args) */
 
 // Returns ids of sliders with the same value as slider with sliderNum id
@@ -63,7 +30,38 @@ export default class {
     };
     this.values = [];
     this.body = {};
-    this.bodyStructure = defaultBodyStructure;
+    this.bodyStructure = {
+      root: {
+        classes: ['jsr'],
+        children: ['railOuter'],
+        count: 1
+      },
+      railOuter: {
+        classes: ['jsr_rail-outer'],
+        children: ['rail'],
+        count: 1
+      },
+      rail: {
+        classes: ['jsr_rail'],
+        children: ['sliders', 'bars'],
+        count: 1
+      },
+      sliders: {
+        classes: ['jsr_slider'],
+        children: [],
+        attributes: {
+          tabindex: 0
+        },
+        count: 2,
+        alwaysArray: true
+      },
+      bars: {
+        classes: ['jsr_bar'],
+        children: [],
+        count: 1,
+        alwaysArray: true
+      }
+    };
   }
 
   _bindEvents () {

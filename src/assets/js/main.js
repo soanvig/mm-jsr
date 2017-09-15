@@ -3,6 +3,7 @@ import Renderer from './renderer/renderer.js';
 import Eventizer from './core/eventSystem.js';
 import Logger from './logger.js';
 import InputUpdater from './inputUpdater.js';
+import Labels from './labels.js';
 import merge from 'deepmerge';
 
 class JSR {
@@ -17,8 +18,9 @@ class JSR {
       modules: {
         eventizer: Eventizer,
         core: Core,
+        labels: Labels,
         renderer: Renderer,
-        inputUpdater: InputUpdater
+        inputUpdater: InputUpdater,
       }
     };
     this.config = merge(defaults, options, {
@@ -28,6 +30,7 @@ class JSR {
     this.specificConfig = {
       eventizer: {},
       core: {},
+      labels: {},
       renderer: {},
       inputUpdater: {}
     };
@@ -89,8 +92,8 @@ class JSR {
 }
 
 new JSR('#range-1', {
-  sliders: 1,
-  values: [50],
+  sliders: 3,
+  values: [25, 50, 75],
   log: 'info'
 });
 
@@ -101,8 +104,8 @@ new JSR('#range-2', {
 });
 
 new JSR('#range-3', {
-  sliders: 3,
-  values: [25, 50, 75],
+  sliders: 1,
+  values: [50],
   log: 'info'
 });
 
