@@ -105,6 +105,7 @@ new JSR('#range-2', {
 
 new JSR('#range-3', {
   sliders: 1,
+  step: 0.1,
   values: [50],
   log: 'info'
 });

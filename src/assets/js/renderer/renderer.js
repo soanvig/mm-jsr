@@ -226,8 +226,10 @@ export default class {
     
     // Create body starting from root
     this.body = structureParser(this.bodyStructure, 'root');
-
+    
     this._bindEvents();
+    
+    this.modules.eventizer.trigger('modules/renderer:builded');
   }
 
   get structure () {
@@ -242,7 +244,7 @@ export default class {
 
   setSliderValue (value, sliderNum) {
     const slider = this.body.sliders[sliderNum];
-    const left = `calc(${value * 100}% - ${slider.offsetWidth}px / 2)`;
+    const left = `${value * 100}%`;
 
     this.logger.debug(`JSR: Slider no. ${sliderNum} set to value: ${value}.`);
 

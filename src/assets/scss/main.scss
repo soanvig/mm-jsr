@@ -2,6 +2,11 @@ $jsr-rail-height: 5px;
 $jsr-rail-padding: 10px;
 $jsr-slider-height: 15px;
 
+.jsr, .jsr_bar, .jsr_label, .jsr_rail,
+.jsr_rail-outer, .jsr_slider {
+    box-sizing: border-box;
+}
+
 .jsr {
     position: relative;
     z-index: 1;
@@ -20,6 +25,8 @@ $jsr-slider-height: 15px;
 
     -webkit-touch-callout: none;
     -khtml-user-select: none;
+
+    font-size: 14px;
 }
 
 .jsr_rail-outer {
@@ -44,11 +51,10 @@ $jsr-slider-height: 15px;
 
 .jsr_slider {
     position: absolute;
-    top: calc(
-        (#{$jsr-rail-height} / 2 + #{$jsr-rail-padding})
-        - #{$jsr-slider-height} / 2
-    );
+    top: calc(#{$jsr-rail-height} / 2 + #{$jsr-rail-padding});
     left: 0;
+
+    transform: translate(-50%, -50%);
 
     width: 15px;
     height: 15px;
@@ -69,8 +75,10 @@ $jsr-slider-height: 15px;
 
 .jsr_label {
     position: absolute;
-    top: calc(#{$jsr-rail-padding + ($jsr-rail-height + $jsr-slider-height) / 2});
+    top: calc(#{$jsr-rail-padding} + #{$jsr-rail-height} + #{$jsr-slider-height} / 1.5);
+    transform: translateX(-50%);
     padding: 0.2em 0.4em;
     background: #444;
     color: #fff;
+    font-size: 0.9em;
 }

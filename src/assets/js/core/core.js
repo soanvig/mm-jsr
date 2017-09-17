@@ -10,12 +10,23 @@ function realToRatio (value) {
   return (value - min) / (max - min); 
 }
 
+// Rounds value to step
+function roundToStep (value) {
+  const step = this.config.step;
+  const stepDecimalsMultiplier = Math.pow(10, this.stepRatioDecimals);
+
+  value = Math.round(value / step) * step;
+  
+  return Math.round(value * stepDecimalsMultiplier) / stepDecimalsMultiplier;
+}
+
 // Converts ratio value used by script to real value from min/max
 function ratioToReal (value) {
   const min = this.config.min;
   const max = this.config.max;
+  value = (max - min) * value + min;
 
-  return (max - min) * value + min;
+  return roundToStep.call(this, value);
 }
 
 // Calculates step in terms of ratio
@@ -27,7 +38,7 @@ function calculateStepRatio () {
   return (step / (max - min));
 }
 
-// Rounds value to step
+// Rounds value to step ratio
 function roundToStepRatio (value) {
   const step = this.stepRatio;
   const stepDecimalsMultiplier = Math.pow(10, this.stepRatioDecimals);
@@ -65,7 +76,6 @@ export default class {
     this.modules = {};
     this.values = [];
     this.valueInMove = [];
-    this.step = 0;
     this.stepRatio = 0;
     this.stepRatioDecimals = 0;
   }
@@ -105,7 +115,7 @@ export default class {
     this.values[id] = roundedValue;
     this.modules.renderer.setSliderValue(roundedValue, id);
 
-    this.modules.eventizer.trigger('core/value:update', id, ratioToReal.call(this, roundedValue));
+    this.modules.eventizer.trigger('core/value:update', id, ratioToReal.call(this, roundedValue), roundedValue);
   }
 
   _bindEvents () {
