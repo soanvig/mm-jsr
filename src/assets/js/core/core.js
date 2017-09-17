@@ -121,11 +121,13 @@ export default class {
   _bindEvents () {
     const eventizer = this.modules.eventizer;
 
-    eventizer.register('view/slider:mousedown', (event, sliderClicked) => {
+    eventizer.register('view/slider:mousedown', (event, slidersId) => {
       this.logger.debug('JSR: Slider mousedown.');
       this.logger.debug(event);
 
-      this.valueInMove[sliderClicked] = this.values[sliderClicked];
+      slidersId.forEach((slider) => {
+        this.valueInMove[slider] = this.values[slider];
+      });
     });
   
     eventizer.register('view/slider:mousemove', (event, id, diff) => {

@@ -76,13 +76,13 @@ export default class {
 
       this.temp.sliderInMove = parseInt(event.target.dataset.jsrId);
       this.temp.sliderClickX = event.clientX;
-
-      eventizer.trigger('view/slider:mousedown', event, this.temp.sliderInMove);
-
+      
       const slidersWithSameValue = getSlidersWithSameValue.call(this, this.temp.sliderInMove);
       if (slidersWithSameValue.length > 1) {
         this.temp.sliderInMove = slidersWithSameValue;
       }
+      
+      eventizer.trigger('view/slider:mousedown', event, slidersWithSameValue);
     });
     listenOn(document, 'mousemove', (event) => {
       event.stopPropagation();
