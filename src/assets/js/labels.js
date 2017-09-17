@@ -5,21 +5,23 @@ function updateLabel (id, real, ratio) {
 
   // Update value
   label.innerHTML = real;
+  this.values[id] = ratio;
 
   // Update position
-  const labelRect = label.getBoundingClientRect();
-  const width = labelRect.width;
+  let labelRect = label.getBoundingClientRect();
 
-  label.style.left = `calc(${ratio * 100}% - ${width / 2}px)`;
+  label.style.left = `calc(${ratio * 100}% - ${labelRect.width / 2}px)`;
 
+  // Handle overlapping
+
+  // Handle exceeding parent
   const rootRect = this.modules.renderer.body.root.getBoundingClientRect();
-  const labelNewRect = label.getBoundingClientRect();
-
-  if (labelNewRect.right > rootRect.right) {
+  labelRect = label.getBoundingClientRect();
+  if (labelRect.right > rootRect.right) {
     label.style.left = `calc(100% - ${width}px)`;
   }
 
-  if (labelNewRect.left < rootRect.left) {
+  if (labelRect.left < rootRect.left) {
     label.style.left = '0';
   }
 }
@@ -27,6 +29,7 @@ function updateLabel (id, real, ratio) {
 export default class {
   constructor () {
     this.labels = [];
+    this.values = [];
   }
 
   _bindEvents () {
