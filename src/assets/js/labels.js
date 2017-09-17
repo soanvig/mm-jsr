@@ -1,11 +1,27 @@
 import { listenOn } from './helpers.js';
 
 function updateLabel (id, real, ratio) {
-  // Update position
-  this.labels[id].style.left = `${ratio * 100}%`;
-  
+  const label = this.labels[id];
+
   // Update value
-  this.labels[id].innerHTML = real;
+  label.innerHTML = real;
+
+  // Update position
+  const labelRect = label.getBoundingClientRect();
+  const width = labelRect.width;
+
+  label.style.left = `calc(${ratio * 100}% - ${width / 2}px)`;
+
+  const rootRect = this.modules.renderer.body.root.getBoundingClientRect();
+  const labelNewRect = label.getBoundingClientRect();
+
+  if (labelNewRect.right > rootRect.right) {
+    label.style.left = `calc(100% - ${width}px)`;
+  }
+
+  if (labelNewRect.left < rootRect.left) {
+    label.style.left = '0';
+  }
 }
 
 export default class {
@@ -14,12 +30,18 @@ export default class {
   }
 
   _bindEvents () {
-    listenOn(this.labels, 'click', () => {
-      console.log('label clicked');
+    listenOn(this.labels, 'click', (event) => {
+      event.stopPropagation();
     });
 
     this.modules.eventizer.register('core/value:update', (id, real, ratio) => {
       updateLabel.call(this, id, real, ratio);
+    });
+
+    // Delegate this event to renderer slider click
+    listenOn(this.labels, 'mousedown', (event) => {
+      const clickEvent = new MouseEvent('mousedown', event);
+      this.modules.renderer.body.sliders[event.target.dataset.jsrId].dispatchEvent(clickEvent);
     });
   }
   

@@ -76,7 +76,6 @@ $jsr-slider-height: 15px;
 .jsr_label {
     position: absolute;
     top: calc(#{$jsr-rail-padding} + #{$jsr-rail-height} + #{$jsr-slider-height} / 1.5);
-    transform: translateX(-50%);
     padding: 0.2em 0.4em;
     background: #444;
     color: #fff;
