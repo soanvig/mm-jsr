@@ -69,7 +69,7 @@ module.exports = {
     'no-useless-concat': 'error',
     'vars-on-top': 'error',
     'yoda': 'error',
-    'no-unused-vars': 'error',
+    'no-unused-vars': 'warn',
     'no-use-before-define': 'error',
     'array-bracket-newline': ['error', { 'multiline': true }],
     'array-bracket-spacing': 'error',

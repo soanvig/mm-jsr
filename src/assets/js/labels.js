@@ -1,5 +1,54 @@
 import { listenOn } from './helpers.js';
 
+function allLabelsSet () {
+  const setValuesCount = this.values.filter((value) => value !== undefined).length;
+  if (setValuesCount === this.config.values.length) {
+    return true;
+  }
+
+  return false;
+}
+
+function mergeLabels (into, from) {
+  console.log(into, from);
+}
+
+function undoMergeLabels (into, from) {
+  console.log(into, from);
+}
+
+function handleOverlappingBecauseItIsVeryFuckedUp () {
+  const labels = this.labels;
+  
+  // Now compare each label (firstLabel) with next label (nextLabel)
+  let firstLabel = 0;
+  let nextLabel = firstLabel + 1;
+  // Exit while nextLabel exceeds last existing label
+  analyzeLoop: while (nextLabel < labels.length) {
+    // If first label overlaps next label
+    if (labels[firstLabel].getBoundingClientRect().right > labels[nextLabel].getBoundingClientRect().left) {
+      // Hide the next label
+      labels[nextLabel].style.visibility = 'hidden';
+      // Merge labels content
+      mergeLabels.call(this, firstLabel, nextLabel);
+      // Move comparison to next label:
+      nextLabel += 1;
+      // Continue with new iteration
+      continue;
+    }
+
+    // Everything okay, so make next label visible
+    labels[nextLabel].style.visibility = 'visible';
+
+    // Undo merging
+    undoMergeLabels.call(this, firstLabel, nextLabel);
+
+    // Otherwise compare new labels:
+    firstLabel += 1;
+    nextLabel += 1;
+  }
+}
+
 function updateLabel (id, real, ratio) {
   const label = this.labels[id];
 
@@ -12,13 +61,16 @@ function updateLabel (id, real, ratio) {
 
   label.style.left = `calc(${ratio * 100}% - ${labelRect.width / 2}px)`;
 
-  // Handle overlapping
+  // Handle overlapping only if all labels are set
+  if (allLabelsSet.call(this)) {
+    handleOverlappingBecauseItIsVeryFuckedUp.call(this);
+  }
 
   // Handle exceeding parent
   const rootRect = this.modules.renderer.body.root.getBoundingClientRect();
   labelRect = label.getBoundingClientRect();
   if (labelRect.right > rootRect.right) {
-    label.style.left = `calc(100% - ${width}px)`;
+    label.style.left = `calc(100% - ${labelRect.width}px)`;
   }
 
   if (labelRect.left < rootRect.left) {
@@ -38,6 +90,7 @@ export default class {
     });
 
     this.modules.eventizer.register('core/value:update', (id, real, ratio) => {
+      this.values[id] = [real, ratio];
       updateLabel.call(this, id, real, ratio);
     });
 
