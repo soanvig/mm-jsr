@@ -1,8 +1,6 @@
 import { listenOn } from './helpers.js';
 
 export default class {
-  constructor () {}
-
   _bindEvents () {
     listenOn([this.modules.renderer.body.sliders, this.modules.renderer.body.labels], 'touchstart', (event) => {
       document.documentElement.classList.add('jsr_lockscreen');

@@ -7,15 +7,13 @@ import Labels from './labels.js';
 import TouchSupport from './touchSupport.js';
 import merge from 'deepmerge';
 
-class JSR {
+export default class {
   constructor (inputs, options = {}) {
     const defaults = {
       log: 'error',
-      sliders: 2,
       min: 0,
       max: 100,
       step: 1,
-      values: [25, 75],
       labels: {
         affixes: {
           prefix: '',
@@ -139,52 +137,3 @@ class JSR {
     this.modules.core.setValue(id, value);
   }
 }
-
-new JSR(['#range-1-1', '#range-1-2', '#range-1-3'], {
-  sliders: 3,
-  values: [25, 50, 75],
-  labels: {
-    minMax: false
-  },
-  log: 'info'
-});
-
-new JSR(['#range-2-1', '#range-2-2'], {
-  sliders: 2,
-  min: 10000,
-  max: 20000,
-  values: [15000, 17500],
-  labels: {
-    affixes: {
-      prefix: '$ '
-    },
-  },
-  log: 'info'
-});
-
-new JSR('#range-3', {
-  sliders: 1,
-  step: 0.1,
-  values: [50],
-  labels: {
-    affixes: {
-      suffix: ' PLN'
-    },
-  },
-  log: 'info'
-});
-
-new JSR(['#range-4-1', '#range-4-2'], {
-  sliders: 2,
-  step: 0.1,
-  min: -200,
-  max: 100,
-  values: [50, 75],
-  log: 'info'
-});
-
-// jsr.addEventListener('update', (slider, value) => {
-//   console.log(`Custom events test: New value set: ${slider}/${value}`);
-// });
-
-// jsr.setValue(0, 40);

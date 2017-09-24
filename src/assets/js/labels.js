@@ -50,10 +50,6 @@ function handleOverlappingBecauseItIsVeryFuckedUp () {
   }
 
   // Finally do things with minmax labels (compare only first and last labels)
-  if (!this.config.labels.minMax) {
-    return;
-  }
-  
   if (this.minMax[0].getBoundingClientRect().right + labelSpacing >= this.labels[0].getBoundingClientRect().left) {
     this.minMax[0].style.opacity = '0';
   } else {
@@ -128,6 +124,11 @@ export default class {
 
     this.minMax[0].style.left = '0%';
     this.minMax[1].style.right = '0%';
+
+    if (!this.config.labels.minMax) {
+      this.minMax[0].style.display = 'none';
+      this.minMax[1].style.display = 'none';
+    }
   }
   
   build ({ config, modules, logger }) {
@@ -143,24 +144,20 @@ export default class {
     };
     this.modules.renderer.structure.rail.children.push('labels');
 
-    if (this.config.labels.minMax) {
-      this.modules.renderer.structure.labelsMinMax = {
-        classes: ['jsr_label', 'jsr_label--minmax'],
-        children: [],
-        count: 2
-      };
+    this.modules.renderer.structure.labelsMinMax = {
+      classes: ['jsr_label', 'jsr_label--minmax'],
+      children: [],
+      count: 2
+    };
 
-      this.modules.renderer.structure.rail.children.push('labelsMinMax');
-    }
+    this.modules.renderer.structure.rail.children.push('labelsMinMax');
   
     this.modules.eventizer.register('modules/renderer:builded', () => {
       this.labels = this.modules.renderer.body.labels;
       this.labelsParent = this.labels[0].parentNode;
       
-      if (this.config.labels.minMax) {
-        this.minMax = this.modules.renderer.body.labelsMinMax;
-        this._parseMinMax();
-      }
+      this.minMax = this.modules.renderer.body.labelsMinMax;
+      this._parseMinMax();
 
       this._bindEvents();
     });
