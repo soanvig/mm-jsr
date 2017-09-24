@@ -80,4 +80,19 @@ $jsr-slider-height: 15px;
     background: #444;
     color: #fff;
     font-size: 0.9em;
+    white-space: nowrap;
+}
+
+// Merged labels
+.jsr_label .jsr_label {
+    position: static;
+    display: inline-block;
+    font-size: 1em;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    
+    &::before {
+        content: ' - ';
+    }
 }

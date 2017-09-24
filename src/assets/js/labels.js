@@ -9,16 +9,24 @@ function allLabelsSet () {
   return false;
 }
 
-function mergeLabels (into, from) {
-  console.log(into, from);
+function mergeLabels (into, what) {
+  this.mergedLabels.push(what);
+  this.labels[into].appendChild(this.labels[what]);
 }
 
-function undoMergeLabels (into, from) {
-  console.log(into, from);
+function undoMergeLabels () {
+  this.mergedLabels.forEach((label) => {
+    this.labelsParent.appendChild(this.labels[label]);
+  });
+  this.mergedLabels = [];
 }
 
 function handleOverlappingBecauseItIsVeryFuckedUp () {
   const labels = this.labels;
+  const labelSpacing = 5;
+
+  // Unmerge all labels
+  undoMergeLabels.call(this);
   
   // Now compare each label (firstLabel) with next label (nextLabel)
   let firstLabel = 0;
@@ -26,22 +34,15 @@ function handleOverlappingBecauseItIsVeryFuckedUp () {
   // Exit while nextLabel exceeds last existing label
   analyzeLoop: while (nextLabel < labels.length) {
     // If first label overlaps next label
-    if (labels[firstLabel].getBoundingClientRect().right > labels[nextLabel].getBoundingClientRect().left) {
-      // Hide the next label
-      labels[nextLabel].style.visibility = 'hidden';
-      // Merge labels content
+    // And next label's parent isn't a label
+    if (labels[firstLabel].getBoundingClientRect().right + labelSpacing >= labels[nextLabel].getBoundingClientRect().left) {
+      // Merge labels
       mergeLabels.call(this, firstLabel, nextLabel);
       // Move comparison to next label:
       nextLabel += 1;
       // Continue with new iteration
       continue;
     }
-
-    // Everything okay, so make next label visible
-    labels[nextLabel].style.visibility = 'visible';
-
-    // Undo merging
-    undoMergeLabels.call(this, firstLabel, nextLabel);
 
     // Otherwise compare new labels:
     firstLabel += 1;
@@ -82,6 +83,8 @@ export default class {
   constructor () {
     this.labels = [];
     this.values = [];
+    this.labelsParent = null;
+    this.mergedLabels = [];
   }
 
   _bindEvents () {
@@ -117,6 +120,7 @@ export default class {
 
     this.modules.eventizer.register('modules/renderer:builded', () => {
       this.labels = this.modules.renderer.body.labels;
+      this.labelsParent = this.labels[0].parentNode;
       this._bindEvents();
     });
   }

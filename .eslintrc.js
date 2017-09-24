@@ -42,7 +42,7 @@ module.exports = {
     'no-case-declarations': 'error',
     'no-else-return': 'error',
     // Comments inside make the function correct
-    'no-empty-function': 'error',
+    'no-empty-function': 'warn',
     'no-floating-decimal': 'error',
     'no-global-assign': 'error',
     'no-implicit-coercion': 'error',
