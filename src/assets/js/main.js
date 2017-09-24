@@ -4,6 +4,7 @@ import Eventizer from './core/eventSystem.js';
 import Logger from './logger.js';
 import InputUpdater from './inputUpdater.js';
 import Labels from './labels.js';
+import TouchSupport from './touchSupport.js';
 import merge from 'deepmerge';
 
 class JSR {
@@ -15,14 +16,18 @@ class JSR {
       max: 100,
       step: 1,
       values: [25, 75],
-      affixes: {
-        prefix: '',
-        suffix: ''
+      labels: {
+        affixes: {
+          prefix: '',
+          suffix: ''
+        },
+        minMax: true
       },
       modules: {
         eventizer: Eventizer,
         core: Core,
         labels: Labels,
+        touchSupport: TouchSupport,
         renderer: Renderer,
         inputUpdater: InputUpdater,
       }
@@ -36,7 +41,8 @@ class JSR {
       core: {},
       labels: {},
       renderer: {},
-      inputUpdater: {}
+      inputUpdater: {},
+      touchSupport: {}
     };
 
     this.logger = new Logger;
@@ -137,6 +143,9 @@ class JSR {
 new JSR(['#range-1-1', '#range-1-2', '#range-1-3'], {
   sliders: 3,
   values: [25, 50, 75],
+  labels: {
+    minMax: false
+  },
   log: 'info'
 });
 
@@ -145,8 +154,10 @@ new JSR(['#range-2-1', '#range-2-2'], {
   min: 10000,
   max: 20000,
   values: [15000, 17500],
-  affixes: {
-    prefix: '$'
+  labels: {
+    affixes: {
+      prefix: '$ '
+    },
   },
   log: 'info'
 });
@@ -155,6 +166,11 @@ new JSR('#range-3', {
   sliders: 1,
   step: 0.1,
   values: [50],
+  labels: {
+    affixes: {
+      suffix: ' PLN'
+    },
+  },
   log: 'info'
 });
 

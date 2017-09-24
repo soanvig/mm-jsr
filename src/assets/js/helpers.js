@@ -21,7 +21,12 @@ function attachEventListener (element, event, callback) {
 function listenOn (elements, event, callback) {
   if (elements instanceof Array) {
     elements.forEach((element) => {
-      attachEventListener(element, event, callback);
+      // If it's array inside array do recursive
+      if (element instanceof Array) {
+        listenOn(element, event, callback);
+      } else {
+        attachEventListener(element, event, callback);
+      }
     });
   } else {
     attachEventListener(elements, event, callback);

@@ -105,3 +105,10 @@ $jsr-slider-height: 15px;
         content: ' - ';
     }
 }
+
+// Lock screen for touch
+.jsr_lockscreen {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
