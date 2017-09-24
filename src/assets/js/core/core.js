@@ -13,7 +13,7 @@ function realToRatio (value) {
 // Rounds value to step
 function roundToStep (value) {
   const step = this.config.step;
-  const stepDecimalsMultiplier = Math.pow(10, this.stepRatioDecimals);
+  const stepDecimalsMultiplier = Math.pow(10, this.stepDecimals);
 
   value = Math.round(value / step) * step;
   
@@ -190,6 +190,7 @@ export default class {
     this.logger = logger;
     this.modules = modules;
 
+    this.stepDecimals = calculateDecimals(this.config.step);
     this.stepRatio = calculateStepRatio.call(this);
     this.stepRatioDecimals = calculateDecimals(this.stepRatio);
   }

@@ -112,6 +112,15 @@ new JSR('#range-3', {
   log: 'info'
 });
 
+new JSR('#range-4', {
+  sliders: 2,
+  step: 0.1,
+  min: -200,
+  max: 100,
+  values: [50, 75],
+  log: 'info'
+});
+
 // jsr.addEventListener('update', (slider, value) => {
 //   console.log(`Custom events test: New value set: ${slider}/${value}`);
 // });
