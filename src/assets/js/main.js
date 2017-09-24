@@ -99,7 +99,9 @@ new JSR('#range-1', {
 
 new JSR('#range-2', {
   sliders: 2,
-  values: [25, 75],
+  min: 10000,
+  max: 20000,
+  values: [15000, 17500],
   log: 'info'
 });
 
