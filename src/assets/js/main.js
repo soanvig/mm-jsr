@@ -7,7 +7,7 @@ import Labels from './labels.js';
 import merge from 'deepmerge';
 
 class JSR {
-  constructor (input, options = {}) {
+  constructor (inputs, options = {}) {
     const defaults = {
       log: 'error',
       sliders: 2,
@@ -34,6 +34,25 @@ class JSR {
       renderer: {},
       inputUpdater: {}
     };
+
+    this.logger = new Logger;
+    this.logger.setLevel(this.config.log);
+
+    // Ensure array and find all inputs
+    inputs = [].concat(inputs);
+    this.inputs = inputs.map((input) => document.querySelector(input));
+
+    // Validate config and inputs
+    // If any errors
+    const errors = this._validate({ inputs });
+    if (errors) {
+      errors.forEach((error) => {
+        this.logger.error(error);
+      });
+
+      // Exit script
+      return {};
+    }
     
     // Create modules
     this.modules = {};
@@ -41,18 +60,36 @@ class JSR {
       this.modules[moduleName] = new this.config.modules[moduleName];
     }
 
-    this.logger = new Logger;
-    this.logger.setLevel(this.config.log);
+    this.specificConfig.inputUpdater.inputs = this.inputs;
 
-    this.input = document.querySelector(input);
-    this.specificConfig.inputUpdater.input = this.input;
+    this._buildModules();
+    this._init();
+  }
 
-    if (this.input) {
-      this._buildModules();
-      this._init();
-    } else {
-      logger.error(`JSR: Invalid 'input' parameter. Couldn't find '${input}' element.`);
+  /* Validate everything */
+  _validate (data) {
+    const errors = [];
+
+    if (this.config.sliders !== this.config.values.length) {
+      errors.push(`JSR: Number of sliders isn't equal to number of values.`);
     }
+
+    if (this.inputs.length !== this.config.values.length) {
+      errors.push(`JSR: Number of inputs isn't equal to number of values.`);
+    }
+
+    // Report not found inputs
+    this.inputs.forEach((input, index) => {
+      if (!input) {
+        errors.push(`JSR: Input ${data.inputs[index]} not found.`);
+      }
+    });
+
+    if (errors.length) {
+      return errors;
+    }
+
+    return false;
   }
 
   /* Builds every module */
@@ -73,8 +110,10 @@ class JSR {
   }
 
   _init () {
-    this.input.style.display = 'none';
-    this.modules.core.init(this.input, this.config.values);
+    this.inputs.forEach((input) => {
+      input.style.display = 'none';
+    });
+    this.modules.core.init(this.inputs, this.config.values);
   }
 
   /* API */
@@ -91,13 +130,13 @@ class JSR {
   }
 }
 
-new JSR('#range-1', {
+new JSR(['#range-1-1', '#range-1-2', '#range-1-3'], {
   sliders: 3,
   values: [25, 50, 75],
   log: 'info'
 });
 
-new JSR('#range-2', {
+new JSR(['#range-2-1', '#range-2-2'], {
   sliders: 2,
   min: 10000,
   max: 20000,
@@ -112,7 +151,7 @@ new JSR('#range-3', {
   log: 'info'
 });
 
-new JSR('#range-4', {
+new JSR(['#range-4-1', '#range-4-2'], {
   sliders: 2,
   step: 0.1,
   min: -200,
