@@ -48,6 +48,19 @@ function handleOverlappingBecauseItIsVeryFuckedUp () {
     firstLabel += 1;
     nextLabel += 1;
   }
+
+  // Finally do things with minmax labels (compare only first and last labels)
+  if (this.minMax[0].getBoundingClientRect().right + labelSpacing >= this.labels[0].getBoundingClientRect().left) {
+    this.minMax[0].style.opacity = '0';
+  } else {
+    this.minMax[0].style.opacity = '1';
+  }
+
+  if (this.labels[this.labels.length - 1].getBoundingClientRect().right + labelSpacing >= this.minMax[1].getBoundingClientRect().left) {
+    this.minMax[1].style.opacity = '0';
+  } else {
+    this.minMax[1].style.opacity = '1';
+  }
 }
 
 function updateLabel (id, real, ratio) {
@@ -82,6 +95,7 @@ function updateLabel (id, real, ratio) {
 export default class {
   constructor () {
     this.labels = [];
+    this.minMax = [];
     this.values = [];
     this.labelsParent = null;
     this.mergedLabels = [];
@@ -103,6 +117,14 @@ export default class {
       this.modules.renderer.body.sliders[event.target.dataset.jsrId].dispatchEvent(clickEvent);
     });
   }
+
+  _parseMinMax () {
+    this.minMax[0].innerHTML = this.config.min;
+    this.minMax[1].innerHTML = this.config.max;
+
+    this.minMax[0].style.left = '0%';
+    this.minMax[1].style.right = '0%';
+  }
   
   build ({ config, modules, logger }) {
     this.logger = logger;
@@ -116,11 +138,21 @@ export default class {
       alwaysArray: true
     };
 
-    this.modules.renderer.structure.rail.children.push('labels');
+    this.modules.renderer.structure.labelsMinMax = {
+      classes: ['jsr_label', 'jsr_label--minmax'],
+      children: [],
+      count: 2
+    };
+
+    this.modules.renderer.structure.rail.children.push('labels', 'labelsMinMax');
 
     this.modules.eventizer.register('modules/renderer:builded', () => {
       this.labels = this.modules.renderer.body.labels;
       this.labelsParent = this.labels[0].parentNode;
+      
+      this.minMax = this.modules.renderer.body.labelsMinMax;
+      this._parseMinMax();
+
       this._bindEvents();
     });
   }
