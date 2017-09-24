@@ -67,7 +67,7 @@ function updateLabel (id, real, ratio) {
   const label = this.labels[id];
 
   // Update value
-  label.innerHTML = real;
+  label.innerHTML = this.config.affixes.prefix + real + this.config.affixes.suffix;
   this.values[id] = ratio;
 
   // Update position

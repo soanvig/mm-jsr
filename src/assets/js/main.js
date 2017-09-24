@@ -15,6 +15,10 @@ class JSR {
       max: 100,
       step: 1,
       values: [25, 75],
+      affixes: {
+        prefix: '',
+        suffix: ''
+      },
       modules: {
         eventizer: Eventizer,
         core: Core,
@@ -141,6 +145,9 @@ new JSR(['#range-2-1', '#range-2-2'], {
   min: 10000,
   max: 20000,
   values: [15000, 17500],
+  affixes: {
+    prefix: '$'
+  },
   log: 'info'
 });
 
