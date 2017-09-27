@@ -69,11 +69,11 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
     In HTML `<head>` section:
 
-    `<link rel="stylesheet" href="[path_to_jsr]/mm-jsr.css">`
+    `<link rel="stylesheet" href="[path_to_jsr_directory]/dist/assets/css/mm-jsr.css">`
 
     And in HTML scripts section (in example in the end of body:)
 
-    `<script src="[path_to_jsr]/mm-jsr.min.js></script>`
+    `<script src="[path_to_jsr_directory]/dist/main.js"></script>`
   
 ### NPM
 
@@ -85,9 +85,13 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
     `import JSR from 'mm-jsr';`
 
+3. Add CSS code in HTML `<head>` section:
+
+    `<link rel="stylesheet" href="node_modules/mm-jsr/dist/assets/css/mm-jsr.css">`
+
 ## Usage
 
-For simple implementation see `mm-jsr-example.html` in repository.
+For simple implementation see `dist/index.html` in repository.
 
 ### JSR instance
 

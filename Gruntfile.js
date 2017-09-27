@@ -219,5 +219,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-rollup');
  
   grunt.registerTask('dev', ['rollup:dev', 'sass:dev', 'pug:dev', 'browserSync', 'watch']);
-  grunt.registerTask('dist', ['clean:dist', 'mkdir:dist', 'copy:dist', 'sass:dist', 'pug:dist', 'rollup:dist', 'versioning']);
+  grunt.registerTask('dist', ['clean:dist', 'mkdir:dist', 'copy:dist', 'sass:dist', 'pug:dist', 'rollup:dist'/*, 'versioning'*/]);
 };
