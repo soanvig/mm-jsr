@@ -17,7 +17,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
         - [Advantages](#advantages)
     - [Installation](#installation)
         - [Manual](#manual)
-        - [NPM](#npm)
+        - [NPM & import](#npm--import)
     - [Usage](#usage)
         - [JSR instance](#jsr-instance)
         - [Configuration: setting options via JS](#configuration-setting-options-via-js)
@@ -75,7 +75,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
     `<script src="[path_to_jsr_directory]/dist/main.js"></script>`
   
-### NPM
+### NPM & import
 
 1. Install via npm: 
 
@@ -83,7 +83,9 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
 2. Include in your JS code:
 
-    `import JSR from 'mm-jsr';`
+    `import 'mm-jsr';`
+
+    Due to pro-browser bundling, it's impossible to include JSR with `[name] from` directive.
 
 3. Add CSS code in HTML `<head>` section:
 
@@ -91,7 +93,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
 ## Usage
 
-For simple implementation see `dist/index.html` in repository.
+For simple implementation see [dist/index.html](https://github.com/mm-jsr/jsr/blob/master/dist/index.html) in repository.
 
 ### JSR instance
 
@@ -140,10 +142,11 @@ Options object with defaults looks like follows:
     },
     minMax: true // Boolean if minimum and maximum labels should be displayed (applies CSS display: none;)
   },
+  log: 'error' // available values: 'debug', 'info', 'warn', 'error'
 }
 ```
 
-Custom options should go together with `sliders` and `values` options in JSR constructor.
+Custom options should go together with `sliders` and `values` options in JSR constructor (see example).
 
 ### Setting values of range programmatically
 
