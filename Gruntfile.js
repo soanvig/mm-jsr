@@ -132,7 +132,9 @@ module.exports = function (grunt) {
         }]
       },
       dist: {
-        options: {},
+        options: {
+          pretty: true
+        },
         files: [{
           expand: true,
           cwd: paths.source + 'assets/pug',
