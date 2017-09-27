@@ -5,11 +5,12 @@ Thank You for Your support and downloading the script. There is huge propability
 
 **M&M JS Range** (*M&M JSR*) is library for JavaScript. It provides You with excellent solution for creating so-called *range-inputs*. Range input is form's field where one can choose a value from min-max *range*. Although HTML 5 comes with `input[type="range"]` its functionality lacks a lot of features. M&M JSR gives You anything You may need.
 
-Newest version: **0.0.2beta**
+Newest version: **0.1.0beta**
 
 Browser support: Firefox, Chrome, others not tested (yet).
 
 ## Table of content
+
 <!-- TOC -->
 
 - [Mort&Mortis JS Range (M&M JSR)](#mortmortis-js-range-mm-jsr)
@@ -17,18 +18,17 @@ Browser support: Firefox, Chrome, others not tested (yet).
     - [Features and advantages](#features-and-advantages)
         - [Features](#features)
         - [Advantages](#advantages)
-        - [Disadvantages](#disadvantages)
     - [Installation](#installation)
+        - [Manual](#manual)
+        - [NPM](#npm)
     - [Usage](#usage)
-        - [Single slider](#single-slider)
-        - [Double slider](#double-slider)
-        - [Setting options via HTML](#setting-options-via-html)
-        - [Setting options via JS](#setting-options-via-js)
+        - [JSR instance](#jsr-instance)
+        - [Configuration: setting options via JS](#configuration-setting-options-via-js)
         - [Setting values of range programmatically](#setting-values-of-range-programmatically)
-        - [Prefixes and suffixes](#prefixes-and-suffixes)
         - [Keyboard](#keyboard)
-        - [Grid](#grid)
-    - [Known bugs](#known-bugs)
+    - [CSS configuration](#css-configuration)
+        - [Merged labels in general, and their separator](#merged-labels-in-general-and-their-separator)
+        - [Locking screen on touchevent](#locking-screen-on-touchevent)
     - [Demo](#demo)
 
 <!-- /TOC -->
@@ -40,21 +40,17 @@ Browser support: Firefox, Chrome, others not tested (yet).
 - new technologies,
 - custom minimum and maximum values (including negative numbers),
 - custom step of values (literally custom, it can be 0.001, 2 or 100),
-- single slider (single value),
-- double sliders (from-to values),
+- any number of sliders,
 - collapsing labels,
-- fully and **easily** customizable through CSS,
-- prefixes, suffixes for labels,
+- fully and **easily** customizable through CSS and configuration,
+- affixes for labels,
 - support for touch devices (**not tested well yet**),
 - support for keyboard,
-- support for screen-readers (**not implemented yet**),
-- support for labels,
-- grid/ruler representing values on slider.
+- support for screen-readers (**not implemented yet**).
 
 ### Advantages
 
 - lightweight,
-- performance wise,
 - customizable,
 - disabled people wise,
 - no dependencies (pure JavaScript),
@@ -62,11 +58,9 @@ Browser support: Firefox, Chrome, others not tested (yet).
 - sends value to inputs, so they can be easily send via form,
 - free.
 
-### Disadvantages
-
-- requires modern browser due to use of ES6
-
 ## Installation
+
+### Manual
 
 1. Clone the repository:
 
@@ -78,173 +72,122 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
     In HTML `<head>` section:
 
-    `<link rel="stylesheet" href="[path_to_jsr]/mm-jsr.css">`
+    `<link rel="stylesheet" href="[path_to_jsr_directory]/dist/assets/css/mm-jsr.css">`
 
     And in HTML scripts section (in example in the end of body:)
 
-    `<script src="[path_to_jsr]/mm-jsr.min.js></script>`
+    `<script src="[path_to_jsr_directory]/dist/main.js"></script>`
+  
+### NPM
+
+1. Install via npm: 
+
+    `npm install mm-jsr`
+
+2. Include in your JS code:
+
+    `import JSR from 'mm-jsr';`
+
+3. Add CSS code in HTML `<head>` section:
+
+    `<link rel="stylesheet" href="node_modules/mm-jsr/dist/assets/css/mm-jsr.css">`
 
 ## Usage
 
-For simple implementation see `mm-jsr-example.html` in repository.
+For simple implementation see `dist/index.html` in repository.
 
-### Single slider
+### JSR instance
+
+The example below will create range with 3 sliders of values: 25, 50, 75 from 0-100 range (which is default).
 
 1. Create HTML:
 
+    - HTML **must** be builded of n-inputs, where `n` is the number of sliders You want to use.
+    - Each input **should** have it's unique `[id]` (though it's not necessary).
+    - Input's validation rules (that includes `[min|max]` attributes if `[type="range"]`) **must** allow *numbers* from *range* min-max (which is 0-100 by default, other if set via configuration) with optional decimals.
+
     ```html
-    <input id="jsrSingle" name="range" type="range" min="50" max="200" step="1" value="150">
+    <input id="jsr-1-1" name="range1" type="range" min="0" max="100" step="1" value="25">
+    <input id="jsr-1-2" name="range2" type="range" min="0" max="100" step="1" value="50">
+    <input id="jsr-1-3" name="range3" type="text" value="75">
     ```
 
-2. Create instance of JSR, and point, that this is single slider:
+2. Create instance of JSR on inputs, and set it's starting values, and number of sliders You want to use:
+
+    - Inputs **must** be provided as CSS selector rule, as string (if one slider) or as array of strings (if one or more sliders).
+    - Number of sliders **must** match the number of inputs.
+    - Number of values **must** match the number of sliders.
+    - Values **should** match min-max range.
 
     ```js
-    new JSRange('#jsrSingle', '', {
-        single: true
+    new JSR(['#jsr-1-1', '#jsr-1-2', '#jsr-1-3'], {
+        sliders: 3,
+        values: [25, 50, 75]
     });
     ```
+    
+### Configuration: setting options via JS
 
-    Note the second argument is empty string. It is in fact *fallback* for second input (see **Double slider**).
-
-### Double slider
-
-1. Create HTML:
-
-    ```html
-    <input id="jsrMin" name="range[min]" type="range" min="50" max="200" step="1" value="150">
-    <input id="jsrMax" name="range[max]" type="range" value="175">
-    ```
-   
-    Note we need two fields - one for passing selected minimum value, and second for maximum value.
-
-2. Create instance of JSR:
-
-    ```js
-    new JSRange('#jsrMin', '#jsrMax', {});
-    ```
-
-### Setting options via HTML
-
-JSR can be configured via HTML attributes on input:
-
-- `min="x"` - set the minimum value of range
-- `max="x"` - set the maximum value of range
-- `step="x"` - the step between each value of range
-- `value="x"` on `min input` - the preset value of `from` slider
-- `value="x"` on `max input` - the preset value of `to` slider
-
-All of those values are HTML-valid.
-
-**Beware**: options (like `min`, `max` or `step`) for JSR are taken from `min input`. This means, that any options set on `max input` will be ignored (with the exception of `value` of course).
-
-In case of not setting any `value`, the `from` will be equal to `min`, and `to` will be equal to `max`.
-
-### Setting options via JS
-
-JSR can be also configured by JS. In case of configuration in HTML, the JS options **overwrite** HTML options (HTML is left unchanged though).
-
-- `min` - set the minimum value of range
-- `max` - set the maximum value of range
-- `step` - the step between each value of range
-
-Sample usage:
+Options object with defaults looks like follows:
 
 ```js
-new JSRange('#jsrangeMin', '#jsrangeMax', {
-    min: 0,
-    max: 200
-    step: 0.01
-});
+{
+  min: 0, // Minimal value
+  max: 100, // Maximum value
+  step: 1, // Step of values. It can be any value (10, 1, 0.1, 0.01 and so on)
+  values: [25, 75], // Values from smallest to biggest
+  labels: { // Configuration for labels
+    affixes: {
+      prefix: '', // Text before value in label (i.e. '$ ')
+      suffix: '' // Text after value in label (i.e. ' $')
+    },
+    minMax: true // Boolean if minimum and maximum labels should be displayed (applies CSS display: none;)
+  },
+}
 ```
 
-To set `from` and `to` values you may need to use HTML attributes or see next section.
+Custom options should go together with `sliders` and `values` options in JSR constructor.
 
 ### Setting values of range programmatically
 
-The `from` and `to` values can be set programmatically via JS. The action `set()` needs to be called on JSR object:
+Values of sliders can be set programmatically via JS:
 
 ```js
-var range = new JSRange('#jsrangeMin', '#jsrangeMax', {
-    min: 0,
-    max: 200
-    step: 0.01
+const range = new JSR(['#jsr-1-1', '#jsr-1-2', '#jsr-1-3'], {
+    sliders: 3,
+    values: [25, 50, 75]
 });
-// Later in code (or immediately after defining):
-range.set({
-    from: 50,
-    to: 75
-});
-```
-
-### Prefixes and suffixes
-
-Prefixes and suffixes can be applied by CSS pseudoelements `::before` and `::after`, although it is possible to apply them through configuration.
-
-If you want to set affixes in options, you need to add to options hash respectively: `prefixes: {}` and `suffixes: {}`. Then you shall to define where you want these affixes, and what should they be. You can use:
-
-- `min` - minimum label
-- `max` - maximum label
-- `from` - from label
-- `to` - to label
-- `single` - single label (`from === to`)
-
-Example:
-
-```js
-new JSRange('#jsrMin', '#jsrMax', {
-    prefixes: {
-        min: '$ ',
-        from: '$ ',
-        single: '$ '
-    },
-    suffixes: {
-        max: ' $',
-        to: ' $'
-    }
-})
+// Later in code:
+range.setValue(0, 40); // where 0 is the 0-index number of slider, and 40 is the value
 ```
 
 ### Keyboard
 
-JSR supports keyboard control. First of all one of two sliders needs to be focused. 
+JSR supports keyboard control. First of all one of sliders needs to be focused (by TAB or by click). 
 
 - By clicking `left/right arrow` the value is changed by `options.step`. 
 - If the `CTRL` is pressed along with arrow, the value is changed by `options.step x10`.
-- If the `SHIFT` is pressed along with arrow, the values is changed by `range x5%` (by the 5% of whole range).
+- If the `SHIFT` is pressed along with arrow, the value is changed by `range x5%` (by the 5% of whole range).
 
 NOTE: In case of `SHIFT` and `CTRL` keys pressed simultaneously, `SHIFT` takes priority.
 
-### Grid
+## CSS configuration
 
-Grid is a ruler placed beneath/over rail, which indicates values on the rail.
+JSR relies on CSS as much as possible. JSR CSS selectors are written in BEM methodology, which means,
+that the specificity is as flat as possible. You should have no problems with overwriting styles.
 
-It is created through two gradients: `background-image: linear-gradient(...), linear-gradient(...);`. The first one gradient is the *primary* markers set, the second one: *secondary* markers set. This way you can style those gradients by styling `background`. In example, to make secondary markers smaller than primary ones set: `background-size: 100% 100%, 100% 50%;` - secondary markers are now 50% height of primary markers.
+Everything (sliders, labels, bars) work in % positions, which means that the position of elements should be
+window size-independent.
 
-It has few options to set via `grid` parameter:
+### Merged labels in general, and their separator
 
--  `enabled` - defaults to false. If you want grid to be displayed, set it to `true`.
--  `step` -  every which (percent) of value, the grid marker (vertical line) should be placed. `step: 0.05` means, that marker should be placed every 5% of range width, giving 20 markers.
--  `primaryStepNth` - describes, every which marker should be the 'primary' one. Setting it to `primaryStepNth: 5` means, that every 5th marker (starting from first) will be primary. It is advisible, that `100 / primaryStepNth` gives integer, not float number.
-- `color` - this value contains two properties: `color.primary` (primary markers) and `color.secondary` (secondary markers). They can be set seperately. If one is not set, JSR tries to retrieve its color from `.jsr-grid` CSS `color` attribute. If it is not defined either, it uses default value, which is `#999`.
+Because merging labels is created through inserting on DOM level following label into preceding label, the merged label can be accessed by `.jsr_label .jsr_label` selector. By default this style removes padding, fixes font-size, and such things.
 
-Example:
+The labels are separated by pseudo-element `.jsr_label .jsr_label::before`. It's `content` property is the separator. By default it is: `content: ' - ';`.
 
-```js
-new JSRange('#jsrMin', '#jsrMax', {
-    grid: {
-        step: 0.02,
-        bigStepNth: 10,
-        color: {
-            primary: '#000',
-            secondary: '#555'
-        }
-    }
-})
-```
+### Locking screen on touchevent
 
-## Known bugs
-
-1. Sometimes some of the grid's marker may not be displayed (at least in Firefox). This is clearly rendering bug incredibly hard to reproduce.
+Touch event on mobile devices is supported by JSR. Because moving the finger around the screen to move slider caused the view to go up and down, I decided to lock the screen on touch start. This means, that to document root `.jsr_lockscreen` class is applied, which sets the size of document root to window size. If it causes any problems, You can set `overflow: visible; width: auto; height: auto;` on `.jsr_lockscreen` class, and report the issue through GitHub's issue system.
 
 ## Demo
 
