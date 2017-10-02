@@ -27,6 +27,8 @@ Browser support: Firefox, Chrome, others not tested (yet).
         - [Merged labels in general, and their separator](#merged-labels-in-general-and-their-separator)
         - [Locking screen on touchevent](#locking-screen-on-touchevent)
     - [Demo](#demo)
+    - [Modules information](#modules-information)
+        - [HTML Label support](#html-label-support)
 
 <!-- /TOC -->
 
@@ -192,3 +194,10 @@ Touch event on mobile devices is supported by JSR. Because moving the finger aro
 ## Demo
 
 https://mm-jsr.github.io/mm-jsr/#demo
+
+## Modules information
+
+### HTML Label support
+
+HTML Label support module enables support for focusing sliders by clicking on appropriate label.
+Since `<label>` is connected with its input by `[for]` attribute, it's necessary to [connect it properly](https://developer.mozilla.org/pl/docs/Web/HTML/Element/label#Using_the_for_attribute). Clicking on label focuses connected input (slider).

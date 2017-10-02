@@ -31,8 +31,6 @@ export default class {
     this.config = config;
     this.modules = modules;
 
-    this.modules.eventizer.register('modules/renderer:builded', () => {
-      this._bindEvents();
-    });
+    this._bindEvents();
   }
 }

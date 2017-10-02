@@ -5,6 +5,7 @@ import Logger from './logger.js';
 import InputUpdater from './inputUpdater.js';
 import Labels from './labels.js';
 import TouchSupport from './touchSupport.js';
+import HtmlLabels from './htmlLabels.js';
 import merge from 'deepmerge';
 
 export default class {
@@ -25,9 +26,10 @@ export default class {
         eventizer: Eventizer,
         core: Core,
         labels: Labels,
-        touchSupport: TouchSupport,
         renderer: Renderer,
+        touchSupport: TouchSupport,
         inputUpdater: InputUpdater,
+        htmlLabels: HtmlLabels
       }
     };
     this.config = merge(defaults, options, {
@@ -35,12 +37,8 @@ export default class {
       arrayMerge: (destinationArray, sourceArray) => sourceArray
     });
     this.specificConfig = {
-      eventizer: {},
-      core: {},
-      labels: {},
-      renderer: {},
       inputUpdater: {},
-      touchSupport: {}
+      htmlLabels: {}
     };
 
     this.logger = new Logger;
@@ -69,6 +67,7 @@ export default class {
     }
 
     this.specificConfig.inputUpdater.inputs = this.inputs;
+    this.specificConfig.htmlLabels.inputs = this.inputs;
 
     this._buildModules();
     this._init();
@@ -109,7 +108,7 @@ export default class {
           modules: this.modules,
           logger: this.logger,
           config: this.config
-        }, this.specificConfig[moduleName]);
+        }, (this.specificConfig[moduleName] || {}));
         this.logger.info(`JSR: Module ${moduleName} builded.`);
       } else {
         this.logger.info(`JSR: Module ${moduleName} skipped. No .build() method.`);
