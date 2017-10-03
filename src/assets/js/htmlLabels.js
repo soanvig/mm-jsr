@@ -1,5 +1,3 @@
-import { listenOn } from './helpers.js';
-
 export default class {
   _bindEvents () {
     // For each id of input

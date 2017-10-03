@@ -1,4 +1,4 @@
-import { listenOn } from './helpers.js';
+import { listenOn, calculateDecimals } from './helpers.js';
 
 function allLabelsSet () {
   const setValuesCount = this.values.filter((value) => value !== undefined).length;
@@ -65,6 +65,18 @@ function handleOverlappingBecauseItIsVeryFuckedUp () {
 
 function updateLabel (id, real, ratio) {
   const label = this.labels[id];
+
+  // Fill real value with appropriate number of zeros
+  if (this.config.step < 1) {
+    const realDecimals = calculateDecimals(real);
+    const stepDecimals = calculateDecimals(this.config.step);
+    const decimalsDiff = stepDecimals - realDecimals;
+    if (decimalsDiff > 0) {
+      // Adds zeros
+      const realSplit = real.toString().split('.');
+      real = `${realSplit[0]}.${realSplit[1] || 0}${Array(decimalsDiff).join('0')}`;
+    }
+  }
 
   // Update value
   label.innerHTML = this.config.labels.affixes.prefix + real + this.config.labels.affixes.suffix;
