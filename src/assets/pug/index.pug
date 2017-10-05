@@ -38,8 +38,7 @@ html(lang='pl')
                     affixes: {
                     prefix: '$ '
                     },
-                },
-                log: 'info'
+                }
             });
 
             new JSR('#range-3', {
@@ -50,8 +49,7 @@ html(lang='pl')
                     affixes: {
                     suffix: ' PLN'
                     },
-                },
-                log: 'info'
+                }
             });
 
             new JSR(['#range-4-1', '#range-4-2'], {
@@ -59,8 +57,7 @@ html(lang='pl')
                 step: 0.1,
                 min: -200,
                 max: 100,
-                values: [50, 75],
-                log: 'info'
+                values: [50, 75]
             });
 
             new JSR(['#range-5-1'], {

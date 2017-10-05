@@ -240,6 +240,7 @@ export default class {
   // @target should be HTML element
   appendRoot (target) {
     target.parentNode.insertBefore(this.body.root, target.nextSibling);
+    this.modules.eventizer.trigger('modules/renderer:rootAppended');
   }
 
   setSliderValue (value, sliderNum) {

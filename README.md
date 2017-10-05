@@ -26,6 +26,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
         - [Setting values](#setting-values)
         - [Listening on internal events](#listening-on-internal-events)
     - [CSS configuration](#css-configuration)
+        - [Slider dot](#slider-dot)
         - [Merged labels in general, and their separator](#merged-labels-in-general-and-their-separator)
         - [Locking screen on touchevent](#locking-screen-on-touchevent)
     - [Demo](#demo)
@@ -39,7 +40,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
 ### Features
 
-- new technologies,
+- resolution responsivity, due to use of percentage values,
 - custom minimum and maximum values (including negative numbers),
 - custom step of values (literally custom, it can be 0.001, 2 or 100),
 - any number of sliders,
@@ -207,6 +208,10 @@ that the specificity is as flat as possible. You should have no problems with ov
 Everything (sliders, labels, bars) work in % positions, which means that the position of elements should be
 window size-independent.
 
+### Slider dot
+
+Since slider is bigger than the dot itself to make targetting easier, the dot is painted on `::before` pseudoelement.
+
 ### Merged labels in general, and their separator
 
 Because merging labels is created through inserting on DOM level following label into preceding label, the merged label can be accessed by `.jsr_label .jsr_label` selector. By default this style removes padding, fixes font-size, and such things.
@@ -231,6 +236,7 @@ Some of the modules can be safely disabled:
 - `htmlLabels`
 - `touchSupport`
 - `inputUpdater`
+- `grid`
 
 by setting `modules[moduleName]` to false in JSR configuration.
 

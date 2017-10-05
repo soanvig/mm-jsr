@@ -6,6 +6,7 @@ import InputUpdater from './inputUpdater.js';
 import Labels from './labels.js';
 import TouchSupport from './touchSupport.js';
 import HtmlLabels from './htmlLabels.js';
+import Grid from './grid.js';
 import merge from 'deepmerge';
 
 export default class {
@@ -22,10 +23,12 @@ export default class {
         },
         minMax: true
       },
+      grid: false,
       modules: {
         eventizer: Eventizer,
         core: Core,
         labels: Labels,
+        grid: Grid,
         renderer: Renderer,
         touchSupport: TouchSupport,
         inputUpdater: InputUpdater,
