@@ -63,7 +63,9 @@ export default class {
     // Create modules
     this.modules = {};
     for (const moduleName in this.config.modules) {
-      this.modules[moduleName] = new this.config.modules[moduleName];
+      if (this.config.modules[moduleName]) {
+        this.modules[moduleName] = new this.config.modules[moduleName];
+      }
     }
 
     this.specificConfig.inputUpdater.inputs = this.inputs;

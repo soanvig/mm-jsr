@@ -2,7 +2,12 @@ import { listenOn } from './helpers.js';
 
 export default class {
   _bindEvents () {
-    listenOn([this.modules.renderer.body.sliders, this.modules.renderer.body.labels], 'touchstart', (event) => {
+    const elements = [this.modules.renderer.body.sliders];
+    if (this.modules.renderer.body.labels) {
+      elements.push(this.modules.renderer.body.labels);
+    }
+
+    listenOn(elements, 'touchstart', (event) => {
       document.documentElement.classList.add('jsr_lockscreen');
 
       event = event.targetTouches.item(0);
@@ -10,7 +15,7 @@ export default class {
       this.modules.renderer.body.sliders[event.target.dataset.jsrId].dispatchEvent(mouseEvent);
     });
 
-    listenOn([this.modules.renderer.body.sliders, this.modules.renderer.body.labels], 'touchmove', (event) => {
+    listenOn(elements, 'touchmove', (event) => {
       event = event.targetTouches.item(0);
       const mouseEvent = new MouseEvent('mousemove', event);
       document.dispatchEvent(mouseEvent);

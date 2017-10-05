@@ -30,6 +30,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
         - [Locking screen on touchevent](#locking-screen-on-touchevent)
     - [Demo](#demo)
     - [Modules information](#modules-information)
+        - [Disabling modules](#disabling-modules)
         - [HTML Label support](#html-label-support)
 
 <!-- /TOC -->
@@ -221,6 +222,17 @@ Touch event on mobile devices is supported by JSR. Because moving the finger aro
 https://mm-jsr.github.io/mm-jsr/#demo
 
 ## Modules information
+
+### Disabling modules
+
+Some of the modules can be safely disabled:
+
+- `labels`
+- `htmlLabels`
+- `touchSupport`
+- `inputUpdater`
+
+by setting `modules[moduleName]` to false in JSR configuration.
 
 ### HTML Label support
 
