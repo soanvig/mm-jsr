@@ -130,9 +130,13 @@ export default class {
     };
 
     this.modules.eventizer.register(eventNames[event], callback);
+
+    return this;
   }
   
   setValue (id, value) {
     this.modules.core.setValue(id, value);
+
+    return this;
   }
 }

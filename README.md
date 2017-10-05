@@ -164,6 +164,8 @@ NOTE: In case of `SHIFT` and `CTRL` keys pressed simultaneously, `SHIFT` takes p
 
 ## API
 
+Most of the API methods return `this`, so methods can be chained one by one.
+
 ### Setting values
 
 Values of sliders can be set programmatically via JS:
