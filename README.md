@@ -21,8 +21,10 @@ Browser support: Firefox, Chrome, others not tested (yet).
     - [Usage](#usage)
         - [JSR instance](#jsr-instance)
         - [Configuration: setting options via JS](#configuration-setting-options-via-js)
-        - [Setting values of range programmatically](#setting-values-of-range-programmatically)
         - [Keyboard](#keyboard)
+    - [API](#api)
+        - [Setting values](#setting-values)
+        - [Listening on internal events](#listening-on-internal-events)
     - [CSS configuration](#css-configuration)
         - [Merged labels in general, and their separator](#merged-labels-in-general-and-their-separator)
         - [Locking screen on touchevent](#locking-screen-on-touchevent)
@@ -150,7 +152,19 @@ Options object with defaults looks like follows:
 
 Custom options should go together with `sliders` and `values` options in JSR constructor (see example).
 
-### Setting values of range programmatically
+### Keyboard
+
+JSR supports keyboard control. First of all one of sliders needs to be focused (by TAB or by click). 
+
+- By clicking `left/right arrow` the value is changed by `options.step`. 
+- If the `CTRL` is pressed along with arrow, the value is changed by `options.step x10`.
+- If the `SHIFT` is pressed along with arrow, the value is changed by `range x5%` (by the 5% of whole range).
+
+NOTE: In case of `SHIFT` and `CTRL` keys pressed simultaneously, `SHIFT` takes priority.
+
+## API
+
+### Setting values
 
 Values of sliders can be set programmatically via JS:
 
@@ -163,15 +177,24 @@ const range = new JSR(['#jsr-1-1', '#jsr-1-2', '#jsr-1-3'], {
 range.setValue(0, 40); // where 0 is the 0-index number of slider, and 40 is the value
 ```
 
-### Keyboard
+### Listening on internal events
 
-JSR supports keyboard control. First of all one of sliders needs to be focused (by TAB or by click). 
+You can listen on certain events, by executing `.addEventListener(event, callback)` method on JSR instance.
 
-- By clicking `left/right arrow` the value is changed by `options.step`. 
-- If the `CTRL` is pressed along with arrow, the value is changed by `options.step x10`.
-- If the `SHIFT` is pressed along with arrow, the value is changed by `range x5%` (by the 5% of whole range).
+```js
+const range = new JSR(['#jsr-1-1', '#jsr-1-2', '#jsr-1-3'], {
+    sliders: 3,
+    values: [25, 50, 75]
+});
+range.addEventListener('update', (input, value) {
+    console.log(input, value);
+});
+```
 
-NOTE: In case of `SHIFT` and `CTRL` keys pressed simultaneously, `SHIFT` takes priority.
+Available event names and their callback arguments:
+
+- `update` - `([NodeElement] input, [Integer/Float] value)` - called by InputUpdate module after updating input's value.
+
 
 ## CSS configuration
 
