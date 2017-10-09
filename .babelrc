@@ -7,7 +7,15 @@
       }
     ]
   ],
-  "plugins": [
-    "external-helpers"
-  ]
+  "env": {
+    "development": {
+      "plugins": ["external-helpers"]
+    },
+    "production:": {
+      "plugins": ["external-helpers"]
+    },
+    "test": {
+      "plugins": ["transform-es2015-modules-commonjs"]
+    }
+  }
 }
