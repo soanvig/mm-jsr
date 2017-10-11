@@ -5,8 +5,8 @@ function throttle (name, time, func) {
   }
 
   throttling[name] = func;
+  throttling[name]();
   setTimeout(() => {
-    throttling[name]();
     throttling[name] = false;
   }, time);
   return true;

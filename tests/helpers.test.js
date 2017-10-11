@@ -53,3 +53,54 @@ describe('test listenOn', () => {
     expect(eventLaunched).toBe(true);
   });
 });
+
+describe('test throttle', () => {
+  jest.setTimeout(5000);
+
+  test('expected single immidiate execution', () => {
+    jest.useFakeTimers();
+    
+    throttle('throttle_test_1', 500, () => {});
+    expect(setTimeout.mock.calls.length).toBe(1);
+  });
+
+  test('expected 2 executions with 6 tries', () => {
+    const callback = jest.fn();
+    jest.useFakeTimers();
+
+    // 5 times execution
+    for (let i = 0; i < 5; i += 1) {
+      throttle('throttle_test_2', 500, callback);
+    }
+
+    expect(setTimeout.mock.calls.length).toBe(1);
+
+    // Release lock
+    jest.runTimersToTime(1000);
+    
+    // After releasing the lock try once more
+    throttle('throttle_test_2', 500, callback);
+
+    expect(setTimeout.mock.calls.length).toBe(2);
+  });
+
+  test('expected 1 executions with 6 tries (without releasing lock)', () => {
+    const callback = jest.fn();
+    jest.useFakeTimers();
+
+    // 5 times execution
+    for (let i = 0; i < 5; i += 1) {
+      throttle('throttle_test_3', 500, callback);
+    }
+
+    expect(setTimeout.mock.calls.length).toBe(1);
+
+    // Don't release lock
+    jest.runTimersToTime(200);
+    
+    // After "releasing" the lock try once more
+    throttle('throttle_test_3', 500, callback);
+
+    expect(setTimeout.mock.calls.length).toBe(1);
+  });
+});
