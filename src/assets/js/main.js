@@ -23,6 +23,7 @@ export default class {
         },
         minMax: true
       },
+      enabled: true,
       grid: false,
       modules: {
         eventizer: Eventizer,
@@ -143,5 +144,13 @@ export default class {
     this.modules.core.setValue(id, value);
 
     return this;
+  }
+
+  disable () {
+    this.config.enabled = false;
+  }
+
+  enable () {
+    this.config.enabled = true;
   }
 }

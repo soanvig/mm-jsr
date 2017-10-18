@@ -84,6 +84,10 @@ export default class {
   // - this.valueInMove (which is value saved during click).
   // - value (which is the difference between position during click and new mouse position).
   _setValue (value, id = null, diff = false) {
+    if (!this.config.enabled) {
+      return null;
+    }
+    
     id = (id === null) ? findClosestValue.call(this, value) : parseInt(id);
 
     if (diff) {
