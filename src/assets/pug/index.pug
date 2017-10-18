@@ -18,6 +18,7 @@ html(lang='pl')
         input#range-4-2(type='range' min='0' max='100' value='30')
         input#range-5-1(type='range' min='0' max='100' value='30')
         input#range-6-1(type='range' min='0' max='100' value='30')
+        input#range-7-1(type='range' min='0' max='100' value='30')
         script(src='./main.js')
         script.
             new JSR(['#range-1-1', '#range-1-2', '#range-1-3'], {
@@ -75,7 +76,23 @@ html(lang='pl')
                 values: [50],
                 modules: {
                     labels: false,
-                    
+                }
+            });
+
+            new JSR(['#range-7-1'], {
+                sliders: 1,
+                values: [50],
+                min: 1483228801000,
+                max: 1514678399000,
+                step: 1000 * 60 * 60 * 24,
+                labels: {
+                    formatter: function (value) {
+                        const date = new Date(value);
+                        const day = date.getUTCDate();
+                        const month = date.getMonth() + 1;
+                        const year = date.getUTCFullYear();
+                        return `${day}-${month}-${year}`;
+                    }
                 }
             });
 

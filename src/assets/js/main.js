@@ -21,7 +21,8 @@ export default class {
           prefix: '',
           suffix: ''
         },
-        minMax: true
+        minMax: true,
+        formatter: null
       },
       enabled: true,
       grid: false,
@@ -42,7 +43,7 @@ export default class {
     });
     this.specificConfig = {
       inputUpdater: {},
-      htmlLabels: {}
+      htmlLabels: {},
     };
 
     this.logger = new Logger;

@@ -1,5 +1,9 @@
 import { listenOn, calculateDecimals } from './helpers.js';
 
+function defaultFormatter (value) {
+  return this.config.labels.affixes.prefix + value + this.config.labels.affixes.suffix;
+}
+
 function allLabelsSet () {
   const setValuesCount = this.values.filter((value) => value !== undefined).length;
   if (setValuesCount === this.config.values.length) {
@@ -79,7 +83,7 @@ function updateLabel (id, real, ratio) {
   }
 
   // Update value
-  label.innerHTML = this.config.labels.affixes.prefix + real + this.config.labels.affixes.suffix;
+  label.innerHTML = (this.formatter || defaultFormatter).call(this, real);
   this.values[id] = ratio;
 
   // Update position
@@ -131,8 +135,8 @@ export default class {
   }
 
   _parseMinMax () {
-    this.minMax[0].innerHTML = this.config.min;
-    this.minMax[1].innerHTML = this.config.max;
+    this.minMax[0].innerHTML = (this.formatter || defaultFormatter).call(this, this.config.min);
+    this.minMax[1].innerHTML = (this.formatter || defaultFormatter).call(this, this.config.max);
 
     this.minMax[0].style.left = '0%';
     this.minMax[1].style.right = '0%';
@@ -147,6 +151,8 @@ export default class {
     this.logger = logger;
     this.config = config;
     this.modules = modules;
+
+    this.formatter = this.config.labels.formatter;
 
     this.modules.renderer.structure.labels = {
       classes: ['jsr_label'],
