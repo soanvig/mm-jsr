@@ -31,6 +31,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
         - [Locking screen on touchevent](#locking-screen-on-touchevent)
     - [Demo](#demo)
     - [Modules information](#modules-information)
+        - [Labels formatter](#labels-formatter)
         - [Disabling modules](#disabling-modules)
         - [HTML Label support](#html-label-support)
 
@@ -227,6 +228,31 @@ Touch event on mobile devices is supported by JSR. Because moving the finger aro
 https://mm-jsr.github.io/mm-jsr/#demo
 
 ## Modules information
+
+### Labels formatter
+
+By default label formatter function is: `prefix + value + suffix`, but the `config.labels.formatter` can be set to any function, which returned value will be displayed to the user as label. The function is provided with a current slider value as first argument.
+
+This is an example of JSR configuration which enables to choose between dates (DD-MM-YYYY) 01-01-2017 and 30-12-2017:
+
+```js
+new JSR(['#range-7-1'], {
+    sliders: 1, // Only one date
+    values: [1], // Whatever, will be set to minimum anyway, can be current date timestamp
+    min: 1483228801000, // timestamp of minimum value (01-01-2017)
+    max: 1514678399000, // timestamp of maximum value (30-12-2017)
+    step: 1000 * 60 * 60 * 24, // full day (mili * seconds * minutes * hours)
+    labels: {
+        formatter: function (value) {
+            const date = new Date(value); // Get date from value 
+            const day = date.getUTCDate(); // Get day
+            const month = date.getMonth() + 1; // Get month
+            const year = date.getUTCFullYear(); // Get year
+            return `${day}-${month}-${year}`; // Display
+        }
+    }
+});
+```
 
 ### Disabling modules
 
