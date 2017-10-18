@@ -25,6 +25,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
     - [API](#api)
         - [Setting values](#setting-values)
         - [Listening on internal events](#listening-on-internal-events)
+        - [Disabling/enabling slider](#disablingenabling-slider)
     - [CSS configuration](#css-configuration)
         - [Slider dot](#slider-dot)
         - [Merged labels in general, and their separator](#merged-labels-in-general-and-their-separator)
@@ -200,6 +201,9 @@ Available event names and their callback arguments:
 
 - `update` - `([NodeElement] input, [Integer/Float] value)` - called by InputUpdate module after updating input's value.
 
+### Disabling/enabling slider
+
+At any time methods `.enable()` and `.disable()` can be called to enable/disable slider.
 
 ## CSS configuration
 
