@@ -17,7 +17,6 @@ export default class {
       max: 100,
       step: 1,
       enabled: true,
-      grid: false,
       modules: {
         eventizer: Eventizer,
         core: Core,

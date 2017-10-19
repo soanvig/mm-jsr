@@ -1,4 +1,5 @@
 import { throttle } from './helpers.js';
+import merge from 'deepmerge';
 
 export default class {
   _bindEvents () {
@@ -42,8 +43,11 @@ export default class {
 
   /* API */
   build ({ config, modules, logger }) {
+    const defaults = {
+      grid: false
+    };
     this.logger = logger;
-    this.config = config;
+    this.config = merge(defaults, config);
     this.modules = modules;
 
     this.canvas = document.createElement('canvas');
