@@ -16,14 +16,6 @@ export default class {
       min: 0,
       max: 100,
       step: 1,
-      labels: {
-        affixes: {
-          prefix: '',
-          suffix: ''
-        },
-        minMax: true,
-        formatter: null
-      },
       enabled: true,
       grid: false,
       modules: {

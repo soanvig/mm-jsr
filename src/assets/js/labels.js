@@ -1,4 +1,5 @@
 import { listenOn, calculateDecimals } from './helpers.js';
+import merge from 'deepmerge';
 
 function defaultFormatter (value) {
   return this.config.labels.affixes.prefix + value + this.config.labels.affixes.suffix;
@@ -148,8 +149,18 @@ export default class {
   }
   
   build ({ config, modules, logger }) {
+    const defaults = {
+      labels: {
+        affixes: {
+          prefix: '',
+          suffix: ''
+        },
+        minMax: true,
+        formatter: null
+      }
+    };
     this.logger = logger;
-    this.config = config;
+    this.config = merge(defaults, config);
     this.modules = modules;
 
     this.formatter = this.config.labels.formatter;
