@@ -7,6 +7,7 @@ import Labels from './labels.js';
 import TouchSupport from './touchSupport.js';
 import HtmlLabels from './htmlLabels.js';
 import Grid from './grid.js';
+import CustomRange from './customRange.js';
 import merge from 'deepmerge';
 
 export default class {
@@ -25,7 +26,8 @@ export default class {
         renderer: Renderer,
         touchSupport: TouchSupport,
         inputUpdater: InputUpdater,
-        htmlLabels: HtmlLabels
+        htmlLabels: HtmlLabels,
+        customRange: CustomRange
       }
     };
     this.config = merge(defaults, options, {
