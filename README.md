@@ -206,6 +206,8 @@ Available event names and their callback arguments:
 
 At any time methods `.enable()` and `.disable()` can be called to enable/disable slider.
 
+Slider, while disabled, will have `.jsr--disabled` class.
+
 ### Limit values
 
 It is possible to programmaticaly change minimum and maximum values the sliders can achieve. It is called *limit*.

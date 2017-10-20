@@ -148,12 +148,15 @@ export default class {
 
   disable () {
     this.config.enabled = false;
+    this.modules.renderer.body.root.classList.add('jsr--disabled');
 
     return this;
   }
 
   enable () {
     this.config.enabled = true;
+
+    this.modules.renderer.body.root.classList.remove('jsr--disabled');
 
     return this;
   }
