@@ -26,6 +26,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
         - [Setting values](#setting-values)
         - [Listening on internal events](#listening-on-internal-events)
         - [Disabling/enabling slider](#disablingenabling-slider)
+        - [Limit values](#limit-values)
     - [CSS configuration](#css-configuration)
         - [Slider dot](#slider-dot)
         - [Merged labels in general, and their separator](#merged-labels-in-general-and-their-separator)
@@ -204,6 +205,32 @@ Available event names and their callback arguments:
 ### Disabling/enabling slider
 
 At any time methods `.enable()` and `.disable()` can be called to enable/disable slider.
+
+### Limit values
+
+It is possible to programmaticaly change minimum and maximum values the sliders can achieve. It is called *limit*.
+
+It can be done via config or `.setLimit(limit, value)` API option.
+
+```js
+    new JSR('...', {
+        ...
+        limit: {
+            min: [value],
+            max: [value]
+        }
+        ...
+    });
+```
+
+```js
+    jsr.setLimit('min', 25).setLimit('max', 70);
+```
+
+Limit cannot be set to value bigger than min/max.
+
+**BEWARE**: setting new limit (via API) refreshes all values to ensure noone exceeds the limit.
+This cause *n* refresh events to be called.
 
 ## CSS configuration
 

@@ -40,12 +40,15 @@ html(lang='pl')
                     prefix: '$ '
                     },
                 }
-            });
+            }).setLimit('min', 12000).setLimit('max', 16000);
 
             new JSR('#range-3', {
                 sliders: 1,
                 step: 0.01,
                 values: [50],
+                limit: {
+                    min: 19
+                },
                 labels: {
                     affixes: {
                     suffix: ' PLN'

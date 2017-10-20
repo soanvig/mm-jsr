@@ -7,7 +7,6 @@ import Labels from './labels.js';
 import TouchSupport from './touchSupport.js';
 import HtmlLabels from './htmlLabels.js';
 import Grid from './grid.js';
-import CustomRange from './customRange.js';
 import merge from 'deepmerge';
 
 export default class {
@@ -18,6 +17,7 @@ export default class {
       max: 100,
       step: 1,
       enabled: true,
+      limit: {},
       modules: {
         eventizer: Eventizer,
         core: Core,
@@ -26,14 +26,14 @@ export default class {
         renderer: Renderer,
         touchSupport: TouchSupport,
         inputUpdater: InputUpdater,
-        htmlLabels: HtmlLabels,
-        customRange: CustomRange
+        htmlLabels: HtmlLabels
       }
     };
     this.config = merge(defaults, options, {
       // This will overwrite arrays, instead merging them.
       arrayMerge: (destinationArray, sourceArray) => sourceArray
     });
+
     this.specificConfig = {
       inputUpdater: {},
       htmlLabels: {},
@@ -140,11 +140,21 @@ export default class {
     return this;
   }
 
+  setLimit (limit, value) {
+    this.modules.core.setLimit(limit, value);
+
+    return this;
+  }
+
   disable () {
     this.config.enabled = false;
+
+    return this;
   }
 
   enable () {
     this.config.enabled = true;
+
+    return this;
   }
 }

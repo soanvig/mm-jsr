@@ -94,11 +94,13 @@ export default class {
       value = this.valueInMove[id] + value;
     }
 
-    // Value cannot exceed min/max
-    if (value < 0) {
-      value = 0;
-    } else if (value > 1) {
-      value = 1;
+    // Value cannot exceed limit
+    if (this.limit.min !== null && value < this.limit.min) {
+      value = this.limit.min;
+    }
+
+    if (this.limit.max !== null && value > this.limit.max) {
+      value = this.limit.max;
     }
   
     // Value cannot exceed neighbour values
@@ -194,6 +196,10 @@ export default class {
     this.logger = logger;
     this.modules = modules;
 
+    this.limit = {};
+    this.setLimit('min', this.config.limit.min, true);
+    this.setLimit('max', this.config.limit.max, true);
+
     this.stepDecimals = calculateDecimals(this.config.step);
     this.stepRatio = calculateStepRatio.call(this);
     this.stepRatioDecimals = calculateDecimals(this.stepRatio);
@@ -220,5 +226,29 @@ export default class {
 
   setValue (value, id) {
     this._setValue(value, id);
+  }
+
+  setLimit (limit, value, initial = false) {
+    if (value === null || typeof value === 'undefined') {
+      this.limit[limit] = limit === 'min' ? 0 : 1;
+    } else {
+      this.limit[limit] = realToRatio.call(this, value);
+
+      // Limit cannot be bigger than min/max
+      if (this.limit[limit] < 0) {
+        this.limit[limit] = 0;
+      } else if (this.limit[limit] > 1) {
+        this.limit[limit] = 1;
+      }
+
+      // Refresh all values if it isn't initial set
+      if (initial) {
+        return;
+      }
+
+      this.values.forEach((value, index) => {
+        this._setValue(value, index);
+      });
+    }
   }
 }
