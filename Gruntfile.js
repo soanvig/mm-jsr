@@ -153,7 +153,7 @@ module.exports = function (grunt) {
 
     rollup: {
       options: {
-        format: 'iife',
+        format: 'umd',
         moduleName: 'JSR'
       },
       dev: {
