@@ -17,7 +17,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
         - [Advantages](#advantages)
     - [Installation](#installation)
         - [Manual](#manual)
-        - [NPM & import](#npm--import)
+        - [NPM & modules](#npm--modules)
     - [Usage](#usage)
         - [JSR instance](#jsr-instance)
         - [Configuration: setting options via JS](#configuration-setting-options-via-js)
@@ -84,7 +84,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
     `<script src="[path_to_jsr_directory]/dist/main.js"></script>`
   
-### NPM & import
+### NPM & modules
 
 1. Install via npm: 
 
@@ -92,9 +92,15 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
 2. Include in your JS code:
 
-    `import 'mm-jsr';`
+    `import JSR from 'mm-jsr';`
 
-    Due to pro-browser bundling, it's impossible to include JSR with `[name] from` directive.
+    **or**, depending on your module system:
+
+    `const JSR = require('mm-jsr')`;
+
+    Since JSR is packed as UMD bundle, You can include also directly as JSR:
+
+    `import 'mm-jsr';`
 
 3. Add CSS code in HTML `<head>` section:
 
