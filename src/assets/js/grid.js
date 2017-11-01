@@ -18,23 +18,34 @@ export default class {
     this.canvas.width = this.modules.renderer.body.railOuter.offsetWidth;
   }
 
+  _getNumberOfLines () {
+    const number = 100;
+    return Math.round(number);  
+  }
+
   _render () {
     const width = this.canvas.width;
-    const height = this.canvas.height;
+    const height = this.config.grid.height;
     const context = this.context;
-    const numberOfLines = 100;
+    const numberOfLines = this._getNumberOfLines();
     const ratio = 1 / numberOfLines;
 
     context.clearRect(0, 0, width, height);
     context.beginPath();
     context.lineWidth = 1;
-    context.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+    context.fillStyle = context.strokeStyle = this.config.grid.color;
+    context.textAlign = 'center';
+    context.font = `${this.config.grid.fontSize}px ${this.config.grid.fontFamily}`;
+    context.textBaseline = 'top';
 
     for (let i = 0; i <= numberOfLines; i += 1) {
       let left = i * ratio * width;
       left = Math.round(left * 100.0) / 100.0;
       context.moveTo(i * ratio * width, 0);
       context.lineTo(i * ratio * width, height);
+      if (i % 10 === 0) {
+        context.fillText('TEST', i * ratio * width, height + this.config.grid.textPadding);
+      }
     }
 
     context.closePath();
@@ -44,7 +55,13 @@ export default class {
   /* API */
   build ({ config, modules, logger }) {
     const defaults = {
-      grid: false
+      grid: {
+        color: 'rgba(0, 0, 0, 0.3)',
+        height: 10,
+        fontSize: 10,
+        fontFamily: 'sans-serif',
+        textPadding: 5
+      }
     };
     this.logger = logger;
     this.config = merge(defaults, config);
@@ -52,7 +69,7 @@ export default class {
 
     this.canvas = document.createElement('canvas');
     this.canvas.classList.add('jsr_canvas');
-    this.canvas.height = '10';
+    this.canvas.height = this.config.grid.height + this.config.grid.fontSize + this.config.grid.textPadding;
 
     this.context = this.canvas.getContext('2d');
 

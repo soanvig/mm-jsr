@@ -99,7 +99,6 @@ module.exports = {
     'new-cap': 'error',
     'no-lonely-if': 'error',
     'no-mixed-spaces-and-tabs': 'error',
-    'no-multi-assign': 'error',
     'no-multiple-empty-lines': 'error',
     'no-negated-condition': 'error',
     'no-plusplus': 'error',

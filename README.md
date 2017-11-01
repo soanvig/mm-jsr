@@ -33,6 +33,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
         - [Locking screen on touchevent](#locking-screen-on-touchevent)
     - [Demo](#demo)
     - [Modules information](#modules-information)
+        - [Grid](#grid)
         - [Labels formatter](#labels-formatter)
         - [Disabling modules](#disabling-modules)
         - [HTML Label support](#html-label-support)
@@ -157,6 +158,9 @@ Options object with defaults looks like follows:
     },
     minMax: true // Boolean if minimum and maximum labels should be displayed (applies CSS display: none;)
   },
+  grid: {
+      color: 'rgba(0, 0, 0, 0.3)'
+  }
   log: 'error' // available values: 'debug', 'info', 'warn', 'error'
 }
 ```
@@ -267,6 +271,14 @@ Touch event on mobile devices is supported by JSR. Because moving the finger aro
 https://mm-jsr.github.io/mm-jsr/#demo
 
 ## Modules information
+
+### Grid
+
+A grid displays vertical bars, by default beneath the bar, which help to target values on bar. The grid is clickable, just like bar.
+
+Some of the range solutions use multiple divs to draw bars. JSR uses canvas, because it's far faster solution, and it doesn't pollute DOM.
+
+Since the canvas has JS-only side, bars' color can be set only via JS by `grid.color` option. It tolerates any [CSS color values](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Applying_styles_and_colors).
 
 ### Labels formatter
 
