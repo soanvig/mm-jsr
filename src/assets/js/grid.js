@@ -44,7 +44,11 @@ export default class {
       context.moveTo(i * ratio * width, 0);
       context.lineTo(i * ratio * width, height);
       if (i % 10 === 0) {
-        context.fillText('TEST', i * ratio * width, height + this.config.grid.textPadding);
+        let text = (this.config.max - this.config.min) * (i / numberOfLines) + this.config.min;
+        if (this.config.labels && this.config.labels.formatter) {
+          text = this.config.labels.formatter(text);
+        }
+        context.fillText(text.toString(), i * ratio * width, height + this.config.grid.textPadding);
       }
     }
 
