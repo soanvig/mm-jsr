@@ -43,7 +43,7 @@ export default class {
       },
       rail: {
         classes: ['jsr_rail'],
-        children: ['sliders', 'bars'],
+        children: ['bars', 'sliders', 'limitBar'],
         count: 1
       },
       sliders: {
@@ -60,6 +60,11 @@ export default class {
         children: [],
         count: 1,
         alwaysArray: true
+      },
+      limitBar: {
+        classes: ['jsr_bar', 'jsr_bar--limit'],
+        children: [],
+        count: 1
       }
     };
   }

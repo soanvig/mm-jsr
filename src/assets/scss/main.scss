@@ -43,10 +43,16 @@ $jsr-slider-height: 15px;
 
 .jsr_bar {
     position: absolute;
-    height: 5px;
+    height: $jsr-rail-height;
     background-color: #999;
     z-index: 2;
     cursor: move;
+}
+
+.jsr_bar--limit {
+    background-color: #161;
+    z-index: 1;
+    cursor: auto;
 }
 
 .jsr_slider {

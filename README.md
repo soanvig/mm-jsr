@@ -155,6 +155,9 @@ Options object with defaults looks like follows:
     minMax: true, // Boolean if minimum and maximum labels should be displayed (applies CSS display: none;)
     formatter: null,
   },
+  limit: {
+      show: false // Determines, if the limit should be visible on bar or not.
+  },
   grid: {
     color: 'rgba(0, 0, 0, 0.3)', // Color of bars and text of grid. Can by any CSS color.
     height: 10, // Height of bars of grid.
@@ -229,6 +232,7 @@ It can be done via config or `.setLimit(limit, value)` API option.
     new JSR('...', {
         ...
         limit: {
+            show: [boolean], // Defaults to false. Limit works even if `show` is false!
             min: [value],
             max: [value]
         }
@@ -244,6 +248,10 @@ Limit cannot be set to value bigger than min/max.
 
 **BEWARE**: setting new limit (via API) refreshes all values to ensure noone exceeds the limit.
 This cause *n* refresh events to be called.
+
+If you change the `show` property after initializing JSR, some limit need to be set to update visibility state.
+
+To disable limit set it to `null`.
 
 ## CSS configuration
 

@@ -249,6 +249,12 @@ export default class {
       this.values.forEach((value, index) => {
         this._setValue(value, index);
       });
+
+      if (this.config.limit.show) {
+        const body = this.modules.renderer.body.limitBar;
+        body.style.left = `${this.limit.min * 100}%`;
+        body.style.right = `${(1 - this.limit.max) * 100}%`;
+      }
     }
   }
 }
