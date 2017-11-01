@@ -50,7 +50,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
 - any number of sliders,
 - collapsing labels,
 - fully and **easily** customizable through CSS and configuration,
-- affixes for labels,
+- formatter for labels,
 - support for touch devices (**not tested well yet**),
 - support for keyboard,
 - support for screen-readers (**not implemented yet**).
@@ -152,14 +152,15 @@ Options object with defaults looks like follows:
   step: 1, // Step of values. It can be any value (10, 1, 0.1, 0.01 and so on)
   values: [25, 75], // Values from smallest to biggest
   labels: { // Configuration for labels
-    affixes: {
-      prefix: '', // Text before value in label (i.e. '$ ')
-      suffix: '' // Text after value in label (i.e. ' $')
-    },
-    minMax: true // Boolean if minimum and maximum labels should be displayed (applies CSS display: none;)
+    minMax: true, // Boolean if minimum and maximum labels should be displayed (applies CSS display: none;)
+    formatter: null,
   },
   grid: {
-      color: 'rgba(0, 0, 0, 0.3)'
+    color: 'rgba(0, 0, 0, 0.3)', // Color of bars and text of grid. Can by any CSS color.
+    height: 10, // Height of bars of grid.
+    fontSize: 10, // Font size of text (in pixels).
+    fontFamily: 'sans-serif', // Font family of text (any CSS font-family value).
+    textPadding: 5 // Vertical distance between text and bars (in pixels).
   }
   log: 'error' // available values: 'debug', 'info', 'warn', 'error'
 }
@@ -280,9 +281,11 @@ Some of the range solutions use multiple divs to draw bars. JSR uses canvas, bec
 
 Since the canvas has JS-only side, bars' color can be set only via JS by `grid.color` option. It tolerates any [CSS color values](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Applying_styles_and_colors).
 
+Grid uses `config.labels.formatter` to format text.
+
 ### Labels formatter
 
-By default label formatter function is: `prefix + value + suffix`, but the `config.labels.formatter` can be set to any function, which returned value will be displayed to the user as label. The function is provided with a current slider value as first argument.
+By default labels shows the actual value of input, but the `config.labels.formatter` can be set to any function, which returned value will be displayed to the user as label. The function is provided with a current slider value as first argument.
 
 This is an example of JSR configuration which enables to choose between dates (DD-MM-YYYY) 01-01-2017 and 30-12-2017:
 

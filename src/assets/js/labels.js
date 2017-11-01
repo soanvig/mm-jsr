@@ -1,10 +1,6 @@
 import { listenOn, calculateDecimals } from './helpers.js';
 import merge from 'deepmerge';
 
-function defaultFormatter (value) {
-  return this.config.labels.affixes.prefix + value + this.config.labels.affixes.suffix;
-}
-
 function allLabelsSet () {
   const setValuesCount = this.values.filter((value) => value !== undefined).length;
   if (setValuesCount === this.config.values.length) {
@@ -84,7 +80,7 @@ function updateLabel (id, real, ratio) {
   }
 
   // Update value
-  label.innerHTML = (this.formatter || defaultFormatter).call(this, real);
+  label.innerHTML = this.formatter ? this.formatter(real) : real;
   this.values[id] = ratio;
 
   // Update position
@@ -136,8 +132,8 @@ export default class {
   }
 
   _parseMinMax () {
-    this.minMax[0].innerHTML = (this.formatter || defaultFormatter).call(this, this.config.min);
-    this.minMax[1].innerHTML = (this.formatter || defaultFormatter).call(this, this.config.max);
+    this.minMax[0].innerHTML = this.formatter ? this.formatter(this.config.min) : this.config.min;
+    this.minMax[1].innerHTML = this.formatter ? this.formatter(this.config.max) : this.config.max;
 
     this.minMax[0].style.left = '0%';
     this.minMax[1].style.right = '0%';
@@ -151,10 +147,6 @@ export default class {
   build ({ config, modules, logger }) {
     const defaults = {
       labels: {
-        affixes: {
-          prefix: '',
-          suffix: ''
-        },
         minMax: true,
         formatter: null
       }

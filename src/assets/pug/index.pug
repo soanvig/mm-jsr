@@ -36,9 +36,9 @@ html(lang='pl')
                 max: 20000,
                 values: [15000, 17500],
                 labels: {
-                    affixes: {
-                    prefix: '$ '
-                    },
+                    formatter: (value) => {
+                        return '$' + value.toString();
+                    }
                 }
             }).setLimit('min', 12000).setLimit('max', 16000);
 
@@ -50,9 +50,9 @@ html(lang='pl')
                     min: 19
                 },
                 labels: {
-                    affixes: {
-                    suffix: ' PLN'
-                    },
+                    formatter: (value) => {
+                        return value.toString() + ' PLN';
+                    }
                 }
             });
 
@@ -92,7 +92,7 @@ html(lang='pl')
                     color: '#F00'
                 },
                 labels: {
-                    formatter: function (value) {
+                    formatter: (value) => {
                         const date = new Date(value);
                         const day = date.getUTCDate();
                         const month = date.getMonth() + 1;
