@@ -279,7 +279,7 @@ Touch event on mobile devices is supported by JSR. Because moving the finger aro
 
 ## Demo
 
-https://mm-jsr.github.io/mm-jsr/#demo
+https://mm-jsr.github.io/#demo
 
 ## Modules information
 
