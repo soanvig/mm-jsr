@@ -34,7 +34,6 @@ export default class {
     context.beginPath();
     context.lineWidth = 1;
     context.fillStyle = context.strokeStyle = this.config.grid.color;
-    context.textAlign = 'center';
     context.font = `${this.config.grid.fontSize}px ${this.config.grid.fontFamily}`;
     context.textBaseline = 'top';
 
@@ -44,6 +43,15 @@ export default class {
       context.moveTo(i * ratio * width, 0);
       context.lineTo(i * ratio * width, height);
       if (i % 10 === 0) {
+        // Determine the position of text
+        if (i === 0) {
+          context.textAlign = 'left';
+        } else if (i === numberOfLines) {
+          context.textAlign = 'right';
+        } else {
+          context.textAlign = 'center';
+        }
+
         let text = (this.config.max - this.config.min) * (i / numberOfLines) + this.config.min;
         if (this.config.labels && this.config.labels.formatter) {
           text = this.config.labels.formatter(text);
