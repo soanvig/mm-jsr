@@ -38,10 +38,13 @@ export default class {
     context.textBaseline = 'top';
 
     for (let i = 0; i <= numberOfLines; i += 1) {
+      // Draw line
       let left = i * ratio * width;
       left = Math.round(left * 100.0) / 100.0;
-      context.moveTo(i * ratio * width, 0);
-      context.lineTo(i * ratio * width, height);
+      context.moveTo(left, 0);
+      context.lineTo(left, height);
+
+      // Draw text
       if (i % 10 === 0) {
         // Determine the position of text
         if (i === 0) {
