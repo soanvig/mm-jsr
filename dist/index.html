@@ -36,10 +36,13 @@
           min: 10000,
           max: 20000,
           values: [15000, 17500],
+          limit: {
+              show: true
+          },
           labels: {
-              affixes: {
-              prefix: '$ '
-              },
+              formatter: (value) => {
+                  return '$' + value.toString();
+              }
           }
       }).setLimit('min', 12000).setLimit('max', 16000);
       
@@ -51,9 +54,9 @@
               min: 19
           },
           labels: {
-              affixes: {
-              suffix: ' PLN'
-              },
+              formatter: (value) => {
+                  return value.toString() + ' PLN';
+              }
           }
       });
       
@@ -89,8 +92,11 @@
           min: 1483228801000,
           max: 1514678399000,
           step: 1000 * 60 * 60 * 24,
+          grid: {
+              color: '#F00'
+          },
           labels: {
-              formatter: function (value) {
+              formatter: (value) => {
                   const date = new Date(value);
                   const day = date.getUTCDate();
                   const month = date.getMonth() + 1;
