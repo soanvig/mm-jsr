@@ -4,7 +4,7 @@
 
 Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
-Newest version: **0.1.3beta**
+Newest version: **0.1.66beta**
 
 Browser support: Firefox, Chrome, others not tested (yet).
 
