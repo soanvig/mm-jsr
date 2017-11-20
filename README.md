@@ -86,10 +86,10 @@ Browser support: Firefox, Chrome, others not tested (yet).
     And in HTML scripts section (in example in the end of body:)
 
     `<script src="[path_to_jsr_directory]/dist/main.js"></script>`
-  
+
 ### NPM & modules
 
-1. Install via npm: 
+1. Install via npm:
 
     `npm install mm-jsr`
 
@@ -109,7 +109,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
     `<link rel="stylesheet" href="node_modules/mm-jsr/dist/assets/css/main.css">`
 
-    **or** to the imports section of your css file:
+    **or** to the imports section of your css file (considering webpack resolves your `node_modules` folder):
 
     `@import "mm-jsr/dist/assets/css/main.css"`
 
@@ -146,7 +146,7 @@ The example below will create range with 3 sliders of values: 25, 50, 75 from 0-
         values: [25, 50, 75]
     });
     ```
-    
+
 ### Configuration: setting options via JS
 
 Options object with defaults looks like follows:
@@ -179,9 +179,9 @@ Custom options should go together with `sliders` and `values` options in JSR con
 
 ### Keyboard
 
-JSR supports keyboard control. First of all one of sliders needs to be focused (by TAB or by click). 
+JSR supports keyboard control. First of all one of sliders needs to be focused (by TAB or by click).
 
-- By clicking `left/right arrow` the value is changed by `options.step`. 
+- By clicking `left/right arrow` the value is changed by `options.step`.
 - If the `CTRL` is pressed along with arrow, the value is changed by `options.step x10`.
 - If the `SHIFT` is pressed along with arrow, the value is changed by `range x5%` (by the 5% of whole range).
 
@@ -312,7 +312,7 @@ new JSR(['#range-7-1'], {
     step: 1000 * 60 * 60 * 24, // full day (mili * seconds * minutes * hours)
     labels: {
         formatter: function (value) {
-            const date = new Date(value); // Get date from value 
+            const date = new Date(value); // Get date from value
             const day = date.getUTCDate(); // Get day
             const month = date.getMonth() + 1; // Get month
             const year = date.getUTCFullYear(); // Get year
