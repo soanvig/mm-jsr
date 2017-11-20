@@ -107,7 +107,11 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
 3. Add CSS code in HTML `<head>` section:
 
-    `<link rel="stylesheet" href="node_modules/mm-jsr/dist/assets/css/mm-jsr.css">`
+    `<link rel="stylesheet" href="node_modules/mm-jsr/dist/assets/css/main.css">`
+
+    **or** to the imports section of your css file:
+
+    `@import "mm-jsr/dist/assets/css/main.css"`
 
 ## Usage
 
@@ -209,7 +213,7 @@ const range = new JSR(['#jsr-1-1', '#jsr-1-2', '#jsr-1-3'], {
     sliders: 3,
     values: [25, 50, 75]
 });
-range.addEventListener('update', (input, value) {
+range.addEventListener('update', (input, value) => {
     console.log(input, value);
 });
 ```
