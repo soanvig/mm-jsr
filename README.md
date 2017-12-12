@@ -4,7 +4,7 @@
 
 Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
-Newest version: **0.1.6beta**
+Newest version: **0.1.7beta**
 
 Browser support: Firefox, Chrome, others not tested (yet).
 
@@ -131,7 +131,7 @@ The example below will create range with 3 sliders of values: 25, 50, 75 from 0-
 
 2. Create instance of JSR on inputs, and set it's starting values, and number of sliders You want to use:
 
-    - Inputs **must** be provided as CSS selector rule, as string (if one slider) or as array of strings (if one or more sliders).
+    - Inputs **must** be provided as CSS selector rule, as string (if one slider) or as array of strings (if one or more sliders) **or must** be provided as DOM objects or array of DOM objects.
     - Number of sliders **must** match the number of inputs.
     - Number of values **must** match the number of sliders.
     - Values **should** match min-max range.

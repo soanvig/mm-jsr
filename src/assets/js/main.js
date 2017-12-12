@@ -46,7 +46,13 @@ export default class {
 
     // Ensure array and find all inputs
     inputs = [].concat(inputs);
-    this.inputs = inputs.map((input) => document.querySelector(input));
+    this.inputs = inputs.map((input) => {
+      if (typeof input === 'string') {
+        return document.querySelector(input);
+      }
+
+      return input;
+    });
 
     // Validate config and inputs
     // If any errors
