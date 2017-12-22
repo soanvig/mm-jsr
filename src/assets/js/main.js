@@ -143,7 +143,7 @@ export default class {
   }
   
   setValue (id, value) {
-    this.modules.core.setValue(id, value);
+    this.modules.core.setValue(value, id);
 
     return this;
   }
