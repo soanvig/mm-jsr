@@ -105,13 +105,19 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
     `import 'mm-jsr';`
 
-3. Add CSS code in HTML `<head>` section:
+3. Add CSS:
+
+    In your `<head>` section:
 
     `<link rel="stylesheet" href="node_modules/mm-jsr/dist/assets/css/main.css">`
 
-    **or** to the imports section of your css file (considering webpack resolves your `node_modules` folder):
+    **or** to the imports section of your css file (considering your bundling tool resolves your `node_modules` folder):
 
-    `@import "mm-jsr/dist/assets/css/main.css"`
+    `@import 'mm-jsr/dist/assets/css/main.css'`
+    
+    **or** (in your JS code) if your bundling tool resolves `node_modules` and allows to load all assets from JS (Webpack does):
+    
+    `import 'mm-jsr/dist/assets/css/main.scss'`
 
 ## Usage
 
