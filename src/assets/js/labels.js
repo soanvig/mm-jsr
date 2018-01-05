@@ -130,8 +130,9 @@ export default class {
       this.modules.renderer.body.sliders[event.target.dataset.jsrId].dispatchEvent(clickEvent);
     });
 
+    // Update label merging
     listenOn(window, 'resize', () => {
-      throttle(`label-update-overlapping-${Math.random()}`, 50, () => {
+      throttle(`label-update-overlapping-${Math.random()}`, 100, () => {
         handleOverlappingBecauseItIsVeryFuckedUp.call(this);
       });
     });

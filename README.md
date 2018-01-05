@@ -8,11 +8,16 @@ Newest version: **1.0.0**
 
 Tested browser support: Firefox (57+), Chrome (63+), Edge (41+).
 
+## Contributing
+
+[CONTRIBUTING.md](CONTRIBUTING.md)
+
 ## Table of content
 
 <!-- TOC -->
 
 - [Mort&Mortis JS Range (M&M JSR)](#mortmortis-js-range-mm-jsr)
+    - [Contributing](#contributing)
     - [Table of content](#table-of-content)
     - [Features and advantages](#features-and-advantages)
         - [Features](#features)
