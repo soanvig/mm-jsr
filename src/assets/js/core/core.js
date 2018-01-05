@@ -2,12 +2,12 @@ import { throttle, calculateDecimals } from '../helpers.js';
 
 /* Private methods. Require to be called with .call(this, ...args) */
 
-// Converts real value to ratio value used by script 
+// Converts real value to ratio value used by script
 function realToRatio (value) {
   const min = this.config.min;
   const max = this.config.max;
 
-  return (value - min) / (max - min); 
+  return (value - min) / (max - min);
 }
 
 // Rounds value to step
@@ -16,7 +16,7 @@ function roundToStep (value) {
   const stepDecimalsMultiplier = Math.pow(10, this.stepDecimals);
 
   value = Math.round(value / step) * step;
-  
+
   return Math.round(value * stepDecimalsMultiplier) / stepDecimalsMultiplier;
 }
 
@@ -87,7 +87,7 @@ export default class {
     if (!this.config.enabled) {
       return null;
     }
-    
+
     id = (id === null) ? findClosestValue.call(this, value) : parseInt(id);
 
     if (diff) {
@@ -102,22 +102,22 @@ export default class {
     if (this.limit.max !== null && value > this.limit.max) {
       value = this.limit.max;
     }
-  
+
     // Value cannot exceed neighbour values
     if ((typeof this.values[id - 1] !== 'undefined') && value < this.values[id - 1]) {
       value = this.values[id - 1];
     }
-    
+
     if ((typeof this.values[id + 1] !== 'undefined') && value > this.values[id + 1]) {
       value = this.values[id + 1];
     }
-  
+
     const roundedValue = roundToStepRatio.call(this, value);
     if (roundedValue === this.values[id]) {
       // Nothing changed
       return;
     }
-  
+
     this.values[id] = roundedValue;
     this.modules.renderer.setSliderValue(roundedValue, id);
 
@@ -135,7 +135,7 @@ export default class {
         this.valueInMove[slider] = this.values[slider];
       });
     });
-  
+
     eventizer.register('view/slider:mousemove', (event, id, diff) => {
       throttle('slider-mousemove', 10, () => {
         this.logger.debug('JSR: Slider mousemove.');
@@ -144,24 +144,24 @@ export default class {
         this._setValue(diff, id, true);
       });
     });
-  
+
     eventizer.register('view/slider:mouseup', (event) => {
       this.logger.debug('JSR: Slider mouseup.');
       this.logger.debug(event);
     });
-  
+
     eventizer.register('view/rail:click', (event, value) => {
       this.logger.debug('JSR: Rail clicked.');
       this.logger.debug(event);
       this._setValue(value);
     });
-  
+
     eventizer.register('view/root:arrow', (event, id, direction) => {
       const actualValue = this.values[id];
       const twentiethRange = 0.05;
       const increaseBy = event.shiftKey ? twentiethRange
         : (event.ctrlKey ? this.stepRatio * 10 : this.stepRatio);
-  
+
       const newValue = actualValue + increaseBy * direction;
       this._setValue(newValue, id);
     });
@@ -169,11 +169,11 @@ export default class {
     eventizer.register('view/bar:mousedown', (event, id) => {
       this.logger.debug('JSR: Bar mousedown.');
       this.logger.debug(event);
-      
+
       this.valueInMove[id] = this.values[id];
       this.valueInMove[id + 1] = this.values[id + 1];
     });
-  
+
     eventizer.register('view/bar:mousemove', (event, id, diff) => {
       throttle('bar-mousemove', 10, () => {
         this.logger.debug('JSR: Bar mousemove.');
@@ -183,7 +183,7 @@ export default class {
         this._setValue(diff, id + 1, true);
       });
     });
-  
+
     eventizer.register('view/bar:mouseup', (event) => {
       this.logger.debug('JSR: Bar mouseup.');
       this.logger.debug(event);
@@ -208,12 +208,12 @@ export default class {
   init (inputs, values) {
     // Renderer should be applied to body before setting values.
     this.modules.renderer.appendRoot(inputs[0]);
-    
+
     values.forEach((value, index) => {
       value = realToRatio.call(this, value);
       this._setValue(value, index);
     });
-    
+
     this._bindEvents();
 
     this.logger.info('JSR: Core initiated.');
