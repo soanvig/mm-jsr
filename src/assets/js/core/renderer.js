@@ -71,7 +71,7 @@ export default class {
 
   _bindEvents () {
     const eventizer = this.modules.eventizer;
-    
+
     // Slider
     listenOn(this.body.sliders, 'click', (event) => {
       event.stopPropagation();
@@ -81,12 +81,12 @@ export default class {
 
       this.temp.sliderInMove = parseInt(event.target.dataset.jsrId);
       this.temp.sliderClickX = event.clientX;
-      
+
       const slidersWithSameValue = getSlidersWithSameValue.call(this, this.temp.sliderInMove);
       if (slidersWithSameValue.length > 1) {
         this.temp.sliderInMove = slidersWithSameValue;
       }
-      
+
       eventizer.trigger('view/slider:mousedown', event, slidersWithSameValue);
     });
     listenOn(document, 'mousemove', (event) => {
@@ -108,8 +108,9 @@ export default class {
         }
       }
 
-      // Now, if its certain which slider should be move, focus it!
+      // Now, if its certain which slider should be move, focus it and make active!
       this.body.sliders[this.temp.sliderInMove].focus();
+      this.body.sliders[this.temp.sliderInMove].classList.add('jsr_slider--active');
 
       // Calculate the difference between the position where slider was clicked and where the mouse cursor is now.
       // Plus convert it into rationed value.
@@ -122,6 +123,11 @@ export default class {
       if (this.temp.sliderInMove === null) {
         return;
       }
+
+      // Clear active class on all sliders
+      this.body.sliders.forEach((slider) => {
+        slider.classList.remove('jsr_slider--active');
+      });
 
       eventizer.trigger('view/slider:mouseup', event, this.temp.sliderInMove);
       this.temp.sliderInMove = null;
@@ -147,53 +153,53 @@ export default class {
         if (this.temp.barInMove === null) {
           return;
         }
-  
+
         // Calculate the difference between the position where bar was clicked and where the mouse cursor is now.
         // Plus convert it into rationed value.
         const diff = event.clientX - this.temp.barClickX;
         const diffRatio = diff / this.body.railOuter.offsetWidth;
-  
+
         eventizer.trigger('view/bar:mousemove', event, this.temp.barInMove, diffRatio);
       });
       listenOn(document, 'mouseup', (event) => {
         if (this.temp.barInMove === null) {
           return;
         }
-  
+
         eventizer.trigger('view/bar:mouseup', event, this.temp.barInMove);
         this.temp.barInMove = null;
       });
     }
     // ./ Bar
-  
+
     // Rail
     listenOn(this.body.railOuter, 'click', (event) => {
       const clickX = event.clientX;
       const railLeft = this.body.railOuter.getBoundingClientRect().left;
       const clickRelative = clickX - railLeft;
       const ratio = clickRelative / this.body.railOuter.offsetWidth;
-  
+
       eventizer.trigger('view/rail:click', event, ratio);
     });
     // ./ Rail
-  
+
     // Keyboard
     listenOn(this.body.root, 'keydown', (event) => {
       // Its slider presumably, cuz only slider can have focus
       const sliderId = event.target.dataset.jsrId;
       const keyCodes = {
-        '37': -1, // left 
+        '37': -1, // left
         '38': +1, // up
         '39': +1, // right
         '40': -1 // down
       };
-  
+
       // If the left, up, down or right arrow was pressed
       const key = keyCodes[event.keyCode.toString()];
       if (!key) {
         return false;
       }
-  
+
       // Prevent default, to disable functions like selecting text
       // Because of condition above it doesn't block other keys like TAB
       event.preventDefault();
@@ -207,14 +213,14 @@ export default class {
     if (!this.body.bars) {
       return;
     }
-  
+
     const leftBar = this.body.bars[sliderNum - 1];
     const rightBar = this.body.bars[sliderNum];
-  
+
     if (leftBar) {
       leftBar.style.right = `${(1 - value) * 100}%`;
     }
-  
+
     if (rightBar) {
       rightBar.style.left = `${value * 100}%`;
     }
@@ -228,12 +234,12 @@ export default class {
 
     this.bodyStructure.sliders.count = this.config.sliders || 1;
     this.bodyStructure.bars.count = this.bodyStructure.sliders.count - 1;
-    
+
     // Create body starting from root
     this.body = structureParser(this.bodyStructure, 'root');
-    
+
     this._bindEvents();
-    
+
     this.modules.eventizer.trigger('modules/renderer:builded');
   }
 
