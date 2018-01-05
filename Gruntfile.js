@@ -1,24 +1,25 @@
 module.exports = function (grunt) {
   // Rollup specific plugins
-  var uglify = require('rollup-plugin-uglify');
-  var babel = require('rollup-plugin-babel');
-  var resolve = require('rollup-plugin-node-resolve');
-  var commonjs = require('rollup-plugin-commonjs');
-  var eslint = require('rollup-plugin-eslint');
+  const uglify = require('rollup-plugin-uglify');
+  const babel = require('rollup-plugin-babel');
+  const resolve = require('rollup-plugin-node-resolve');
+  const commonjs = require('rollup-plugin-commonjs');
+  const eslint = require('rollup-plugin-eslint');
+  const uglifyES = require('uglify-es');
 
-  var paths = {
+  const paths = {
     source: 'src/',
     buildTarget: 'dist/',
     public: 'public/',
     temp: '.tmp/'
   }
 
-  var config = {
+  const config = {
     browserSync: {
       dev: {
         browser: 'firefox',
         bsFiles: {
-          src : [
+          src: [
             paths.public + '**/*',
             paths.temp + '**/*'
           ]
@@ -124,9 +125,9 @@ module.exports = function (grunt) {
           dest: paths.temp,
           ext: '.html',
           extDot: 'first',
-          filter: function (path) {
+          filter: (path) => {
             path = path.split('/');
-            let lastPart = path[path.length - 1];
+            const lastPart = path[path.length - 1];
             return lastPart.charAt(0) !== '_';
           }
         }]
@@ -142,9 +143,9 @@ module.exports = function (grunt) {
           dest: paths.buildTarget,
           ext: '.html',
           extDot: 'first',
-          filter: function (path) {
+          filter: (path) => {
             path = path.split('/');
-            let lastPart = path[path.length - 1];
+            const lastPart = path[path.length - 1];
             return lastPart.charAt(0) !== '_';
           }
         }]
@@ -162,7 +163,7 @@ module.exports = function (grunt) {
           'dest': paths.temp + 'main.js'
         }],
         options: {
-          plugins: function() {
+          plugins: () => {
             return [
               eslint({
                 throwOnError: true
@@ -180,7 +181,7 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          plugins: function() {
+          plugins: () => {
             return [
               resolve({
                 jsnext: true,
@@ -188,10 +189,10 @@ module.exports = function (grunt) {
                 browser: true
               }),
               commonjs(),
-              babel({
-                exclude: './node_modules/**'
-              }),
-              uglify()
+              // babel({
+              //   exclude: './node_modules/**'
+              // }),
+              uglify({}, uglifyES.minify)
             ];
           },
           sourceMap: false
@@ -219,7 +220,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-version-assets');
   grunt.loadNpmTasks('grunt-contrib-pug');
   grunt.loadNpmTasks('grunt-rollup');
- 
+
   grunt.registerTask('dev', ['rollup:dev', 'sass:dev', 'pug:dev', 'browserSync', 'watch']);
-  grunt.registerTask('dist', ['clean:dist', 'mkdir:dist', 'copy:dist', 'sass:dist', 'pug:dist', 'rollup:dist'/*, 'versioning'*/]);
+  grunt.registerTask('dist', ['clean:dist', 'mkdir:dist', 'copy:dist', 'sass:dist', 'pug:dist', 'rollup:dist']);
 };

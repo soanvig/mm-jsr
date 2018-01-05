@@ -38,7 +38,7 @@ export default class {
 
     this.specificConfig = {
       inputUpdater: {},
-      htmlLabels: {},
+      htmlLabels: {}
     };
 
     this.logger = new Logger;
@@ -65,7 +65,7 @@ export default class {
       // Exit script
       return {};
     }
-    
+
     // Create modules
     this.modules = {};
     for (const moduleName in this.config.modules) {
@@ -141,7 +141,7 @@ export default class {
 
     return this;
   }
-  
+
   setValue (id, value) {
     this.modules.core.setValue(value, id);
 

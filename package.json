@@ -36,7 +36,8 @@
     "rollup-plugin-commonjs": "^8.2.0",
     "rollup-plugin-eslint": "^4.0.0",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-uglify": "^2.0.1"
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.3.4"
   },
   "dependencies": {
     "deepmerge": "^1.5.1"

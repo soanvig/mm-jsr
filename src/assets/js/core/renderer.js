@@ -134,15 +134,23 @@ export default class {
     });
     // ./ Slider
 
+    // Rail
+    listenOn(this.body.railOuter, 'mouseup', (event) => {
+      if (this.temp.barIsMoved) {
+        return;
+      }
+
+      const clickX = event.clientX;
+      const railLeft = this.body.railOuter.getBoundingClientRect().left;
+      const clickRelative = clickX - railLeft;
+      const ratio = clickRelative / this.body.railOuter.offsetWidth;
+
+      eventizer.trigger('view/rail:click', event, ratio);
+    });
+    // ./ Rail
+
     // Bar
     if (this.body.bars) {
-      listenOn(this.body.bars, 'click', (event) => {
-        if (this.temp.barClickX !== event.clientX) {
-          // Stop propagation into rail click if mouse position differs from bar click position
-          // Ergo - cursor was moved
-          event.stopPropagation();
-        }
-      });
       listenOn(this.body.bars, 'mousedown', (event) => {
         this.temp.barInMove = parseInt(event.target.dataset.jsrId);
         this.temp.barClickX = event.clientX;
@@ -153,6 +161,8 @@ export default class {
         if (this.temp.barInMove === null) {
           return;
         }
+
+        this.temp.barIsMoved = true;
 
         // Calculate the difference between the position where bar was clicked and where the mouse cursor is now.
         // Plus convert it into rationed value.
@@ -167,21 +177,12 @@ export default class {
         }
 
         eventizer.trigger('view/bar:mouseup', event, this.temp.barInMove);
+
         this.temp.barInMove = null;
+        this.temp.barIsMoved = false;
       });
     }
     // ./ Bar
-
-    // Rail
-    listenOn(this.body.railOuter, 'click', (event) => {
-      const clickX = event.clientX;
-      const railLeft = this.body.railOuter.getBoundingClientRect().left;
-      const clickRelative = clickX - railLeft;
-      const ratio = clickRelative / this.body.railOuter.offsetWidth;
-
-      eventizer.trigger('view/rail:click', event, ratio);
-    });
-    // ./ Rail
 
     // Keyboard
     listenOn(this.body.root, 'keydown', (event) => {

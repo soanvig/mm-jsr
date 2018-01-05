@@ -6,7 +6,7 @@ Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
 Newest version: **1.0.0**
 
-Browser support: Firefox, Chrome, others not tested (yet).
+Tested browser support: Firefox (57+), Chrome (63+), Edge (41+).
 
 ## Table of content
 
@@ -31,8 +31,8 @@ Browser support: Firefox, Chrome, others not tested (yet).
         - [Limit values](#limit-values)
     - [CSS configuration](#css-configuration)
         - [Slider dot](#slider-dot)
-    - [Active slider](#active-slider)
-    - [Focus slider](#focus-slider)
+        - [Active slider](#active-slider)
+        - [Focus slider](#focus-slider)
         - [Merged labels in general, and their separator](#merged-labels-in-general-and-their-separator)
         - [Locking screen on touchevent](#locking-screen-on-touchevent)
     - [Demo](#demo)
@@ -275,17 +275,17 @@ that the specificity is as flat as possible. You should have no problems with ov
 Everything (sliders, labels, bars) work in % positions, which means that the position of elements should be
 window size-independent.
 
-See default styles in `src/assets/scss/main.scss`.
+See default styles in [style file](src/assets/scss/main.scss).
 
 ### Slider dot
 
 Since slider is bigger than the dot itself to make targetting easier, the dot is painted on `::before` pseudoelement.
 
-## Active slider
+### Active slider
 
 When moving slider by mouse (or finger) slider receives `.jsr_slider--active` class which indicates, that this slider is moving. It is removed after releasing mouse button (finger). It is not styled by default. It doesn't work if bars are dragged.
 
-## Focus slider
+### Focus slider
 
 Every slider can be focused by keyboard or by clicking. Style with `.jsr_slider:focus`.
 
