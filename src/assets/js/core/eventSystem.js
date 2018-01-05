@@ -10,10 +10,10 @@ export default class {
     if (this.store[name]) {
       return;
     }
-  
+
     this.store[name] = [];
   }
-  
+
   /* Adds new event to existing store */
   _addListener (name, callback) {
     this._createNewStore(name);
@@ -27,7 +27,7 @@ export default class {
     if (!this.store[name]) {
       return false;
     }
-  
+
     const length = this.store[name].length;
     for (let i = 0; i < length; i += 1) {
       this.store[name][i].trigger(...args);

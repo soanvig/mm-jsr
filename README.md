@@ -4,7 +4,7 @@
 
 Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
-Newest version: **0.1.x**
+Newest version: **1.0.0**
 
 Browser support: Firefox, Chrome, others not tested (yet).
 
@@ -32,6 +32,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
     - [CSS configuration](#css-configuration)
         - [Slider dot](#slider-dot)
     - [Active slider](#active-slider)
+    - [Focus slider](#focus-slider)
         - [Merged labels in general, and their separator](#merged-labels-in-general-and-their-separator)
         - [Locking screen on touchevent](#locking-screen-on-touchevent)
     - [Demo](#demo)
@@ -54,7 +55,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
 - collapsing labels,
 - fully and **easily** customizable through CSS and configuration,
 - formatter for labels,
-- support for touch devices (**not tested well yet**),
+- support for touch devices,
 - support for keyboard,
 - support for screen-readers (**not implemented yet**).
 
@@ -62,7 +63,7 @@ Browser support: Firefox, Chrome, others not tested (yet).
 
 - lightweight,
 - customizable,
-- disabled people wise,
+- disabled people wise (**not implemented yet**),
 - no dependencies (pure JavaScript),
 - multiple instances and zero conflicts,
 - sends value to inputs, so they can be easily send via form,
@@ -115,9 +116,9 @@ Browser support: Firefox, Chrome, others not tested (yet).
     **or** to the imports section of your css file (considering your bundling tool resolves your `node_modules` folder):
 
     `@import 'mm-jsr/dist/assets/css/main.css'`
-    
+
     **or** (in your JS code) if your bundling tool resolves `node_modules` and allows to load all assets from JS (Webpack does):
-    
+
     `import 'mm-jsr/dist/assets/css/main.scss'`
 
 ## Usage
@@ -166,7 +167,7 @@ Options object with defaults looks like follows:
   values: [25, 75], // Values from smallest to biggest
   labels: { // Configuration for labels
     minMax: true, // Boolean if minimum and maximum labels should be displayed (applies CSS display: none;)
-    formatter: null,
+    formatter: null
   },
   limit: {
       show: false // Determines, if the limit should be visible on bar or not.
@@ -282,7 +283,11 @@ Since slider is bigger than the dot itself to make targetting easier, the dot is
 
 ## Active slider
 
-When moving slider by mouse (or finger) slider receives `.jsr_slider--active` class which indicates, that this slider is moving. It is removed after releasing mouse button (finger). It is not styled by default.
+When moving slider by mouse (or finger) slider receives `.jsr_slider--active` class which indicates, that this slider is moving. It is removed after releasing mouse button (finger). It is not styled by default. It doesn't work if bars are dragged.
+
+## Focus slider
+
+Every slider can be focused by keyboard or by clicking. Style with `.jsr_slider:focus`.
 
 ### Merged labels in general, and their separator
 
@@ -293,6 +298,8 @@ The labels are separated by pseudo-element `.jsr_label .jsr_label::before`. It's
 ### Locking screen on touchevent
 
 Touch event on mobile devices is supported by JSR. Because moving the finger around the screen to move slider caused the view to go up and down, I decided to lock the screen on touch start. This means, that to document root `.jsr_lockscreen` class is applied, which sets the size of document root to window size. If it causes any problems, You can set `overflow: visible; width: auto; height: auto;` on `.jsr_lockscreen` class, and report the issue through GitHub's issue system.
+
+**Issue**: it may cause screen jump on mobile screens, because after locking screen the top address bar may disappear.
 
 ## Demo
 

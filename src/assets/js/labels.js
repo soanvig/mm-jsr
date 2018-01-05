@@ -1,4 +1,4 @@
-import { listenOn, calculateDecimals } from './helpers.js';
+import { throttle, listenOn, calculateDecimals } from './helpers.js';
 import merge from 'deepmerge';
 
 function allLabelsSet () {
@@ -28,7 +28,7 @@ function handleOverlappingBecauseItIsVeryFuckedUp () {
 
   // Unmerge all labels
   undoMergeLabels.call(this);
-  
+
   // Now compare each label (firstLabel) with next label (nextLabel)
   let firstLabel = 0;
   let nextLabel = firstLabel + 1;
@@ -129,6 +129,12 @@ export default class {
       const clickEvent = new MouseEvent('mousedown', event);
       this.modules.renderer.body.sliders[event.target.dataset.jsrId].dispatchEvent(clickEvent);
     });
+
+    listenOn(window, 'resize', () => {
+      throttle(`label-update-overlapping-${Math.random()}`, 50, () => {
+        handleOverlappingBecauseItIsVeryFuckedUp.call(this);
+      });
+    });
   }
 
   _parseMinMax () {
@@ -143,7 +149,7 @@ export default class {
       this.minMax[1].style.display = 'none';
     }
   }
-  
+
   build ({ config, modules, logger }) {
     const defaults = {
       labels: {
@@ -172,15 +178,15 @@ export default class {
     };
 
     this.modules.renderer.structure.rail.children.push('labelsMinMax');
-  
+
     this.modules.eventizer.register('modules/renderer:builded', () => {
       this.labels = this.modules.renderer.body.labels;
       this.labelsParent = this.labels[0].parentNode;
-      
+
       this.minMax = this.modules.renderer.body.labelsMinMax;
       this._parseMinMax();
 
       this._bindEvents();
     });
   }
-} 
+}
