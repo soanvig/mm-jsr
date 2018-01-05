@@ -4,9 +4,9 @@
 
 Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
-Newest version: **1.0.0**
+Newest version: **1.0.0** (17.9KB without gzipping)
 
-Tested browser support: Firefox (57+), Chrome (63+), Edge (41+).
+Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
 
 ## Contributing
 
@@ -318,7 +318,7 @@ A grid displays vertical bars, by default beneath the bar, which help to target 
 
 Some of the range solutions use multiple divs to draw bars. JSR uses canvas, because it's far faster solution, and it doesn't pollute DOM.
 
-Since the canvas has JS-only side, bars' color can be set only via JS by `grid.color` option. It tolerates any [CSS color values](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Applying_styles_and_colors).
+Since the canvas has JS-only side, bars' color can be set only via JS by `grid.color` option. It tolerates any [CSS color values](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Applying_styles_and_colors). If you want to have grid displayed and text hidden, just set text color to `rgba(0, 0, 0, 0)` (transparent).
 
 Grid uses `config.labels.formatter` to format text.
 
