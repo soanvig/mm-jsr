@@ -8,14 +8,24 @@ export default class {
       throttle(`grid-resize-${id}`, 50, () => {
         this.logger.debug('JSR: Canvas resized.');
 
-        this._setWidth();
+        this._setDimensions();
         this._render();
       });
     });
   }
 
-  _setWidth () {
-    this.canvas.width = this.modules.renderer.body.railOuter.offsetWidth;
+  _setDimensions () {
+    this.width = this.modules.renderer.body.railOuter.offsetWidth;
+    this.height = this.config.grid.height + this.config.grid.fontSize + this.config.grid.textPadding;
+    this.devicePixelRatio = window.devicePixelRatio || 1;
+
+    this.canvas.style.width = `${this.width}px`;
+    this.canvas.width = this.width * this.devicePixelRatio;
+
+    this.canvas.style.height = `${this.height}px`;
+    this.canvas.height = this.height * this.devicePixelRatio;
+
+    this.context.scale(window.devicePixelRatio, window.devicePixelRatio);
   }
 
   _getNumberOfLines () {
@@ -24,7 +34,7 @@ export default class {
   }
 
   _render () {
-    const width = this.canvas.width;
+    const width = this.width;
     const height = this.config.grid.height;
     const context = this.context;
     const numberOfLines = this._getNumberOfLines();
@@ -84,13 +94,11 @@ export default class {
 
     this.canvas = document.createElement('canvas');
     this.canvas.classList.add('jsr_canvas');
-    this.canvas.height = this.config.grid.height + this.config.grid.fontSize + this.config.grid.textPadding;
-
     this.context = this.canvas.getContext('2d');
 
     this.modules.eventizer.register('modules/renderer:rootAppended', () => {
       this.modules.renderer.body.railOuter.appendChild(this.canvas);
-      this._setWidth();
+      this._setDimensions();
       this._render();
     });
 
