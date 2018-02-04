@@ -1,4 +1,4 @@
-export default class {
+class HtmlLabels {
   _bindEvents () {
     // For each id of input
     this.inputs.map((input) => input.id).forEach((id, index) => {
@@ -22,3 +22,8 @@ export default class {
     this._bindEvents();
   }
 }
+
+export default {
+  name: 'htmlLabels',
+  Klass: HtmlLabels
+};

@@ -1,6 +1,6 @@
 import Event from './event.js';
 
-export default class {
+class Eventizer {
   constructor () {
     this.store = {};
   }
@@ -43,3 +43,8 @@ export default class {
     this._dispatchEvent(name, ...args);
   }
 }
+
+export default {
+  name: 'eventizer',
+  Klass: Eventizer
+};

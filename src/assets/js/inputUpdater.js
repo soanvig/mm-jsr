@@ -1,4 +1,4 @@
-export default class {
+class InputUpdater {
   constructor () {
     this.input = null;
   }
@@ -21,3 +21,8 @@ export default class {
     this._bindEvents();
   }
 }
+
+export default {
+  name: 'inputUpdater',
+  Klass: InputUpdater
+};

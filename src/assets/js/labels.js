@@ -105,7 +105,7 @@ function updateLabel (id, real, ratio) {
   }
 }
 
-export default class {
+class Labels {
   constructor () {
     this.labels = [];
     this.minMax = [];
@@ -191,3 +191,8 @@ export default class {
     });
   }
 }
+
+export default {
+  name: 'labels',
+  Klass: Labels
+};

@@ -17,6 +17,7 @@ Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
 **This is development branch**. This branch has all newest features:
 
 - support for High DPI Displays (e.g. Retina displays) [by [sahithyen](https://github.com/sahithyen)]
+- updated module system
 
 ## Table of content
 
