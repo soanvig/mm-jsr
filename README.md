@@ -18,6 +18,7 @@ Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
 
 - support for High DPI Displays (e.g. Retina displays) [by [sahithyen](https://github.com/sahithyen)]
 - updated module system
+- yarn instead of npm used for development
 
 ## Table of content
 
