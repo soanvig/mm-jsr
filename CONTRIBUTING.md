@@ -47,4 +47,4 @@ builds the project to `dist` directory.
 ## Babel & browser support
 
 MM JSR relies heavily on ECMAScript 2015. If You want to support older browser, which don't support ES6,
-go to `Gruntfile.js`, and uncomment three babel's lines under `rollup.dist.plugins` key, then build again.
+go to `grunt/plugins/rollup.js`, and uncomment three babel's lines under `dist.plugins` key, then build again.
