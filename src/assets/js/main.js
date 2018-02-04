@@ -29,12 +29,19 @@ export default class {
         touchSupport: TouchSupport,
         inputUpdater: InputUpdater,
         htmlLabels: HtmlLabels
-      }
+      },
+      modulesOrder: [
+        'eventizer',
+        'core',
+        'labels',
+        'grid',
+        'renderer',
+        'touchSupport',
+        'inputUpdater',
+        'htmlLabels'
+      ]
     };
-    this.config = merge(defaults, options, {
-      // This will overwrite arrays, instead merging them.
-      arrayMerge: (destinationArray, sourceArray) => sourceArray
-    });
+    this.config = merge(defaults, options);
 
     this.specificConfig = {
       inputUpdater: {},
@@ -66,13 +73,13 @@ export default class {
       return {};
     }
 
-    // Create modules
+    // Install modules
     this.modules = {};
-    for (const moduleName in this.config.modules) {
+    this.config.modulesOrder.forEach((moduleName) => {
       if (this.config.modules[moduleName]) {
         this.modules[moduleName] = new this.config.modules[moduleName];
       }
-    }
+    });
 
     this.specificConfig.inputUpdater.inputs = this.inputs;
     this.specificConfig.htmlLabels.inputs = this.inputs;
