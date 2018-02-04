@@ -12,7 +12,7 @@ Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
 
 [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## Development and new features
+## New features
 
 **This is development branch**. This branch has all newest features:
 
@@ -24,6 +24,7 @@ Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
 
 - [Mort&Mortis JS Range (M&M JSR)](#mortmortis-js-range-mm-jsr)
     - [Contributing](#contributing)
+    - [New features](#new-features)
     - [Table of content](#table-of-content)
     - [Features and advantages](#features-and-advantages)
         - [Features](#features)
