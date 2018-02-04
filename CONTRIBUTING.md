@@ -19,6 +19,10 @@ Because MM JSR uses [Grunt](https://gruntjs.com/getting-started) in build proces
 ```
 grunt dev
 ```
+or
+```
+npm run dev
+```
 
 starts development server with auto-reload. It keeps an eye on linting and returns results to console, so make sure to look at it before build!
 
@@ -26,6 +30,10 @@ starts development server with auto-reload. It keeps an eye on linting and retur
 
 ```
 grunt dist
+```
+or
+```
+npm run build
 ```
 
 builds the project to `dist` directory.
