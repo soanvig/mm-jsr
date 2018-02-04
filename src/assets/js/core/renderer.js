@@ -16,7 +16,7 @@ function getSlidersWithSameValue (sliderNum) {
   return sliders;
 }
 
-export default class {
+class Renderer {
   constructor () {
     // This lists all available in-object variables
     this.logger = null;
@@ -267,3 +267,8 @@ export default class {
     this._updateBars(sliderNum, value);
   }
 }
+
+export default {
+  name: 'renderer',
+  Klass: Renderer
+};

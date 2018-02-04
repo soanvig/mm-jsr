@@ -20,25 +20,16 @@ export default class {
       limit: {
         show: false
       },
-      modules: {
-        eventizer: Eventizer,
-        core: Core,
-        labels: Labels,
-        grid: Grid,
-        renderer: Renderer,
-        touchSupport: TouchSupport,
-        inputUpdater: InputUpdater,
-        htmlLabels: HtmlLabels
-      },
-      modulesOrder: [
-        'eventizer',
-        'core',
-        'labels',
-        'grid',
-        'renderer',
-        'touchSupport',
-        'inputUpdater',
-        'htmlLabels'
+      modules: {},
+      modulesArray: [
+        Eventizer,
+        Core,
+        Labels,
+        Grid,
+        Renderer,
+        TouchSupport,
+        InputUpdater,
+        HtmlLabels
       ]
     };
     this.config = merge(defaults, options);
@@ -75,9 +66,14 @@ export default class {
 
     // Install modules
     this.modules = {};
-    this.config.modulesOrder.forEach((moduleName) => {
-      if (this.config.modules[moduleName]) {
-        this.modules[moduleName] = new this.config.modules[moduleName];
+    this.config.modulesArray.forEach((module) => {
+      // Keep backward compability, because of semver
+      // Setting config.modules to false will disable module
+      if (
+        typeof this.config.modules[module.name] === 'undefined'
+        || this.config.modules[module.name]
+      ) {
+        this.modules[module.name] = new module.Klass;
       }
     });
 
