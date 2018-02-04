@@ -6,7 +6,7 @@ Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
 Newest version: **1.0.0** (17.9KB without gzipping)
 
-Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
+Tested browser support: Firefox (57+), Chrome (63+), Edge (41+), Safari (11.1+)
 
 ## Contributing
 
