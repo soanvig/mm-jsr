@@ -2,12 +2,18 @@
 
 ## Start
 
-MM JSR uses [NPM](https://www.npmjs.com/) package manager, so make sure You have it installed.
+MM JSR uses [Yarn](https://yarnpkg.com/) package manager, so make sure You have it installed.
+
+```
+npm install -g yarn
+```
+
+Then go ahead with
 
 ```
 git clone https://github.com/mm-jsr/jsr.git
 cd jsr
-npm install
+yarn install
 ```
 
 ## Grunt
@@ -21,7 +27,7 @@ grunt dev
 ```
 or
 ```
-npm run dev
+yarn run dev
 ```
 
 starts development server with auto-reload. It keeps an eye on linting and returns results to console, so make sure to look at it before build!
@@ -33,7 +39,7 @@ grunt dist
 ```
 or
 ```
-npm run build
+yarn run build
 ```
 
 builds the project to `dist` directory.
