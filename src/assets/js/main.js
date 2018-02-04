@@ -20,21 +20,19 @@ export default class {
       limit: {
         show: false
       },
-      modules: {
-        eventizer: Eventizer,
-        core: Core,
-        labels: Labels,
-        grid: Grid,
-        renderer: Renderer,
-        touchSupport: TouchSupport,
-        inputUpdater: InputUpdater,
-        htmlLabels: HtmlLabels
-      }
+      modules: {},
+      modulesArray: [
+        Eventizer,
+        Core,
+        Labels,
+        Grid,
+        Renderer,
+        TouchSupport,
+        InputUpdater,
+        HtmlLabels
+      ]
     };
-    this.config = merge(defaults, options, {
-      // This will overwrite arrays, instead merging them.
-      arrayMerge: (destinationArray, sourceArray) => sourceArray
-    });
+    this.config = merge(defaults, options);
 
     this.specificConfig = {
       inputUpdater: {},
@@ -66,13 +64,18 @@ export default class {
       return {};
     }
 
-    // Create modules
+    // Install modules
     this.modules = {};
-    for (const moduleName in this.config.modules) {
-      if (this.config.modules[moduleName]) {
-        this.modules[moduleName] = new this.config.modules[moduleName];
+    this.config.modulesArray.forEach((module) => {
+      // Keep backward compability, because of semver
+      // Setting config.modules to false will disable module
+      if (
+        typeof this.config.modules[module.name] === 'undefined'
+        || this.config.modules[module.name]
+      ) {
+        this.modules[module.name] = new module.Klass;
       }
-    }
+    });
 
     this.specificConfig.inputUpdater.inputs = this.inputs;
     this.specificConfig.htmlLabels.inputs = this.inputs;

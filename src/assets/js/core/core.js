@@ -64,7 +64,7 @@ function findClosestValue (lookupVal) {
   return id;
 }
 
-export default class {
+class Core {
   constructor () {
     // This lists all available in-object variables
     this.logger = null;
@@ -258,3 +258,8 @@ export default class {
     }
   }
 }
+
+export default {
+  name: 'core',
+  Klass: Core
+};

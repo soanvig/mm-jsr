@@ -1,6 +1,6 @@
 import { listenOn } from './helpers.js';
 
-export default class {
+class TouchSupport {
   _bindEvents () {
     const elements = [this.modules.renderer.body.sliders];
     if (this.modules.renderer.body.labels) {
@@ -39,3 +39,8 @@ export default class {
     this._bindEvents();
   }
 }
+
+export default {
+  name: 'touchSupport',
+  Klass: TouchSupport
+};

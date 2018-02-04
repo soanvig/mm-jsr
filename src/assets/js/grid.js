@@ -1,7 +1,7 @@
 import { throttle } from './helpers.js';
 import merge from 'deepmerge';
 
-export default class {
+class Grid {
   _bindEvents () {
     const id = Math.random();
     window.addEventListener('resize', () => {
@@ -105,3 +105,8 @@ export default class {
     this._bindEvents();
   }
 }
+
+export default {
+  name: 'grid',
+  Klass: Grid
+};
