@@ -12,12 +12,19 @@ Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
 
 [CONTRIBUTING.md](CONTRIBUTING.md)
 
+## New features
+
+**This is development branch**. This branch has all newest features:
+
+- support for High DPI Displays (e.g. Retina displays) [by [sahithyen](https://github.com/sahithyen)]
+
 ## Table of content
 
 <!-- TOC -->
 
 - [Mort&Mortis JS Range (M&M JSR)](#mortmortis-js-range-mm-jsr)
     - [Contributing](#contributing)
+    - [New features](#new-features)
     - [Table of content](#table-of-content)
     - [Features and advantages](#features-and-advantages)
         - [Features](#features)
