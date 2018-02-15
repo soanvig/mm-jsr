@@ -34,6 +34,7 @@ class Grid {
   }
 
   _render () {
+    this._setDimensions();
     const width = this.width;
     const height = this.config.grid.height;
     const context = this.context;
