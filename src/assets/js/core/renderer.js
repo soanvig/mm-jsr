@@ -229,17 +229,20 @@ class Renderer {
 
   /* API */
   build ({ modules, logger, config }) {
-    this.modules = modules;
-    this.logger = logger;
-    this.config = config;
+    if (Object.keys(this.body).length === 0) {
+      this.modules = modules;
+      this.logger = logger;
+      this.config = config;
+  
+      this.bodyStructure.sliders.count = this.config.sliders || 1;
+      this.bodyStructure.bars.count = this.bodyStructure.sliders.count - 1;
+  
+      // Create body starting from root
+      this.body = structureParser(this.bodyStructure, 'root');
+  
+      this._bindEvents();
+    }
 
-    this.bodyStructure.sliders.count = this.config.sliders || 1;
-    this.bodyStructure.bars.count = this.bodyStructure.sliders.count - 1;
-
-    // Create body starting from root
-    this.body = structureParser(this.bodyStructure, 'root');
-
-    this._bindEvents();
 
     this.modules.eventizer.trigger('modules/renderer:builded');
   }

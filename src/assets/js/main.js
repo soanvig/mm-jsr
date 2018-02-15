@@ -157,6 +157,12 @@ export default class {
     return this;
   }
 
+  redraw ( options ) {
+    this.config = merge(this.config, options);
+    this._buildModules();
+    this._init();
+  }
+
   disable () {
     this.config.enabled = false;
     this.modules.renderer.body.root.classList.add('jsr--disabled');
