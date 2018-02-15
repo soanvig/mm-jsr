@@ -208,14 +208,11 @@ class Core {
   init (inputs, values) {
     // Renderer should be applied to body before setting values.
     this.modules.renderer.appendRoot(inputs[0]);
-
     values.forEach((value, index) => {
       value = realToRatio.call(this, value);
       this._setValue(value, index);
     });
-
     this._bindEvents();
-
     this.logger.info('JSR: Core initiated.');
   }
 
