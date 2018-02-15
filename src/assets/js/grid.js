@@ -34,6 +34,7 @@ class Grid {
   }
 
   _render () {
+    this._setDimensions();
     const width = this.width;
     const height = this.config.grid.height;
     const context = this.context;
@@ -91,13 +92,16 @@ class Grid {
     this.logger = logger;
     this.config = merge(defaults, config);
     this.modules = modules;
-
-    this.canvas = document.createElement('canvas');
-    this.canvas.classList.add('jsr_canvas');
-    this.context = this.canvas.getContext('2d');
-
+    if (!this.canvas) {
+      this.canvas = document.createElement('canvas');
+      this.canvas.classList.add('jsr_canvas');
+      this.context = this.canvas.getContext('2d');
+    }
     this.modules.eventizer.register('modules/renderer:rootAppended', () => {
-      this.modules.renderer.body.railOuter.appendChild(this.canvas);
+      if (this.modules.renderer.body.railOuter.childElementCount === 1) {
+        this.modules.renderer.body.railOuter.appendChild(this.canvas);
+      }
+     
       this._setDimensions();
       this._render();
     });
