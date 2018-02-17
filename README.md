@@ -22,6 +22,7 @@ Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
 - refactored Grunt config
 - very huge refactor of files structure and development environment
 - events refactor (less DOM events, optimized things)
+- add `.refresh` method
 
 ## Table of content
 
@@ -46,6 +47,7 @@ Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
         - [Listening on internal events](#listening-on-internal-events)
         - [Disabling/enabling slider](#disablingenabling-slider)
         - [Limit values](#limit-values)
+        - [Refresh](#refresh)
     - [CSS configuration](#css-configuration)
         - [Slider dot](#slider-dot)
         - [Active slider](#active-slider)
@@ -283,6 +285,29 @@ This cause *n* refresh events to be called.
 If you change the `show` property after initializing JSR, some limit need to be set to update visibility state.
 
 To disable limit set it to `null`.
+
+### Refresh
+
+If you want to change configuration (in example `min/max` values) you may want to refresh state of application.
+
+```js
+    jsr.refresh(config = {}, moduleName = null);
+```
+
+It is possible to refresh state of any of the module listed below, or all at once (by calling `.refresh() without moduleName)`:
+- core
+
+**Example:**
+
+```js
+    jsr.refresh(config = {
+        min: -50,
+        max: 100,
+        limit: {
+            min: 25
+        }
+    });
+```
 
 ## CSS configuration
 
