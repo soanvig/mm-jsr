@@ -8,6 +8,7 @@ import {
 } from '@/helpers';
 
 import bindEvents from './bindEvents';
+import merge from 'deepmerge';
 
 class Core {
   constructor () {
@@ -113,28 +114,39 @@ class Core {
     this._updateBars(sliderNum, value);
   }
 
+  _initValues () {
+    this.config.values.forEach((value, index) => {
+      value = realToRatio(this.config.min, this.config.max, value);
+      this._setValue(value, index);
+    });
+  }
+
+  _initLimits () {
+    this.limit = {};
+    this.setLimit('min', this.config.limit.min, true);
+    this.setLimit('max', this.config.limit.max, true);
+  }
+
+  _initData () {
+    this.stepRatio = calculateStepRatio(this.config.min, this.config.max, this.config.step);
+    this.stepRatioDecimals = calculateDecimals(this.stepRatio);
+  }
+
   /* API */
   build ({ config, modules, logger }) {
     this.config = config;
     this.logger = logger;
     this.modules = modules;
 
-    this.limit = {};
-    this.setLimit('min', this.config.limit.min, true);
-    this.setLimit('max', this.config.limit.max, true);
-
-    this.stepRatio = calculateStepRatio(this.config.min, this.config.max, this.config.step);
-    this.stepRatioDecimals = calculateDecimals(this.stepRatio);
+    this._initLimits();
+    this._initData();
   }
 
-  init (inputs, values) {
+  init (inputs) {
     // Renderer should be applied to body before setting values.
     this.modules.renderer.appendRoot(inputs[0]);
 
-    values.forEach((value, index) => {
-      value = realToRatio(this.config.min, this.config.max, value);
-      this._setValue(value, index);
-    });
+    this._initValues();
 
     bindEvents.call(this);
 
@@ -144,6 +156,14 @@ class Core {
   getValue (id) {
     const value = this.values[id];
     return ratioToReal(this.config.min, this.config.max, value, this.config.step);
+  }
+
+  refresh (config) {
+    this.config = merge(this.config, config, { arrayMerge: (dest, source) => source });
+
+    this._initData();
+    this._initLimits();
+    this._initValues();
   }
 
   setValue (value, id) {
