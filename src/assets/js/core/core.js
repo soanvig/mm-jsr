@@ -1,4 +1,5 @@
-import { throttle, calculateDecimals, listenOn } from '../helpers';
+import debounce from 'debounce';
+import { calculateDecimals, listenOn } from '@/helpers';
 
 /* Private methods. Require to be called with .call(this, ...args) */
 
@@ -292,14 +293,14 @@ class Core {
       });
     });
 
-    eventizer.register('view/slider:mousemove', (event, id, diff) => {
-      throttle('slider-mousemove', 10, () => {
+    eventizer.register('view/slider:mousemove',
+      debounce((event, id, diff) => {
         this.logger.debug('JSR: Slider mousemove.');
         this.logger.debug(event);
 
         this._setValue(diff, id, true);
-      });
-    });
+      }, 10)
+    );
 
     eventizer.register('view/slider:mouseup', (event) => {
       this.logger.debug('JSR: Slider mouseup.');
@@ -330,15 +331,15 @@ class Core {
       this.valueInMove[id + 1] = this.values[id + 1];
     });
 
-    eventizer.register('view/bar:mousemove', (event, id, diff) => {
-      throttle('bar-mousemove', 10, () => {
+    eventizer.register('view/bar:mousemove',
+      debounce((event, id, diff) => {
         this.logger.debug('JSR: Bar mousemove.');
         this.logger.debug(event);
 
         this._setValue(diff, id, true);
         this._setValue(diff, id + 1, true);
-      });
-    });
+      }, 10)
+    );
 
     eventizer.register('view/bar:mouseup', (event) => {
       this.logger.debug('JSR: Bar mouseup.');

@@ -37,6 +37,7 @@
     "jest": "^21.2.1",
     "pug": "^2.0.0-rc.3",
     "rollup": "^0.49.2",
+    "rollup-plugin-alias": "https://github.com/soanvig/rollup-plugin-alias",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.0",
     "rollup-plugin-eslint": "^4.0.0",
@@ -45,7 +46,7 @@
     "uglify-es": "^3.3.4"
   },
   "dependencies": {
-    "deepmerge": "^1.5.1",
-    "rollup-plugin-alias": "https://github.com/soanvig/rollup-plugin-alias"
+    "debounce": "^1.1.0",
+    "deepmerge": "^1.5.1"
   }
 }

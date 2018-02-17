@@ -1,17 +1,17 @@
-import { throttle } from '@/helpers';
+import debounce from 'debounce';
 import merge from 'deepmerge';
 
 class Grid {
   _bindEvents () {
     const id = Math.random();
-    window.addEventListener('resize', () => {
-      throttle(`grid-resize-${id}`, 50, () => {
+    window.addEventListener('resize',
+      debounce(() => {
         this.logger.debug('JSR: Canvas resized.');
 
         this._setDimensions();
         this._render();
-      });
-    });
+      }, 50)
+    );
   }
 
   _setDimensions () {

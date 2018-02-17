@@ -1,4 +1,5 @@
-import { throttle, listenOn, calculateDecimals } from '@/helpers';
+import { listenOn, calculateDecimals } from '@/helpers';
+import debounce from 'debounce';
 import merge from 'deepmerge';
 
 function allLabelsSet () {
@@ -131,11 +132,11 @@ class Labels {
     });
 
     // Update label merging
-    listenOn(window, 'resize', () => {
-      throttle(`label-update-overlapping-${Math.random()}`, 100, () => {
+    listenOn(window, 'resize',
+      debounce(() => {
         handleOverlappingBecauseItIsVeryFuckedUp.call(this);
-      });
-    });
+      }, 100)
+    );
   }
 
   _parseMinMax () {
