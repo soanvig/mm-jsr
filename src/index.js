@@ -131,7 +131,7 @@ export default class {
     this.inputs.forEach((input) => {
       input.style.display = 'none';
     });
-    this.modules.core.init(this.inputs, this.config.values);
+    this.modules.core.init(this.inputs);
   }
 
   /* API */
@@ -166,7 +166,6 @@ export default class {
 
   enable () {
     this.config.enabled = true;
-
     this.modules.renderer.body.root.classList.remove('jsr--disabled');
 
     return this;
@@ -174,7 +173,7 @@ export default class {
 
   refresh (config = null, moduleName = null) {
     if (config) {
-      this.config = merge(this.config, config);
+      this.config = merge(this.config, config, { arrayMerge: (dest, source) => source });
     }
 
     const eventName = moduleName ? `refresh:${moduleName}` : 'refresh';
