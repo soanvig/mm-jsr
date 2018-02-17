@@ -20,6 +20,7 @@ Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
 - updated module system
 - yarn instead of npm used for development
 - refactored Grunt config
+- very huge refactor of files structure and development environment
 
 ## Table of content
 

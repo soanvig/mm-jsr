@@ -3,7 +3,6 @@ import merge from 'deepmerge';
 
 class Grid {
   _bindEvents () {
-    const id = Math.random();
     window.addEventListener('resize',
       debounce(() => {
         this.logger.debug('JSR: Canvas resized.');

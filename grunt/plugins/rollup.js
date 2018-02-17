@@ -16,7 +16,7 @@ module.exports = {
   dev: {
     files: [
       {
-        'src': `${config.paths.source}/assets/js/main.js`,
+        'src': `${config.paths.source}/index.js`,
         'dest': `${config.paths.temp}/main.js`
       }
     ],
@@ -27,7 +27,7 @@ module.exports = {
             throwOnError: true
           }),
           alias({
-            '@': path.join(process.cwd(), './src/assets/js'),
+            '@': path.join(process.cwd(), './src'),
           }),
           resolve({
             jsnext: true,
@@ -45,7 +45,7 @@ module.exports = {
       plugins: () => {
         return [
           alias({
-            '@': path.join(process.cwd(), './src/assets/js'),
+            '@': path.join(process.cwd(), './src'),
           }),
           resolve({
             jsnext: true,
@@ -64,7 +64,7 @@ module.exports = {
 
     files: [
       {
-        'src': `${config.paths.source}/assets/js/main.js`,
+        'src': `${config.paths.source}/index.js`,
         'dest': `${config.paths.buildTarget}/main.js`
       }
     ],
