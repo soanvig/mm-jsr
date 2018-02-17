@@ -29,7 +29,7 @@ class Grid {
 
   _getNumberOfLines () {
     const number = 100;
-    return Math.round(number);  
+    return Math.round(number);
   }
 
   _render () {
@@ -102,6 +102,15 @@ class Grid {
     });
 
     this._bindEvents();
+  }
+
+  refresh (config) {
+    this.config = merge(this.config, config, { arrayMerge: (dest, source) => source });
+
+    this._setDimensions();
+    this._render();
+
+    this.logger.debug('JSR: grid refreshed');
   }
 }
 

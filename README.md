@@ -4,13 +4,15 @@
 
 Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
-Newest version: **1.1.0** (19.2KB without gzipping)
+Newest version: **1.1.1** (19.6KB without gzipping)
 
 Tested browser support: Firefox (57+), Chrome (63+), Edge (41+), Safari (11.1+)
 
 ## What's new?
 
 Version 1.1.0 adds `.refresh()` method, and rebuilds whole project structure resulting in easier code maintaining.
+
+Version 1.1.1 is hotfix.
 
 ## Contributing
 
