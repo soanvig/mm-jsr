@@ -10,7 +10,6 @@ module.exports = {
       watchTask: true,
       server: [
         config.paths.source,
-        config.paths.public,
         config.paths.temp
       ]
     }

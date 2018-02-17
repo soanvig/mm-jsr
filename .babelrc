@@ -1,21 +1,12 @@
 {
-  "presets": [
-    [
-      "es2015",
-      {
-        "modules": false
-      }
-    ]
-  ],
-  "env": {
-    "development": {
-      "plugins": ["external-helpers"]
-    },
-    "production:": {
-      "plugins": ["external-helpers"]
-    },
-    "test": {
-      "plugins": ["transform-es2015-modules-commonjs"]
-    }
-  }
+  "presets": ["env"],
+  "plugins": [
+      ["module-resolver", {
+          "root": ["."],
+          "alias": {
+          "@": "./src",
+          "%": "./tests"
+          }
+      }]
+  ]
 }

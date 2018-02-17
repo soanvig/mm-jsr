@@ -1,0 +1,130 @@
+.jsr, .jsr_bar, .jsr_label, .jsr_rail,
+.jsr_rail-outer, .jsr_slider {
+    box-sizing: border-box;
+}
+
+.jsr {
+    position: relative;
+    z-index: 1;
+
+    display: block;
+
+    box-sizing: border-box;
+    width: 100%;
+
+    margin: 20px 0;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+
+    font: 14px sans-serif;
+}
+
+.jsr_rail-outer {
+    position: relative;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.jsr_rail {
+    height: 5px;
+    background: #444;
+    z-index: 1;
+}
+
+.jsr_bar {
+    position: absolute;
+    height: 5px;
+    background-color: #999;
+    z-index: 2;
+    cursor: move;
+}
+
+.jsr_bar--limit {
+    background-color: #7e7e7e;
+    z-index: 1;
+    cursor: auto;
+}
+
+.jsr_slider {
+    position: absolute;
+    top: calc(5px / 2 + 10px);
+    left: 0;
+
+    transform: translate(-50%, -50%);
+
+    width: 25px;
+    height: 25px;
+
+    cursor: col-resize;
+    transition: background 0.1s ease-in-out;
+
+    outline: 0;
+
+    z-index: 3;
+}
+
+.jsr_slider::before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #999;
+    border-radius: 50%;
+}
+
+.jsr_slider:focus::before {
+    background: #c00;
+}
+
+.jsr_label {
+    position: absolute;
+    top: calc(10px + 5px + 15px / 1.5);
+    padding: 0.2em 0.4em;
+    background: #444;
+    color: #fff;
+    font-size: 0.9em;
+    white-space: nowrap;
+    border-radius: 0.3em;
+    z-index: 2;
+}
+
+.jsr_label--minmax {
+    z-index: 1;
+    color: #999;
+    background: #333;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Merged labels */
+.jsr_label .jsr_label {
+    position: static;
+    display: inline-block;
+    font-size: 1em;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
+.jsr_label .jsr_label::before {
+    content: ' - ';
+}
+
+.jsr_canvas {
+    margin-top: 5px;
+}
+
+/* Lock screen for touch */
+.jsr_lockscreen {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
