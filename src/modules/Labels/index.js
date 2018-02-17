@@ -180,6 +180,15 @@ class Labels {
     });
   }
 
+  refresh (config) {
+    this.config = merge(this.config, config, { arrayMerge: (dest, source) => source });
+    this.formatter = this.config.labels.formatter;
+    this._parseMinMax();
+    handleOverlappingBecauseItIsVeryFuckedUp.call(this);
+
+    this.logger.debug('JSR: labels refreshed');
+  }
+
   view () {
     const labels = {
       classes: ['jsr_label'],

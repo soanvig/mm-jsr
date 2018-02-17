@@ -115,6 +115,7 @@ class Core {
   }
 
   _initValues () {
+    this.values = [];
     this.config.values.forEach((value, index) => {
       value = realToRatio(this.config.min, this.config.max, value);
       this._setValue(value, index);
@@ -161,9 +162,11 @@ class Core {
   refresh (config) {
     this.config = merge(this.config, config, { arrayMerge: (dest, source) => source });
 
-    this._initData();
     this._initLimits();
+    this._initData();
     this._initValues();
+
+    this.logger.debug('JSR: core refreshed');
   }
 
   setValue (value, id) {
@@ -183,6 +186,12 @@ class Core {
         this.limit[limit] = 1;
       }
 
+      if (this.config.limit.show) {
+        const body = this.modules.renderer.body.limitBar;
+        body.style.left = `${this.limit.min * 100}%`;
+        body.style.right = `${(1 - this.limit.max) * 100}%`;
+      }
+
       // Refresh all values if it isn't initial set
       if (initial) {
         return;
@@ -191,12 +200,6 @@ class Core {
       this.values.forEach((value, index) => {
         this._setValue(value, index);
       });
-
-      if (this.config.limit.show) {
-        const body = this.modules.renderer.body.limitBar;
-        body.style.left = `${this.limit.min * 100}%`;
-        body.style.right = `${(1 - this.limit.max) * 100}%`;
-      }
     }
   }
 

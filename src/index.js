@@ -66,14 +66,15 @@ export default class {
 
     // Install modules
     this.modules = {};
-    this.config.modulesArray.forEach((module) => {
+    this.modulesArray = [];
+    this.config.modulesArray.forEach((module, index) => {
       // Keep backward compability, because of semver
       // Setting config.modules to false will disable module
       if (
         typeof this.config.modules[module.name] === 'undefined'
         || this.config.modules[module.name]
       ) {
-        this.modules[module.name] = new module.Klass;
+        this.modulesArray[index] = this.modules[module.name] = new module.Klass;
       }
     });
 
@@ -174,7 +175,16 @@ export default class {
   refresh (config = {}, moduleName = null) {
     this.config = merge(this.config, config, { arrayMerge: (dest, source) => source });
 
-    const eventName = moduleName ? `refresh:${moduleName}` : 'refresh';
-    this.modules.eventizer.trigger(eventName, this.config);
+    if (moduleName) {
+      if (this.modules[moduleName].refresh) {
+        this.modules[moduleName].refresh(this.config);
+      }
+    } else {
+      this.modulesArray.forEach((module) => {
+        if (module.refresh) {
+          module.refresh(this.config);
+        }
+      });
+    }
   }
 }
