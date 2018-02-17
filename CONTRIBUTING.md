@@ -35,11 +35,11 @@ starts development server with auto-reload. It keeps an eye on linting and retur
 ## Build
 
 ```
-grunt dist
+grunt build
 ```
 or
 ```
-yarn run build
+yarn build
 ```
 
 builds the project to `dist` directory.

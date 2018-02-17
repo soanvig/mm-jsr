@@ -4,25 +4,17 @@
 
 Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
-Newest version: **1.0.0** (17.9KB without gzipping)
+Newest version: **1.1.0** (19.2KB without gzipping)
 
 Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
+
+## What's new?
+
+Version 1.1.0 adds `.refresh()` method, and rebuilds whole project structure resulting in easier code maintaining.
 
 ## Contributing
 
 [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## New features
-
-**This is development branch**. This branch has all newest features:
-
-- support for High DPI Displays (e.g. Retina displays) [by [sahithyen](https://github.com/sahithyen)]
-- updated module system
-- yarn instead of npm used for development
-- refactored Grunt config
-- very huge refactor of files structure and development environment
-- events refactor (less DOM events, optimized things)
-- add `.refresh` method
 
 ## Table of content
 
@@ -30,7 +22,6 @@ Tested browser support: Firefox (57+), Chrome (63+), Edge (41+)
 
 - [Mort&Mortis JS Range (M&M JSR)](#mortmortis-js-range-mm-jsr)
     - [Contributing](#contributing)
-    - [New features](#new-features)
     - [Table of content](#table-of-content)
     - [Features and advantages](#features-and-advantages)
         - [Features](#features)
