@@ -4,9 +4,13 @@
 
 Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
-Newest version: **1.0.0** (17.9KB without gzipping)
+Newest version: **1.1.0** (19.2KB without gzipping)
 
 Tested browser support: Firefox (57+), Chrome (63+), Edge (41+), Safari (11.1+)
+
+## What's new?
+
+Version 1.1.0 adds `.refresh()` method, and rebuilds whole project structure resulting in easier code maintaining.
 
 ## Contributing
 
@@ -34,6 +38,7 @@ Tested browser support: Firefox (57+), Chrome (63+), Edge (41+), Safari (11.1+)
         - [Listening on internal events](#listening-on-internal-events)
         - [Disabling/enabling slider](#disablingenabling-slider)
         - [Limit values](#limit-values)
+        - [Refresh](#refresh)
     - [CSS configuration](#css-configuration)
         - [Slider dot](#slider-dot)
         - [Active slider](#active-slider)
@@ -271,6 +276,29 @@ This cause *n* refresh events to be called.
 If you change the `show` property after initializing JSR, some limit need to be set to update visibility state.
 
 To disable limit set it to `null`.
+
+### Refresh
+
+If you want to change configuration (in example `min/max` values) you may want to refresh state of application.
+
+```js
+    jsr.refresh(config = {}, moduleName = null);
+```
+
+It is possible to refresh state of any of the module listed below, or all at once (by calling `.refresh() without moduleName)`:
+- core
+
+**Example:**
+
+```js
+    jsr.refresh(config = {
+        min: -50,
+        max: 100,
+        limit: {
+            min: 25
+        }
+    });
+```
 
 ## CSS configuration
 
