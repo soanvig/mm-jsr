@@ -4,8 +4,14 @@ module.exports = {
       {
         expand: true,
         cwd: config.paths.source,
-        src: ['*.css', '*.html'],
+        src: ['*.html'],
         dest: config.paths.buildTarget
+      },
+      {
+        expand: true,
+        cwd: config.paths.source,
+        src: ['*.css'],
+        dest: `${config.paths.buildTarget}/assets/css`
       }
     ]
   }

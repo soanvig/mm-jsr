@@ -19,21 +19,20 @@ module.exports = function (grunt) {
 
   grunt.initConfig(pluginsConfig);
 
-  grunt.registerTask(
-    'dev',
-    [
-      'rollup:dev',
-      'browserSync:dev',
-      'watch'
-    ]
-  );
-  grunt.registerTask(
-    'dist',
-    [
-      'clean:dist',
-      'mkdir:dist',
-      'copy:dist',
-      'rollup:dist'
-    ]
-  );
+  const dev = [
+    'rollup:dev',
+    'browserSync:dev',
+    'watch'
+  ];
+
+  const dist = [
+    'clean:dist',
+    'mkdir:dist',
+    'copy:dist',
+    'rollup:dist'
+  ];
+
+  grunt.registerTask('dev', dev);
+  grunt.registerTask('dist', dist);
+  grunt.registerTask('build', dist);
 };

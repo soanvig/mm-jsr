@@ -11,7 +11,7 @@
   },
   "files": [
     "dist/main.js",
-    "dist/main.css"
+    "dist/assets/css/main.css"
   ],
   "main": "dist/main.js",
   "repository": {
