@@ -1,82 +1,15 @@
 import debounce from 'debounce';
-import { calculateDecimals, listenOn } from '@/helpers';
-
-/* Private methods. Require to be called with .call(this, ...args) */
-
-// Returns ids of sliders with the same value as slider with sliderNum id
-function getSlidersWithSameValue (sliderNum) {
-  const sliders = [];
-
-  this.values.forEach((value, index) => {
-    if (value === this.values[sliderNum]) {
-      sliders.push(index);
-    }
-  });
-
-  return sliders;
-}
-
-// Converts real value to ratio value used by script
-function realToRatio (value) {
-  const min = this.config.min;
-  const max = this.config.max;
-
-  return (value - min) / (max - min);
-}
-
-// Rounds value to step
-function roundToStep (value) {
-  const step = this.config.step;
-  const stepDecimalsMultiplier = Math.pow(10, this.stepDecimals);
-
-  value = Math.round(value / step) * step;
-
-  return Math.round(value * stepDecimalsMultiplier) / stepDecimalsMultiplier;
-}
-
-// Converts ratio value used by script to real value from min/max
-function ratioToReal (value) {
-  const min = this.config.min;
-  const max = this.config.max;
-  value = (max - min) * value + min;
-
-  return roundToStep.call(this, value);
-}
-
-// Calculates step in terms of ratio
-function calculateStepRatio () {
-  const min = this.config.min;
-  const max = this.config.max;
-  const step = this.config.step;
-
-  return (step / (max - min));
-}
-
-// Rounds value to step ratio
-function roundToStepRatio (value) {
-  const step = this.stepRatio;
-  const stepDecimalsMultiplier = Math.pow(10, this.stepRatioDecimals);
-
-  value = Math.round(value / step) * step;
-
-  return Math.round(value * stepDecimalsMultiplier) / stepDecimalsMultiplier;
-}
-
-// Returns id of value in this.values, which is closest to `lookupVal`
-function findClosestValue (lookupVal) {
-  let diff = 1;
-  let id = 0;
-
-  this.values.forEach((value, index) => {
-    const actualDiff = Math.abs(value - lookupVal);
-    if (actualDiff < diff) {
-      id = index;
-      diff = actualDiff;
-    }
-  });
-
-  return id;
-}
+import {
+  calculateDecimals,
+  listenOn,
+  findClosestValue,
+  findSameInArray,
+  roundToStep,
+  realToRatio,
+  roundToStepRatio,
+  ratioToReal,
+  calculateStepRatio
+} from '@/helpers';
 
 class Core {
   constructor () {
@@ -108,7 +41,7 @@ class Core {
       return null;
     }
 
-    id = (id === null) ? findClosestValue.call(this, value) : parseInt(id);
+    id = (id === null) ? findClosestValue(this.values, value) : parseInt(id);
 
     if (diff) {
       value = this.valueInMove[id] + value;
@@ -132,7 +65,7 @@ class Core {
       value = this.values[id + 1];
     }
 
-    const roundedValue = roundToStepRatio.call(this, value);
+    const roundedValue = roundToStepRatio(value, this.stepRatio);
     if (roundedValue === this.values[id]) {
       // Nothing changed
       return;
@@ -141,7 +74,12 @@ class Core {
     this.values[id] = roundedValue;
     this.setSliderValue(roundedValue, id);
 
-    this.modules.eventizer.trigger('core/value:update', id, ratioToReal.call(this, roundedValue), roundedValue);
+    this.modules.eventizer.trigger(
+      'core/value:update',
+      id,
+      ratioToReal(this.config.min, this.config.max, roundedValue, this.config.step),
+      roundedValue
+    );
   }
 
   _bindEvents () {
@@ -158,7 +96,7 @@ class Core {
       this.temp.sliderInMove = parseInt(event.target.dataset.jsrId);
       this.temp.sliderClickX = event.clientX;
 
-      const slidersWithSameValue = getSlidersWithSameValue.call(this, this.temp.sliderInMove);
+      const slidersWithSameValue = findSameInArray(this.values, this.temp.sliderInMove);
       if (slidersWithSameValue.length > 1) {
         this.temp.sliderInMove = slidersWithSameValue;
       }
@@ -390,8 +328,7 @@ class Core {
     this.setLimit('min', this.config.limit.min, true);
     this.setLimit('max', this.config.limit.max, true);
 
-    this.stepDecimals = calculateDecimals(this.config.step);
-    this.stepRatio = calculateStepRatio.call(this);
+    this.stepRatio = calculateStepRatio(this.config.min, this.config.max, this.config.step);
     this.stepRatioDecimals = calculateDecimals(this.stepRatio);
   }
 
@@ -400,7 +337,7 @@ class Core {
     this.modules.renderer.appendRoot(inputs[0]);
 
     values.forEach((value, index) => {
-      value = realToRatio.call(this, value);
+      value = realToRatio(this.config.min, this.config.max, value);
       this._setValue(value, index);
     });
 
@@ -411,7 +348,7 @@ class Core {
 
   getValue (id) {
     const value = this.values[id];
-    return ratioToReal.call(this, value);
+    return ratioToReal(this.config.min, this.config.max, value, this.config.step);
   }
 
   setValue (value, id) {
@@ -422,7 +359,7 @@ class Core {
     if (value === null || typeof value === 'undefined') {
       this.limit[limit] = limit === 'min' ? 0 : 1;
     } else {
-      this.limit[limit] = realToRatio.call(this, value);
+      this.limit[limit] = realToRatio(this.config.min, this.config.max, value);
 
       // Limit cannot be bigger than min/max
       if (this.limit[limit] < 0) {
