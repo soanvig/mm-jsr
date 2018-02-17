@@ -164,22 +164,6 @@ class Labels {
 
     this.formatter = this.config.labels.formatter;
 
-    this.modules.renderer.structure.labels = {
-      classes: ['jsr_label'],
-      children: [],
-      count: this.config.sliders,
-      alwaysArray: true
-    };
-    this.modules.renderer.structure.rail.children.push('labels');
-
-    this.modules.renderer.structure.labelsMinMax = {
-      classes: ['jsr_label', 'jsr_label--minmax'],
-      children: [],
-      count: 2
-    };
-
-    this.modules.renderer.structure.rail.children.push('labelsMinMax');
-
     this.modules.eventizer.register('modules/renderer:builded', () => {
       this.labels = this.modules.renderer.body.labels;
       this.labelsParent = this.labels[0].parentNode;
@@ -189,6 +173,27 @@ class Labels {
 
       this._bindEvents();
     });
+  }
+
+  view () {
+    const labels = {
+      classes: ['jsr_label'],
+      children: [],
+      count: this.config.sliders,
+      alwaysArray: true,
+      parent: 'rail',
+      name: 'labels'
+    };
+
+    const labelsMinMax = {
+      classes: ['jsr_label', 'jsr_label--minmax'],
+      children: [],
+      count: 2,
+      parent: 'rail',
+      name: 'labelsMinMax'
+    };
+
+    return [labels, labelsMinMax];
   }
 }
 

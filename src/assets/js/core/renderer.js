@@ -1,5 +1,6 @@
 import structureParser from './structureParser.js';
 import { listenOn } from '../helpers.js';
+import merge from 'deepmerge';
 
 /* Private methods. Require to be called with .call(this, ...args) */
 
@@ -227,6 +228,24 @@ class Renderer {
     }
   }
 
+  _createBody (start) {
+    const structure = merge({}, this.bodyStructure);
+
+    for (const moduleName in this.modules) {
+      if (!this.modules[moduleName].view) {
+        continue;
+      }
+
+      const view = this.modules[moduleName].view();
+      view.forEach((singleView) => {
+        structure[singleView.name] = singleView;
+        structure[singleView.parent].children.push(singleView.name);
+      });
+    }
+
+    return structureParser(structure, start);
+  }
+
   /* API */
   build ({ modules, logger, config }) {
     this.modules = modules;
@@ -237,7 +256,7 @@ class Renderer {
     this.bodyStructure.bars.count = this.bodyStructure.sliders.count - 1;
 
     // Create body starting from root
-    this.body = structureParser(this.bodyStructure, 'root');
+    this.body = this._createBody('root');
 
     this._bindEvents();
 
