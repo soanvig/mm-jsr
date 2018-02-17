@@ -22,7 +22,7 @@
     <input id="range-7-1" type="range" min="0" max="100" value="30">
     <script src="./main.js"></script>
     <script>
-      new JSR(['#range-1-1', '#range-1-2', '#range-1-3'], {
+      const r1 = new JSR(['#range-1-1', '#range-1-2', '#range-1-3'], {
           sliders: 3,
           values: [25, 50, 75],
           labels: {
@@ -30,6 +30,11 @@
           },
           log: 'info'
       });
+      setTimeout(() => {
+        r1.refresh({
+            min: -50
+        });
+      }, 2000);
       new JSR(['#range-2-1', '#range-2-2'], {
           sliders: 2,
           min: 10000,

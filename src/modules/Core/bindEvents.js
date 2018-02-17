@@ -236,4 +236,8 @@ export default function bindEvents () {
     this.logger.debug('JSR: Bar mouseup.');
     this.logger.debug(event);
   });
+
+  // Refresh
+  eventizer.register('refresh', this.refresh.bind(this));
+  eventizer.register('refresh:core', this.refresh.bind(this));
 }
