@@ -257,6 +257,56 @@ class Core {
       }
     }
   }
+
+  view () {
+    const railOuter = {
+      classes: ['jsr_rail-outer'],
+      count: 1,
+      name: 'railOuter',
+      parent: 'root'
+    };
+
+    const rail = {
+      classes: ['jsr_rail'],
+      count: 1,
+      name: 'rail',
+      parent: 'railOuter'
+    };
+
+    const sliders = {
+      classes: ['jsr_slider'],
+      attributes: {
+        tabindex: 0
+      },
+      count: this.config.sliders || 1,
+      alwaysArray: true,
+      name: 'sliders',
+      parent: 'rail'
+    };
+
+    const bars = {
+      classes: ['jsr_bar'],
+      count: sliders.count - 1,
+      alwaysArray: true,
+      name: 'bars',
+      parent: 'rail'
+    };
+
+    const limitBar = {
+      classes: ['jsr_bar', 'jsr_bar--limit'],
+      count: 1,
+      name: 'limitBar',
+      parent: 'rail'
+    };
+
+    return [
+      railOuter,
+      rail,
+      sliders,
+      bars,
+      limitBar
+    ];
+  }
 }
 
 export default {

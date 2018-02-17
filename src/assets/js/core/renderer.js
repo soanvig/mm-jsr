@@ -34,37 +34,6 @@ class Renderer {
     this.bodyStructure = {
       root: {
         classes: ['jsr'],
-        children: ['railOuter'],
-        count: 1
-      },
-      railOuter: {
-        classes: ['jsr_rail-outer'],
-        children: ['rail'],
-        count: 1
-      },
-      rail: {
-        classes: ['jsr_rail'],
-        children: ['bars', 'sliders', 'limitBar'],
-        count: 1
-      },
-      sliders: {
-        classes: ['jsr_slider'],
-        children: [],
-        attributes: {
-          tabindex: 0
-        },
-        count: 2,
-        alwaysArray: true
-      },
-      bars: {
-        classes: ['jsr_bar'],
-        children: [],
-        count: 1,
-        alwaysArray: true
-      },
-      limitBar: {
-        classes: ['jsr_bar', 'jsr_bar--limit'],
-        children: [],
         count: 1
       }
     };
@@ -239,6 +208,9 @@ class Renderer {
       const view = this.modules[moduleName].view();
       view.forEach((singleView) => {
         structure[singleView.name] = singleView;
+        if (!structure[singleView.parent].children) {
+          structure[singleView.parent].children = [];
+        }
         structure[singleView.parent].children.push(singleView.name);
       });
     }
@@ -252,19 +224,11 @@ class Renderer {
     this.logger = logger;
     this.config = config;
 
-    this.bodyStructure.sliders.count = this.config.sliders || 1;
-    this.bodyStructure.bars.count = this.bodyStructure.sliders.count - 1;
-
     // Create body starting from root
     this.body = this._createBody('root');
-
     this._bindEvents();
 
     this.modules.eventizer.trigger('modules/renderer:builded');
-  }
-
-  get structure () {
-    return this.bodyStructure;
   }
 
   // Appends root after target

@@ -16,7 +16,7 @@ function createElement (elName, bodyStructure, body, elIds) {
   }
 
   // If there is any child
-  if (structEl.children.length > 0) {
+  if (structEl.children && structEl.children.length > 0) {
     // For each child name
     structEl.children.forEach((childName) => {
       // And for each parent
