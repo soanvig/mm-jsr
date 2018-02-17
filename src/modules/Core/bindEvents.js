@@ -1,30 +1,65 @@
 import { listenOn, findSameInArray } from '@/helpers';
-import debounce from 'debounce';
 
 export default function bindEvents () {
   const eventizer = this.modules.eventizer;
   const body = this.modules.renderer.body;
 
-  // Slider
-  listenOn(body.sliders, 'click', (event) => {
-    event.stopPropagation();
+  listenOn(body.root, 'mousedown', (event) => {
+    this.temp.mouseDown = true;
+
+    eventizer.trigger('view/mousedown', event);
   });
-  listenOn(body.sliders, 'mousedown', (event) => {
+
+  listenOn(document, 'mousemove', (event) => {
+    if (!this.temp.mouseDown) {
+      return;
+    }
+
+    this.temp.mouseMove = true;
+
+    eventizer.trigger('view/mousemove', event);
+  });
+
+  listenOn(document, 'mouseup', (event) => {
+    eventizer.trigger('view/mouseup', event);
+
+    this.temp.mouseMove = false;
+    this.temp.mouseDown = false;
+  });
+
+  listenOn(body.root, 'keydown', (event) => {
+    eventizer.trigger('view/keydown', event);
+  });
+
+  eventizer.register('view/mouseup', (event) => {
+    if (this.temp.mouseMove || !this.temp.mouseDown) {
+      return;
+    }
+
+    eventizer.trigger('view/click', event);
+  });
+
+  // Slider
+  eventizer.register('view/mousedown', (event) => {
+    if (!event.target.classList.contains('jsr_slider')) {
+      return;
+    }
+
     event.stopPropagation();
 
     this.temp.sliderInMove = parseInt(event.target.dataset.jsrId);
     this.temp.sliderClickX = event.clientX;
 
     const slidersWithSameValue = findSameInArray(this.values, this.temp.sliderInMove);
+
     if (slidersWithSameValue.length > 1) {
       this.temp.sliderInMove = slidersWithSameValue;
     }
 
     eventizer.trigger('view/slider:mousedown', event, slidersWithSameValue);
   });
-  listenOn(document, 'mousemove', (event) => {
-    event.stopPropagation();
 
+  eventizer.register('view/mousemove', (event) => {
     if (this.temp.sliderInMove === null) {
       return;
     }
@@ -52,7 +87,8 @@ export default function bindEvents () {
 
     eventizer.trigger('view/slider:mousemove', event, this.temp.sliderInMove, diffRatio);
   });
-  listenOn(document, 'mouseup', (event) => {
+
+  eventizer.register('view/mouseup', (event) => {
     if (this.temp.sliderInMove === null) {
       return;
     }
@@ -68,14 +104,10 @@ export default function bindEvents () {
   // ./ Slider
 
   // Rail
-  listenOn(body.railOuter, 'mouseup', (event) => {
-    if (this.temp.barIsMoved) {
-      return;
-    }
-
+  eventizer.register('view/click', (event) => {
     const clickX = event.clientX;
-    const railLeft = body.railOuter.getBoundingClientRect().left;
-    const clickRelative = clickX - railLeft;
+    const rect = body.railOuter.getBoundingClientRect();
+    const clickRelative = clickX - rect.left;
     const ratio = clickRelative / body.railOuter.offsetWidth;
 
     eventizer.trigger('view/rail:click', event, ratio);
@@ -84,13 +116,19 @@ export default function bindEvents () {
 
   // Bar
   if (body.bars) {
-    listenOn(body.bars, 'mousedown', (event) => {
+    eventizer.register('view/mousedown', (event) => {
+      if (!event.target.classList.contains('jsr_bar')) {
+        return;
+      }
+
+      event.stopPropagation();
+
       this.temp.barInMove = parseInt(event.target.dataset.jsrId);
       this.temp.barClickX = event.clientX;
 
       eventizer.trigger('view/bar:mousedown', event, this.temp.barInMove);
     });
-    listenOn(document, 'mousemove', (event) => {
+    eventizer.register('view/mousemove', (event) => {
       if (this.temp.barInMove === null) {
         return;
       }
@@ -104,7 +142,7 @@ export default function bindEvents () {
 
       eventizer.trigger('view/bar:mousemove', event, this.temp.barInMove, diffRatio);
     });
-    listenOn(document, 'mouseup', (event) => {
+    eventizer.register('view/mouseup', (event) => {
       if (this.temp.barInMove === null) {
         return;
       }
@@ -118,7 +156,7 @@ export default function bindEvents () {
   // ./ Bar
 
   // Keyboard
-  listenOn(body.root, 'keydown', (event) => {
+  eventizer.register('view/keydown', (event) => {
     // Its slider presumably, cuz only slider can have focus
     const sliderId = event.target.dataset.jsrId;
     const keyCodes = {
@@ -150,14 +188,12 @@ export default function bindEvents () {
     });
   });
 
-  eventizer.register('view/slider:mousemove',
-    debounce((event, id, diff) => {
-      this.logger.debug('JSR: Slider mousemove.');
-      this.logger.debug(event);
+  eventizer.register('view/slider:mousemove', (event, id, diff) => {
+    this.logger.debug('JSR: Slider mousemove.');
+    this.logger.debug(event);
 
-      this._setValue(diff, id, true);
-    }, 10)
-  );
+    this._setValue(diff, id, true);
+  });
 
   eventizer.register('view/slider:mouseup', (event) => {
     this.logger.debug('JSR: Slider mouseup.');
@@ -188,15 +224,13 @@ export default function bindEvents () {
     this.valueInMove[id + 1] = this.values[id + 1];
   });
 
-  eventizer.register('view/bar:mousemove',
-    debounce((event, id, diff) => {
-      this.logger.debug('JSR: Bar mousemove.');
-      this.logger.debug(event);
+  eventizer.register('view/bar:mousemove', (event, id, diff) => {
+    this.logger.debug('JSR: Bar mousemove.');
+    this.logger.debug(event);
 
-      this._setValue(diff, id, true);
-      this._setValue(diff, id + 1, true);
-    }, 10)
-  );
+    this._setValue(diff, id, true);
+    this._setValue(diff, id + 1, true);
+  });
 
   eventizer.register('view/bar:mouseup', (event) => {
     this.logger.debug('JSR: Bar mouseup.');

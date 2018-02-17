@@ -2,31 +2,34 @@ import { listenOn } from '@/helpers';
 
 class TouchSupport {
   _bindEvents () {
-    const elements = [this.modules.renderer.body.sliders];
-    if (this.modules.renderer.body.labels) {
-      elements.push(this.modules.renderer.body.labels);
-    }
+    const body = this.modules.renderer.body;
 
-    listenOn(elements, 'touchstart', (event) => {
+    listenOn(body.root, 'touchstart', (event) => {
       document.documentElement.classList.add('jsr_lockscreen');
-
+      
       event = event.targetTouches.item(0);
+      event.bubbles = true;
+      event.cancelable = true;
       const mouseEvent = new MouseEvent('mousedown', event);
-      this.modules.renderer.body.sliders[event.target.dataset.jsrId].dispatchEvent(mouseEvent);
+      event.target.dispatchEvent(mouseEvent);
     });
 
-    listenOn(elements, 'touchmove', (event) => {
+    listenOn(document, 'touchmove', (event) => {
       event = event.targetTouches.item(0);
+      event.bubbles = true;
+      event.cancelable = true;
       const mouseEvent = new MouseEvent('mousemove', event);
-      document.dispatchEvent(mouseEvent);
+      event.target.dispatchEvent(mouseEvent);
     });
 
     listenOn(document, 'touchend', (event) => {
       document.documentElement.classList.remove('jsr_lockscreen');
       
-      event = event.targetTouches.item(0);
+      event = event.changedTouches.item(0);
+      event.bubbles = true;
+      event.cancelable = true;
       const mouseEvent = new MouseEvent('mouseup', event);
-      document.dispatchEvent(mouseEvent);
+      event.target.dispatchEvent(mouseEvent);
     });
   }
 

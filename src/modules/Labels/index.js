@@ -116,17 +116,21 @@ class Labels {
   }
 
   _bindEvents () {
-    listenOn(this.labels, 'click', (event) => {
-      event.stopPropagation();
-    });
+    const eventizer = this.modules.eventizer;
 
-    this.modules.eventizer.register('core/value:update', (id, real, ratio) => {
+    eventizer.register('core/value:update', (id, real, ratio) => {
       this.values[id] = [real, ratio];
       updateLabel.call(this, id, real, ratio);
     });
 
     // Delegate this event to renderer slider click
-    listenOn(this.labels, 'mousedown', (event) => {
+    eventizer.register('view/mousedown', (event) => {
+      if (!event.target.classList.contains('jsr_label')) {
+        return;
+      }
+
+      event.stopPropagation();
+
       const clickEvent = new MouseEvent('mousedown', event);
       this.modules.renderer.body.sliders[event.target.dataset.jsrId].dispatchEvent(clickEvent);
     });
