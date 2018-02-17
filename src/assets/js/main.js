@@ -177,7 +177,7 @@ export default class {
       this.config = merge(this.config, config);
     }
 
-    const eventName = moduleName ? `refresh/${moduleName}` : 'refresh';
+    const eventName = moduleName ? `refresh:${moduleName}` : 'refresh';
     this.modules.eventizer.trigger(eventName, this.config);
   }
 }
