@@ -21,6 +21,7 @@ Version 1.1.0 adds `.refresh()` method, and rebuilds whole project structure res
 <!-- TOC -->
 
 - [Mort&Mortis JS Range (M&M JSR)](#mortmortis-js-range-mm-jsr)
+    - [What's new?](#whats-new)
     - [Contributing](#contributing)
     - [Table of content](#table-of-content)
     - [Features and advantages](#features-and-advantages)
@@ -51,6 +52,7 @@ Version 1.1.0 adds `.refresh()` method, and rebuilds whole project structure res
         - [Labels formatter](#labels-formatter)
         - [Disabling modules](#disabling-modules)
         - [HTML Label support](#html-label-support)
+    - [Contributors](#contributors)
 
 <!-- /TOC -->
 
@@ -391,3 +393,13 @@ by setting `modules[moduleName]` to false in JSR configuration.
 
 HTML Label support module enables support for focusing sliders by clicking on appropriate label.
 Since `<label>` is connected with its input by `[for]` attribute, it's necessary to [connect it properly](https://developer.mozilla.org/pl/docs/Web/HTML/Element/label#Using_the_for_attribute). Clicking on label focuses connected input (slider).
+
+## Contributors
+
+Thanks to all contributors whose PR's have been merged:
+
+- [Nufeen](https://github.com/Nufeen) - README revision
+- [sahithyen](https://github.com/sahithyen) - support for HDPI (grid)
+- [Soanvig](https://github.com/soanvig) - maintainer (in sake of consistency :-) )
+
+Besides that thanks to all people who tried to contribute by opening issues and PRs!
