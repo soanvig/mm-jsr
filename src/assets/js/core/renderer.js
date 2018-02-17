@@ -1,4 +1,4 @@
-import structureParser from './structureParser.js';
+import structureParser from './structureParser';
 import merge from 'deepmerge';
 
 class Renderer {

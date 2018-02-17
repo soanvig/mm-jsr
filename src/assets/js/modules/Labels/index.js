@@ -1,4 +1,4 @@
-import { throttle, listenOn, calculateDecimals } from './helpers.js';
+import { throttle, listenOn, calculateDecimals } from '@/helpers';
 import merge from 'deepmerge';
 
 function allLabelsSet () {

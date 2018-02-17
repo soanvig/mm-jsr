@@ -1,4 +1,4 @@
-import { listenOn } from './helpers.js';
+import { listenOn } from '@/helpers';
 
 class TouchSupport {
   _bindEvents () {

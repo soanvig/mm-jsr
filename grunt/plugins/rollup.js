@@ -3,7 +3,10 @@ const babel = require('rollup-plugin-babel');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const eslint = require('rollup-plugin-eslint');
+const alias = require('rollup-plugin-alias');
 const uglifyES = require('uglify-es');
+
+const path = require('path');
 
 module.exports = {
   options: {
@@ -23,6 +26,9 @@ module.exports = {
           eslint({
             throwOnError: true
           }),
+          alias({
+            '@': path.join(process.cwd(), './src/assets/js'),
+          }),
           resolve({
             jsnext: true,
             main: true,
@@ -38,6 +44,9 @@ module.exports = {
     options: {
       plugins: () => {
         return [
+          alias({
+            '@': path.join(process.cwd(), './src/assets/js'),
+          }),
           resolve({
             jsnext: true,
             main: true,

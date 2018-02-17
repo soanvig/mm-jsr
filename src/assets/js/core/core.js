@@ -1,4 +1,4 @@
-import { throttle, calculateDecimals, listenOn } from '../helpers.js';
+import { throttle, calculateDecimals, listenOn } from '../helpers';
 
 /* Private methods. Require to be called with .call(this, ...args) */
 

@@ -1,4 +1,4 @@
-import { throttle } from './helpers.js';
+import { throttle } from '@/helpers';
 import merge from 'deepmerge';
 
 class Grid {
