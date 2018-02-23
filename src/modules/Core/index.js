@@ -170,6 +170,7 @@ class Core {
   }
 
   setValue (value, id) {
+    value = realToRatio(this.config.min, this.config.max, value);
     this._setValue(value, id);
   }
 
