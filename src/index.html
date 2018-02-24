@@ -20,6 +20,7 @@
     <input id="range-5-1" type="range" min="0" max="100" value="30">
     <input id="range-6-1" type="range" min="0" max="100" value="30">
     <input id="range-7-1" type="range" min="0" max="100" value="30">
+    <input id="range-8-1" type="range" min="0" max="100" value="30">
     <script src="./main.js"></script>
     <script>
       new JSR(['#range-1-1', '#range-1-2', '#range-1-3'], {
@@ -108,7 +109,13 @@
               }
           }
       });
-      // jsr.setValue(0, 40);
+      const r2 = new JSR(['#range-8-1'], {
+          sliders: 1,
+          values: [50],
+      });
+       setTimeout(()=>{
+        r2.setValue(0, 25);
+       }, 2000)
     </script>
   </body>
 </html>

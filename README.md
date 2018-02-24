@@ -291,6 +291,8 @@ If you want to change configuration (in example `min/max` values) you may want t
 
 It is possible to refresh state of any of the module listed below, or all at once (by calling `.refresh() without moduleName)`:
 - core
+- grid
+- labels
 
 **Example:**
 
@@ -303,6 +305,8 @@ It is possible to refresh state of any of the module listed below, or all at onc
         }
     });
 ```
+
+**BEWARE**: this function is very bug-vulnerable. If you encounter any bug using this function to update config, report it immediately to [issues](https://github.com/mm-jsr/jsr/issues), please!
 
 ## CSS configuration
 
