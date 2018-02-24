@@ -4,15 +4,17 @@
 
 Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
-Newest version: **1.1.1** (19.6KB without gzipping)
+Newest version: **1.1.2** (19.6KB without gzipping)
 
 Tested browser support: Firefox (57+), Chrome (63+), Edge (41+), Safari (11.1+)
 
 ## What's new?
 
-Version 1.1.0 adds `.refresh()` method, and rebuilds whole project structure resulting in easier code maintaining.
+v1.1.0 adds `.refresh()` method, and rebuilds whole project structure resulting in easier code maintaining.
 
-Version 1.1.1 is hotfix.
+v1.1.1 hotfix.
+v1.1.2 hotfix.
+
 
 ## Contributing
 
@@ -404,6 +406,7 @@ Since `<label>` is connected with its input by `[for]` attribute, it's necessary
 
 Thanks to all contributors whose PR's have been merged:
 
+- [johnnyflinn](https://github.com/johnnyflinn) - setValue hotfix
 - [Nufeen](https://github.com/Nufeen) - README revision
 - [sahithyen](https://github.com/sahithyen) - support for HDPI (grid)
 - [Soanvig](https://github.com/soanvig) - maintainer (in sake of consistency :-) )
