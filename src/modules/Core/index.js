@@ -26,6 +26,10 @@ class Core {
       barClickX: 0
     };
     this.modules = {};
+    this.limit = {
+      min: 0,
+      max: 1
+    };
     this.values = [];
     this.valueInMove = [];
     this.stepRatio = 0;
@@ -254,6 +258,10 @@ class Core {
     ];
   }
 }
+
+export {
+  Core
+};
 
 export default {
   name: 'core',
