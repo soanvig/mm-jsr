@@ -75,7 +75,7 @@ class Core {
     }
 
     this.values[id] = roundedValue;
-    this.setSliderValue(roundedValue, id);
+    this._setSliderValue(roundedValue, id);
 
     this.modules.eventizer.trigger(
       'core/value:update',
@@ -105,7 +105,7 @@ class Core {
     }
   }
 
-  setSliderValue (value, sliderNum) {
+  _setSliderValue (value, sliderNum) {
     const body = this.modules.renderer.body;
     const slider = body.sliders[sliderNum];
     const left = `${value * 100}%`;

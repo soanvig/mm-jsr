@@ -5,11 +5,11 @@ describe('Core', () => {
     describe('_setValue', () => {
       let core;
       let eventizerTrigger;
-      const setSliderValue = {};
+      const _setSliderValue = {};
 
       beforeEach(() => {
-        setSliderValue.original = Core.prototype.setSliderValue;
-        Core.prototype.setSliderValue = setSliderValue.mock = jest.fn();
+        _setSliderValue.original = Core.prototype._setSliderValue;
+        Core.prototype._setSliderValue = _setSliderValue.mock = jest.fn();
 
         eventizerTrigger = jest.fn();
 
@@ -40,16 +40,16 @@ describe('Core', () => {
           expect(core.values[0]).toBe(0.5);
         });
 
-        it('should call setSliderValue', () => {
+        it('should call _setSliderValue', () => {
           core._setValue(0.5, 0);
-          expect(setSliderValue.mock).toHaveBeenCalledTimes(1);
+          expect(_setSliderValue.mock).toHaveBeenCalledTimes(1);
         });
 
-        it('should not call setSliderValue if value did not change', () => {
+        it('should not call _setSliderValue if value did not change', () => {
           core._setValue(0.5, 0);
-          expect(setSliderValue.mock).toHaveBeenCalledTimes(1);
+          expect(_setSliderValue.mock).toHaveBeenCalledTimes(1);
           core._setValue(0.5, 0);
-          expect(setSliderValue.mock).toHaveBeenCalledTimes(1);
+          expect(_setSliderValue.mock).toHaveBeenCalledTimes(1);
         });
 
         it('should not exceed preceding value', () => {
