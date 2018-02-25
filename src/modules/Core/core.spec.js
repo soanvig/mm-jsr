@@ -122,5 +122,40 @@ describe('Core', () => {
         });
       });
     });
+    describe('_updateBars', () => {
+      let core;
+
+      beforeEach(() => {
+        core = new Core();
+        core.modules.renderer = {
+          body: {
+            bars: [
+              {
+                style: {
+                  left: null,
+                  right: null
+                }
+              },
+              {
+                style: {
+                  left: null,
+                  right: null
+                }
+              }
+            ]
+          }
+        };
+      });
+
+      it('should set left bar right style.', () => {
+        core._updateBars(1, 0.3);
+        expect(core.modules.renderer.body.bars[0].style.right).toBe('70%');
+      });
+
+      it('should set right bar left style.', () => {
+        core._updateBars(0, 0.3);
+        expect(core.modules.renderer.body.bars[0].style.left).toBe('30%');
+      });
+    });
   });
 });
