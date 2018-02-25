@@ -5,11 +5,11 @@ describe('Core', () => {
     describe('_setValue', () => {
       let core;
       let eventizerTrigger;
-      const _setSliderValue = {};
+      const _updateSlider = {};
 
       beforeEach(() => {
-        _setSliderValue.original = Core.prototype._setSliderValue;
-        Core.prototype._setSliderValue = _setSliderValue.mock = jest.fn();
+        _updateSlider.original = Core.prototype._updateSlider;
+        Core.prototype._updateSlider = _updateSlider.mock = jest.fn();
 
         eventizerTrigger = jest.fn();
 
@@ -19,6 +19,10 @@ describe('Core', () => {
           trigger: eventizerTrigger
         };
         core.stepRatio = 0.1;
+      });
+
+      afterEach(() => {
+        Core.prototype._updateSlider = _updateSlider.original;
       });
 
       it('should do nothing if !enabled', () => {
@@ -40,16 +44,16 @@ describe('Core', () => {
           expect(core.values[0]).toBe(0.5);
         });
 
-        it('should call _setSliderValue', () => {
+        it('should call _updateSlider', () => {
           core._setValue(0.5, 0);
-          expect(_setSliderValue.mock).toHaveBeenCalledTimes(1);
+          expect(_updateSlider.mock).toHaveBeenCalledTimes(1);
         });
 
-        it('should not call _setSliderValue if value did not change', () => {
+        it('should not call _updateSlider if value did not change', () => {
           core._setValue(0.5, 0);
-          expect(_setSliderValue.mock).toHaveBeenCalledTimes(1);
+          expect(_updateSlider.mock).toHaveBeenCalledTimes(1);
           core._setValue(0.5, 0);
-          expect(_setSliderValue.mock).toHaveBeenCalledTimes(1);
+          expect(_updateSlider.mock).toHaveBeenCalledTimes(1);
         });
 
         it('should not exceed preceding value', () => {
@@ -122,6 +126,7 @@ describe('Core', () => {
         });
       });
     });
+
     describe('_updateBars', () => {
       let core;
 
@@ -147,14 +152,46 @@ describe('Core', () => {
         };
       });
 
-      it('should set left bar right style.', () => {
+      it('should set left bar right style', () => {
         core._updateBars(1, 0.3);
         expect(core.modules.renderer.body.bars[0].style.right).toBe('70%');
+        expect(core.modules.renderer.body.bars[0].style.left).toBeNull();
       });
 
-      it('should set right bar left style.', () => {
+      it('should set right bar left style', () => {
         core._updateBars(0, 0.3);
         expect(core.modules.renderer.body.bars[0].style.left).toBe('30%');
+        expect(core.modules.renderer.body.bars[0].style.right).toBeNull();
+      });
+    });
+
+    describe('_updateSlider', () => {
+      let core;
+
+      beforeEach(() => {
+        core = new Core();
+        core._updateBars = jest.fn();
+        core.logger = {
+          debug: jest.fn()
+        };
+        core.modules.renderer = {
+          body: {
+            sliders: [
+              {
+                style: {
+                  left: null,
+                  right: null
+                }
+              }
+            ]
+          }
+        };
+      });
+
+      it('should set slider left', () => {
+        core._updateSlider(0, 0.3);
+        expect(core.modules.renderer.body.sliders[0].style.left).toBe('30%');
+        expect(core.modules.renderer.body.sliders[0].style.right).toBe(null);
       });
     });
   });

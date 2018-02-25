@@ -75,7 +75,7 @@ class Core {
     }
 
     this.values[id] = roundedValue;
-    this._setSliderValue(roundedValue, id);
+    this._updateSlider(id, roundedValue);
 
     this.modules.eventizer.trigger(
       'core/value:update',
@@ -105,14 +105,13 @@ class Core {
     }
   }
 
-  _setSliderValue (value, sliderNum) {
+  _updateSlider (sliderNum, value) {
     const body = this.modules.renderer.body;
     const slider = body.sliders[sliderNum];
     const left = `${value * 100}%`;
 
     this.logger.debug(`JSR: Slider no. ${sliderNum} set to value: ${value}.`);
 
-    this.values[sliderNum] = value;
     slider.style.left = left;
 
     this._updateBars(sliderNum, value);
