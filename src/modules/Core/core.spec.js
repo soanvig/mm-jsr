@@ -194,5 +194,34 @@ describe('Core', () => {
         expect(core.modules.renderer.body.sliders[0].style.right).toBe(null);
       });
     });
+    describe('_initValues', () => {
+      let core;
+      const _setValue = {};
+
+      beforeEach(() => {
+        _setValue.original = Core.prototype._setValue;
+        Core.prototype._setValue = _setValue.mock = jest.fn();
+
+        core = new Core();
+        core.config = {
+          min: 0,
+          max: 10,
+          values: [0, 2, 5]
+        };
+      });
+
+      afterEach(() => {
+        Core.prototype._setValue = _setValue.original;
+      });
+
+      it('should set values from config', () => {
+        core._initValues();
+
+        expect(_setValue.mock.mock.calls).toHaveLength(3);
+        expect(_setValue.mock.mock.calls).toEqual(
+          expect.arrayContaining([[0, 0], [0.2, 1], [0.5, 2]])
+        );
+      });
+    });
   });
 });
