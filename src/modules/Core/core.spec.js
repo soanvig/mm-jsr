@@ -223,5 +223,95 @@ describe('Core', () => {
         );
       });
     });
+
+    describe('_initLimits', () => {
+      let core;
+      const setLimit = {};
+
+      beforeEach(() => {
+        setLimit.original = Core.prototype.setLimit;
+        Core.prototype.setLimit = setLimit.mock = jest.fn();
+
+        core = new Core();
+        core.config = {
+          limit: {
+            min: 20,
+            max: 100
+          }
+        };
+      });
+
+      afterEach(() => {
+        Core.prototype.setLimit = setLimit.original;
+      });
+
+      it('should create limit object', () => {
+        core._initLimits();
+        expect(core.limit).toMatchObject({});
+      });
+
+      it('should call setLimit', () => {
+        core._initLimits();
+        expect(setLimit.mock.mock.calls).toEqual(
+          expect.arrayContaining([
+            ['min', 20, true],
+            ['max', 100, true]
+          ])
+        );
+      });
+    });
+
+    describe('_initData', () => {
+      let core;
+
+      beforeEach(() => {
+        core = new Core();
+        core.config = {
+          min: 0,
+          max: 100,
+          step: 1
+        };
+      });
+
+      it('should set stepRatio', () => {
+        core._initData();
+        expect(core.stepRatio).toBeCloseTo(0.01, 2);
+      });
+
+      it('should set stepRatioDecimals', () => {
+        core._initData();
+        expect(core.stepRatioDecimals).toBe(2);
+      });
+    });
+  });
+
+  describe('public methods', () => {
+    describe('build', () => {
+      
+    });
+
+    describe('init', () => {
+      
+    });
+
+    describe('getValue', () => {
+      
+    });
+
+    describe('refresh', () => {
+      
+    });
+
+    describe('setValue', () => {
+      
+    });
+
+    describe('setLimit', () => {
+      
+    });
+
+    describe('view', () => {
+      
+    });
   });
 });

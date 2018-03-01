@@ -207,6 +207,7 @@ class Core {
     }
   }
 
+  /* istanbul ignore next */
   view () {
     const railOuter = {
       classes: ['jsr_rail-outer'],
