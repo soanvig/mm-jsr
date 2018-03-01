@@ -287,15 +287,25 @@ describe('Core', () => {
 
   describe('public methods', () => {
     let core;
+    const _setValue = {};
 
     beforeEach(() => {
+      _setValue.original = Core.prototype._setValue;
+      Core.prototype._setValue = _setValue.mock = jest.fn();
       core = new Core();
       core.config = {
         min: 0,
         max: 100,
         values: [0, 20, 50],
-        step: 10
+        step: 10,
+        limit: {}
       };
+      core.values = [0, 0.2, 0.5];
+      core.limit = {};
+    });
+
+    afterEach(() => {
+      Core.prototype._setValue = _setValue.original;
     });
 
     describe('build', () => {
@@ -319,17 +329,6 @@ describe('Core', () => {
     });
 
     describe('setValue', () => {
-      const _setValue = {};
-
-      beforeEach(() => {
-        _setValue.original = Core.prototype._setValue;
-        Core.prototype._setValue = _setValue.mock = jest.fn();
-      });
-
-      afterEach(() => {
-        Core.prototype._setValue = _setValue.original;
-      });
-
       it('should call _setValue with value converted to ratio', () => {
         core.setValue(20, 0);
         expect(_setValue.mock).toBeCalledWith(0.2, 0);
@@ -337,11 +336,97 @@ describe('Core', () => {
     });
 
     describe('setLimit', () => {
+      describe('when value === null', () => {
+        it('should set min to 0', () => {
+          core.setLimit('min', null);
+          expect(core.limit.min).toBe(0);
+        });
 
-    });
+        it('should set max to 1', () => {
+          core.setLimit('max', null);
+          expect(core.limit.max).toBe(1);
+        });
+      });
 
-    describe('view', () => {
+      describe('when value not passed', () => {
+        it('should set min to 0', () => {
+          core.setLimit('min');
+          expect(core.limit.min).toBe(0);
+        });
 
+        it('should set max to 1', () => {
+          core.setLimit('max');
+          expect(core.limit.max).toBe(1);
+        });
+      });
+
+      describe('when value is passed', () => {
+        it('should save limit converted into ratio', () => {
+          core.setLimit('min', 10);
+          expect(core.limit.min).toBe(0.1);
+
+          core.setLimit('max', 20);
+          expect(core.limit.max).toBe(0.2);
+        });
+
+        it('should not allow min < 0', () => {
+          core.setLimit('min', -10);
+          expect(core.limit.min).toBe(0);
+        });
+
+        it('should not allow max > 1', () => {
+          core.setLimit('max', 110);
+          expect(core.limit.max).toBe(1);
+        });
+
+        describe('when initial is false', () => {
+          it('should call _setValue for each value', () => {
+            core.setLimit('min', 10);
+
+            expect(_setValue.mock.mock.calls).toEqual(
+              expect.arrayContaining([
+                [0, 0],
+                [0.2, 1],
+                [0.5, 2]
+              ])
+            );
+          });
+        });
+
+        describe('when initial is true', () => {
+          it('should not call _setValue', () => {
+            core.setLimit('max', 10, true);
+            expect(_setValue.mock.mock.calls).toHaveLength(0);
+          });
+        });
+
+        describe('when config.limit.show is true', () => {
+          const style = {};
+
+          beforeEach(() => {
+            style.left = null;
+            style.right = null;
+            core.config.limit.show = true;
+            core.modules.renderer = {
+              body: {
+                limitBar: {
+                  style
+                }
+              }
+            };
+          });
+
+          it('should set limitBar style.left to % limit.min', () => {
+            core.setLimit('min', 10);
+            expect(style.left).toBe('10%');
+          });
+
+          it('should set limitBar style.right to % 1 - limit.max', () => {
+            core.setLimit('max', 60);
+            expect(style.right).toBe('40%');
+          });
+        });
+      });
     });
   });
 });
