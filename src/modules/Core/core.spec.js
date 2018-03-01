@@ -286,32 +286,48 @@ describe('Core', () => {
   });
 
   describe('public methods', () => {
+    let core;
+
+    beforeEach(() => {
+      core = new Core();
+      core.config = {
+        min: 0,
+        max: 100,
+        values: [0, 20, 50],
+        step: 10
+      };
+    });
+
     describe('build', () => {
-      
+
     });
 
     describe('init', () => {
-      
+
     });
 
     describe('getValue', () => {
-      
+      it('should return value converted to real', () => {
+        core.values = [0.2];
+        const value = core.getValue(0);
+        expect(value).toBe(20);
+      });
     });
 
     describe('refresh', () => {
-      
+
     });
 
     describe('setValue', () => {
-      
+
     });
 
     describe('setLimit', () => {
-      
+
     });
 
     describe('view', () => {
-      
+
     });
   });
 });
