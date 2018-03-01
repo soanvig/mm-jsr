@@ -319,7 +319,21 @@ describe('Core', () => {
     });
 
     describe('setValue', () => {
+      const _setValue = {};
 
+      beforeEach(() => {
+        _setValue.original = Core.prototype._setValue;
+        Core.prototype._setValue = _setValue.mock = jest.fn();
+      });
+
+      afterEach(() => {
+        Core.prototype._setValue = _setValue.original;
+      });
+
+      it('should call _setValue with value converted to ratio', () => {
+        core.setValue(20, 0);
+        expect(_setValue.mock).toBeCalledWith(0.2, 0);
+      });
     });
 
     describe('setLimit', () => {
