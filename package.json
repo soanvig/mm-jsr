@@ -5,7 +5,8 @@
   "description": "Pure JS range input solution",
   "license": "MIT",
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest --watch --coverage",
+    "test:ci": "jest --ci",
     "dev": "grunt dev",
     "build": "grunt build"
   },
