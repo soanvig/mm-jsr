@@ -53,9 +53,11 @@ module.exports = {
             browser: true
           }),
           commonjs(),
-          // babel({
-          //   exclude: './node_modules/**'
-          // }),
+          babel({
+            exclude: './node_modules/**',
+            babelrc: false,
+            presets: ['es2015-rollup']
+          }),
           uglify({}, uglifyES.minify)
         ];
       },
