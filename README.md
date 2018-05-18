@@ -406,7 +406,7 @@ Since `<label>` is connected with its input by `[for]` attribute, it's necessary
 
 Thanks to all contributors whose PR's have been merged:
 
-- [johnnyflinn](https://github.com/johnnyflinn) - setValue hotfix
+- [johnnyflinn](https://github.com/johnnyflinn) - setValue hotfix, ES5 build
 - [Nufeen](https://github.com/Nufeen) - README revision
 - [sahithyen](https://github.com/sahithyen) - support for HDPI (grid)
 - [Soanvig](https://github.com/soanvig) - maintainer (in sake of consistency :-) )
