@@ -14,7 +14,8 @@ v1.1.0 adds `.refresh()` method, and rebuilds whole project structure resulting 
 
 v1.1.1 hotfix.
 v1.1.2 hotfix.
-v1.1.3 #37
+~~v1.1.3~~
+v1.1.4 #37
 
 
 ## Contributing
