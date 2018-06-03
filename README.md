@@ -4,7 +4,7 @@
 
 Homepage: [https://mm-jsr.github.io/](https://mm-jsr.github.io/)
 
-Newest version: **1.1.2** (19.6KB without gzipping)
+Newest version: **1.1.3**
 
 Tested browser support: Firefox (57+), Chrome (63+), Edge (41+), Safari (11.1+)
 
@@ -14,6 +14,7 @@ v1.1.0 adds `.refresh()` method, and rebuilds whole project structure resulting 
 
 v1.1.1 hotfix.
 v1.1.2 hotfix.
+v1.1.3 #37
 
 
 ## Contributing
@@ -33,22 +34,22 @@ v1.1.2 hotfix.
         - [Advantages](#advantages)
     - [Installation](#installation)
         - [Manual](#manual)
-        - [NPM & modules](#npm--modules)
+        - [NPM & modules](#npm-modules)
     - [Usage](#usage)
         - [JSR instance](#jsr-instance)
-        - [Configuration: setting options via JS](#configuration-setting-options-via-js)
+        - [Configuration: setting options via JS](#configuration--setting-options-via-js)
         - [Keyboard](#keyboard)
     - [API](#api)
         - [Setting values](#setting-values)
         - [Listening on internal events](#listening-on-internal-events)
-        - [Disabling/enabling slider](#disablingenabling-slider)
+        - [Disabling/enabling slider](#disabling-enabling-slider)
         - [Limit values](#limit-values)
         - [Refresh](#refresh)
     - [CSS configuration](#css-configuration)
         - [Slider dot](#slider-dot)
         - [Active slider](#active-slider)
         - [Focus slider](#focus-slider)
-        - [Merged labels in general, and their separator](#merged-labels-in-general-and-their-separator)
+        - [Merged labels in general, and their separator](#merged-labels-in-general--and-their-separator)
         - [Locking screen on touchevent](#locking-screen-on-touchevent)
     - [Demo](#demo)
     - [Modules information](#modules-information)
