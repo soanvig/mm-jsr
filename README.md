@@ -1,3 +1,5 @@
+**(DISCLAIMER) About activity**: This project has incredibly low activity lately. Partially because of my daily work, partially because the project has most of the functionality I desired. The codebase is not as good as it could be, but is OK enough. Some day I will release v2 version, completely rewritten. For now I support only bugs or any problems, no new features will be added. If you would like to contribute though - feel free to do that. I'll be glad.
+
 # Mort&Mortis JS Range (M&M JSR)
 
 **M&M JS Range** (*M&M JSR*) is library for JavaScript. It provides You with excellent solution for creating so-called *range-inputs*. Range input is form's field where one can choose a value from min-max *range*. Although HTML 5 comes with `input[type="range"]` its functionality lacks a lot of features. M&M JSR gives You anything You may need.
