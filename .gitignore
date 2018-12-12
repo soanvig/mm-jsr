@@ -3,3 +3,6 @@ node_modules/
 .tmp/*
 !.tmp/.gitkeep
 coverage
+yarn-error.log
+yarn.lock
+package-lock.json
