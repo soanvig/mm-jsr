@@ -64,7 +64,7 @@ class Grid {
           context.textAlign = 'center';
         }
 
-        let text = (this.config.max - this.config.min) * (i / numberOfLines) + this.config.min;
+        let text = Math.round((this.config.max - this.config.min) * (i / numberOfLines) + this.config.min);
         if (this.config.labels && this.config.labels.formatter) {
           text = this.config.labels.formatter(text);
         }
