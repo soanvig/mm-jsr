@@ -1,5 +1,6 @@
 import debounce from 'debounce';
 import merge from 'deepmerge';
+import roundToStep from '@/helpers/roundToStep';
 
 class Grid {
   _bindEvents () {
@@ -64,7 +65,8 @@ class Grid {
           context.textAlign = 'center';
         }
 
-        let text = Math.round((this.config.max - this.config.min) * (i / numberOfLines) + this.config.min);
+        let text = (this.config.max - this.config.min) * (i / numberOfLines) + this.config.min;
+        text = roundToStep(text, this.config.step);
         if (this.config.labels && this.config.labels.formatter) {
           text = this.config.labels.formatter(text);
         }
