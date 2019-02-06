@@ -18,6 +18,7 @@ v1.1.1 hotfix.
 v1.1.2 hotfix.
 ~~v1.1.3~~
 v1.1.4 #37
+v1.1.5 #41 + upgraded solution
 
 
 ## Contributing
@@ -29,38 +30,38 @@ v1.1.4 #37
 <!-- TOC -->
 
 - [Mort&Mortis JS Range (M&M JSR)](#mortmortis-js-range-mm-jsr)
-    - [What's new?](#whats-new)
-    - [Contributing](#contributing)
-    - [Table of content](#table-of-content)
-    - [Features and advantages](#features-and-advantages)
-        - [Features](#features)
-        - [Advantages](#advantages)
-    - [Installation](#installation)
-        - [Manual](#manual)
-        - [NPM & modules](#npm-modules)
-    - [Usage](#usage)
-        - [JSR instance](#jsr-instance)
-        - [Configuration: setting options via JS](#configuration--setting-options-via-js)
-        - [Keyboard](#keyboard)
-    - [API](#api)
-        - [Setting values](#setting-values)
-        - [Listening on internal events](#listening-on-internal-events)
-        - [Disabling/enabling slider](#disabling-enabling-slider)
-        - [Limit values](#limit-values)
-        - [Refresh](#refresh)
-    - [CSS configuration](#css-configuration)
-        - [Slider dot](#slider-dot)
-        - [Active slider](#active-slider)
-        - [Focus slider](#focus-slider)
-        - [Merged labels in general, and their separator](#merged-labels-in-general--and-their-separator)
-        - [Locking screen on touchevent](#locking-screen-on-touchevent)
-    - [Demo](#demo)
-    - [Modules information](#modules-information)
-        - [Grid](#grid)
-        - [Labels formatter](#labels-formatter)
-        - [Disabling modules](#disabling-modules)
-        - [HTML Label support](#html-label-support)
-    - [Contributors](#contributors)
+  - [What's new?](#whats-new)
+  - [Contributing](#contributing)
+  - [Table of content](#table-of-content)
+  - [Features and advantages](#features-and-advantages)
+    - [Features](#features)
+    - [Advantages](#advantages)
+  - [Installation](#installation)
+    - [Manual](#manual)
+    - [NPM & modules](#npm--modules)
+  - [Usage](#usage)
+    - [JSR instance](#jsr-instance)
+    - [Configuration: setting options via JS](#configuration-setting-options-via-js)
+    - [Keyboard](#keyboard)
+  - [API](#api)
+    - [Setting values](#setting-values)
+    - [Listening on internal events](#listening-on-internal-events)
+    - [Disabling/enabling slider](#disablingenabling-slider)
+    - [Limit values](#limit-values)
+    - [Refresh](#refresh)
+  - [CSS configuration](#css-configuration)
+    - [Slider dot](#slider-dot)
+    - [Active slider](#active-slider)
+    - [Focus slider](#focus-slider)
+    - [Merged labels in general, and their separator](#merged-labels-in-general-and-their-separator)
+    - [Locking screen on touchevent](#locking-screen-on-touchevent)
+  - [Demo](#demo)
+  - [Modules information](#modules-information)
+    - [Grid](#grid)
+    - [Labels formatter](#labels-formatter)
+    - [Disabling modules](#disabling-modules)
+    - [HTML Label support](#html-label-support)
+  - [Contributors](#contributors)
 
 <!-- /TOC -->
 
@@ -412,6 +413,7 @@ Thanks to all contributors whose PR's have been merged:
 
 - [johnnyflinn](https://github.com/johnnyflinn) - setValue hotfix, ES5 build
 - [Nufeen](https://github.com/Nufeen) - README revision
+- [plumthedev](https://github.com/plumthedev) - fixed rounding number in grid display
 - [sahithyen](https://github.com/sahithyen) - support for HDPI (grid)
 - [Soanvig](https://github.com/soanvig) - maintainer (in sake of consistency :-) )
 
