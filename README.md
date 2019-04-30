@@ -28,6 +28,7 @@ v1.1.2 hotfix.
 ~~v1.1.3~~
 v1.1.4 #37
 v1.1.5 #41 + upgraded solution
+v1.1.6 #44
 
 
 ## Contributing
