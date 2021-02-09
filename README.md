@@ -1,13 +1,10 @@
 **(DISCLAIMER) About activity and version 2.0.0**: This project has incredibly low activity lately. Partially because of my daily work, partially because the project has most of the functionality I desired. The codebase is not as good as it could be, but is OK enough. ~Some day I will release v2 version, completely rewritten.~ For now I support only bugs or any problems, no new features will be added. If you would like to contribute though - feel free to do that. I'll be glad.
 
-Update 13.02.2019
+Update 10.02.2021
 
-Currently, I work on [v2.0.0](https://github.com/mm-jsr/jsr/tree/v2.0.0) version of JSR. In it's initial form it will have all the functions JSR has, but in addition it will have better and more maintainable codebase, **it will be fully modular** (via architecture and [ESM](https://jakearchibald.com/2017/es-modules-in-browsers/)), and support three compatibility modes:
-1. Browsers supporting ESM modules and ES6 (lightest, because you can choose modules you want to import)
-2. Browsers not supporting ESM modules, but supporting ES6 (medium weight)
-3. Browsers not supporting ES6 (greatest weight)
+Currently, I work on [v2.0.0](https://github.com/mm-jsr/jsr/tree/v2.0.0) version of JSR with better API and code structure, easier to maintain.
 
-With that in mind, while version v1.0.0 oscillated around 22kB script in ES5, the v2.0.0 version will have this limit raised up to 30kB of ES6 (there is huge byte-bloat after transforming code from ES6+ to ES5). Because of that I believe, I will be able to ship better library overall.
+Experience as developer I've gathered since JSR v1 will surely help.
 
 # Mort&Mortis JS Range (M&M JSR)
 
