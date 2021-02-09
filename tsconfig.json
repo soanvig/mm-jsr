@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es6",
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": true,
+    "baseUrl": "./src",
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "lib": [
+      "DOM",
+      "es2019"
+    ]
+  }
+}

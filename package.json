@@ -3,6 +3,7 @@
     "build": "rollup --config rollup.config.js"
   },
   "devDependencies": {
+    "@rollup/plugin-alias": "^3.1.2",
     "@rollup/plugin-typescript": "^8.1.1",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
