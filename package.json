@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "build": "rollup --config rollup.config.js"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.1.1",
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "eslint": "^7.19.0",
+    "eslint-plugin-import-quotes": "^0.0.1",
+    "rollup": "^2.38.5",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.4"
+  }
+}
