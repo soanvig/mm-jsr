@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "commonjs",
+    "module": "es6",
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "sourceMap": true,
@@ -26,8 +26,5 @@
         "exclude": ["*"]
       }
     ]
-  },
-  "ts-node": {
-    "compiler": "ttypescript"
-  },
+  }
 }

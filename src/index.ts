@@ -1,3 +1,9 @@
-import { value } from '@/module';
+import { Config } from './models/Config';
+import { State } from './models/State';
+import { Value } from './models/Value';
 
-console.log('Hello from typescript', value);
+export {
+  Config,
+  State,
+  Value,
+};
