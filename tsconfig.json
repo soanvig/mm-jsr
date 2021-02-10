@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "es6",
+    "module": "commonjs",
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "strict": true,
     "baseUrl": "./src",
     "esModuleInterop": true,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "resolveJsonModule": true,
@@ -19,6 +19,15 @@
     "lib": [
       "DOM",
       "es2019"
+    ],
+    "plugins": [
+      {
+        "transform": "@zerollup/ts-transform-paths",
+        "exclude": ["*"]
+      }
     ]
-  }
+  },
+  "ts-node": {
+    "compiler": "ttypescript"
+  },
 }

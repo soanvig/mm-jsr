@@ -1,5 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
-import alias from '@rollup/plugin-alias';
+import ttypescript from 'ttypescript';
 import * as path from 'path';
 
 export default {
@@ -9,9 +9,8 @@ export default {
     format: 'umd',
   },
   plugins: [
-    typescript(),
-    alias({
-      '@': path.join(process.cwd(), './src'),
+    typescript({
+      typescript: ttypescript,
     }),
   ],
 };

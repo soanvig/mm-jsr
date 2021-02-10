@@ -168,6 +168,10 @@ module.exports = {
       'error',
       { anonymous: 'always', named: 'always', asyncArrow: 'always' },
     ],
+    'arrow-parens': [
+      'error',
+      'as-needed',
+    ],
     'space-in-parens': [
       'error',
     ],
