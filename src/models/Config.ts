@@ -13,6 +13,18 @@ export class Config {
     this.attrs = attrs;
   }
 
+  public toDto (): Readonly<ConfigAttrs> {
+    return this.attrs;
+  }
+
+  public get max () {
+    return this.attrs.max;
+  }
+
+  public get min () {
+    return this.attrs.min;
+  }
+
   public static createFromInput (attrs: ConfigAttrs): Config {
     assert('min', attrs.min, isNumber);
     assert('max', attrs.max, isNumber);

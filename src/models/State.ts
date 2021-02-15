@@ -1,18 +1,31 @@
 
 import { Value } from '@/models/Value';
 
-interface Ctor {
-  value: Value;
+interface Data {
+  values: Value[];
 }
 
 export class State {
-  private value: Value;
+  public readonly values: Value[];
 
-  private constructor (ctor: Ctor) {
-    this.value = ctor.value;
+  private constructor (ctor: Data) {
+    this.values = ctor.values;
   }
 
-  public static fromData (data: Ctor): State {
+  public updateValues (values: Value[]) {
+    return new State({
+      ...this.toData(),
+      values,
+    });
+  }
+
+  public static fromData (data: Data): State {
     return new State(data);
+  }
+
+  private toData (): Data {
+    return {
+      values: this.values,
+    };
   }
 }

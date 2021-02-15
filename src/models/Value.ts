@@ -1,25 +1,39 @@
-export type RealValue = number & { _real: 1 };
-export type RatioValue = number & { _ratio: 1 };
+export type RealValue = number;
+export type RatioValue = number;
 export type FormattedValue = string;
 
-interface Ctor {
-  min: number;
-  max: number;
-  real: number;
-  formatter: (v: number) => string;
+interface Data {
+  min: RealValue;
+  max: RealValue;
+  real: RealValue;
+  formatter: (v: RealValue) => string;
 }
 
 export class Value {
   private formatter: (v: RealValue) => FormattedValue;
   private real: RealValue;
-  private min: number;
-  private max: number;
+  private min: RealValue;
+  private max: RealValue;
 
-  private constructor (ctor: Ctor) {
+  private constructor (ctor: Data) {
     this.real = ctor.real as RealValue;
     this.min = ctor.min;
     this.max = ctor.max;
     this.formatter = ctor.formatter;
+  }
+
+  public clampReal (min: RealValue, max: RealValue) {
+    return new Value({
+      ...this.toData(),
+      real: Math.min(max, Math.max(min, this.real)),
+    });
+  }
+
+  public changeReal (real: RealValue) {
+    return new Value({
+      ...this.toData(),
+      real,
+    });
   }
 
   public asReal (): RealValue {
@@ -40,7 +54,16 @@ export class Value {
     return this.formatter(this.real);
   }
 
-  public static fromData (data: Ctor): Value {
+  public static fromData (data: Data): Value {
     return new Value(data);
+  }
+
+  private toData () {
+    return {
+      formatter: this.formatter,
+      min: this.min,
+      max: this.max,
+      real: this.real,
+    };
   }
 }
