@@ -1,7 +1,10 @@
 import { State } from '@/models/State';
-import { Value } from '@/models/Value';
+import { RealValue, Value } from '@/models/Value';
 import type { Extension, Changelog } from '@/extensions/types';
 import { Config } from '@/models/Config';
+import { extensionNeighbourLimit } from '@/extensions/neighbourLimit';
+import { extensionRoundToStep } from '@/extensions/roundToStep';
+import { mapChanged } from '@/helpers/mapChanged';
 
 interface Ctor {
   config: Config;
@@ -26,10 +29,30 @@ export class StateProcessor {
     });
   }
 
-  public process (): void {
-    const updatedState = this.internalProcess([], this.state, { changedValues: [] });
+  public updateValue (index: number, value: RealValue) {
+    const updatedState = this.state.updateValues(
+      mapChanged(this.state.values, [index], v => v.changeReal(value)),
+    );
 
-    this.state = updatedState;
+    this.state = this.process(updatedState);
+
+    return this.state;
+  }
+
+  public process (state: State): State {
+    const changedValues = this.state.findChangedValues(state);
+    const extensions = [
+      extensionNeighbourLimit,
+      extensionRoundToStep,
+    ];
+
+    const updatedState = this.internalProcess(
+      extensions,
+      state,
+      { changedValues },
+    );
+
+    return updatedState;
   }
 
   private internalProcess (extensions: Extension[], state: State, changelog: Changelog): State {
@@ -37,7 +60,7 @@ export class StateProcessor {
 
     const updatedState = extension(this.config, state, changelog);
 
-    if (extension.length) {
+    if (nextExtensions.length) {
       return this.internalProcess(nextExtensions, updatedState, changelog);
     } else {
       return updatedState;

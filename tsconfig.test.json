@@ -4,6 +4,6 @@
     "module": "CommonJS"
   },
   "ts-node": {
-    "compiler": "ttypescript",
-  },
+    "compiler": "ttypescript"
+  }
 }

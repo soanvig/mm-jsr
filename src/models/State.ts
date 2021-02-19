@@ -19,6 +19,16 @@ export class State {
     });
   }
 
+  public findChangedValues (state: State): number[] {
+    return state.values.reduce((changedValues, value, index) => {
+      if (this.values.includes(value)) {
+        return changedValues;
+      } else {
+        return changedValues.concat(index);
+      }
+    }, [] as number[]).sort();
+  }
+
   public static fromData (data: Data): State {
     return new State(data);
   }
