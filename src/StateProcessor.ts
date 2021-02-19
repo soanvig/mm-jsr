@@ -1,6 +1,6 @@
 import { State } from '@/models/State';
 import { Value } from '@/models/Value';
-import type { Extension, Changelog } from '@/extensions';
+import type { Extension, Changelog } from '@/extensions/types';
 import { Config } from '@/models/Config';
 
 interface Ctor {
