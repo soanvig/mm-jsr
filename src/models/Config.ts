@@ -1,9 +1,10 @@
 import { assert, isArray, isNumber } from '@/validation/assert';
 
-interface ConfigAttrs {
+export interface ConfigAttrs {
   min: number;
   max: number;
   initialValues: number[];
+  step: number;
 }
 
 export class Config {
@@ -25,9 +26,14 @@ export class Config {
     return this.attrs.min;
   }
 
+  public get step () {
+    return this.attrs.step;
+  }
+
   public static createFromInput (attrs: ConfigAttrs): Config {
     assert('min', attrs.min, isNumber);
     assert('max', attrs.max, isNumber);
+    assert('step', attrs.step, isNumber);
     assert('initialValues', attrs.initialValues, isArray(isNumber));
 
     return new Config(attrs);

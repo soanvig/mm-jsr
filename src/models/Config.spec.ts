@@ -42,4 +42,5 @@ const configDefaults = {
   min: 0,
   max: 100,
   initialValues: [25, 50],
+  step: 1,
 };
