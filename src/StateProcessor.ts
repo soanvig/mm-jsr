@@ -5,6 +5,7 @@ import { Config } from '@/models/Config';
 import { extensionNeighbourLimit } from '@/extensions/neighbourLimit';
 import { extensionRoundToStep } from '@/extensions/roundToStep';
 import { mapChanged } from '@/helpers/mapChanged';
+import { extensionPerformanceEnd, extensionPerformanceStart } from '@/extensions/performance';
 
 interface Ctor {
   config: Config;
@@ -42,8 +43,10 @@ export class StateProcessor {
   public process (state: State): State {
     const changedValues = this.state.findChangedValues(state);
     const extensions = [
+      extensionPerformanceStart,
       extensionNeighbourLimit,
       extensionRoundToStep,
+      extensionPerformanceEnd,
     ];
 
     const updatedState = this.internalProcess(
