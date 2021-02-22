@@ -43,4 +43,5 @@ const configDefaults = {
   max: 100,
   initialValues: [25, 50],
   step: 1,
+  container: document.body,
 };

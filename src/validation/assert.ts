@@ -4,7 +4,7 @@ export class AssertError extends Error {
   }
 }
 
-type AssertionValue = string | number | AssertionValue[];
+type AssertionValue = string | number | object | AssertionValue[];
 type AssertFunction = (v: AssertionValue) => false | { error: string, value: AssertionValue };
 
 export const assert = (valueName: string, value: AssertionValue, assertFunction: AssertFunction) => {
@@ -15,8 +15,13 @@ export const assert = (valueName: string, value: AssertionValue, assertFunction:
   }
 };
 
-export const isNumber: AssertFunction = (v: AssertionValue) => (Number.isFinite(v) ? false : { error: 'expected number', value: v });
-export const isArray = (assertFunction: AssertFunction): AssertFunction => (v: AssertionValue) => {
+export const isInstanceOf = (klass: any): AssertFunction => v =>
+  (v instanceof klass ? false : { error: `expected instance of ${klass.name}`, value: v.constructor.name });
+
+export const isNumber: AssertFunction = v =>
+  (Number.isFinite(v) ? false : { error: 'expected number', value: v });
+
+export const isArray = (assertFunction: AssertFunction): AssertFunction => v => {
   if (!Array.isArray(v)) {
     return {
       error: 'expected array',

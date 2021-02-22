@@ -1,22 +1,22 @@
 import { State } from '@/models/State';
 import { RealValue, Value } from '@/models/Value';
 import type { Extension, Changelog } from '@/extensions/types';
-import { Config } from '@/models/Config';
+import { ConfigDto } from '@/models/Config';
 import { extensionNeighbourLimit } from '@/extensions/neighbourLimit';
 import { extensionRoundToStep } from '@/extensions/roundToStep';
 import { mapChanged } from '@/helpers/mapChanged';
 import { extensionPerformanceEnd, extensionPerformanceStart } from '@/extensions/performance';
 
 interface Ctor {
-  config: Config;
+  config: ConfigDto;
 }
 
 export class StateProcessor {
   private state: State;
-  private config: Config;
+  private config: ConfigDto;
 
   private constructor (ctor: Ctor) {
-    const configDto = ctor.config.toDto();
+    const configDto = ctor.config;
     const values = configDto.initialValues.map(v => Value.fromData({
       min: configDto.min,
       max: configDto.max,

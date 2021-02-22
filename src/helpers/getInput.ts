@@ -13,7 +13,8 @@ export const getInput = ({
     min,
     max,
     step,
-  });
+    container: document.body,
+  }).toDto();
 
   const state = State.fromData({
     values: initialValues.map(v => (

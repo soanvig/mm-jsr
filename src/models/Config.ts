@@ -1,11 +1,17 @@
-import { assert, isArray, isNumber } from '@/validation/assert';
+import { assert, isArray, isInstanceOf, isNumber } from '@/validation/assert';
 
 export interface ConfigAttrs {
+  // core
   min: number;
   max: number;
-  initialValues: number[];
   step: number;
+  initialValues: number[];
+
+  // renderer
+  container: HTMLElement;
 }
+
+export interface ConfigDto extends ConfigAttrs {}
 
 export class Config {
   private attrs: ConfigAttrs;
@@ -14,7 +20,7 @@ export class Config {
     this.attrs = attrs;
   }
 
-  public toDto (): Readonly<ConfigAttrs> {
+  public toDto (): Readonly<ConfigDto> {
     return this.attrs;
   }
 
@@ -35,6 +41,7 @@ export class Config {
     assert('max', attrs.max, isNumber);
     assert('step', attrs.step, isNumber);
     assert('initialValues', attrs.initialValues, isArray(isNumber));
+    assert('container', attrs.container, isInstanceOf(window.HTMLElement));
 
     return new Config(attrs);
   }
