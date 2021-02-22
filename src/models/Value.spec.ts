@@ -34,10 +34,5 @@ test('asReal', t => {
   t.is(getReal(-20), -20);
 });
 
-test('formatted', t => {
-  t.is(getFormatted(50, v => v.toString().slice(0, 1)), '5');
-});
-
-const getRatio = (min: number, max: number, value: number) => Value.fromData({ real: value, min, max, formatter: () => '' }).asRatio();
-const getFormatted = (value: number, formatter: (v: number) => string) => Value.fromData({ real: value, min: 0, max: 100, formatter }).asFormatted();
-const getReal = (value: number) => Value.fromData({ real: value, min: 0, max: 100, formatter: () => '' }).asReal();
+const getRatio = (min: number, max: number, value: number) => Value.fromData({ real: value, min, max }).asRatio();
+const getReal = (value: number) => Value.fromData({ real: value, min: 0, max: 100 }).asReal();

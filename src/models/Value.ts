@@ -1,16 +1,13 @@
 export type RealValue = number;
 export type RatioValue = number;
-export type FormattedValue = string;
 
 interface Data {
   min: RealValue;
   max: RealValue;
   real: RealValue;
-  formatter: (v: RealValue) => string;
 }
 
 export class Value {
-  private formatter: (v: RealValue) => FormattedValue;
   private real: RealValue;
   private min: RealValue;
   private max: RealValue;
@@ -19,7 +16,6 @@ export class Value {
     this.real = ctor.real as RealValue;
     this.min = ctor.min;
     this.max = ctor.max;
-    this.formatter = ctor.formatter;
   }
 
   public clampReal (min: RealValue, max: RealValue) {
@@ -50,17 +46,12 @@ export class Value {
     return finite as RatioValue;
   }
 
-  public asFormatted (): FormattedValue {
-    return this.formatter(this.real);
-  }
-
   public static fromData (data: Data): Value {
     return new Value(data);
   }
 
   private toData () {
     return {
-      formatter: this.formatter,
       min: this.min,
       max: this.max,
       real: this.real,

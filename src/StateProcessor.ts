@@ -21,7 +21,6 @@ export class StateProcessor {
       min: configDto.min,
       max: configDto.max,
       real: v,
-      formatter: v => v.toString(),
     }));
 
     this.config = ctor.config;
