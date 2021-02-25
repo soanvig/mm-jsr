@@ -1,6 +1,7 @@
 import { InputHandler } from '@/InputHandler';
 import { Config, ConfigAttrs } from '@/models/Config';
 import { ModuleRail } from '@/modules/ModuleRail';
+import { ModuleSlider } from '@/modules/ModuleSlider';
 import { Module } from '@/modules/Module';
 import { Renderer } from '@/Renderer';
 import { StateProcessor } from '@/StateProcessor';
@@ -11,6 +12,7 @@ interface Ctor {
 
 const modules = [
   ModuleRail,
+  ModuleSlider,
 ];
 
 export class JSR {
@@ -32,8 +34,14 @@ export class JSR {
       config,
       renderer: this.renderer,
     }));
+  }
 
+  public tmpTest () {
     this.modules.forEach(m => m.initView());
+
+    const state = this.stateProcessor.getState();
+
+    this.modules.forEach(m => m.render(state)());
   }
 
   public destroy () {

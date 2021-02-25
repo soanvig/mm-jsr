@@ -32,6 +32,40 @@
       height: 5px;
       background: #444;
     }
+
+    .jsr_slider {
+      position: absolute;
+      top: calc(5px / 2 + 10px);
+      left: 0;
+
+      transform: translate(-50%, -50%);
+
+      width: 25px;
+      height: 25px;
+
+      cursor: col-resize;
+      transition: background 0.1s ease-in-out;
+
+      outline: 0;
+
+      z-index: 3;
+    }
+
+    .jsr_slider::before {
+      content: '';
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #999;
+      border-radius: 50%;
+    }
+
+    .jsr_slider:focus::before {
+      background: #c00;
+    }
   </style>
 </head>
 <body>
@@ -47,6 +81,8 @@
         container: document.getElementById('jsr'),
       }
     });
+
+    jsr.tmpTest();
   </script>
 </body>
 </html>

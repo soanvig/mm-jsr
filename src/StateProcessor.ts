@@ -1,4 +1,4 @@
-import { State } from '@/models/State';
+import { State, StateDto } from '@/models/State';
 import { RealValue, Value } from '@/models/Value';
 import type { Extension, Changelog } from '@/extensions/types';
 import { ConfigDto } from '@/models/Config';
@@ -39,7 +39,11 @@ export class StateProcessor {
     return this.state;
   }
 
-  public process (state: State): State {
+  public getState (): StateDto {
+    return this.state.toDto();
+  }
+
+  private process (state: State): State {
     const changedValues = this.state.findChangedValues(state);
     const extensions = [
       extensionPerformanceStart,
