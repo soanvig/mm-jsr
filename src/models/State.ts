@@ -5,6 +5,8 @@ interface Data {
   values: Value[];
 }
 
+export interface StateDto extends Data {}
+
 export class State {
   public readonly values: Value[];
 
@@ -31,6 +33,10 @@ export class State {
 
   public static fromData (data: Data): State {
     return new State(data);
+  }
+
+  public toDto (): StateDto {
+    return this.toData();
   }
 
   private toData (): Data {

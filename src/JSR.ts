@@ -15,8 +15,8 @@ export class JSR {
 
   public constructor (ctor: Ctor) {
     this.config = Config.createFromInput(ctor.config);
-    const config = this.config.toDto();
 
+    const config = this.config.toDto();
     this.stateProcessor = StateProcessor.init({ config });
     this.inputHandler = InputHandler.init();
     this.renderer = Renderer.init({ container: config.container });
