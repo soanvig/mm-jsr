@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    [class^="jsr"] {
+        box-sizing: border-box;
+    }
+
+    .jsr {
+      position: relative;
+
+      display: block;
+
+      width: 100%;
+
+      -webkit-user-select: none;
+        -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+
+      -webkit-touch-callout: none;
+      -khtml-user-select: none;
+
+      font: 14px sans-serif;
+    }
+
+    .jsr_rail {
+      height: 5px;
+      background: #444;
+    }
+  </style>
+</head>
+<body>
+  <div id="jsr"></div>
+  <script src="./build/index.js"></script>
+  <script>
+    const jsr = new JSR.JSR({
+      config: {
+        min: 0,
+        max: 100,
+        step: 1,
+        initialValues: [25, 50],
+        container: document.getElementById('jsr'),
+      }
+    });
+  </script>
+</body>
+</html>

@@ -6,6 +6,7 @@ export default {
   output: {
     dir: 'build',
     format: 'iife',
+    name: 'JSR',
   },
   plugins: [
     typescript({
