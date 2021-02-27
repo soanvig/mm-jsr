@@ -18,7 +18,7 @@ export const getInput = ({
 
   const state = State.fromData({
     values: initialValues.map(v => (
-      Value.fromData({ min, max, real: v })
+      Value.fromReal({ min, max, real: v })
     )),
   });
 

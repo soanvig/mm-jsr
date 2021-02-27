@@ -17,7 +17,7 @@ export class StateProcessor {
 
   private constructor (ctor: Ctor) {
     const configDto = ctor.config;
-    const values = configDto.initialValues.map(v => Value.fromData({
+    const values = configDto.initialValues.map(v => Value.fromReal({
       min: configDto.min,
       max: configDto.max,
       real: v,
@@ -29,9 +29,9 @@ export class StateProcessor {
     });
   }
 
-  public updateValue (index: number, value: RealValue) {
+  public updateValue (index: number, value: Value) {
     const updatedState = this.state.updateValues(
-      mapChanged(this.state.values, [index], v => v.changeReal(value)),
+      mapChanged(this.state.values, [index], _ => value),
     );
 
     this.state = this.process(updatedState);

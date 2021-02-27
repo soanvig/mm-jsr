@@ -7,6 +7,12 @@ interface Data {
   real: RealValue;
 }
 
+interface FromRatio {
+  min: RealValue;
+  max: RealValue;
+  ratio: RatioValue;
+}
+
 export class Value {
   private real: RealValue;
   private min: RealValue;
@@ -46,8 +52,15 @@ export class Value {
     return finite as RatioValue;
   }
 
-  public static fromData (data: Data): Value {
+  public static fromReal (data: Data): Value {
     return new Value(data);
+  }
+
+  public static fromRatio (data: FromRatio): Value {
+    return new Value({
+      ...data,
+      real: data.ratio * (data.max - data.min),
+    });
   }
 
   private toData () {

@@ -27,8 +27,14 @@ export class JSR {
 
     const config = this.config.toDto();
     this.stateProcessor = StateProcessor.init({ config });
-    this.inputHandler = InputHandler.init();
     this.renderer = Renderer.init({ container: config.container });
+    this.inputHandler = InputHandler.init({
+      config,
+      onChange: (index, value) => {
+        const state = this.stateProcessor.updateValue(index, value);
+        this.modules.forEach(m => m.render(state)());
+      },
+    });
 
     this.modules = modules.map(M => new M({
       config,

@@ -15,7 +15,7 @@ export class ModuleSlider extends Module {
       slider.classList.add('jsr_slider');
       slider.style.left = '0';
 
-      useOnMove(slider, e => console.log(this.renderer.xToRelative(e.clientX)));
+      useOnMove(slider, e => this.input.setRatioValue(index, this.renderer.xToRelative(e.clientX)));
 
       return slider;
     });
