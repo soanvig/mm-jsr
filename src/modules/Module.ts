@@ -1,3 +1,4 @@
+import { InputHandler } from '@/InputHandler';
 import { ConfigDto } from '@/models/Config';
 import { StateDto } from '@/models/State';
 import { Renderer } from '@/Renderer';
@@ -5,15 +6,18 @@ import { Renderer } from '@/Renderer';
 export interface ModuleArgs {
   renderer: Renderer;
   config: ConfigDto;
+  input: InputHandler;
 }
 
 export abstract class Module {
   protected renderer: Renderer;
   protected config: ConfigDto;
+  protected input: InputHandler;
 
   public constructor (args: ModuleArgs) {
     this.renderer = args.renderer;
     this.config = args.config;
+    this.input = args.input;
   }
 
   public abstract destroy (): void;

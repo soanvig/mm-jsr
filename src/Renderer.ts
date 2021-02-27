@@ -15,6 +15,10 @@ export class Renderer {
     this.container.appendChild(child);
   }
 
+  public xToRelative (x: number): number {
+    return (x - this.container.offsetLeft) / this.container.offsetWidth;
+  }
+
   public static init (ctor: Ctor) {
     return new Renderer(ctor);
   }

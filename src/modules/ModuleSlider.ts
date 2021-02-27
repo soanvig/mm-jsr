@@ -1,3 +1,4 @@
+import { useOnMove } from '@/events/useOnMove';
 import { StateDto } from '@/models/State';
 import { Module } from '@/modules/Module';
 
@@ -9,10 +10,12 @@ export class ModuleSlider extends Module {
   }
 
   public initView () {
-    this.sliders = this.config.initialValues.map(value => {
+    this.sliders = this.config.initialValues.map((_, index) => {
       const slider = document.createElement('div');
       slider.classList.add('jsr_slider');
       slider.style.left = '0';
+
+      useOnMove(slider, e => console.log(this.renderer.xToRelative(e.clientX)));
 
       return slider;
     });

@@ -33,6 +33,7 @@ export class JSR {
     this.modules = modules.map(M => new M({
       config,
       renderer: this.renderer,
+      input: this.inputHandler,
     }));
   }
 
