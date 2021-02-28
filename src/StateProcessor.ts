@@ -29,14 +29,14 @@ export class StateProcessor {
     });
   }
 
-  public updateValue (index: number, value: Value) {
+  public updateValue (index: number, value: Value): StateDto {
     const updatedState = this.state.updateValues(
       mapChanged(this.state.values, [index], _ => value),
     );
 
     this.state = this.process(updatedState);
 
-    return this.state;
+    return this.state.toDto();
   }
 
   public getState (): StateDto {

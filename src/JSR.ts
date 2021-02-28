@@ -6,6 +6,7 @@ import { Module } from '@/modules/Module';
 import { Renderer } from '@/Renderer';
 import { StateProcessor } from '@/StateProcessor';
 import { Value } from '@/models/Value';
+import { StateDto } from '@/models/State';
 
 interface Ctor {
   config: ConfigAttrs;
@@ -53,13 +54,14 @@ export class JSR {
   private initView () {
     this.modules.forEach(m => m.initView());
 
-    const state = this.stateProcessor.getState();
-    const renderFunctions = this.modules.map(m => m.render(state));
-    this.renderer.render(renderFunctions);
+    this.renderState(this.stateProcessor.getState());
   }
 
   private onValueChange (index: number, value: Value) {
-    const state = this.stateProcessor.updateValue(index, value);
+    this.renderState(this.stateProcessor.updateValue(index, value));
+  }
+
+  private renderState (state: StateDto): void {
     const renderFunctions = this.modules.map(m => m.render(state));
     this.renderer.render(renderFunctions);
   }
