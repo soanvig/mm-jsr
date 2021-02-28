@@ -1,5 +1,5 @@
 import { extensionRoundToStep } from '@/extensions/roundToStep';
-import { getInput } from '@/helpers/getInput';
+import { getInput } from '@/testHelpers/getInput';
 import test from 'ava';
 
 test('round to full value', t => {

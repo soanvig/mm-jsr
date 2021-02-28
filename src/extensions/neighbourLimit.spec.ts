@@ -1,4 +1,4 @@
-import { getInput } from '@/helpers/getInput';
+import { getInput } from '@/testHelpers/getInput';
 import test from 'ava';
 import { extensionNeighbourLimit } from './neighbourLimit';
 
