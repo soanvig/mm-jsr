@@ -15,7 +15,7 @@ export class ModuleSlider extends Module {
       slider.classList.add('jsr_slider');
       slider.style.left = '0';
 
-      useOnMove(slider, e => this.input.setRatioValue(index, this.renderer.xToRelative(e.clientX)));
+      useOnMove(slider, e => this.handleMove(index, e.clientX));
 
       return slider;
     });
@@ -29,5 +29,9 @@ export class ModuleSlider extends Module {
         this.sliders[i].style.left = `${value.asRatio() * 100}%`;
       });
     };
+  }
+
+  private handleMove (index: number, x: number) {
+    this.input.setRatioValue(index, this.renderer.xToRelative(x));
   }
 }

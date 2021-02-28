@@ -5,6 +5,7 @@ import { ModuleSlider } from '@/modules/ModuleSlider';
 import { Module } from '@/modules/Module';
 import { Renderer } from '@/Renderer';
 import { StateProcessor } from '@/StateProcessor';
+import { Value } from '@/models/Value';
 
 interface Ctor {
   config: ConfigAttrs;
@@ -26,14 +27,18 @@ export class JSR {
     this.config = Config.createFromInput(ctor.config);
 
     const config = this.config.toDto();
-    this.stateProcessor = StateProcessor.init({ config });
-    this.renderer = Renderer.init({ container: config.container });
+
+    this.stateProcessor = StateProcessor.init({
+      config,
+    });
+
+    this.renderer = Renderer.init({
+      container: config.container,
+    });
+
     this.inputHandler = InputHandler.init({
       config,
-      onChange: (index, value) => {
-        const state = this.stateProcessor.updateValue(index, value);
-        this.modules.forEach(m => m.render(state)());
-      },
+      onChange: this.onValueChange.bind(this),
     });
 
     this.modules = modules.map(M => new M({
@@ -41,14 +46,22 @@ export class JSR {
       renderer: this.renderer,
       input: this.inputHandler,
     }));
+
+    this.initView();
   }
 
-  public tmpTest () {
+  private initView () {
     this.modules.forEach(m => m.initView());
 
     const state = this.stateProcessor.getState();
+    const renderFunctions = this.modules.map(m => m.render(state));
+    this.renderer.render(renderFunctions);
+  }
 
-    this.modules.forEach(m => m.render(state)());
+  private onValueChange (index: number, value: Value) {
+    const state = this.stateProcessor.updateValue(index, value);
+    const renderFunctions = this.modules.map(m => m.render(state));
+    this.renderer.render(renderFunctions);
   }
 
   public destroy () {

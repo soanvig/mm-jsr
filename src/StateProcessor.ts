@@ -46,10 +46,10 @@ export class StateProcessor {
   private process (state: State): State {
     const changedValues = this.state.findChangedValues(state);
     const extensions = [
-      extensionPerformanceStart,
+      // extensionPerformanceStart,
       extensionNeighbourLimit,
       extensionRoundToStep,
-      extensionPerformanceEnd,
+      // extensionPerformanceEnd,
     ];
 
     const updatedState = this.internalProcess(
