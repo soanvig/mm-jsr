@@ -53,6 +53,10 @@ export class JSR {
     this.initView();
   }
 
+  public destroy () {
+    this.modules.forEach(m => m.destroy());
+  }
+
   private initView () {
     this.modules.forEach(m => m.initView());
 
@@ -66,9 +70,5 @@ export class JSR {
   private renderState (state: StateDto): void {
     const renderFunctions = this.modules.map(m => m.render(state));
     this.renderer.render(renderFunctions);
-  }
-
-  public destroy () {
-    this.modules.forEach(m => m.destroy());
   }
 }

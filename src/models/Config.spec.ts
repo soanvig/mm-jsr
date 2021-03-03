@@ -3,39 +3,45 @@ import { AssertError } from '@/validation/assert';
 import test from 'ava';
 
 test('input validation', t => {
-  t.assert(Config.createFromInput(configDefaults));
+  t.assert(getConfig());
 
   t.throws(
-    () => Config.createFromInput({
-      ...configDefaults,
+    () => getConfig({
       min: '0' as any,
     }),
     { instanceOf: AssertError },
   );
 
   t.throws(
-    () => Config.createFromInput({
-      ...configDefaults,
+    () => getConfig({
       max: '100' as any,
     }),
     { instanceOf: AssertError },
   );
 
   t.throws(
-    () => Config.createFromInput({
-      ...configDefaults,
+    () => getConfig({
       initialValues: 50 as any,
     }),
     { instanceOf: AssertError },
   );
 
   t.throws(
-    () => Config.createFromInput({
-      ...configDefaults,
+    () => getConfig({
       initialValues: ['50', 25] as any,
     }),
     { instanceOf: AssertError },
   );
+});
+
+test('stepDecimals', t => {
+  t.is(getConfig({ step: 1 }).stepDecimals, 0);
+  t.is(getConfig({ step: 0.1 }).stepDecimals, 1);
+  t.is(getConfig({ step: 0.01 }).stepDecimals, 2);
+  t.is(getConfig({ step: 10 }).stepDecimals, 0);
+
+  // edge case
+  t.is(getConfig({ step: 0 }).stepDecimals, 0);
 });
 
 const configDefaults = {
@@ -45,3 +51,8 @@ const configDefaults = {
   step: 1,
   container: document.body,
 };
+
+const getConfig = (input?: Partial<typeof configDefaults>) => Config.createFromInput({
+  ...configDefaults,
+  ...input,
+});

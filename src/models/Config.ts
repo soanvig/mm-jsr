@@ -11,7 +11,9 @@ export interface ConfigAttrs {
   container: HTMLElement;
 }
 
-export interface ConfigDto extends ConfigAttrs {}
+export interface ConfigDto extends ConfigAttrs {
+  stepDecimals: number;
+}
 
 export class Config {
   private attrs: ConfigAttrs;
@@ -21,7 +23,10 @@ export class Config {
   }
 
   public toDto (): Readonly<ConfigDto> {
-    return this.attrs;
+    return {
+      ...this.attrs,
+      stepDecimals: this.stepDecimals,
+    };
   }
 
   public get max () {
@@ -34,6 +39,18 @@ export class Config {
 
   public get step () {
     return this.attrs.step;
+  }
+
+  public get stepDecimals (): number {
+    const compute = (n: number): number => {
+      if (n === 0) {
+        return 0;
+      }
+
+      return (n >= 1 ? 0 : (1 + compute(n * 10)));
+    };
+
+    return compute(this.step);
   }
 
   public static createFromInput (attrs: ConfigAttrs): Config {

@@ -27,7 +27,7 @@ export class ModuleLabels extends Module {
     return () => {
       state.values.forEach((value, i) => {
         this.labels[i].style.left = `${value.asRatio() * 100}%`;
-        this.labels[i].innerHTML = value.asReal().toString();
+        this.labels[i].innerHTML = value.asReal().toFixed(this.config.stepDecimals);
       });
     };
   }
