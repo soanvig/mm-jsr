@@ -15,7 +15,7 @@ export class ModuleSlider extends Module {
       slider.classList.add('jsr_slider');
       slider.style.left = '0';
 
-      useOnMove(slider, e => this.handleMove(index, e.clientX));
+      useOnMove(slider, x => this.handleMove(index, x));
 
       return slider;
     });
