@@ -8,6 +8,7 @@ import { StateProcessor } from '@/StateProcessor';
 import { Value } from '@/models/Value';
 import { StateDto } from '@/models/State';
 import { ModuleLabels } from '@/modules/ModuleLabel';
+import { ModuleBar } from '@/modules/ModuleBar';
 
 interface Ctor {
   config: ConfigAttrs;
@@ -17,6 +18,7 @@ const modules = [
   ModuleRail,
   ModuleSlider,
   ModuleLabels,
+  ModuleBar,
 ];
 
 export class JSR {
