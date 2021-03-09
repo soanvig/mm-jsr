@@ -23,10 +23,10 @@ export class Config {
   }
 
   public toDto (): Readonly<ConfigDto> {
-    return {
+    return Object.freeze({
       ...this.attrs,
       stepDecimals: this.stepDecimals,
-    };
+    });
   }
 
   public get max () {

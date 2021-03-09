@@ -11,13 +11,13 @@ export class ModuleLabels extends Module {
 
   public initView () {
     this.labels = this.config.initialValues.map((_, index) => {
-      const slider = document.createElement('div');
-      slider.classList.add('jsr_label');
-      slider.style.left = '0';
+      const label = document.createElement('div');
+      label.classList.add('jsr_label');
+      label.style.left = '0';
 
-      useOnMove(slider, x => this.handleMove(index, x));
+      useOnMove(label, x => this.handleMove(index, x));
 
-      return slider;
+      return label;
     });
 
     this.labels.forEach(label => this.renderer.addChild(label));
