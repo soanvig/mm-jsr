@@ -1,4 +1,7 @@
 import { useOnMove } from '@/events/useOnMove';
+import { neighbourGroup } from '@/helpers/neighbourGroup';
+import { range } from '@/helpers/range';
+import { uniq } from '@/helpers/uniq';
 import { StateDto } from '@/models/State';
 import { Module } from '@/modules/Module';
 
@@ -21,6 +24,8 @@ export class ModuleLabels extends Module {
     });
 
     this.labels.forEach(label => this.renderer.addChild(label));
+
+    console.log(this.getAllNeighourLabels(4));
   }
 
   public render (state: StateDto): VoidFunction {
@@ -34,5 +39,21 @@ export class ModuleLabels extends Module {
 
   private handleMove (index: number, x: number) {
     this.input.setRatioValue(index, this.renderer.xToRelative(x));
+  }
+
+  private getAllNeighourLabels (n: number) {
+    // [a, b, c] -> [[ab, bc], [abc]]
+    const process = (arr: string[]): string[][] => {
+      const groups = neighbourGroup(arr).map(inner => {
+        return uniq(inner.join('').split('')).join('');
+      });
+
+      return [
+        groups,
+        ...groups.length ? process(groups) : [],
+      ];
+    };
+
+    return process(range(n).map(v => v.toString()));
   }
 }

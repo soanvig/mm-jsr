@@ -4,7 +4,7 @@ export const neighbourGroup = <T>(arr: T[]): T[][] => {
   }
 
   return [
-    [arr[0], arr[1]],
+    arr.slice(0, 2),
     ...neighbourGroup(arr.slice(1)),
   ];
 };

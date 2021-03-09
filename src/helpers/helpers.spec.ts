@@ -1,6 +1,7 @@
 import { neighbourGroup } from '@/helpers/neighbourGroup';
 import { range } from '@/helpers/range';
 import { times } from '@/helpers/times';
+import { uniq } from '@/helpers/uniq';
 import test from 'ava';
 
 test('neighbourGroup', t => {
@@ -31,4 +32,12 @@ test('times', t => {
   t.deepEqual(times(3, n => n), [1, 2, 3]);
 
   t.deepEqual(times(0, n => n), []);
+});
+
+test('helpers', t => {
+  t.deepEqual(uniq([]), []);
+  t.deepEqual(uniq([1]), [1]);
+  t.deepEqual(uniq([1, 2]), [1, 2]);
+  t.deepEqual(uniq([1, 1, 2]), [1, 2]);
+  t.deepEqual(uniq([1, 2, 1]), [1, 2]);
 });
