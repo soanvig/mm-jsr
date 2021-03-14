@@ -13,19 +13,33 @@ export class ModuleLabels extends Module {
   }
 
   public initView () {
-    this.labels = this.config.initialValues.map((_, index) => {
+    // this.labels = this.config.initialValues.map((_, index) => {
+    //   const label = document.createElement('div');
+    //   label.classList.add('jsr_label');
+    //   label.style.left = '0';
+
+    //   useOnMove(label, x => this.handleMove(index, x));
+
+    //   return label;
+    // });
+
+    const labels = [
+      ...range(this.config.initialValues.length).map(v => v.toString()),
+      ...this.getAllNeighourLabels(this.config.initialValues.length),
+    ].flat();
+
+    this.labels = labels.map(labelKey => {
       const label = document.createElement('div');
       label.classList.add('jsr_label');
+      label.dataset.key = labelKey;
       label.style.left = '0';
 
-      useOnMove(label, x => this.handleMove(index, x));
+      // useOnMove(label, x => this.handleMove(index, x));
 
       return label;
     });
 
     this.labels.forEach(label => this.renderer.addChild(label));
-
-    console.log(this.getAllNeighourLabels(4));
   }
 
   public render (state: StateDto): VoidFunction {
@@ -37,9 +51,9 @@ export class ModuleLabels extends Module {
     };
   }
 
-  private handleMove (index: number, x: number) {
-    this.input.setRatioValue(index, this.renderer.xToRelative(x));
-  }
+  // private handleMove (index: number, x: number) {
+  //   this.input.setRatioValue(index, this.renderer.xToRelative(x));
+  // }
 
   private getAllNeighourLabels (n: number) {
     // [a, b, c] -> [[ab, bc], [abc]]
@@ -50,7 +64,7 @@ export class ModuleLabels extends Module {
 
       return [
         groups,
-        ...groups.length ? process(groups) : [],
+        ...groups.length > 1 ? process(groups) : [],
       ];
     };
 
