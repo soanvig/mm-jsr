@@ -1,3 +1,4 @@
+import { avg } from '@/helpers/avg';
 import { neighbourGroup } from '@/helpers/neighbourGroup';
 import { range } from '@/helpers/range';
 import { times } from '@/helpers/times';
@@ -40,4 +41,10 @@ test('helpers', t => {
   t.deepEqual(uniq([1, 2]), [1, 2]);
   t.deepEqual(uniq([1, 1, 2]), [1, 2]);
   t.deepEqual(uniq([1, 2, 1]), [1, 2]);
+});
+
+test('avg', t => {
+  t.deepEqual(avg(1, 2, 3), 2);
+  t.deepEqual(avg(5), 5);
+  t.deepEqual(avg(10, 20), 15);
 });
