@@ -35,16 +35,20 @@ export class ModuleLabels extends Module {
 
   public render (state: StateDto): VoidFunction {
     return () => {
-      for (const [key, label] of this.labels) {
-        const values = key.split('').map(i => state.values[Number(i)]);
-        const avgLeftRatio = avg(...values.map(v => v.asRatio()));
-
-        label.style.left = `${avgLeftRatio * 100}%`;
-        label.innerHTML = values.map(
-          value => value.asReal().toFixed(this.config.stepDecimals),
-        ).join(' - ');
-      }
+      this.applyValues(state);
     };
+  }
+
+  private applyValues (state: StateDto) {
+    for (const [key, label] of this.labels) {
+      const values = key.split('').map(i => state.values[Number(i)]);
+      const avgLeftRatio = avg(...values.map(v => v.asRatio()));
+
+      label.style.left = `${avgLeftRatio * 100}%`;
+      label.innerHTML = values.map(
+        value => value.asReal().toFixed(this.config.stepDecimals),
+      ).join(' - ');
+    }
   }
 
   private handleMove (labelKey: string, x: number) {

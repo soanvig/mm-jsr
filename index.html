@@ -81,6 +81,13 @@
       border-radius: 0.3em;
       z-index: 2;
       cursor: col-resize;
+      opacity: 1;
+      transition opacity 200ms ease-in-out;
+    }
+
+    .jsr_label.is-hidden {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .jsr_bar {
