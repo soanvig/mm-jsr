@@ -14,22 +14,10 @@ export class ModuleLabels extends Module {
   }
 
   public initView () {
-    // this.labels = this.config.initialValues.map((_, index) => {
-    //   const label = document.createElement('div');
-    //   label.classList.add('jsr_label');
-    //   label.style.left = '0';
-
-    //   useOnMove(label, x => this.handleMove(index, x));
-
-    //   return label;
-    // });
-
     const labels = [
       ...range(this.config.initialValues.length - 1).map(v => v.toString()),
       ...this.getAllNeighourLabels(this.config.initialValues.length - 1),
     ].flat();
-
-    console.log(labels);
 
     this.labels = new Map(labels.map(labelKey => {
       const label = document.createElement('div');
@@ -37,7 +25,7 @@ export class ModuleLabels extends Module {
       label.dataset.key = labelKey;
       label.style.left = '0';
 
-      // useOnMove(label, x => this.handleMove(index, x));
+      useOnMove(label, x => this.handleMove(labelKey, x));
 
       return [labelKey, label];
     }));
@@ -59,9 +47,13 @@ export class ModuleLabels extends Module {
     };
   }
 
-  // private handleMove (index: number, x: number) {
-  //   this.input.setRatioValue(index, this.renderer.xToRelative(x));
-  // }
+  private handleMove (labelKey: string, x: number) {
+    if (labelKey.length > 1) {
+      return; // @TODO
+    }
+
+    this.input.setRatioValue(Number(labelKey), this.renderer.xToRelative(x));
+  }
 
   private getAllNeighourLabels (n: number) {
     // [a, b, c] -> [[ab, bc], [abc]]
