@@ -8,28 +8,33 @@ import { Module } from '@/modules/Module';
 
 export class ModuleLabels extends Module {
   private labels: Map<string, Label> = new Map();
+  private coreLabelKeys: string[] = [];
 
   public destroy () {
     this.labels.forEach(l => l.el.remove());
   }
 
   public initView () {
-    const keyedLabels = [
+    const basicLabels = this.getBasicLabels();
+
+    const keyedLabelGroups = [
       this.getBasicLabels(),
       ...this.getAllNeighourLabels(this.config.initialValues.length - 1),
-    ].flat();
+    ];
 
-    this.labels = new Map(keyedLabels.map(label => {
+    this.coreLabelKeys = basicLabels;
+
+    this.labels = new Map(keyedLabelGroups.flat().map(label => {
       const el = document.createElement('div');
       el.classList.add('jsr_label');
-      el.dataset.key = label.key;
+      el.dataset.key = label;
       el.style.left = '0';
 
-      useOnMove(el, x => this.handleMove(label.key, x));
+      useOnMove(el, x => this.handleMove(label, x));
 
       return [
-        label.key,
-        { ...label, el } as Label,
+        label,
+        { key: label, el } as Label,
       ];
     }));
 
@@ -56,42 +61,13 @@ export class ModuleLabels extends Module {
   }
 
   private applyOverlapping () {
-    const visibilityMap = [...this.labels.values()].reduce(
-      (map, label) => {
-        if (label.components.length === 0) {
-          return map;
-        }
+    const verifiedLabels = verifyVisibleLabels([], this.coreLabelKeys, this.doLabelsOverlap.bind(this));
 
-        const first = this.labels.get(label.components[0])!;
-        const second = this.labels.get(label.components[1])!;
-
-        const firstRect = first.el.getBoundingClientRect();
-        const secondRect = second.el.getBoundingClientRect();
-
-        if (firstRect.right > secondRect.left) {
-          return {
-            ...map,
-            [first.key]: false,
-            [second.key]: false,
-            [label.key]: true,
-          };
-        } else {
-          return {
-            ...map,
-            // [first.key]: true,
-            // [second.key]: true,
-            [label.key]: false,
-          };
-        }
-      },
-      {} as Record<string, boolean>,
-    );
-
-    [...this.labels.entries()].forEach(([key, label]) => {
-      if (visibilityMap[key] === false) {
-        label.el.classList.add('is-hidden');
-      } else {
+    [...this.labels.entries()].filter(k => k[0].length > 1).forEach(([key, label]) => {
+      if (verifiedLabels.includes(key)) {
         label.el.classList.remove('is-hidden');
+      } else {
+        label.el.classList.add('is-hidden');
       }
     });
   }
@@ -104,41 +80,64 @@ export class ModuleLabels extends Module {
     this.input.setRatioValue(Number(labelKey), this.renderer.xToRelative(x));
   }
 
-  private getAllNeighourLabels (n: number): KeyedLabel[][] {
+  private getAllNeighourLabels (n: number): string[][] {
     // [a, b, c] -> [[ab, bc], [abc]]
-    const process = (arr: string[]): KeyedLabel[][] => {
+    const process = (arr: string[]): string[][] => {
       // [a, b, c] -> [ab, bc]
-      const groups = neighbourGroup(arr).map(components => {
-        return {
-          key: components.join(''),
-          components,
-        } as KeyedLabel;
-      });
+      const groups = neighbourGroup(arr).map(g => uniqChars(g.join('')));
 
       return [
         groups,
-        ...groups.length > 1 ? process(groups.map(g => g.key)) : [],
+        ...groups.length > 1 ? process(groups) : [],
       ];
     };
 
     return process(range(n).map(v => v.toString()));
   }
 
-  private getBasicLabels (): KeyedLabel[] {
-    return range(this.config.initialValues.length - 1).map(v => ({
-      key: v.toString(),
-      components: [],
-    }));
+  private getBasicLabels (): string[] {
+    return range(this.config.initialValues.length - 1).map(v => v.toString());
+  }
+
+  private doLabelsOverlap (first: string, second: string): boolean {
+    const firstRect = this.labels.get(first)!.el.getBoundingClientRect();
+    const secondRect = this.labels.get(second)!.el.getBoundingClientRect();
+
+    return firstRect.right > secondRect.left;
   }
 }
 
+const uniqChars = (str: string) => uniq(str.split('')).join('');
+
+export const verifyVisibleLabels = (
+  verifiedLabels: string[],
+  labels: string[],
+  doLabelsOverlap: (first: string, second: string) => boolean,
+): string[] => {
+  const [first, second, ...rest] = labels;
+
+  if (!first) {
+    return verifiedLabels;
+  } else if (!second) {
+    return [...verifiedLabels, first];
+  } else {
+    if (doLabelsOverlap(first, second)) {
+      return verifyVisibleLabels(
+        verifiedLabels,
+        [uniqChars(first + second), ...rest], // labels overlap, so verify if joined label overlaps with third
+        doLabelsOverlap,
+      );
+    } else {
+      return verifyVisibleLabels(
+        [...verifiedLabels, first], // first label doesn't overlap second, so it's visible
+        [second, ...rest], // but second label may overlap with third, so pass it further
+        doLabelsOverlap,
+      );
+    }
+  }
+};
+
 interface Label {
   key: string;
-  components: string[];
   el: HTMLElement;
-}
-
-interface KeyedLabel {
-  key: string;
-  components: string[];
 }
