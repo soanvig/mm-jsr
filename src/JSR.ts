@@ -44,6 +44,7 @@ export class JSR {
     this.inputHandler = InputHandler.init({
       config,
       onChange: this.onValueChange.bind(this),
+      getState: this.stateProcessor.getState.bind(this.stateProcessor),
     });
 
     this.modules = modules.map(M => new M({
