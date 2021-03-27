@@ -91,6 +91,14 @@ export class ModuleLabels extends Module {
 const uniqChars = (str: string) => uniq(str.split('')).join('');
 
 export const getPrimaryLabels = (n: number): string[] => {
+  if (n === 0) {
+    return [];
+  }
+
+  if (n === 1) {
+    return ['0'];
+  }
+
   return range(n - 1).map(v => v.toString());
 };
 
