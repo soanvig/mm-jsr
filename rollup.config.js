@@ -17,6 +17,7 @@ export default {
   output: [
     {
       ...outputCommons,
+      sourcemap: true,
       file: 'build/jsr.js',
     },
     {

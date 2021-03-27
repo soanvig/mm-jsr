@@ -8,23 +8,21 @@ import { Module } from '@/modules/Module';
 
 export class ModuleLabels extends Module {
   private labels: Map<string, Label> = new Map();
-  private coreLabelKeys: string[] = [];
+  private primaryLabels: string[] = [];
 
   public destroy () {
     this.labels.forEach(l => l.el.remove());
   }
 
   public initView () {
-    const basicLabels = getBasicLabels(this.config.initialValues.length);
+    const primaryLabels = getPrimaryLabels(this.config.valuesCount);
 
-    const keyedLabelGroups = [
-      basicLabels,
-      ...getAllNeighourLabels(this.config.initialValues.length),
+    const labelGroups = [
+      primaryLabels,
+      ...getAllNeighourLabels(this.config.valuesCount),
     ];
 
-    this.coreLabelKeys = basicLabels;
-
-    this.labels = new Map(keyedLabelGroups.flat().map(label => {
+    const labels = new Map(labelGroups.flat().map(label => {
       const el = document.createElement('div');
       el.classList.add('jsr_label');
       el.dataset.key = label;
@@ -38,6 +36,8 @@ export class ModuleLabels extends Module {
       ];
     }));
 
+    this.primaryLabels = primaryLabels;
+    this.labels = labels;
     this.labels.forEach(label => this.renderer.addChild(label.el));
   }
 
@@ -61,10 +61,10 @@ export class ModuleLabels extends Module {
   }
 
   private applyOverlapping () {
-    const verifiedLabels = verifyVisibleLabels([], this.coreLabelKeys, this.doLabelsOverlap.bind(this));
+    const verifiedLabels = verifyVisibleLabels([], this.primaryLabels, this.doLabelsOverlap.bind(this));
 
-    [...this.labels.entries()].filter(k => k[0].length > 1).forEach(([key, label]) => {
-      if (verifiedLabels.includes(key)) {
+    [...this.labels.values()].forEach(label => {
+      if (verifiedLabels.includes(label.key)) {
         label.el.classList.remove('is-hidden');
       } else {
         label.el.classList.add('is-hidden');
@@ -90,7 +90,7 @@ export class ModuleLabels extends Module {
 
 const uniqChars = (str: string) => uniq(str.split('')).join('');
 
-export const getBasicLabels = (n: number): string[] => {
+export const getPrimaryLabels = (n: number): string[] => {
   return range(n - 1).map(v => v.toString());
 };
 
@@ -106,7 +106,7 @@ export const getAllNeighourLabels = (n: number): string[][] => {
     ];
   };
 
-  return process(getBasicLabels(n - 1));
+  return process(getPrimaryLabels(n));
 };
 
 export const verifyVisibleLabels = (

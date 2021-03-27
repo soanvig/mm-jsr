@@ -13,7 +13,7 @@ export class ModuleBar extends Module {
   }
 
   public initView () {
-    this.bars = times(this.config.initialValues.length - 1, () => {
+    this.bars = times(this.config.valuesCount - 1, () => {
       const bar = document.createElement('div');
       bar.classList.add('jsr_bar');
       bar.style.left = '0';

@@ -13,6 +13,7 @@ export interface ConfigAttrs {
 
 export interface ConfigDto extends ConfigAttrs {
   stepDecimals: number;
+  valuesCount: number;
 }
 
 export class Config {
@@ -26,6 +27,7 @@ export class Config {
     return Object.freeze({
       ...this.attrs,
       stepDecimals: this.stepDecimals,
+      valuesCount: this.valuesCount,
     });
   }
 
@@ -51,6 +53,10 @@ export class Config {
     };
 
     return compute(this.step);
+  }
+
+  public get valuesCount (): number {
+    return this.attrs.initialValues.length;
   }
 
   public static createFromInput (attrs: ConfigAttrs): Config {
