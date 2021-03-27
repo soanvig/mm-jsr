@@ -3,8 +3,10 @@
 Update 10.02.2021
 
 Currently, I work on [v2.0.0](https://github.com/soanvig/jsr/tree/v2) version of JSR with better API and code structure, easier to maintain.
+You may track development in issues panel.
 
-Experience as developer I've gathered since JSR v1 will surely help.
+Old version was created before I had expertise on creating maintanable code, and I've created a little monster. Lovely, but still a monster.
+New version is truly modular, with reusable structures, clean API, TypeScript, and good-quality declarative code (including tests). The hardest part is already done (engine architecture, and label merging), so now it should be easy.
 
 # Mort&Mortis JS Range (M&M JSR)
 
