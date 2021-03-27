@@ -15,11 +15,11 @@ export class ModuleLabels extends Module {
   }
 
   public initView () {
-    const basicLabels = this.getBasicLabels();
+    const basicLabels = getBasicLabels(this.config.initialValues.length);
 
     const keyedLabelGroups = [
-      this.getBasicLabels(),
-      ...this.getAllNeighourLabels(this.config.initialValues.length - 1),
+      basicLabels,
+      ...getAllNeighourLabels(this.config.initialValues.length),
     ];
 
     this.coreLabelKeys = basicLabels;
@@ -80,25 +80,6 @@ export class ModuleLabels extends Module {
     this.input.setRatioValue(Number(labelKey), this.renderer.xToRelative(x));
   }
 
-  private getAllNeighourLabels (n: number): string[][] {
-    // [a, b, c] -> [[ab, bc], [abc]]
-    const process = (arr: string[]): string[][] => {
-      // [a, b, c] -> [ab, bc]
-      const groups = neighbourGroup(arr).map(g => uniqChars(g.join('')));
-
-      return [
-        groups,
-        ...groups.length > 1 ? process(groups) : [],
-      ];
-    };
-
-    return process(range(n).map(v => v.toString()));
-  }
-
-  private getBasicLabels (): string[] {
-    return range(this.config.initialValues.length - 1).map(v => v.toString());
-  }
-
   private doLabelsOverlap (first: string, second: string): boolean {
     const firstRect = this.labels.get(first)!.el.getBoundingClientRect();
     const secondRect = this.labels.get(second)!.el.getBoundingClientRect();
@@ -108,6 +89,25 @@ export class ModuleLabels extends Module {
 }
 
 const uniqChars = (str: string) => uniq(str.split('')).join('');
+
+export const getBasicLabels = (n: number): string[] => {
+  return range(n - 1).map(v => v.toString());
+};
+
+export const getAllNeighourLabels = (n: number): string[][] => {
+  // [a, b, c] -> [[ab, bc], [abc]]
+  const process = (arr: string[]): string[][] => {
+    // [a, b, c] -> [ab, bc]
+    const groups = neighbourGroup(arr).map(g => uniqChars(g.join('')));
+
+    return [
+      groups,
+      ...groups.length > 1 ? process(groups) : [],
+    ];
+  };
+
+  return process(getBasicLabels(n - 1));
+};
 
 export const verifyVisibleLabels = (
   verifiedLabels: string[],
