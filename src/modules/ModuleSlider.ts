@@ -14,6 +14,7 @@ export class ModuleSlider extends Module {
       const slider = document.createElement('div');
       slider.classList.add('jsr_slider');
       slider.style.left = '0';
+      slider.tabIndex = 1;
 
       useOnMove(slider, x => this.handleMove(index, x));
 
