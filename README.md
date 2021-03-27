@@ -2,7 +2,7 @@
 
 Update 10.02.2021
 
-Currently, I work on [v2.0.0](https://github.com/mm-jsr/jsr/tree/v2.0.0) version of JSR with better API and code structure, easier to maintain.
+Currently, I work on [v2.0.0](https://github.com/soanvig/jsr/tree/v2) version of JSR with better API and code structure, easier to maintain.
 
 Experience as developer I've gathered since JSR v1 will surely help.
 
