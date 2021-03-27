@@ -6,7 +6,7 @@ Currently, I work on [v2.0.0](https://github.com/soanvig/jsr/tree/v2) version of
 You may track development in issues panel.
 
 Old version was created before I had expertise on creating maintanable code, and I've created a little monster. Lovely, but still a monster.
-New version is truly modular, with reusable structures, clean API, TypeScript, and good-quality declarative code (including tests). The hardest part is already done (engine architecture, and label merging), so now it should be easy.
+New version is truly modular, with reusable structures, clean API, TypeScript, and good-quality declarative code (including tests). The hardest part is already done (engine architecture, and label merging), so now it should be easy. New version will also have adapters to all popular frameworks/libraries (React, Vue, and so on)
 
 # Mort&Mortis JS Range (M&M JSR)
 
