@@ -28,7 +28,7 @@ export class ModuleLabels extends Module {
       el.dataset.key = label;
       el.style.left = '0';
 
-      useOnMove(el, x => this.handleMove(label, x));
+      useOnMove(el, (x, trigger) => this.handleMove(label, x, trigger));
 
       return [
         label,
@@ -50,13 +50,22 @@ export class ModuleLabels extends Module {
 
   private applyValues (state: StateDto) {
     for (const [key, label] of this.labels) {
-      const values = uniq(key.split('')).map(i => state.values[Number(i)]);
-      const avgLeftRatio = avg(...values.map(v => v.asRatio()));
+      const labels = uniq(key.split('')).map(singleKey => ({
+        key: singleKey,
+        value: state.values[Number(singleKey)],
+      }));
+
+      const avgLeftRatio = avg(...labels.map(v => v.value.asRatio()));
 
       label.el.style.left = `${avgLeftRatio * 100}%`;
-      label.el.innerHTML = values.map(
-        value => value.asReal().toFixed(this.config.stepDecimals),
-      ).join(' - ');
+      label.el.innerHTML = labels.map(
+        (label, index) => `
+        <span data-key="${label.key}">
+          ${label.value.asReal().toFixed(this.config.stepDecimals)}
+          ${index < (labels.length - 1) ? ' - ' : ''}
+        </span>
+      `,
+      ).join('');
     }
   }
 
@@ -72,12 +81,20 @@ export class ModuleLabels extends Module {
     });
   }
 
-  private handleMove (labelKey: string, x: number) {
-    if (labelKey.length > 1) {
-      return; // @TODO
-    }
+  private handleMove (labelKey: string, x: number, trigger: HTMLElement) {
+    const ratio = this.renderer.xToRelative(x);
 
-    this.input.setRatioValue(Number(labelKey), this.renderer.xToRelative(x));
+    if (labelKey.length === 1) {
+      this.input.setRatioValue(Number(labelKey), ratio);
+    } else {
+      const movedLabelKey = trigger.dataset.key;
+
+      if (!movedLabelKey || movedLabelKey.length > 1) {
+        return; // @TODO
+      }
+
+      this.input.setRatioValue(Number(movedLabelKey), ratio);
+    }
   }
 
   private doLabelsOverlap (first: string, second: string): boolean {
@@ -131,8 +148,9 @@ export const verifyVisibleLabels = (
   } else {
     if (doLabelsOverlap(first, second)) {
       return verifyVisibleLabels(
-        verifiedLabels,
-        [uniqChars(first + second), ...rest], // labels overlap, so verify if joined label overlaps with third
+        [],
+        // labels overlap, so verify if joined label overlaps with previous ones (already verified) or with next (rest)
+        [...verifiedLabels, uniqChars(first + second), ...rest],
         doLabelsOverlap,
       );
     } else {

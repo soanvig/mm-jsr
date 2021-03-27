@@ -20,4 +20,8 @@ test('verifyVisibleLabels', t => {
   t.deepEqual(verifyVisibleLabels([], ['0', '1', '2'], (one, two) => false), ['0', '1', '2']);
   t.deepEqual(verifyVisibleLabels([], ['0', '1', '2'], (one, two) => one === '0' && two === '1'), ['01', '2']);
   t.deepEqual(verifyVisibleLabels([], ['0', '1', '2'], (one, two) => true), ['012']);
+  t.deepEqual(verifyVisibleLabels([], ['0', '1', '2'], (one, two) => {
+    return (one === '1' && two === '2')
+      || (one === '0' && two === '12');
+  }), ['012']);
 });

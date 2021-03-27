@@ -1,12 +1,15 @@
-export const useOnMove = (trigger: HTMLElement, cb: (x: number) => void) => {
+export const useOnMove = (trigger: HTMLElement, cb: (x: number, clickElement: HTMLElement) => void) => {
   // relative to trigger center
   let offset = 0;
+  let clickElement: HTMLElement | null = null;
 
   const onMouseDown = (e: MouseEvent) => {
     document.addEventListener('mouseup', onMouseUp);
     document.addEventListener('mousemove', onMouseMove);
 
-    const rect = trigger.getBoundingClientRect();
+    clickElement = e.target as any as HTMLElement;
+
+    const rect = clickElement.getBoundingClientRect();
     offset = e.clientX - rect.x - rect.width / 2;
   };
 
@@ -15,10 +18,11 @@ export const useOnMove = (trigger: HTMLElement, cb: (x: number) => void) => {
     document.removeEventListener('mouseup', onMouseUp);
 
     offset = 0;
+    clickElement = null;
   };
 
   const onMouseMove = (e: MouseEvent) => {
-    cb(e.clientX - offset);
+    cb(e.clientX - offset, clickElement!);
   };
 
   trigger.addEventListener('mousedown', onMouseDown);
