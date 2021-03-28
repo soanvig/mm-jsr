@@ -13,13 +13,13 @@ export class ModuleBar extends Module {
   }
 
   public initView () {
-    this.bars = times(this.config.valuesCount - 1, () => {
+    this.bars = times(this.config.valuesCount - 1, index => {
       const bar = document.createElement('div');
       bar.classList.add('jsr_bar');
       bar.style.left = '0';
       bar.style.width = '0';
 
-      // useOnMove(slider, x => this.handleMove(index, x));
+      useOnMove(bar, x => this.handleMove(index, x));
 
       return bar;
     });
