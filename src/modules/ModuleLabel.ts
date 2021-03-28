@@ -82,7 +82,7 @@ export class ModuleLabels extends Module {
   }
 
   private handleMove (labelKey: string, x: number, trigger: HTMLElement) {
-    const ratio = this.renderer.xToRelative(x);
+    const ratio = this.renderer.positionToRelative(x);
 
     if (labelKey.length === 1) {
       this.input.setRatioValue(Number(labelKey), ratio);

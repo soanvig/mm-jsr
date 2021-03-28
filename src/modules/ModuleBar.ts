@@ -1,3 +1,4 @@
+import { useOnMouse } from '@/events/useOnMouse';
 import { useOnMove } from '@/events/useOnMove';
 import { neighbourGroup } from '@/helpers/neighbourGroup';
 import { range } from '@/helpers/range';
@@ -19,7 +20,7 @@ export class ModuleBar extends Module {
       bar.style.left = '0';
       bar.style.width = '0';
 
-      useOnMove(bar, x => this.handleMove(index, x));
+      this.addMoveHandler(bar, index - 1);
 
       return bar;
     });
@@ -38,7 +39,32 @@ export class ModuleBar extends Module {
     };
   }
 
+  private addMoveHandler (bar: HTMLElement, index: number) {
+    let setOffsetRatioLeft = (() => {}) as (o: number) => void;
+    let setOffsetRatioRight = (() => {}) as (o: number) => void;
+    let startX: number = 0;
+
+    useOnMouse(bar, {
+      onMouseDown: e => {
+        setOffsetRatioLeft = this.input.makeValueRatioOffsetModifier(index);
+        setOffsetRatioRight = this.input.makeValueRatioOffsetModifier(index + 1);
+        startX = e.clientX;
+      },
+      onMouseMove: e => {
+        const ratioDistance = this.renderer.distanceToRelative(e.clientX - startX);
+
+        setOffsetRatioLeft(ratioDistance);
+        setOffsetRatioRight(ratioDistance);
+      },
+      onMouseUp: () => {
+        setOffsetRatioLeft = () => {};
+        setOffsetRatioRight = () => {};
+        startX = 0;
+      },
+    });
+  }
+
   private handleMove (index: number, x: number) {
-    this.input.setRatioValue(index, this.renderer.xToRelative(x));
+    this.input.setRatioValue(index, this.renderer.positionToRelative(x));
   }
 }
