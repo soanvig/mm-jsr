@@ -1,5 +1,4 @@
 import { useOnMouse } from '@/events/useOnMouse';
-import { useOnMove } from '@/events/useOnMove';
 import { neighbourGroup } from '@/helpers/neighbourGroup';
 import { range } from '@/helpers/range';
 import { times } from '@/helpers/times';
@@ -62,9 +61,5 @@ export class ModuleBar extends Module {
         startX = 0;
       },
     });
-  }
-
-  private handleMove (index: number, x: number) {
-    this.input.setRatioValue(index, this.renderer.positionToRelative(x));
   }
 }
