@@ -54,6 +54,18 @@ export class InputHandler {
     }));
   }
 
+  public makeValueRatioOffsetModifier (index: number) {
+    const currentValue = this.getState().values[index].asRatio();
+
+    return (offset: number) => {
+      this.onChange(index, Value.fromRatio({
+        max: this.config.max,
+        min: this.config.min,
+        ratio: currentValue + offset,
+      }));
+    };
+  }
+
   public static init (ctor: Ctor) {
     return new InputHandler(ctor);
   }

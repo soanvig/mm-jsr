@@ -41,7 +41,7 @@ export class ModuleSlider extends Module {
   }
 
   private handleMove (index: number, x: number) {
-    this.input.setRatioValue(index, this.renderer.xToRelative(x));
+    this.input.setRatioValue(index, this.renderer.positionToRelative(x));
   }
 
   private handleKeyboard (event: KeyboardEvent) {
