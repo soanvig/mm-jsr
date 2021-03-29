@@ -86,7 +86,6 @@
       z-index: 2;
       cursor: col-resize;
       opacity: 1;
-      transition opacity 200ms ease-in-out;
     }
 
     .jsr_label.is-hidden {
@@ -102,6 +101,15 @@
       cursor: move;
       top: 10px;
     }
+
+    .jsr_limit {
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      height: 5px;
+      top: 10px;
+      background-color: #727272;
+    }
   </style>
 </head>
 <body>
@@ -113,6 +121,10 @@
         min: 0,
         max: 100,
         step: 0.01,
+        limit: {
+          min: 15,
+          max: 90,
+        },
         initialValues: [25, 50, 75],
         container: document.getElementById('jsr'),
       }

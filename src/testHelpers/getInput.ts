@@ -7,6 +7,7 @@ export const getInput = ({
   min = 0,
   max = 100,
   step = 1,
+  ...configInput
 }: Partial<ConfigAttrs>) => {
   const config = Config.createFromInput({
     initialValues,
@@ -14,6 +15,7 @@ export const getInput = ({
     max,
     step,
     container: document.body,
+    ...configInput,
   }).toDto();
 
   const state = State.fromData({

@@ -1,4 +1,4 @@
-import { assert, isArray, isInstanceOf, isNumber } from '@/validation/assert';
+import { assert, isArray, isInstanceOf, isNumber, isPlainObject } from '@/validation/assert';
 
 export interface ConfigAttrs {
   // core
@@ -6,6 +6,9 @@ export interface ConfigAttrs {
   max: number;
   step: number;
   initialValues: number[];
+
+  // limit
+  limit?: { min?: number; max?: number };
 
   // renderer
   container: HTMLElement;
@@ -65,6 +68,13 @@ export class Config {
     assert('step', attrs.step, isNumber);
     assert('initialValues', attrs.initialValues, isArray(isNumber));
     assert('container', attrs.container, isInstanceOf(window.HTMLElement));
+
+    if (attrs.limit) {
+      assert('limit', attrs.limit, isPlainObject);
+
+      attrs.limit.min && assert('limit.min', attrs.limit.min, isNumber);
+      attrs.limit.max && assert('limit.min', attrs.limit.max, isNumber);
+    }
 
     return new Config(attrs);
   }

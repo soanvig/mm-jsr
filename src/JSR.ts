@@ -9,6 +9,7 @@ import { Value } from '@/models/Value';
 import { StateDto } from '@/models/State';
 import { ModuleLabels } from '@/modules/ModuleLabel';
 import { ModuleBar } from '@/modules/ModuleBar';
+import { ModuleLimit } from '@/modules/ModuleLimit';
 
 interface Ctor {
   config: ConfigAttrs;
@@ -19,6 +20,7 @@ const modules = [
   ModuleSlider,
   ModuleLabels,
   ModuleBar,
+  ModuleLimit,
 ];
 
 export class JSR {

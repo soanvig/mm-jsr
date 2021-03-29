@@ -1,11 +1,12 @@
 import { State, StateDto } from '@/models/State';
-import { RealValue, Value } from '@/models/Value';
+import { Value } from '@/models/Value';
 import type { Extension, Changelog } from '@/extensions/types';
 import { ConfigDto } from '@/models/Config';
 import { extensionNeighbourLimit } from '@/extensions/neighbourLimit';
 import { extensionRoundToStep } from '@/extensions/roundToStep';
 import { mapChanged } from '@/helpers/mapChanged';
 import { extensionPerformanceEnd, extensionPerformanceStart } from '@/extensions/performance';
+import { extensionLimit } from '@/extensions/limit';
 
 interface Ctor {
   config: ConfigDto;
@@ -17,15 +18,25 @@ export class StateProcessor {
 
   private constructor (ctor: Ctor) {
     const configDto = ctor.config;
-    const values = configDto.initialValues.map(v => Value.fromReal({
+    const minMax = {
       min: configDto.min,
       max: configDto.max,
+    };
+    const values = configDto.initialValues.map(v => Value.fromReal({
+      ...minMax,
       real: v,
     }));
+    const limit = configDto.limit
+      ? {
+        min: configDto.limit.min ? Value.fromReal({ ...minMax, real: configDto.limit.min }) : undefined,
+        max: configDto.limit.max ? Value.fromReal({ ...minMax, real: configDto.limit.max }) : undefined,
+      }
+      : undefined;
 
     this.config = ctor.config;
     this.state = State.fromData({
       values,
+      limit,
     });
   }
 
@@ -48,6 +59,7 @@ export class StateProcessor {
     const extensions = [
       // extensionPerformanceStart,
       extensionNeighbourLimit,
+      extensionLimit,
       extensionRoundToStep,
       // extensionPerformanceEnd,
     ];

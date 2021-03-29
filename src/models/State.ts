@@ -3,15 +3,18 @@ import { Value } from '@/models/Value';
 
 interface Data {
   values: Value[];
+  limit?: { min?: Value; max?: Value };
 }
 
 export interface StateDto extends Data {}
 
 export class State {
   public readonly values: Value[];
+  public readonly limit?: { min?: Value; max?: Value };
 
   private constructor (ctor: Data) {
     this.values = ctor.values;
+    this.limit = ctor.limit;
   }
 
   public updateValues (values: Value[]) {
@@ -47,6 +50,7 @@ export class State {
   private toData (): Data {
     return {
       values: this.values,
+      limit: this.limit,
     };
   }
 }
