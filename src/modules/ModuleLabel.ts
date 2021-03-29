@@ -1,4 +1,5 @@
 import { useOnMove } from '@/events/useOnMove';
+import { useOnTouch } from '@/events/useOnTouch';
 import { avg } from '@/helpers/avg';
 import { neighbourGroup } from '@/helpers/neighbourGroup';
 import { range } from '@/helpers/range';
@@ -28,7 +29,7 @@ export class ModuleLabels extends Module {
       el.dataset.key = label;
       el.style.left = '0';
 
-      useOnMove(el, (x, trigger) => this.handleMove(label, x, trigger));
+      useOnMove(el, (x, trigger) => this.handleMove(label, x, trigger), this.renderer.getContainer());
 
       return [
         label,

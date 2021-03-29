@@ -12,6 +12,10 @@ export class Renderer {
     this.container.classList.add('jsr');
   }
 
+  public getContainer () {
+    return this.container;
+  }
+
   public addChild (child: HTMLElement) {
     this.container.appendChild(child);
   }
