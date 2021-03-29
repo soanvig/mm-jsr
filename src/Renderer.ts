@@ -16,8 +16,12 @@ export class Renderer {
     this.container.appendChild(child);
   }
 
-  public xToRelative (x: number): number {
+  public positionToRelative (x: number): number {
     return (x - this.container.offsetLeft) / this.container.offsetWidth;
+  }
+
+  public distanceToRelative (distance: number): number {
+    return distance / this.container.offsetWidth;
   }
 
   public render (renderFunctions: VoidFunction[]): void {

@@ -1,4 +1,4 @@
-import { useOnMove } from '@/events/useOnMove';
+import { useOnMouse } from '@/events/useOnMouse';
 import { neighbourGroup } from '@/helpers/neighbourGroup';
 import { range } from '@/helpers/range';
 import { times } from '@/helpers/times';
@@ -13,13 +13,13 @@ export class ModuleBar extends Module {
   }
 
   public initView () {
-    this.bars = times(this.config.valuesCount - 1, () => {
+    this.bars = times(this.config.valuesCount - 1, index => {
       const bar = document.createElement('div');
       bar.classList.add('jsr_bar');
       bar.style.left = '0';
       bar.style.width = '0';
 
-      // useOnMove(slider, x => this.handleMove(index, x));
+      this.addMoveHandler(bar, index - 1);
 
       return bar;
     });
@@ -38,7 +38,28 @@ export class ModuleBar extends Module {
     };
   }
 
-  private handleMove (index: number, x: number) {
-    this.input.setRatioValue(index, this.renderer.xToRelative(x));
+  private addMoveHandler (bar: HTMLElement, index: number) {
+    let setOffsetRatioLeft = (() => {}) as (o: number) => void;
+    let setOffsetRatioRight = (() => {}) as (o: number) => void;
+    let startX: number = 0;
+
+    useOnMouse(bar, {
+      onMouseDown: e => {
+        setOffsetRatioLeft = this.input.makeValueRatioOffsetModifier(index);
+        setOffsetRatioRight = this.input.makeValueRatioOffsetModifier(index + 1);
+        startX = e.clientX;
+      },
+      onMouseMove: e => {
+        const ratioDistance = this.renderer.distanceToRelative(e.clientX - startX);
+
+        setOffsetRatioLeft(ratioDistance);
+        setOffsetRatioRight(ratioDistance);
+      },
+      onMouseUp: () => {
+        setOffsetRatioLeft = () => {};
+        setOffsetRatioRight = () => {};
+        startX = 0;
+      },
+    });
   }
 }
