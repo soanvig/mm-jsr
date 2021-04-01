@@ -1,4 +1,5 @@
 import { useOnMove } from '@/events/useOnMove';
+import { useOnTouch } from '@/events/useOnTouch';
 import { StateDto } from '@/models/State';
 import { Module } from '@/modules/Module';
 
@@ -19,7 +20,7 @@ export class ModuleSlider extends Module {
       slider.dataset.key = index.toString();
       slider.tabIndex = 1;
 
-      useOnMove(slider, x => this.handleMove(index, x));
+      useOnMove(slider, x => this.handleMove(index, x), this.renderer.getContainer());
 
       return slider;
     });
