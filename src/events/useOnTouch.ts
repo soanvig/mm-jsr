@@ -5,45 +5,50 @@ interface Options {
   onTouchUp: (e: Touch) => void;
 }
 
+type EventCb = (e: Event) => void;
+
 export const useOnTouch = (el: HTMLElement, { onTouchDown, onTouchMove, onTouchUp, root }: Options) => {
-  let isTouchDown = false;
+  let touchTarget: EventTarget | null = null;
 
   const handleStart = (e: TouchEvent) => {
     // this is called multiple times upon press
     const touch = e.targetTouches.item(0);
 
-    if (touch) {
+    if (touch && !touchTarget) {
+      touchTarget = touch.target;
+
+      // https://stackoverflow.com/questions/33298828/touch-move-event-dont-fire-after-touch-start-target-is-removed
+      // html elements of label are rendered inside, and that breaks touch event
+      touchTarget.addEventListener('touchmove', handleMove as EventCb);
+      touchTarget.addEventListener('touchend', handleEnd as EventCb);
+
       document.documentElement.classList.add('jsr_lockscreen');
 
       onTouchDown(touch);
-
-      isTouchDown = true;
     }
   };
 
   const handleEnd = (e: TouchEvent) => {
-    const touch = e.changedTouches.item(0);
+    const changedTouch = e.changedTouches[0];
 
-    if (touch) {
-      document.documentElement.classList.remove('jsr_lockscreen');
+    document.documentElement.classList.remove('jsr_lockscreen');
 
-      onTouchUp(touch);
+    if (touchTarget && changedTouch) {
+      touchTarget.removeEventListener('touchmove', handleMove as EventCb);
+      touchTarget.removeEventListener('touchend', handleEnd as EventCb);
+      touchTarget = null;
 
-      isTouchDown = false;
+      onTouchUp(changedTouch);
     }
   };
 
   const handleMove = (e: TouchEvent) => {
-    const touch = e.targetTouches.item(0);
+    const changedTouch = e.changedTouches[0];
 
-    if (touch && isTouchDown) {
-      onTouchMove(touch);
+    if (touchTarget && changedTouch) {
+      onTouchMove(changedTouch);
     }
   };
 
   el.addEventListener('touchstart', handleStart);
-  document.addEventListener('touchmove', handleMove);
-  document.addEventListener('touchend', handleEnd);
-
-  // @TODO remove events
 };

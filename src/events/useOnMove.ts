@@ -1,10 +1,13 @@
 import { useOnMouse } from '@/events/useOnMouse';
 import { useOnTouch } from '@/events/useOnTouch';
+import { throttle } from '@/helpers/throttle';
 
 export const useOnMove = (trigger: HTMLElement, cb: (x: number, clickElement: HTMLElement) => void, root: HTMLElement) => {
   // relative to trigger center
   let offset = 0;
   let clickElement: HTMLElement | null = null;
+
+  const throttledMove = throttle(cb, 1000 / 60); // that would give 60hz updates
 
   useOnMouse(trigger, {
     onMouseDown: (e: MouseEvent) => {
@@ -14,7 +17,7 @@ export const useOnMove = (trigger: HTMLElement, cb: (x: number, clickElement: HT
       offset = e.clientX - rect.x - rect.width / 2;
     },
     onMouseMove: (e: MouseEvent) => {
-      cb(e.clientX - offset, clickElement!);
+      throttledMove(e.clientX - offset, clickElement!);
     },
     onMouseUp: () => {
       offset = 0;
@@ -30,7 +33,7 @@ export const useOnMove = (trigger: HTMLElement, cb: (x: number, clickElement: HT
       offset = touch.clientX - rect.x - rect.width / 2;
     },
     onTouchMove: (touch: Touch) => {
-      cb(touch.clientX - offset, clickElement!);
+      throttledMove(touch.clientX - offset, clickElement!);
     },
     onTouchUp: () => {
       offset = 0;
