@@ -1,3 +1,4 @@
+import { debounce } from '@/helpers/debounce';
 import { StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
@@ -8,6 +9,8 @@ export class ModuleGrid extends Module {
 
   public destroy () {
     this.grid.remove();
+
+    window.removeEventListener('resize', this.handleWindowResize);
   }
 
   public initView () {
@@ -20,6 +23,8 @@ export class ModuleGrid extends Module {
     this.renderer.addChild(this.grid);
 
     this.drawGrid();
+
+    window.addEventListener('resize', this.handleWindowResize);
   }
 
   public render (_: StateDto): VoidFunction {
@@ -89,4 +94,8 @@ export class ModuleGrid extends Module {
     context.closePath();
     context.stroke();
   }
+
+  private handleWindowResize = debounce(() => {
+    this.drawGrid();
+  }, 50);
 }
