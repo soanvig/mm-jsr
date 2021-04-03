@@ -21,6 +21,9 @@ export const isInstanceOf = (klass: any): AssertFunction => v =>
 export const isNumber: AssertFunction = v =>
   (Number.isFinite(v) ? false : { error: 'expected number', value: v });
 
+export const isFunction: AssertFunction = v =>
+  (typeof v === 'function' ? false : { error: 'expected function', value: v });
+
 export const isPlainObject: AssertFunction = v =>
   (isPlainObjectImpl(v) ? false : { error: 'expected literal object', value: v });
 

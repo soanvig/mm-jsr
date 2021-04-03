@@ -110,6 +110,11 @@
       top: 10px;
       background-color: #727272;
     }
+
+    .jsr_grid {
+      margin-top: 5px;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -127,6 +132,7 @@
         },
         initialValues: [25, 50, 75],
         container: document.getElementById('jsr'),
+        formatter: String,
       }
     });
   </script>

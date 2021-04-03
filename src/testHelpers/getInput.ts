@@ -15,6 +15,7 @@ export const getInput = ({
     max,
     step,
     container: document.body,
+    formatter: String,
     ...configInput,
   }).toDto();
 

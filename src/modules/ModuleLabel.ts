@@ -5,6 +5,7 @@ import { neighbourGroup } from '@/helpers/neighbourGroup';
 import { range } from '@/helpers/range';
 import { uniq } from '@/helpers/uniq';
 import { StateDto } from '@/models/State';
+import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
 
 export class ModuleLabels extends Module {
@@ -57,12 +58,15 @@ export class ModuleLabels extends Module {
       }));
 
       const avgLeftRatio = avg(...labels.map(v => v.value.asRatio()));
+      const formatValue = (v: Value) => this.config.formatter(
+        Number(v.asReal().toFixed(this.config.stepDecimals)),
+      );
 
       label.el.style.left = `${avgLeftRatio * 100}%`;
       label.el.innerHTML = labels.map(
         (label, index) => `
         <span data-key="${label.key}">
-          ${label.value.asReal().toFixed(this.config.stepDecimals)}
+          ${formatValue(label.value)}
           ${index < (labels.length - 1) ? ' - ' : ''}
         </span>
       `,

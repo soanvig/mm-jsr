@@ -1,4 +1,4 @@
-import { assert, isArray, isInstanceOf, isNumber, isPlainObject } from '@/validation/assert';
+import { assert, isArray, isFunction, isInstanceOf, isNumber, isPlainObject } from '@/validation/assert';
 
 export interface ConfigAttrs {
   // core
@@ -6,6 +6,9 @@ export interface ConfigAttrs {
   max: number;
   step: number;
   initialValues: number[];
+
+  // formatting
+  formatter: (v: number) => string;
 
   // limit
   limit?: { min?: number; max?: number };
@@ -46,6 +49,10 @@ export class Config {
     return this.attrs.step;
   }
 
+  public get formatter () {
+    return this.attrs.formatter;
+  }
+
   public get stepDecimals (): number {
     const compute = (n: number): number => {
       if (n === 0) {
@@ -68,6 +75,7 @@ export class Config {
     assert('step', attrs.step, isNumber);
     assert('initialValues', attrs.initialValues, isArray(isNumber));
     assert('container', attrs.container, isInstanceOf(window.HTMLElement));
+    assert('formatter', attrs.formatter, isFunction);
 
     if (attrs.limit) {
       assert('limit', attrs.limit, isPlainObject);
@@ -75,6 +83,7 @@ export class Config {
       attrs.limit.min && assert('limit.min', attrs.limit.min, isNumber);
       attrs.limit.max && assert('limit.min', attrs.limit.max, isNumber);
     }
+
 
     return new Config(attrs);
   }
