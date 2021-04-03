@@ -25,6 +25,8 @@ export class ModuleGrid extends Module {
     this.drawGrid();
 
     window.addEventListener('resize', this.handleWindowResize);
+
+    this.grid.addEventListener('click', this.handleClick);
   }
 
   public render (_: StateDto): VoidFunction {
@@ -98,4 +100,8 @@ export class ModuleGrid extends Module {
   private handleWindowResize = debounce(() => {
     this.drawGrid();
   }, 50);
+
+  private handleClick = (e: MouseEvent) => {
+    this.input.setClosestRatioValue(this.renderer.positionToRelative(e.clientX));
+  }
 }
