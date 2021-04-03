@@ -1,4 +1,5 @@
 import { avg } from '@/helpers/avg';
+import { closest } from '@/helpers/closest';
 import { neighbourGroup } from '@/helpers/neighbourGroup';
 import { range } from '@/helpers/range';
 import { times } from '@/helpers/times';
@@ -47,4 +48,12 @@ test('avg', t => {
   t.deepEqual(avg(1, 2, 3), 2);
   t.deepEqual(avg(5), 5);
   t.deepEqual(avg(10, 20), 15);
+});
+
+test('closest', t => {
+  const arr = [0, 20, 50, 100];
+
+  t.is(closest(25, arr), 1);
+  t.is(closest(50, arr), 2);
+  t.is(closest(35, arr), 2);
 });

@@ -50,6 +50,7 @@ const configDefaults = {
   initialValues: [25, 50],
   step: 1,
   container: document.body,
+  formatter: String,
 };
 
 const getConfig = (input?: Partial<typeof configDefaults>) => Config.createFromInput({

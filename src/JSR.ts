@@ -10,6 +10,7 @@ import { StateDto } from '@/models/State';
 import { ModuleLabels } from '@/modules/ModuleLabel';
 import { ModuleBar } from '@/modules/ModuleBar';
 import { ModuleLimit } from '@/modules/ModuleLimit';
+import { ModuleGrid } from '@/modules/ModuleGrid';
 
 interface Ctor {
   config: ConfigAttrs;
@@ -21,6 +22,7 @@ const modules = [
   ModuleLabels,
   ModuleBar,
   ModuleLimit,
+  ModuleGrid,
 ];
 
 export class JSR {
