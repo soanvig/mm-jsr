@@ -22,6 +22,8 @@ export class ModuleBar extends Module {
 
       this.addMoveHandler(bar, index - 1);
 
+      bar.addEventListener('click', this.handleClick);
+
       return bar;
     });
 
@@ -62,5 +64,9 @@ export class ModuleBar extends Module {
         startX = 0;
       },
     });
+  }
+
+  private handleClick = (e: MouseEvent) => {
+    this.input.setClosestRatioValue(this.renderer.positionToRelative(e.clientX));
   }
 }
