@@ -14,6 +14,14 @@ export class JSR {
     });
   }
 
+  public setRealValue (index: number, value: number) {
+    this.engine.inputHandler.setRealValue(index, value);
+  }
+
+  public setRatioValue (index: number, value: number) {
+    this.engine.inputHandler.setRatioValue(index, value);
+  }
+
   public destroy () {
     this.engine.modules.forEach(m => m.destroy());
   }
