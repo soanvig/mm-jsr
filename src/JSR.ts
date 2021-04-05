@@ -22,6 +22,14 @@ export class JSR {
     this.engine.inputHandler.setRatioValue(index, value);
   }
 
+  public getRealValue (index: number) {
+    return this.engine.stateProcessor.getState().values[index].asReal();
+  }
+
+  public getRatioValue (index: number) {
+    return this.engine.stateProcessor.getState().values[index].asRatio();
+  }
+
   public destroy () {
     this.engine.modules.forEach(m => m.destroy());
   }
