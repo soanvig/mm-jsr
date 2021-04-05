@@ -34,6 +34,14 @@ export class JSR {
     this.engine.addValueChangeHandler(handler);
   }
 
+  public enable () {
+    this.engine.enable();
+  }
+
+  public disable () {
+    this.engine.disable();
+  }
+
   public destroy () {
     this.engine.modules.forEach(m => m.destroy());
   }

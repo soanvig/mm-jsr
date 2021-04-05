@@ -34,7 +34,8 @@ export class Engine {
   public readonly renderer!: Renderer;
   public readonly modules!: Module[];
 
-  private readonly valueChageHandlers: ValueChangeHandler[] = [];
+  private valueChageHandlers: ValueChangeHandler[] = [];
+  private enabled = true;
 
   public constructor (setup: SetupCommand) {
     this.config = Config.createFromInput(setup.config);
@@ -68,6 +69,16 @@ export class Engine {
     this.valueChageHandlers.push(handler);
   }
 
+  public enable () {
+    this.renderer.getContainer().classList.remove('is-disabled');
+    this.enabled = true;
+  }
+
+  public disable () {
+    this.renderer.getContainer().classList.add('is-disabled');
+    this.enabled = false;
+  }
+
   private initView () {
     this.modules.forEach(m => m.initView());
 
@@ -75,6 +86,10 @@ export class Engine {
   }
 
   private onValueChange (index: number, value: Value) {
+    if (!this.enabled) {
+      return;
+    }
+
     const state = this.stateProcessor.updateValue(index, value);
 
     this.renderState(state);
