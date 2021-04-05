@@ -25,12 +25,16 @@ interface SetupCommand {
   config: ConfigAttrs;
 }
 
+export type ValueChangeHandler = (v: { index: number, real: number, ratio: number }) => void;
+
 export class Engine {
-  public config!: Config;
-  public stateProcessor!: StateProcessor;
-  public inputHandler!: InputHandler;
-  public renderer!: Renderer;
-  public modules!: Module[];
+  public readonly config!: Config;
+  public readonly stateProcessor!: StateProcessor;
+  public readonly inputHandler!: InputHandler;
+  public readonly renderer!: Renderer;
+  public readonly modules!: Module[];
+
+  private readonly valueChageHandlers: ValueChangeHandler[] = [];
 
   public constructor (setup: SetupCommand) {
     this.config = Config.createFromInput(setup.config);
@@ -60,6 +64,10 @@ export class Engine {
     this.initView();
   }
 
+  public addValueChangeHandler (handler: ValueChangeHandler) {
+    this.valueChageHandlers.push(handler);
+  }
+
   private initView () {
     this.modules.forEach(m => m.initView());
 
@@ -67,7 +75,17 @@ export class Engine {
   }
 
   private onValueChange (index: number, value: Value) {
-    this.renderState(this.stateProcessor.updateValue(index, value));
+    const state = this.stateProcessor.updateValue(index, value);
+
+    this.renderState(state);
+
+    this.valueChageHandlers.forEach(handler => {
+      handler({
+        index,
+        ratio: state.values[index].asRatio(),
+        real: state.values[index].asReal(),
+      });
+    });
   }
 
   private renderState (state: StateDto): void {

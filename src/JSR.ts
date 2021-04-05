@@ -1,4 +1,4 @@
-import { Engine } from '@/Engine';
+import { Engine, ValueChangeHandler } from '@/Engine';
 import { ConfigAttrs } from '@/models/Config';
 
 interface Ctor {
@@ -28,6 +28,10 @@ export class JSR {
 
   public getRatioValue (index: number) {
     return this.engine.stateProcessor.getState().values[index].asRatio();
+  }
+
+  public onValueChange (handler: ValueChangeHandler) {
+    this.engine.addValueChangeHandler(handler);
   }
 
   public destroy () {
