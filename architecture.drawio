@@ -1,6 +1,6 @@
-<mxfile host="65bd71144e" modified="2021-02-28T17:58:35.911Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Code-OSS/1.53.2 Chrome/83.0.4103.122 Electron/9.4.1 Safari/537.36" etag="5BJoRRj4dIsuJ76Izzd7" version="14.2.4" type="embed">
+<mxfile>
     <diagram id="XLUI0eQ95eJfd8FlJT_6" name="Page-1">
-        <mxGraphModel dx="1631" dy="531" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1920" dy="925" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -37,9 +37,6 @@
                 </mxCell>
                 <mxCell id="28" value="Additional limit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="730" y="1090" width="140" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="54" value="State" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" parent="1" vertex="1">
-                    <mxGeometry x="-540" y="1090" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="55" value="Module" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="-540" y="1020" width="120" height="60" as="geometry"/>
@@ -113,9 +110,6 @@
                 <mxCell id="85" value="Labels combinations" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="1010" y="350" width="170" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="87" value="&lt;font style=&quot;font-size: 12px&quot;&gt;Value&lt;br&gt;- .asReal()&lt;br&gt;- .asRatio()&lt;br&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" parent="1" vertex="1">
-                    <mxGeometry x="-360" y="880" width="120" height="90" as="geometry"/>
-                </mxCell>
                 <mxCell id="89" value="Stateless&lt;br&gt;extensions modifying&lt;br&gt;state in state loop" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="-630" y="935" width="80" height="90" as="geometry"/>
                 </mxCell>
@@ -152,7 +146,7 @@
                         <mxPoint x="1" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="94" value="JSR module API" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#76608a;strokeColor=#432D57;fontColor=#ffffff;" parent="1" vertex="1">
+                <mxCell id="94" value="Engine" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#76608a;strokeColor=#432D57;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="-150" y="860" width="120" height="380" as="geometry"/>
                 </mxCell>
                 <mxCell id="101" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="100" target="94" edge="1">
@@ -262,8 +256,11 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="177" value="&lt;font style=&quot;font-size: 12px&quot;&gt;State&lt;br&gt;- Value[]&lt;br&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" vertex="1" parent="1">
-                    <mxGeometry x="-360" y="990" width="120" height="90" as="geometry"/>
+                <mxCell id="180" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="179" target="94">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="179" value="JSR API" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="-150" y="730" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
