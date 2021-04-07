@@ -1,16 +1,28 @@
 import { Engine, ValueChangeHandler } from '@/Engine';
 import { ConfigAttrs } from '@/models/Config';
+import { Module } from '@/modules/Module';
+import { ModuleBar } from '@/modules/ModuleBar';
+import { ModuleGrid } from '@/modules/ModuleGrid';
+import { ModuleLabel } from '@/modules/ModuleLabel';
+import { ModuleLimit } from '@/modules/ModuleLimit';
+import { ModuleRail } from '@/modules/ModuleRail';
+import { ModuleSlider } from '@/modules/ModuleSlider';
+import { assert, isArray, isInstanceOf } from '@/validation/assert';
 
 interface Ctor {
   config: ConfigAttrs;
+  modules: Module[];
 }
 
 export class JSR {
   private engine: Engine;
 
   public constructor (ctor: Ctor) {
+    assert('JSR.modules', ctor.modules, isArray(isInstanceOf(Module)));
+
     this.engine = new Engine({
       config: ctor.config,
+      modules: ctor.modules,
     });
   }
 
@@ -45,4 +57,12 @@ export class JSR {
   public destroy () {
     this.engine.modules.forEach(m => m.destroy());
   }
+
+  public static Module = Module;
+  public static Bar = ModuleBar;
+  public static Grid = ModuleGrid;
+  public static Label = ModuleLabel;
+  public static Limit = ModuleLimit;
+  public static Rail = ModuleRail;
+  public static Slider = ModuleSlider;
 }

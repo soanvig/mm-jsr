@@ -121,7 +121,14 @@
   <div id="jsr"></div>
   <script src="./build/jsr.js"></script>
   <script>
-    const jsr = new JSR.JSR({
+    const jsr = new JSR({
+      modules: [
+        new JSR.Rail(),
+        new JSR.Slider(),
+        new JSR.Bar(),
+        new JSR.Label(),
+        new JSR.Grid(),
+      ],
       config: {
         min: 0,
         max: 100,

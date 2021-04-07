@@ -5,24 +5,10 @@ import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
 import { Renderer } from '@/Renderer';
 import { StateProcessor } from '@/StateProcessor';
-import { ModuleLabels } from '@/modules/ModuleLabel';
-import { ModuleBar } from '@/modules/ModuleBar';
-import { ModuleLimit } from '@/modules/ModuleLimit';
-import { ModuleGrid } from '@/modules/ModuleGrid';
-import { ModuleRail } from '@/modules/ModuleRail';
-import { ModuleSlider } from '@/modules/ModuleSlider';
-
-const modules = [
-  ModuleRail,
-  ModuleSlider,
-  ModuleLabels,
-  ModuleBar,
-  ModuleLimit,
-  ModuleGrid,
-];
 
 interface SetupCommand {
   config: ConfigAttrs;
+  modules: Module[];
 }
 
 export type ValueChangeHandler = (v: { index: number, real: number, ratio: number }) => void;
@@ -56,7 +42,7 @@ export class Engine {
       getState: this.stateProcessor.getState.bind(this.stateProcessor),
     });
 
-    this.modules = modules.map(M => new M({
+    this.modules = setup.modules.map(M => M.init({
       config,
       renderer: this.renderer,
       input: this.inputHandler,
