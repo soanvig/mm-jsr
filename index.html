@@ -30,6 +30,10 @@
       font: 14px sans-serif;
     }
 
+    .jsr.is-disabled {
+      background: grey;
+    }
+
     .jsr_rail {
       height: 5px;
       background: #444;
@@ -119,7 +123,8 @@
 </head>
 <body>
   <div id="jsr"></div>
-  <button id="changeLimit">Random limit</button>
+  <button id="changeLimit">Randomize limit</button>
+  <button id="toogleEnabled">Toogle enabled</button>
   <script src="./build/jsr.js"></script>
   <script>
     const jsr = new JSR({
@@ -151,6 +156,14 @@
         max: Math.floor(Math.random() * 50) + 50,
       })
     });
+
+    toogleEnabled.addEventListener('click', () => {
+      if (jsr.isEnabled()) {
+        jsr.disable();
+      } else {
+        jsr.enable();
+      }
+    })
   </script>
 </body>
 </html>

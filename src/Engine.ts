@@ -65,6 +65,10 @@ export class Engine {
     this.enabled = false;
   }
 
+  public isEnabled () {
+    return this.enabled;
+  }
+
   public changeLimit (command: ChangeLimitCommand) {
     const state = this.stateProcessor.changeLimit(command);
 

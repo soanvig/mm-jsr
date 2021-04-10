@@ -28,19 +28,19 @@ export class JSR {
     });
   }
 
-  public setRealValue (index: number, value: number) {
+  public setRealValue (index: number, value: number): void {
     this.engine.inputHandler.setRealValue(index, value);
   }
 
-  public setRatioValue (index: number, value: number) {
+  public setRatioValue (index: number, value: number): void {
     this.engine.inputHandler.setRatioValue(index, value);
   }
 
-  public getRealValue (index: number) {
+  public getRealValue (index: number): number {
     return this.engine.stateProcessor.getState().values[index].asReal();
   }
 
-  public getRatioValue (index: number) {
+  public getRatioValue (index: number): number {
     return this.engine.stateProcessor.getState().values[index].asRatio();
   }
 
@@ -48,7 +48,7 @@ export class JSR {
     this.engine.addValueChangeHandler(handler);
   }
 
-  public changeLimit (command: ChangeLimitCommand) {
+  public changeLimit (command: ChangeLimitCommand): void {
     assert('limit object', command, isPlainObject);
 
     if (command.min) {
@@ -65,15 +65,19 @@ export class JSR {
     });
   }
 
-  public enable () {
+  public enable (): void {
     this.engine.enable();
   }
 
-  public disable () {
+  public disable (): void {
     this.engine.disable();
   }
 
-  public destroy () {
+  public isEnabled (): boolean {
+    return this.engine.isEnabled();
+  }
+
+  public destroy (): void {
     this.engine.modules.forEach(m => m.destroy());
   }
 
