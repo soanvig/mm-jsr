@@ -3,7 +3,7 @@ import ttypescript from 'ttypescript';
 import { terser } from 'rollup-plugin-terser';
 
 const outputCommons = {
-  format: 'iife',
+  format: 'umd',
   name: 'JSR',
 };
 
