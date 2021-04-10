@@ -28,22 +28,51 @@ export class JSR {
     });
   }
 
+  /**
+   * Set `index` value (real)
+   *
+   * @param index - index of value to set
+   * @param value - real value to set
+   */
   public setRealValue (index: number, value: number): void {
     this.engine.inputHandler.setRealValue(index, value);
   }
 
+  /**
+   * Set `index` value (ratio)
+   *
+   * @param index - index of value to set
+   * @param value - ratio value to set
+   */
   public setRatioValue (index: number, value: number): void {
     this.engine.inputHandler.setRatioValue(index, value);
   }
 
+  /**
+   * Get `index` value (real)
+   *
+   * @param index - index of value to get
+   * @returns - real value
+   */
   public getRealValue (index: number): number {
     return this.engine.stateProcessor.getState().values[index].asReal();
   }
 
+  /**
+   * Get `index` value (ratio)
+   *
+   * @param index - index of value to get
+   * @returns - ratio value
+   */
   public getRatioValue (index: number): number {
     return this.engine.stateProcessor.getState().values[index].asRatio();
   }
 
+  /**
+   * Add handler listening of any value change
+   *
+   * @param handler - handler listening for value change
+   */
   public onValueChange (handler: ValueChangeHandler) {
     this.engine.addValueChangeHandler(handler);
   }
