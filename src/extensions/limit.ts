@@ -1,13 +1,13 @@
 import { Extension } from '@/extensions/types';
-import { mapChanged } from '@/helpers/mapChanged';
 
 export const extensionLimit: Extension = (config, state, changelog) => {
   const { values } = state;
 
-  const limitedValues = mapChanged(values, changelog.changedValues, (value, index, processedValues) => (
+  // @NOTE this modified all values. Should changelog include these values then??
+  const limitedValues = values.map(value => (
     value.clampReal(
-      config.limit?.min ?? -Infinity,
-      config.limit?.max ?? +Infinity,
+      state.limit?.min?.asReal() ?? -Infinity,
+      state.limit?.max?.asReal() ?? +Infinity,
     )
   ));
 

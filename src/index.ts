@@ -1,1 +1,3 @@
-export { JSR } from './JSR';
+import { JSR } from './JSR';
+
+export default JSR;

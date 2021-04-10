@@ -10,17 +10,19 @@ export interface ModuleArgs {
 }
 
 export abstract class Module {
-  protected renderer: Renderer;
-  protected config: ConfigDto;
-  protected input: InputHandler;
-
-  public constructor (args: ModuleArgs) {
-    this.renderer = args.renderer;
-    this.config = args.config;
-    this.input = args.input;
-  }
+  protected renderer!: Renderer;
+  protected config!: ConfigDto;
+  protected input!: InputHandler;
 
   public abstract destroy (): void;
   public abstract render (state: StateDto): VoidFunction;
   public abstract initView (): void;
+
+  public init (args: ModuleArgs) {
+    this.renderer = args.renderer;
+    this.config = args.config;
+    this.input = args.input;
+
+    return this;
+  }
 }
