@@ -1,4 +1,4 @@
-import { State, StateDto } from '@/models/State';
+import { ChangeLimitCommand, State, StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
 import type { Extension, Changelog } from '@/extensions/types';
 import { ConfigDto } from '@/models/Config';
@@ -38,6 +38,14 @@ export class StateProcessor {
       values,
       limit,
     });
+  }
+
+  public changeLimit (command: ChangeLimitCommand): StateDto {
+    const updatedState = this.state.changeLimit(command);
+
+    this.state = this.process(updatedState);
+
+    return this.state.toDto();
   }
 
   public updateValue (index: number, value: Value): StateDto {

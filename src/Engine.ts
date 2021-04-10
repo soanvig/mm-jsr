@@ -65,6 +65,14 @@ export class Engine {
     this.enabled = false;
   }
 
+  public produceRealValue (value: number): Value {
+    return Value.fromReal({
+      real: value,
+      max: this.config.max,
+      min: this.config.min,
+    });
+  }
+
   private initView () {
     this.modules.forEach(m => m.initView());
 

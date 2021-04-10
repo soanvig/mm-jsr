@@ -8,6 +8,8 @@ interface Data {
 
 export interface StateDto extends Data {}
 
+export type ChangeLimitCommand = { min?: Value, max?: Value };
+
 export class State {
   public readonly values: Value[];
   public readonly limit?: { min?: Value; max?: Value };
@@ -21,6 +23,13 @@ export class State {
     return new State({
       ...this.toData(),
       values,
+    });
+  }
+
+  public changeLimit (command: ChangeLimitCommand) {
+    return new State({
+      ...this.toData(),
+      limit: command,
     });
   }
 

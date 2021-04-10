@@ -7,12 +7,14 @@ import { ModuleLabel } from '@/modules/ModuleLabel';
 import { ModuleLimit } from '@/modules/ModuleLimit';
 import { ModuleRail } from '@/modules/ModuleRail';
 import { ModuleSlider } from '@/modules/ModuleSlider';
-import { assert, isArray, isInstanceOf } from '@/validation/assert';
+import { assert, isArray, isInstanceOf, isNumber, isPlainObject } from '@/validation/assert';
 
 interface Ctor {
   config: ConfigAttrs;
   modules: Module[];
 }
+
+export type ChangeLimitCommand = { min?: number; max?: number; }
 
 export class JSR {
   private engine: Engine;
@@ -44,6 +46,23 @@ export class JSR {
 
   public onValueChange (handler: ValueChangeHandler) {
     this.engine.addValueChangeHandler(handler);
+  }
+
+  public changeLimit (command: ChangeLimitCommand) {
+    assert('limit object', command, isPlainObject);
+
+    if (command.min) {
+      assert('limit.min', command.min, isNumber);
+    }
+
+    if (command.max) {
+      assert('limit.max', command.max, isNumber);
+    }
+
+    this.engine.stateProcessor.changeLimit({
+      min: command.min !== undefined ? this.engine.produceRealValue(command.min) : undefined,
+      max: command.max !== undefined ? this.engine.produceRealValue(command.max) : undefined,
+    });
   }
 
   public enable () {
