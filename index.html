@@ -125,6 +125,8 @@
   <div id="jsr"></div>
   <button id="changeLimit">Randomize limit</button>
   <button id="toogleEnabled">Toogle enabled</button>
+  <button id="setValue">Set first value</button>
+  <button id="destroy">Destroy</button>
   <script src="./build/jsr.js"></script>
   <script>
     const jsr = new JSR({
@@ -163,7 +165,17 @@
       } else {
         jsr.enable();
       }
-    })
+    });
+
+    setValue.addEventListener('click', () => {
+      jsr.setRealValue(0, Math.floor(Math.random() * 50));
+    });
+
+    destroy.addEventListener('click', () => {
+      jsr.destroy();
+    });
+
+    jsr.onValueChange(console.log)
   </script>
 </body>
 </html>
