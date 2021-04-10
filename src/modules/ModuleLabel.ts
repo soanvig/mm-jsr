@@ -8,7 +8,7 @@ import { StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
 
-export class ModuleLabels extends Module {
+export class ModuleLabel extends Module {
   private labels: Map<string, Label> = new Map();
   private primaryLabels: string[] = [];
 

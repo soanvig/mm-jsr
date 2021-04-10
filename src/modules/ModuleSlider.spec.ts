@@ -74,7 +74,7 @@ const testKeyboard = async (opts: KeyboardEventInit, test: (index: number, value
       getState: () => input.state,
     });
 
-    sliderModule = new ModuleSlider({
+    sliderModule = new ModuleSlider().init({
       renderer,
       input: inputHandler,
       config: input.config,
