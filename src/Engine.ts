@@ -1,6 +1,6 @@
 import { InputHandler } from '@/InputHandler';
 import { Config, ConfigAttrs } from '@/models/Config';
-import { StateDto } from '@/models/State';
+import { ChangeLimitCommand, StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
 import { Renderer } from '@/Renderer';
@@ -63,6 +63,12 @@ export class Engine {
   public disable () {
     this.renderer.getContainer().classList.add('is-disabled');
     this.enabled = false;
+  }
+
+  public changeLimit (command: ChangeLimitCommand) {
+    const state = this.stateProcessor.changeLimit(command);
+
+    this.renderState(state);
   }
 
   public produceRealValue (value: number): Value {

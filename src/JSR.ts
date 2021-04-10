@@ -59,7 +59,7 @@ export class JSR {
       assert('limit.max', command.max, isNumber);
     }
 
-    this.engine.stateProcessor.changeLimit({
+    this.engine.changeLimit({
       min: command.min !== undefined ? this.engine.produceRealValue(command.min) : undefined,
       max: command.max !== undefined ? this.engine.produceRealValue(command.max) : undefined,
     });

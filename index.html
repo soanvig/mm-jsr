@@ -119,6 +119,7 @@
 </head>
 <body>
   <div id="jsr"></div>
+  <button id="changeLimit">Random limit</button>
   <script src="./build/jsr.js"></script>
   <script>
     const jsr = new JSR({
@@ -128,6 +129,7 @@
         new JSR.Bar(),
         new JSR.Label(),
         new JSR.Grid({ color: '#000' }),
+        new JSR.Limit(),
       ],
       config: {
         min: 0,
@@ -141,6 +143,13 @@
         container: document.getElementById('jsr'),
         formatter: String,
       }
+    });
+
+    changeLimit.addEventListener('click', () => {
+      jsr.changeLimit({
+        min: Math.floor(Math.random() * 50),
+        max: Math.floor(Math.random() * 50) + 50,
+      })
     });
   </script>
 </body>
