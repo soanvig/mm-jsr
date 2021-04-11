@@ -4,7 +4,8 @@
   "author": "Mateusz Koteja <soanvig@gmail.com>",
   "description": "Pure JS range input solution",
   "license": "LGPLv3",
-  "main": "dist/jsr.min.js",
+  "main": "build/index.js",
+  "types": "build/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/soanvig/jsr.git"

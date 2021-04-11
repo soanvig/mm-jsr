@@ -12,17 +12,16 @@ export default {
   plugins: [
     typescript({
       typescript: ttypescript,
+      declaration: true,
+      declarationDir: './build/types',
+      rootDir: 'src/',
     }),
   ],
   output: [
     {
       ...outputCommons,
+      dir: './build',
       sourcemap: true,
-      file: 'build/jsr.js',
-    },
-    {
-      ...outputCommons,
-      file: 'build/jsr.min.js',
       plugins: [
         terser(),
       ],

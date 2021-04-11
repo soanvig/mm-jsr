@@ -52,7 +52,7 @@ Browser support: Firefox, Chrome (and Chromium forks, like: Brave, Edge, Opera, 
 
   or
 
-  <script src="https://unpkg.com/browse/mm-jsr@1.1.6/build/main.js"></script>
+  <script src="https://unpkg.com/browse/mm-jsr/build/index.js"></script>
   (which makes variable JSR available globally)
   ```
 
