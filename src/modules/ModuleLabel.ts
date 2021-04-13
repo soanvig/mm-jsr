@@ -61,7 +61,8 @@ export class ModuleLabel extends Module {
   public render (state: StateDto): VoidFunction {
     return () => {
       this.applyValues(state);
-      this.applyOverlapping();
+      this.fixExceeding();
+      this.fixOverlapping();
     };
   }
 
@@ -89,7 +90,10 @@ export class ModuleLabel extends Module {
     }
   }
 
-  private applyOverlapping () {
+  /**
+   * @performance
+   */
+  private fixOverlapping () {
     const verifiedLabels = verifyVisibleLabels([], this.primaryLabels, this.doLabelsOverlap.bind(this));
 
     [...this.labels.values()].forEach(label => {
@@ -97,6 +101,29 @@ export class ModuleLabel extends Module {
         label.el.classList.remove('is-hidden');
       } else {
         label.el.classList.add('is-hidden');
+      }
+    });
+  }
+
+  /**
+   * @performance
+   */
+  private fixExceeding () {
+    const containerRect = this.renderer.getContainer().getBoundingClientRect();
+
+    [...this.labels.values()].map(l => l.el).forEach(label => {
+      const rect = label.getBoundingClientRect();
+
+      if (rect.left < containerRect.left) {
+        const currentLeft = parseFloat(label.style.left);
+        const correction = this.renderer.distanceToRelative(containerRect.left - rect.left) * 100;
+        label.style.left = `${currentLeft + correction}%`;
+      }
+
+      if (rect.right > containerRect.right) {
+        const currentLeft = parseFloat(label.style.left);
+        const correction = this.renderer.distanceToRelative(rect.right - containerRect.right) * 100;
+        label.style.left = `${currentLeft - correction}%`;
       }
     });
   }
