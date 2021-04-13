@@ -132,6 +132,10 @@ CSS are similar, but differ in details: basically because HTML is different (fla
 
 JSR instance API is completely different, although features are almost the same (v2 should contain most of the v1 features).
 
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md)
+
 ## v1 contributors
 
 Thanks to all contributors, which made v1 better version:
