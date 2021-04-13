@@ -29,7 +29,7 @@ export class JSR {
   }
 
   /**
-   * Set `index` value (real)
+   * Set `index` value (real).
    *
    * @param index - index of value to set
    * @param value - real value to set
@@ -39,7 +39,7 @@ export class JSR {
   }
 
   /**
-   * Set `index` value (ratio)
+   * Set `index` value (ratio).
    *
    * @param index - index of value to set
    * @param value - ratio value to set
@@ -49,7 +49,7 @@ export class JSR {
   }
 
   /**
-   * Get `index` value (real)
+   * Get `index` value (real).
    *
    * @param index - index of value to get
    * @returns - real value
@@ -59,7 +59,7 @@ export class JSR {
   }
 
   /**
-   * Get `index` value (ratio)
+   * Get `index` value (ratio).
    *
    * @param index - index of value to get
    * @returns - ratio value
@@ -69,7 +69,7 @@ export class JSR {
   }
 
   /**
-   * Add handler listening of any value change
+   * Add handler listening of any value change.
    *
    * @param handler - handler listening for value change
    */
@@ -77,6 +77,11 @@ export class JSR {
     this.engine.addValueChangeHandler(handler);
   }
 
+  /**
+   * Dynamically change limit.
+   *
+   * @param command - limit object, that should be applied as new limit
+   */
   public changeLimit (command: ChangeLimitCommand): void {
     assert('limit object', command, isPlainObject);
 
@@ -94,18 +99,34 @@ export class JSR {
     });
   }
 
+  /**
+   * Enable JSR by allowing value changes, and removing `.is-disabled` class from the container.
+   */
   public enable (): void {
     this.engine.enable();
   }
 
+  /**
+   * Disable JSR by disallowing value changes, and adding `.is-disabled` class to the container.
+   */
   public disable (): void {
     this.engine.disable();
   }
 
+  /**
+   * Return whether JSR is enabled or disabled.
+   */
   public isEnabled (): boolean {
     return this.engine.isEnabled();
   }
 
+  /**
+   * Destroy JSR instance, removing all HTML elements (besides container) and event listeners.
+   *
+   * @NOTE this function does not remove the instance of JSR itself, therefore
+   * it does not remove handler already added to JSR, but one can simple forget about this instance,
+   * and let garbage-collector to collect it.
+   */
   public destroy (): void {
     this.engine.modules.forEach(m => m.destroy());
   }
