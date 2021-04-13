@@ -14,7 +14,7 @@ interface Ctor {
   modules: Module[];
 }
 
-export type ChangeLimitCommand = { min?: number; max?: number; }
+type ChangeLimitCommand = { min?: number; max?: number; }
 
 export class JSR {
   private engine: Engine;

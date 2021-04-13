@@ -56,9 +56,9 @@ Browser support: Firefox, Chrome (and Chromium forks, like: Brave, Edge, Opera, 
   (which makes variable JSR available globally)
   ```
 
-3. Add CSS
+3. Add CSS (you can use basic styles from [here](./styles.css))
 
-4. Instantiate
+4. Instantiate JSR
 
   ```js
     const jsr = new JSR({
@@ -120,7 +120,7 @@ limit | visual representation of limit configuration | new JSR.Limit() | -
 However, if you decide to make changes to the library code, You **has to** publish them under LGPLv3 license.
 This way library legally always stays open source and free.
 
-The best to make changes is to create public fork of the library.
+The best way to make changes is to create public fork of the library.
 
 If You don't plan to add any malicious behavior to the library, this license should not be harmful for You in any way.
 
