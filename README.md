@@ -88,7 +88,6 @@ LGPLv3 license doubts are [explained here](#license-explanation)
         },
         initialValues: [25, 50, 75],
         container: document.getElementById('jsr'),
-        formatter: String,
       }
     });
   ```
