@@ -97,6 +97,15 @@ LGPLv3 license doubts are [explained here](#license-explanation)
 
 See docs (@TODO)
 
+## Important notes
+
+### Locking screen on touchevent
+
+Touch event on mobile devices is supported by JSR. Because moving the finger around the screen to move slider caused the view to go up and down, I decided to lock the screen on touch start. This means, that to document root `.jsr_lockscreen` class is applied, which sets the size of document root to window size. If it causes any problems, You can set `overflow: visible; width: auto; height: auto;` on `.jsr_lockscreen` class (or just remove this class from code), and report the issue through GitHub's issue system.
+
+**Known issues**:
+1. it may cause screen jump on mobile screens, because after locking screen the top address bar may disappear.
+
 ## Keyboard support
 
 JSR supports keyboard control. First of all one of sliders needs to be focused (by TAB or by click).

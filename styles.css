@@ -111,3 +111,9 @@
   margin-top: 5px;
   width: 100%;
 }
+
+.jsr_lockscreen {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
