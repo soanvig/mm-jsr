@@ -2,6 +2,7 @@ import { debounce } from '@/helpers/debounce';
 import { StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
+import { assert, isFunction, isNumber, isString } from '@/validation/assert';
 
 interface Settings {
   color: string;
@@ -9,6 +10,7 @@ interface Settings {
   fontSize: number;
   fontFamily: string;
   textPadding: number;
+  formatter: (realValue: number) => string;
 }
 
 export class ModuleGrid extends Module {
@@ -19,12 +21,15 @@ export class ModuleGrid extends Module {
   constructor (settings: Partial<Settings> = {}) {
     super();
 
+    this.assertSettings(settings);
+
     this.settings = Object.assign({
       color: 'rgba(0, 0, 0, 0.3)',
       height: 10,
       fontSize: 10,
       fontFamily: 'sans-serif',
       textPadding: 5,
+      formatter: String,
     }, settings);
   }
 
@@ -101,7 +106,7 @@ export class ModuleGrid extends Module {
 
         const roundedValue = value.changeReal(Math.round(value.asReal() / this.config.step) * this.config.step);
 
-        const text = this.config.formatter(roundedValue.asReal());
+        const text = this.settings.formatter(roundedValue.asReal());
         context.fillText(text.toString(), i * ratio * canvasWidth, this.settings.height + this.settings.textPadding);
       }
     }
@@ -116,5 +121,14 @@ export class ModuleGrid extends Module {
 
   private handleClick = (e: MouseEvent) => {
     this.input.setClosestRatioValue(this.renderer.positionToRelative(e.clientX));
+  }
+
+  private assertSettings (settings: Partial<Settings>) {
+    settings.formatter && assert('Grid.formatter', settings.formatter, isFunction);
+    settings.color && assert('Grid.color', settings.color, isString);
+    settings.height && assert('Grid.height', settings.height, isNumber);
+    settings.fontSize && assert('Grid.fontSize', settings.fontSize, isNumber);
+    settings.fontFamily && assert('Grid.fontFamily', settings.fontFamily, isString);
+    settings.textPadding && assert('Grid.textPadding', settings.textPadding, isNumber);
   }
 }

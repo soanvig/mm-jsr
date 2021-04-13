@@ -1,5 +1,4 @@
 import { useOnMove } from '@/events/useOnMove';
-import { useOnTouch } from '@/events/useOnTouch';
 import { avg } from '@/helpers/avg';
 import { neighbourGroup } from '@/helpers/neighbourGroup';
 import { range } from '@/helpers/range';
@@ -7,10 +6,26 @@ import { uniq } from '@/helpers/uniq';
 import { StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
+import { assert, isFunction } from '@/validation/assert';
+
+interface Settings {
+  formatter: (realValue: number) => string;
+}
 
 export class ModuleLabel extends Module {
   private labels: Map<string, Label> = new Map();
   private primaryLabels: string[] = [];
+  private settings: Settings;
+
+  constructor (settings: Partial<Settings> = {}) {
+    super();
+
+    this.assertSettings(settings);
+
+    this.settings = Object.assign({
+      formatter: String,
+    }, settings);
+  }
 
   public destroy () {
     this.labels.forEach(l => l.el.remove());
@@ -58,7 +73,7 @@ export class ModuleLabel extends Module {
       }));
 
       const avgLeftRatio = avg(...labels.map(v => v.value.asRatio()));
-      const formatValue = (v: Value) => this.config.formatter(
+      const formatValue = (v: Value) => this.settings.formatter(
         Number(v.asReal().toFixed(this.config.stepDecimals)),
       );
 
@@ -107,6 +122,10 @@ export class ModuleLabel extends Module {
     const secondRect = this.labels.get(second)!.el.getBoundingClientRect();
 
     return firstRect.right > secondRect.left;
+  }
+
+  private assertSettings (settings: Partial<Settings>) {
+    settings.formatter && assert('Label.formatter', settings.formatter, isFunction);
   }
 }
 
