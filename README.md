@@ -6,9 +6,11 @@ Range input is form's field where one can choose a value from min-max range.
 Although HTML 5 comes with input[type="range"] its functionality lacks a lot of features.
 M&M JSR gives You anything You may need.
 
-Homepage: https://mm-jsr.github.io/
+Homepage and demo: https://mm-jsr.github.io/
 
 Browser support: Firefox, Chrome (and Chromium forks, like: Brave, Edge, Opera, Vivaldi)
+
+LGPLv3 license doubts are [explained here](#license-explanation)
 
 ## Features
 
@@ -85,7 +87,11 @@ Browser support: Firefox, Chrome (and Chromium forks, like: Brave, Edge, Opera, 
     });
   ```
 
-## Keyboard
+## Configuration and API
+
+See docs (@TODO)
+
+## Keyboard support
 
 JSR supports keyboard control. First of all one of sliders needs to be focused (by TAB or by click).
 
@@ -109,6 +115,11 @@ label | moveable labels beneath sliders  | new JSR.Label() | -
 grid | vertical bar beneath sliders | new JSR.Grid(options) | @TODO
 limit | visual representation of limit configuration | new JSR.Limit() | -
 
+If You don't see a module here, that suits your case, **You can create one by yourself**.
+Modules created that way are applicable via configuration option, so You don't have to make changes to library code.
+
+You may want to see [./CONTRIBUTING.md](./CONTRIBUTING.md#creating-new-modules) for more information.
+
 ## License explanation
 
 `mm-jsr` uses LGPLv3 license. It means, that You can:
@@ -124,6 +135,9 @@ The best way to make changes is to create public fork of the library.
 
 If You don't plan to add any malicious behavior to the library, this license should not be harmful for You in any way.
 
+It is also *expected*, that any plugins (extensions or modules) added to library via configuration, are respecting final user freedom,
+and are not spying on his actions perfomed over such module without his knowledge and approval.
+
 ## Migration guide: v1 -> v2
 
 Basically You need to implement it from the ground up.
@@ -134,16 +148,4 @@ JSR instance API is completely different, although features are almost the same 
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
-
-## v1 contributors
-
-Thanks to all contributors, which made v1 better version:
-
-- [johnnyflinn](https://github.com/johnnyflinn) - setValue hotfix, ES5 build
-- [Nufeen](https://github.com/Nufeen) - README revision
-- [plumthedev](https://github.com/plumthedev) - fixed rounding number in grid display
-- [sahithyen](https://github.com/sahithyen) - support for HDPI (grid)
-- [Soanvig](https://github.com/soanvig) - maintainer (in sake of consistency :-) )
-
-Besides that thanks to all people who tried to contribute by opening issues and PRs!
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for information about how to contribute and current contributors.
