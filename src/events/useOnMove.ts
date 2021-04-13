@@ -27,6 +27,8 @@ export const useOnMove = (trigger: HTMLElement, cb: (x: number, clickElement: HT
 
   useOnTouch(trigger, {
     onTouchDown: (touch: Touch) => {
+      document.documentElement.classList.add('jsr_lockscreen');
+
       clickElement = touch.target as any as HTMLElement;
 
       const rect = clickElement.getBoundingClientRect();
@@ -36,6 +38,8 @@ export const useOnMove = (trigger: HTMLElement, cb: (x: number, clickElement: HT
       throttledMove(touch.clientX - offset, clickElement!);
     },
     onTouchUp: () => {
+      document.documentElement.classList.remove('jsr_lockscreen');
+
       offset = 0;
       clickElement = null;
     },
