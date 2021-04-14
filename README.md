@@ -1,7 +1,5 @@
 # mm-jsr
 
-**This is development branch**
-
 For v1 (old version) documentation see [v1 branch](https://github.com/soanvig/mm-jsr/tree/v1)
 
 ---
@@ -95,6 +93,8 @@ LGPLv3 license doubts are [explained here](#license-explanation)
 ## Configuration and API
 
 See docs (@TODO)
+
+For now You may like to reference code: [JSR.ts](./src/JSR.ts)
 
 ## Important notes
 
