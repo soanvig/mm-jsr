@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSR</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body style="height: 120vh;">
+  <div id="jsr"></div>
+  <button id="changeLimit">Randomize limit</button>
+  <button id="toogleEnabled">Toogle enabled</button>
+  <button id="setValue">Set first value</button>
+  <button id="destroy">Destroy</button>
+  <script src="./build/index.js"></script>
+  <script>
+    const jsr = new JSR({
+      modules: [
+        new JSR.Rail(),
+        new JSR.Slider(),
+        new JSR.Bar(),
+        new JSR.Label(),
+        new JSR.Grid({ color: '#000' }),
+        // new JSR.Limit(),
+      ],
+      config: {
+        min: 0,
+        max: 100,
+        step: 0.01,
+        // limit: {
+        //   min: 15,
+        //   max: 90,
+        // },
+        initialValues: [25, 50, 75],
+        container: document.getElementById('jsr'),
+      }
+    });
+
+    changeLimit.addEventListener('click', () => {
+      jsr.changeLimit({
+        min: Math.floor(Math.random() * 50),
+        max: Math.floor(Math.random() * 50) + 50,
+      })
+    });
+
+    toogleEnabled.addEventListener('click', () => {
+      if (jsr.isEnabled()) {
+        jsr.disable();
+      } else {
+        jsr.enable();
+      }
+    });
+
+    setValue.addEventListener('click', () => {
+      jsr.setRealValue(0, Math.floor(Math.random() * 50));
+    });
+
+    destroy.addEventListener('click', () => {
+      jsr.destroy();
+    });
+
+    jsr.onValueChange(console.log)
+  </script>
+</body>
+</html>
