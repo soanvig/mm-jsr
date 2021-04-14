@@ -5,13 +5,12 @@
     <meta name="description" content="Mort&Mortis JS Range is lightweight and elastic library for JavaScript. It provides You with excellent solution for creating so-called range-inputs.">
     <title>Mort&Mortis JS Range</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://rawgit.com/soanvig/mm-jsr/master/dist/assets/css/main.css" rel="stylesheet">
-    <script src="https://rawgit.com/soanvig/mm-jsr/master/dist/main.js"></script>
+    
+    <script src="https://unpkg.com/mm-jsr/build/index.js"></script>
     <link href="assets/plugins/prism.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
-
-
+    
+    
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
@@ -21,7 +20,7 @@
     <meta name="msapplication-TileColor" content="#181818">
     <meta name="msapplication-config" content="/assets/images/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-
+    
 </head>
 <body class="page-body">
     <div class="page-section page-section--start" id="start">
@@ -47,40 +46,56 @@
             </ul>
         </nav>
         <a class="menu-open" href="#menu" aria-hidden="true">Menu</a>
-
+        
         <div class="page-section--start_content">
             <span class="page-section--start_name">Mort&amp;Mortis</span>
             <span class="page-section--start_subname">presents</span>
             <span class="page-section--start_app">JS Range</span>
         </div>
-
+        
         <div class="page-section--start_demo">
-            <input id="startDemoMin" name="range" type="range" min="-100" max="100" step="1" value="-50">
-            <input id="startDemoMax" name="range" type="range" min="-100" max="100" step"1" value="50">
+            <div id="startDemo"></div>
             <script>
-                new JSR(['#startDemoMin', '#startDemoMax'], {
-                    min: -100,
-                    max: 100,
-                    sliders: 2,
-                    values: [-50, 50],
-                    grid: {
-                        color: '#555'
+                new JSR({
+                    modules: [
+                        new JSR.Rail(),
+                        new JSR.Slider(),
+                        new JSR.Bar(),
+                        new JSR.Label(),
+                        new JSR.Grid({
+                            color: '#777'
+                        }),
+                    ],
+                    config: {
+                        min: 0,
+                        max: 100,
+                        step: 1,
+                        initialValues: [25,75],
+                        container: document.getElementById('startDemo'),
                     }
                 });
             </script>
         </div>
-
+        
         <a class="button button--download" href="https://github.com/soanvig/mm-jsr">Get started</a>
     </div>
-
+    
     <main class="page-main">
         <section class="page-section" id="about">
             <h2 class="header">About M&amp;M JSR</h2>
-            <p class="paragraph">Mort&amp;Mortis JS Range (M&amp;M JSR) is library for JavaScript. It provides You with excellent solution for creating so-called range-inputs. Range input is form's field where one can choose a value from min-max range. Although HTML 5 comes with input[type="range"] its functionality lacks a lot of features. M&amp;M JSR gives You <strong>anything You may need</strong>.</p>
-            <p class="paragraph">M&amp;M JS Range was created as an alternative to popular <a class="link" href="http://ionden.com/a/plugins/ion.rangeSlider/en.html">ion.rangeSlider</a>. Being competition for such a big brand I decided to focus on features <strong>ion.rangeSlider doesn't have</strong>: better keyboard support, support for screen-readers (which is very hard part and is being developed), lightweight, no dependencies, any number of sliders and others. <a href="#comparison" class="link">See comparison...</a></p>
+            <p class="paragraph">
+                M&M JS Range (M&M JSR v2) provides You with excellent solution for creating so-called range-inputs.
+            </p>
+            <p class="paragraph">
+                Range input is form's field where one can choose a value from min-max range.
+                Although HTML 5 comes with input[type="range"] its functionality lacks a lot of features.
+                M&M JSR gives You anything You may need.
+                
+                For more information see <a class="link" href="https://github.com/soanvig/mm-jsr">README</a>
+            </p>
         </section>
-
-        <section class="page-section" id="comparison">
+        
+        <!-- <section class="page-section" id="comparison">
             <h2 class="header">Comparison</h2>
             <div class="comparison_wrapper">
                 <table class="comparison">
@@ -156,235 +171,379 @@
                     </tbody>
                 </table>
             </div>
-        </section>
-
+        </section> -->
+        
         <section class="page-section" id="demo">
             <h2 class="header">Demo</h2>
             <p class="paragraph">These demos represents usage of different JSR functions and settings. See <a href="https://github.com/soanvig/mm-jsr" class="link">README</a> for more details.</p>
             <p class="paragraph">Feel free to play with sliders, and try to find bugs :-) If you find any, let me know!</p>
             <div class="demo">
-                <p class="paragraph">HTML markup, basic usage, multiple sliders, labels, disabled min/max labels.</p>
-                <label for="range-1-1" class="demo_label">Minimum value</label>
-                <label for="range-1-3" class="demo_label demo_label--right">Maximum value</label>
-                <input id="range-1-1" type="range" min="0" max="100" value="30">
-                <input id="range-1-2" type="range" min="0" max="100" value="30">
-                <input id="range-1-3" type="range" min="0" max="100" value="30">
-                <pre class="demo_code line-numbers"><code class="language-markup">&#x3C;input id=&#x22;range-1-1&#x22; type=&#x22;range&#x22; min=&#x22;0&#x22; max=&#x22;100&#x22; value=&#x22;30&#x22;&#x3E;
-&#x3C;input id=&#x22;range-1-2&#x22; type=&#x22;range&#x22; min=&#x22;0&#x22; max=&#x22;100&#x22; value=&#x22;30&#x22;&#x3E;
-&#x3C;input id=&#x22;range-1-3&#x22; type=&#x22;range&#x22; min=&#x22;0&#x22; max=&#x22;100&#x22; value=&#x22;30&#x22;&#x3E;</code></pre>
-                <pre class="demo_code line-numbers"><code class="language-javascript">new JSR(['#range-1-1', '#range-1-2', '#range-1-3'], {
-    sliders: 3,
-    values: [25, 50, 75],
-    labels: {
-        minMax: false
-    },
-    grid: false
-});</code></pre>
-            </div>
-            <div class="demo">
-                <p class="paragraph">Large values, limit (visible!), affix.</p>
-                <input id="range-2-1" type="range" min="0" max="100" value="30">
-                <input id="range-2-2" type="range" min="0" max="100" value="30">
-                <pre class="demo_code line-numbers"><code class="language-javascript">new JSR(['#range-2-1', '#range-2-2'], {
-    sliders: 2,
-    min: 10000,
-    max: 20000,
-    values: [15000, 17500],
-    labels: {
-        formatter: (value) => {
-            return '$' + value.toString();
-        }
-    },
-    limit: {
-        show: true
-    },
-    grid: false
-}).setLimit('min', 12000).setLimit('max', 16000);</code></pre>
-            </div>
-            <div class="demo">
-                <p class="paragraph">Small step, single value, one side limit, grid with some color.</p>
-                <input id="range-3" type="range" min="0" max="100" value="30">
-                <pre class="demo_code line-numbers"><code class="language-javascript">new JSR('#range-3', {
-    sliders: 1,
-    step: 0.01,
-    values: [50],
-    limit: {
-        min: 19
-    },
-    labels: {
-        formatter: (value) => {
-            return value.toString() + ' PLN';
-        }
-    },
-    grid: {
-        color: '#999'
+                <p class="paragraph">Basic usage, multiple sliders, labels.</p>
+                <div id="demo1"></div>
+                <pre class="demo_code line-numbers"><code class="language-markup">&#x3C;div id=&#x22;demo1&#x22;&#x3E;&#x3C;/div&#x3E;</code></pre>
+                    <pre class="demo_code line-numbers"><code class="language-javascript">new JSR({
+    modules: [
+        new JSR.Rail(),
+        new JSR.Slider(),
+        new JSR.Bar(),
+        new JSR.Label(),
+    ],
+    config: {
+        min: 0,
+        max: 100,
+        step: 1,
+        initialValues: [25,75],
+        container: document.getElementById('demo1'),
     }
 });</code></pre>
-            </div>
-            <div class="demo">
-                <p class="paragraph">Negative values.</p>
-                <input id="range-4-1" type="range" min="-200" max="100" value="50" step="any">
-                <input id="range-4-2" type="range" min="-200" max="100" value="75" step="any">
-                <pre class="demo_code line-numbers"><code class="language-javascript">new JSR(['#range-4-1', '#range-4-2'], {
-    sliders: 2,
-    step: 0.1,
-    min: -200,
-    max: 100,
-    values: [50, 75],
-    grid: false
-});</code></pre>
-            </div>
-            <div class="demo">
-                <p class="paragraph">Small values, events listening.</p>
-                <input id="range-5-1" type="range" min="1" max="3">
-                <pre class="demo_code line-numbers"><code class="language-javascript">new JSR(['#range-5-1'], {
-    sliders: 1,
-    step: 1,
-    min: 1,
-    max: 3,
-    values: [2],
-    grid: false
-}).addEventListener('update', (input, value) => {
-    console.log(`Custom events test: New value set: ${input}/${value}`);
-});</code></pre>
-            </div>
-            <div class="demo">
-                <p class="paragraph">Disabled module (labels).</p>
-                <input id="range-6-1" type="range" min="0" max="100">
-                <pre class="demo_code line-numbers"><code class="language-javascript">new JSR(['#range-6-1'], {
-    sliders: 1,
-    values: [50],
-    modules: {
-        labels: false,
-    },
-    grid: false
-});</code></pre>
-            </div>
-            <div class="demo">
-                <p class="paragraph">Custom formatting labels, grid (formatted with label formatter).</p>
-                <input id="range-7-1" type="range" min="1483228801000" max="1514678399000">
-                <pre class="demo_code line-numbers"><code class="language-javascript">new JSR(['#range-7-1'], {
-    sliders: 1,
-    values: [1],
-    min: 1483228801000,
-    max: 1514678399000,
-    step: 1000 * 60 * 60 * 24,
-    labels: {
-        formatter: function (value) {
-            const date = new Date(value);
-            const day = date.getUTCDate();
-            const month = date.getMonth() + 1;
-            const year = date.getUTCFullYear();
-            return `${day}-${month}-${year}`;
+                </div>
+                <div class="demo">
+                    <p class="paragraph">Large values, limit (visible!), affix.</p>
+                    <div id="demo2"></div>
+                    <pre class="demo_code line-numbers"><code class="language-javascript">new JSR({
+    modules: [
+        new JSR.Rail(),
+        new JSR.Slider(),
+        new JSR.Bar(),
+        new JSR.Label({
+            formatter: (v) => `$${v}`
+        }),
+        new JSR.Limit(),
+    ],
+    config: {
+        min: 10000,
+        max: 20000,
+        step: 1,
+        initialValues: [15000, 17500],
+        container: document.getElementById('demo2'),
+        limit: {
+            min: 12000,
+            max: 16000,
         }
-    },
-    grid: {
-        color: '#777'
     }
 });</code></pre>
-            </div>
-            <script>
-                new JSR(['#range-1-1', '#range-1-2', '#range-1-3'], {
-                    sliders: 3,
-                    values: [25, 50, 75],
-                    labels: {
-                        minMax: false
-                    },
-                    grid: false
-                });
-                
-                new JSR(['#range-2-1', '#range-2-2'], {
-                    sliders: 2,
-                    min: 10000,
-                    max: 20000,
-                    values: [15000, 17500],
-                    labels: {
-                        formatter: (value) => {
-                            return '$' + value.toString();
+                </div>
+                <!-- <div class="demo">
+                    <p class="paragraph">Small step, single value, one side limit, grid with some color.</p>
+                    <input id="range-3" type="range" min="0" max="100" value="30">
+                    <pre class="demo_code line-numbers"><code class="language-javascript">new JSR('#range-3', {
+                        sliders: 1,
+                        step: 0.01,
+                        values: [50],
+                        limit: {
+                            min: 19
+                        },
+                        labels: {
+                            formatter: (value) => {
+                                return value.toString() + ' PLN';
+                            }
+                        },
+                        grid: {
+                            color: '#999'
                         }
-                    },
-                    limit: {
-                        show: true
-                    },
-                    grid: false
-                }).setLimit('min', 12000).setLimit('max', 16000);
-                
-                new JSR('#range-3', {
-                    sliders: 1,
-                    step: 0.01,
-                    values: [50],
-                    limit: {
-                        min: 19
-                    },
-                    labels: {
-                        formatter: (value) => {
-                            return value.toString() + ' PLN';
+                    });</code></pre>
+                </div>
+                <div class="demo">
+                    <p class="paragraph">Negative values.</p>
+                    <input id="range-4-1" type="range" min="-200" max="100" value="50" step="any">
+                    <input id="range-4-2" type="range" min="-200" max="100" value="75" step="any">
+                    <pre class="demo_code line-numbers"><code class="language-javascript">new JSR(['#range-4-1', '#range-4-2'], {
+                        sliders: 2,
+                        step: 0.1,
+                        min: -200,
+                        max: 100,
+                        values: [50, 75],
+                        grid: false
+                    });</code></pre>
+                </div>
+                <div class="demo">
+                    <p class="paragraph">Small values, events listening.</p>
+                    <input id="range-5-1" type="range" min="1" max="3">
+                    <pre class="demo_code line-numbers"><code class="language-javascript">new JSR(['#range-5-1'], {
+                        sliders: 1,
+                        step: 1,
+                        min: 1,
+                        max: 3,
+                        values: [2],
+                        grid: false
+                    }).addEventListener('update', (input, value) => {
+                        console.log(`Custom events test: New value set: ${input}/${value}`);
+                    });</code></pre>
+                </div>
+                <div class="demo">
+                    <p class="paragraph">Disabled module (labels).</p>
+                    <input id="range-6-1" type="range" min="0" max="100">
+                    <pre class="demo_code line-numbers"><code class="language-javascript">new JSR(['#range-6-1'], {
+                        sliders: 1,
+                        values: [50],
+                        modules: {
+                            labels: false,
+                        },
+                        grid: false
+                    });</code></pre>
+                </div>
+                <div class="demo">
+                    <p class="paragraph">Custom formatting labels, grid (formatted with label formatter).</p>
+                    <input id="range-7-1" type="range" min="1483228801000" max="1514678399000">
+                    <pre class="demo_code line-numbers"><code class="language-javascript">new JSR(['#range-7-1'], {
+                        sliders: 1,
+                        values: [1],
+                        min: 1483228801000,
+                        max: 1514678399000,
+                        step: 1000 * 60 * 60 * 24,
+                        labels: {
+                            formatter: function (value) {
+                                const date = new Date(value);
+                                const day = date.getUTCDate();
+                                const month = date.getMonth() + 1;
+                                const year = date.getUTCFullYear();
+                                return `${day}-${month}-${year}`;
+                            }
+                        },
+                        grid: {
+                            color: '#777'
                         }
-                    },
-                    grid: {
-                        color: '#999'
-                    }
-                });
-                
-                new JSR(['#range-4-1', '#range-4-2'], {
-                    sliders: 2,
-                    step: 0.1,
-                    min: -200,
-                    max: 100,
-                    values: [50, 75],
-                    grid: false
-                });
-                
-                new JSR(['#range-5-1'], {
-                    sliders: 1,
-                    step: 1,
-                    min: 1,
-                    max: 3,
-                    values: [2],
-                    grid: false
-                }).addEventListener('update', (input, value) => {
-                    console.log(`Custom events test: New value set: ${input}/${value}`);
-                });
-                
-                new JSR(['#range-6-1'], {
-                    sliders: 1,
-                    values: [50],
-                    modules: {
-                        labels: false,
-                    },
-                    grid: false
-                });
-                
-                new JSR(['#range-7-1'], {
-                    sliders: 1,
-                    values: [1],
-                    min: 1483228801000,
-                    max: 1514678399000,
-                    step: 1000 * 60 * 60 * 24,
-                    labels: {
-                        formatter: function (value) {
-                            const date = new Date(value);
-                            const day = date.getUTCDate();
-                            const month = date.getMonth() + 1;
-                            const year = date.getUTCFullYear();
-                            return `${day}-${month}-${year}`;
+                    });</code></pre>
+                </div> -->
+                <script>
+                    new JSR({
+                        modules: [
+                            new JSR.Rail(),
+                            new JSR.Slider(),
+                            new JSR.Bar(),
+                            new JSR.Label(),
+                        ],
+                        config: {
+                            min: 0,
+                            max: 100,
+                            step: 1,
+                            initialValues: [25, 75],
+                            container: document.getElementById('demo1'),
                         }
-                    },
-                    grid: {
-                        color: '#777'
-                    }
-                });
-            </script>
-        </section>
-    </main>
+                    });
 
-    <a href="#menu" class="menu-link" title="Back to menu" aria-label="Back to menu">^</a>
-
-    <footer class="page-footer">
-        &copy; <a href="http://mortmortis.pl" class="link">Mort&amp;Mortis</a>, since 2017
-    </footer>
-
-    <script src="assets/plugins/prism.js"></script>
-    <script src="assets/js/main.js"></script>
-</body>
-</html>
+                    new JSR({
+                        modules: [
+                            new JSR.Rail(),
+                            new JSR.Slider(),
+                            new JSR.Bar(),
+                            new JSR.Label({
+                                formatter: (v) => `$${v}`
+                            }),
+                            new JSR.Limit(),
+                        ],
+                        config: {
+                            min: 10000,
+                            max: 20000,
+                            step: 1,
+                            initialValues: [15000, 17500],
+                            container: document.getElementById('demo2'),
+                            limit: {
+                                min: 12000,
+                                max: 16000,
+                            }
+                        }
+                    });
+                    
+                    // new JSR('#range-3', {
+                    //     sliders: 1,
+                    //     step: 0.01,
+                    //     values: [50],
+                    //     limit: {
+                    //         min: 19
+                    //     },
+                    //     labels: {
+                    //         formatter: (value) => {
+                    //             return value.toString() + ' PLN';
+                    //         }
+                    //     },
+                    //     grid: {
+                    //         color: '#999'
+                    //     }
+                    // });
+                    
+                    // new JSR(['#range-4-1', '#range-4-2'], {
+                    //     sliders: 2,
+                    //     step: 0.1,
+                    //     min: -200,
+                    //     max: 100,
+                    //     values: [50, 75],
+                    //     grid: false
+                    // });
+                    
+                    // new JSR(['#range-5-1'], {
+                    //     sliders: 1,
+                    //     step: 1,
+                    //     min: 1,
+                    //     max: 3,
+                    //     values: [2],
+                    //     grid: false
+                    // }).addEventListener('update', (input, value) => {
+                    //     console.log(`Custom events test: New value set: ${input}/${value}`);
+                    // });
+                    
+                    // new JSR(['#range-6-1'], {
+                    //     sliders: 1,
+                    //     values: [50],
+                    //     modules: {
+                    //         labels: false,
+                    //     },
+                    //     grid: false
+                    // });
+                    
+                    // new JSR(['#range-7-1'], {
+                    //     sliders: 1,
+                    //     values: [1],
+                    //     min: 1483228801000,
+                    //     max: 1514678399000,
+                    //     step: 1000 * 60 * 60 * 24,
+                    //     labels: {
+                    //         formatter: function (value) {
+                    //             const date = new Date(value);
+                    //             const day = date.getUTCDate();
+                    //             const month = date.getMonth() + 1;
+                    //             const year = date.getUTCFullYear();
+                    //             return `${day}-${month}-${year}`;
+                    //         }
+                    //     },
+                    //     grid: {
+                    //         color: '#777'
+                    //     }
+                    // });
+                </script>
+            </section>
+        </main>
+        
+        <a href="#menu" class="menu-link" title="Back to menu" aria-label="Back to menu">^</a>
+        
+        <footer class="page-footer">
+            &copy; <a href="http://mortmortis.pl" class="link">Mort&amp;Mortis</a>, since 2017
+        </footer>
+        
+        
+        <style>
+            [class^="jsr"] {
+                box-sizing: border-box;
+            }
+            
+            .jsr {
+                display: block;
+                
+                position: relative;
+                
+                padding-top: 10px;
+                
+                width: 100%;
+                
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                
+                -webkit-touch-callout: none;
+                -khtml-user-select: none;
+                
+                font: 14px sans-serif;
+            }
+            
+            .jsr.is-disabled {
+                background: grey;
+            }
+            
+            .jsr_rail {
+                height: 5px;
+                background: #444;
+            }
+            
+            .jsr_slider {
+                position: absolute;
+                top: calc(5px / 2 + 10px);
+                left: 0;
+                
+                transform: translate(-50%, -50%);
+                
+                width: 25px;
+                height: 25px;
+                
+                cursor: col-resize;
+                transition: background 0.1s ease-in-out;
+                
+                outline: 0;
+                
+                z-index: 3;
+            }
+            
+            .jsr_slider:focus {
+                z-index: 4;
+            }
+            
+            .jsr_slider::before {
+                content: '';
+                width: 15px;
+                height: 15px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #999;
+                border-radius: 50%;
+            }
+            
+            .jsr_slider:focus::before {
+                background: #c00;
+            }
+            
+            .jsr_label {
+                position: absolute;
+                top: calc(10px + 5px + 15px / 1.5);
+                transform: translateX(-50%);
+                padding: 0.2em 0.4em;
+                background: #444;
+                color: #fff;
+                font-size: 0.9em;
+                white-space: nowrap;
+                border-radius: 0.3em;
+                z-index: 2;
+                cursor: col-resize;
+                opacity: 1;
+            }
+            
+            .jsr_label.is-hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
+            
+            .jsr_bar {
+                position: absolute;
+                height: 5px;
+                background-color: #999;
+                z-index: 2;
+                cursor: move;
+                top: 10px;
+            }
+            
+            .jsr_limit {
+                position: absolute;
+                z-index: 1;
+                pointer-events: none;
+                height: 5px;
+                top: 10px;
+                background-color: #727272;
+            }
+            
+            .jsr_grid {
+                margin-top: 5px;
+                width: 100%;
+            }
+            
+            .jsr_lockscreen {
+                overflow: hidden;
+                height: 100%;
+                width: 100%;
+            }
+        </style>
+        <script src="assets/plugins/prism.js"></script>
+        <script src="assets/js/main.js"></script>
+    </body>
+    </html>
+    

@@ -58,7 +58,7 @@ LGPLv3 license doubts are [explained here](#license-explanation)
 
   or
 
-  <script src="https://unpkg.com/browse/mm-jsr/build/index.js"></script>
+  <script src="https://unpkg.com/mm-jsr/build/index.js"></script>
   (which makes variable JSR available globally)
   ```
 
