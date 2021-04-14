@@ -8,7 +8,7 @@
   "types": "build/types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/soanvig/jsr.git"
+    "url": "https://github.com/soanvig/mm-jsr.git"
   },
   "scripts": {
     "build": "rollup --config rollup.config.js",

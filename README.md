@@ -2,7 +2,7 @@
 
 **This is development branch**
 
-For v1 (old version) documentation see [v1 branch](https://github.com/soanvig/jsr/tree/v1)
+For v1 (old version) documentation see [v1 branch](https://github.com/soanvig/mm-jsr/tree/v1)
 
 ---
 
@@ -12,7 +12,7 @@ Range input is form's field where one can choose a value from min-max range.
 Although HTML 5 comes with input[type="range"] its functionality lacks a lot of features.
 M&M JSR gives You anything You may need.
 
-Homepage and demo: https://mm-jsr.github.io/
+Homepage and demo: https://soanvig.github.io/mm-jsr/
 
 Browser support: Firefox, Chrome (and Chromium forks, like: Brave, Edge, Opera, Vivaldi)
 
