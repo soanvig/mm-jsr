@@ -30,7 +30,7 @@ LGPLv3 license doubts are [explained here](#license-explanation)
 
 ## Advantages
 
-- lightweight,
+- lightweight (~16kB of minified, not-gzipped code),
 - performant,
 - customizable,
 - no dependencies.
