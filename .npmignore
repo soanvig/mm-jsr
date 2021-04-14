@@ -1,3 +1,4 @@
 *
-!build/jsr.min.js
-!build/jsr.js.map
+!build/index.js
+!build/index.js.map
+!build/**/*.ts
