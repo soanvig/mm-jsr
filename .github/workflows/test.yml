@@ -2,6 +2,8 @@ name: Test any changes to repo
 
 on:
   push:
+    paths:
+      - ./**/*.ts
 
 jobs:
   unit-tests:

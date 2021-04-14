@@ -26,7 +26,9 @@ jobs:
       - uses: actions/setup-node@v2
       - run: yarn install --frozen-lockfile
       - run: yarn build
-      - run: yarn version ${{ github.event.inputs.version }}
+      - run: git config --global user.email "actions@github.com"
+      - run: git config --global user.name "GH Actions"
+      - run: yarn version --new-version ${{ github.event.inputs.version }}
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
