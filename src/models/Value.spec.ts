@@ -34,5 +34,9 @@ test('asReal', t => {
   t.is(getReal(-20), -20);
 });
 
+test('fromRation', t => {
+  t.is(Value.fromRatio({ min: 100, max: 150, ratio: 0.5 }).asReal(), 125);
+});
+
 const getRatio = (min: number, max: number, value: number) => Value.fromReal({ real: value, min, max }).asRatio();
 const getReal = (value: number) => Value.fromReal({ real: value, min: 0, max: 100 }).asReal();

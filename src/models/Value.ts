@@ -59,7 +59,7 @@ export class Value {
   public static fromRatio (data: FromRatio): Value {
     return new Value({
       ...data,
-      real: data.ratio * (data.max - data.min),
+      real: data.ratio * (data.max - data.min) + data.min,
     });
   }
 

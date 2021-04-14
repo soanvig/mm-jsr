@@ -25,13 +25,13 @@ export class ModuleLimit extends Module {
       }
 
       if (state.limit?.min) {
-        this.limit.style.left = `${state.limit.min.asReal()}%`;
+        this.limit.style.left = `${state.limit.min.asRatio() * 100}%`;
       } else {
         this.limit.style.left = '0%';
       }
 
       if (state.limit?.max) {
-        this.limit.style.right = `calc(100% - ${state.limit.max.asReal()}%)`;
+        this.limit.style.right = `calc(100% - ${state.limit.max.asRatio() * 100}%)`;
       } else {
         this.limit.style.right = '0%';
       }

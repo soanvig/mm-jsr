@@ -16,26 +16,27 @@
   <script src="./build/index.js"></script>
   <script>
     const jsr = new JSR({
-      modules: [
-        new JSR.Rail(),
-        new JSR.Slider(),
-        new JSR.Bar(),
-        new JSR.Label(),
-        new JSR.Grid({ color: '#000' }),
-        // new JSR.Limit(),
-      ],
-      config: {
-        min: 0,
-        max: 100,
-        step: 0.01,
-        // limit: {
-        //   min: 15,
-        //   max: 90,
-        // },
-        initialValues: [25, 50, 75],
-        container: document.getElementById('jsr'),
-      }
-    });
+          modules: [
+              new JSR.Rail(),
+              new JSR.Slider(),
+              new JSR.Bar(),
+              new JSR.Label({
+                  formatter: (v) => `$${v}`
+              }),
+              new JSR.Limit(),
+          ],
+          config: {
+              min: 10000,
+              max: 20000,
+              step: 1,
+              initialValues: [15000, 17500],
+              container: document.getElementById('jsr'),
+              limit: {
+                  min: 12000,
+                  max: 16000,
+              }
+          }
+      });
 
     changeLimit.addEventListener('click', () => {
       jsr.changeLimit({

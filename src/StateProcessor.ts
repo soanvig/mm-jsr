@@ -38,6 +38,8 @@ export class StateProcessor {
       values,
       limit,
     });
+
+    this.state = this.process(this.state);
   }
 
   public changeLimit (command: ChangeLimitCommand): StateDto {
