@@ -4,6 +4,8 @@
     "module": "es6",
     "experimentalDecorators": true,
     "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "./build",
     "sourceMap": true,
     "strict": true,
     "baseUrl": "./src",

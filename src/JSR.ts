@@ -9,12 +9,12 @@ import { ModuleRail } from '@/modules/ModuleRail';
 import { ModuleSlider } from '@/modules/ModuleSlider';
 import { assert, isArray, isInstanceOf, isNumber, isPlainObject } from '@/validation/assert';
 
-interface Ctor {
+export interface Ctor {
   config: ConfigAttrs;
   modules: Module[];
 }
 
-type ChangeLimitCommand = { min?: number; max?: number; }
+export type ChangeLimitCommand = { min?: number; max?: number; }
 
 export class JSR {
   private engine: Engine;

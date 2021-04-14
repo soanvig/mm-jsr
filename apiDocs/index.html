@@ -1,0 +1,307 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>mm-jsr</title>
+	<meta name="description" content="Documentation for mm-jsr">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">mm-jsr</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>mm-jsr</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#mm-jsr" id="mm-jsr" style="color: inherit; text-decoration: none;">
+					<h1>mm-jsr</h1>
+				</a>
+				<p><strong>This is development branch</strong></p>
+				<p>For v1 (old version) documentation see <a href="https://github.com/soanvig/mm-jsr/tree/v1">v1 branch</a></p>
+				<hr>
+				<p>M&amp;M JS Range (M&amp;M JSR v2) provides You with excellent solution for creating so-called range-inputs.</p>
+				<p>Range input is form&#39;s field where one can choose a value from min-max range.
+					Although HTML 5 comes with input[type=&quot;range&quot;] its functionality lacks a lot of features.
+				M&amp;M JSR gives You anything You may need.</p>
+				<p>Homepage and demo: <a href="https://soanvig.github.io/mm-jsr/">https://soanvig.github.io/mm-jsr/</a></p>
+				<p>Browser support: Firefox, Chrome (and Chromium forks, like: Brave, Edge, Opera, Vivaldi)</p>
+				<p>LGPLv3 license doubts are <a href="#license-explanation">explained here</a></p>
+				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+					<h2>Features</h2>
+				</a>
+				<ul>
+					<li>screen responsivity,</li>
+					<li>custom minimum and maximum values (including negative numbers),</li>
+					<li>custom step of values (literally custom, it can be 0.001, 2 or 100),</li>
+					<li>any number of sliders,</li>
+					<li>collapsing labels,</li>
+					<li>fully and <strong>easily</strong> customizable through CSS and configuration,</li>
+					<li>support for touch devices,</li>
+					<li>support for keyboard,</li>
+					<li>and other!</li>
+				</ul>
+				<a href="#advantages" id="advantages" style="color: inherit; text-decoration: none;">
+					<h2>Advantages</h2>
+				</a>
+				<ul>
+					<li>lightweight,</li>
+					<li>performant,</li>
+					<li>customizable,</li>
+					<li>no dependencies.</li>
+				</ul>
+				<a href="#quick-start" id="quick-start" style="color: inherit; text-decoration: none;">
+					<h2>Quick-start</h2>
+				</a>
+				<ol>
+					<li>Install</li>
+				</ol>
+				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> --</span><span style="color: #001080">save</span><span style="color: #000000"> </span><span style="color: #001080">mm</span><span style="color: #000000">-</span><span style="color: #001080">jsr</span>
+
+<span style="color: #001080">or</span>
+
+<span style="color: #001080">yarn</span><span style="color: #000000"> </span><span style="color: #001080">add</span><span style="color: #000000"> </span><span style="color: #001080">mm</span><span style="color: #000000">-</span><span style="color: #001080">jsr</span>
+</code></pre>
+				<ol start="2">
+					<li>Include</li>
+				</ol>
+				<pre><code><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">JSR</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;mm-jsr&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #001080">or</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">JSR</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;mm-jsr&#039;</span><span style="color: #000000">);</span>
+
+<span style="color: #001080">or</span>
+
+<span style="color: #000000">&lt;</span><span style="color: #001080">script</span><span style="color: #000000"> </span><span style="color: #001080">src</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;https://unpkg.com/browse/mm-jsr/build/index.js&quot;</span><span style="color: #000000">&gt;&lt;/</span><span style="color: #267F99">script</span><span style="color: #000000">&gt;</span>
+<span style="color: #000000">(</span><span style="color: #001080">which</span><span style="color: #000000"> </span><span style="color: #001080">makes</span><span style="color: #000000"> </span><span style="color: #001080">variable</span><span style="color: #000000"> </span><span style="color: #0070C1">JSR</span><span style="color: #000000"> </span><span style="color: #001080">available</span><span style="color: #000000"> </span><span style="color: #001080">globally</span><span style="color: #000000">)</span>
+</code></pre>
+				<ol start="3">
+					<li><p>Add CSS (you can use basic styles from <a href="./styles.css">here</a>)</p>
+					</li>
+					<li><p>Instantiate JSR</p>
+					</li>
+				</ol>
+				<pre><code class="language-js"><span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">jsr</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">JSR</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">modules:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #0070C1">JSR</span><span style="color: #000000">.</span><span style="color: #795E26">Rail</span><span style="color: #000000">(),</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #0070C1">JSR</span><span style="color: #000000">.</span><span style="color: #795E26">Slider</span><span style="color: #000000">(),</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #0070C1">JSR</span><span style="color: #000000">.</span><span style="color: #795E26">Bar</span><span style="color: #000000">(),</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #0070C1">JSR</span><span style="color: #000000">.</span><span style="color: #795E26">Label</span><span style="color: #000000">(),</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #0070C1">JSR</span><span style="color: #000000">.</span><span style="color: #795E26">Grid</span><span style="color: #000000">(),</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #0070C1">JSR</span><span style="color: #000000">.</span><span style="color: #795E26">Limit</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    ],</span>
+<span style="color: #000000">    </span><span style="color: #001080">config:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">min:</span><span style="color: #000000"> </span><span style="color: #098658">0</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">max:</span><span style="color: #000000"> </span><span style="color: #098658">100</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">step:</span><span style="color: #000000"> </span><span style="color: #098658">0.01</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">limit:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">min:</span><span style="color: #000000"> </span><span style="color: #098658">15</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">max:</span><span style="color: #000000"> </span><span style="color: #098658">90</span><span style="color: #000000">,</span>
+<span style="color: #000000">      },</span>
+<span style="color: #000000">      </span><span style="color: #001080">initialValues:</span><span style="color: #000000"> [</span><span style="color: #098658">25</span><span style="color: #000000">, </span><span style="color: #098658">50</span><span style="color: #000000">, </span><span style="color: #098658">75</span><span style="color: #000000">],</span>
+<span style="color: #000000">      </span><span style="color: #001080">container:</span><span style="color: #000000"> </span><span style="color: #001080">document</span><span style="color: #000000">.</span><span style="color: #795E26">getElementById</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;jsr&#039;</span><span style="color: #000000">),</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  });</span>
+</code></pre>
+				<a href="#configuration-and-api" id="configuration-and-api" style="color: inherit; text-decoration: none;">
+					<h2>Configuration and API</h2>
+				</a>
+				<p>See docs (@TODO)</p>
+				<a href="#important-notes" id="important-notes" style="color: inherit; text-decoration: none;">
+					<h2>Important notes</h2>
+				</a>
+				<a href="#locking-screen-on-touchevent" id="locking-screen-on-touchevent" style="color: inherit; text-decoration: none;">
+					<h3>Locking screen on touchevent</h3>
+				</a>
+				<p>Touch event on mobile devices is supported by JSR. Because moving the finger around the screen to move slider caused the view to go up and down, I decided to lock the screen on touch start. This means, that to document root <code>.jsr_lockscreen</code> class is applied, which sets the size of document root to window size. If it causes any problems, You can set <code>overflow: visible; width: auto; height: auto;</code> on <code>.jsr_lockscreen</code> class (or just remove this class from code), and report the issue through GitHub&#39;s issue system.</p>
+				<p><strong>Known issues</strong>:</p>
+				<ol>
+					<li>it may cause screen jump on mobile screens, because after locking screen the top address bar may disappear.</li>
+				</ol>
+				<a href="#keyboard-support" id="keyboard-support" style="color: inherit; text-decoration: none;">
+					<h2>Keyboard support</h2>
+				</a>
+				<p>JSR supports keyboard control. First of all one of sliders needs to be focused (by TAB or by click).</p>
+				<ul>
+					<li>By clicking <code>left/right arrow</code> the value is changed by <code>options.step</code>.</li>
+					<li>If the <code>CTRL</code> is pressed along with arrow, the value is changed by <code>options.step x10</code>.</li>
+					<li>If the <code>SHIFT</code> is pressed along with arrow, the value is changed by <code>range x5%</code> (by the 5% of whole range).</li>
+				</ul>
+				<p>NOTE: In case of <code>SHIFT</code> and <code>CTRL</code> keys pressed simultaneously, <code>SHIFT</code> takes priority.</p>
+				<a href="#modules" id="modules" style="color: inherit; text-decoration: none;">
+					<h2>Modules</h2>
+				</a>
+				<p>Modules are HTML elements rendered into JSR container.
+				All modules are optional. The most basic slider is built of Slider and Rail modules.</p>
+				<table>
+					<thead>
+						<tr>
+							<th>name</th>
+							<th>description</th>
+							<th>invocation</th>
+							<th>options</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>slider</td>
+							<td>moveable dots/points</td>
+							<td>new JSR.Slider()</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td>rail</td>
+							<td>horizontal clickable bar behind sliders</td>
+							<td>new JSR.Rail()</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td>bar</td>
+							<td>moveable bar between sliders (moving adjacent sliders)</td>
+							<td>new JSR.Bar()</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td>label</td>
+							<td>moveable labels beneath sliders</td>
+							<td>new JSR.Label()</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td>grid</td>
+							<td>vertical bar beneath sliders</td>
+							<td>new JSR.Grid(options)</td>
+							<td>@TODO</td>
+						</tr>
+						<tr>
+							<td>limit</td>
+							<td>visual representation of limit configuration</td>
+							<td>new JSR.Limit()</td>
+							<td>-</td>
+						</tr>
+				</tbody></table>
+				<p>If You don&#39;t see a module here, that suits your case, <strong>You can create one by yourself</strong>.
+				Modules created that way are applicable via configuration option, so You don&#39;t have to make changes to library code.</p>
+				<p>You may want to see <a href="./CONTRIBUTING.md#creating-new-modules">./CONTRIBUTING.md</a> for more information.</p>
+				<a href="#license-explanation" id="license-explanation" style="color: inherit; text-decoration: none;">
+					<h2>License explanation</h2>
+				</a>
+				<p><code>mm-jsr</code> uses LGPLv3 license. It means, that You can:</p>
+				<ol>
+					<li>use library in closed-source projects</li>
+					<li>redistribute the code (preserving authorship)</li>
+					<li>make changes to the code</li>
+				</ol>
+				<p>However, if you decide to make changes to the library code, You <strong>has to</strong> publish them under LGPLv3 license.
+				This way library legally always stays open source and free.</p>
+				<p>The best way to make changes is to create public fork of the library.</p>
+				<p>If You don&#39;t plan to add any malicious behavior to the library, this license should not be harmful for You in any way.</p>
+				<p>It is also <em>expected</em>, that any plugins (extensions or modules) added to library via configuration, are respecting final user freedom,
+				and are not spying on his actions perfomed over such module without his knowledge and approval.</p>
+				<a href="#migration-guide-v1--gt-v2" id="migration-guide-v1--gt-v2" style="color: inherit; text-decoration: none;">
+					<h2>Migration guide: v1 -&gt; v2</h2>
+				</a>
+				<p>Basically You need to implement it from the ground up.</p>
+				<p>CSS are similar, but differ in details: basically because HTML is different (flat, not nested).</p>
+				<p>JSR instance API is completely different, although features are almost the same (v2 should contain most of the v1 features).</p>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<p>See <a href="./CONTRIBUTING.md">CONTRIBUTING.md</a> for information about how to contribute and current contributors.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/jsr.html" class="tsd-kind-icon">JSR</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ctor.html" class="tsd-kind-icon">Ctor</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#changelimitcommand" class="tsd-kind-icon">Change<wbr>Limit<wbr>Command</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -14,7 +14,8 @@
     "build": "rollup --config rollup.config.js",
     "watch": "rollup --watch --config rollup.config.js",
     "test": "cross-env TS_NODE_PROJECT=tsconfig.test.json ava",
-    "play": "ts-node -P tsconfig.test.json ./src/index.ts"
+    "play": "ts-node -P tsconfig.test.json ./src/index.ts",
+    "docs": "typedoc ./src/JSR.ts"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.1.1",
