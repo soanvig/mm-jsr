@@ -1,5 +1,1 @@
-.sass-cache/
-node_modules/
-.tmp/*
-!.tmp/.gitkeep
-coverage
+node_modules
