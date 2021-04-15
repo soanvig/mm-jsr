@@ -60,20 +60,21 @@ export class ModuleGrid extends Module {
   }
 
   private drawGrid () {
+    const width = this.renderer.getContainer().offsetWidth;
+    const height = this.settings.height + this.settings.fontSize + this.settings.textPadding;
+    const pixelRatio = window.devicePixelRatio || 1;
+
     const context = this.context;
     const numberOfLines = 100;
     const ratio = 1 / numberOfLines;
 
-    const pixelRatio = window.devicePixelRatio || 1;
-    const canvasWidth = this.grid.offsetWidth * pixelRatio;
-    const canvasHeight = (this.settings.height + this.settings.fontSize + this.settings.textPadding) * pixelRatio;
-
-    this.grid.width = canvasWidth;
-    this.grid.height = canvasHeight;
+    this.grid.style.width = `${width}px`;
+    this.grid.width = width * pixelRatio;
+    this.grid.style.height = `${height}px`;
+    this.grid.height = height * pixelRatio;
 
     context.scale(pixelRatio, pixelRatio);
-
-    context.clearRect(0, 0, canvasWidth, this.settings.height);
+    context.clearRect(0, 0, width, this.settings.height);
     context.beginPath();
     context.lineWidth = 1;
     context.fillStyle = context.strokeStyle = this.settings.color;
@@ -82,7 +83,7 @@ export class ModuleGrid extends Module {
 
     for (let i = 0; i <= numberOfLines; i += 1) {
       // Draw line
-      let left = i * ratio * canvasWidth;
+      let left = i * ratio * width;
       left = Math.round(left * 100.0) / 100.0;
       context.moveTo(left, 0);
       context.lineTo(left, this.settings.height);
@@ -107,7 +108,7 @@ export class ModuleGrid extends Module {
         const roundedValue = value.changeReal(Math.round(value.asReal() / this.config.step) * this.config.step);
 
         const text = this.settings.formatter(roundedValue.asReal());
-        context.fillText(text.toString(), i * ratio * canvasWidth, this.settings.height + this.settings.textPadding);
+        context.fillText(text.toString(), i * ratio * width, this.settings.height + this.settings.textPadding);
       }
     }
 
