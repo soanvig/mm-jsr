@@ -21,7 +21,7 @@ export class Renderer {
   }
 
   public positionToRelative (x: number): number {
-    return (x - this.container.offsetLeft) / this.container.offsetWidth;
+    return (x - this.container.getBoundingClientRect().left) / this.container.offsetWidth;
   }
 
   public distanceToRelative (distance: number): number {

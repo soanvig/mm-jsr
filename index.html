@@ -8,13 +8,33 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body style="height: 120vh;">
-  <div id="jsr"></div>
+  <div style="width: 900px; margin: 30px auto; position: relative;">
+    <div id="jsr1"></div>
+    <div id="jsr2"></div>
+  </div>
   <button id="changeLimit">Randomize limit</button>
   <button id="toogleEnabled">Toogle enabled</button>
   <button id="setValue">Set first value</button>
   <button id="destroy">Destroy</button>
   <script src="./build/index.js"></script>
   <script>
+
+    const jsr2 = new JSR({
+        modules: [
+            new JSR.Rail(),
+            new JSR.Slider(),
+            new JSR.Bar(),
+            new JSR.Label(),
+        ],
+        config: {
+            min: 0,
+            max: 100,
+            step: 1,
+            initialValues: [25,75],
+            container: document.getElementById('jsr2'),
+        }
+    });
+
     const jsr = new JSR({
           modules: [
               new JSR.Rail(),
@@ -31,7 +51,7 @@
               max: 20000,
               step: 1,
               initialValues: [15000, 17500],
-              container: document.getElementById('jsr'),
+              container: document.getElementById('jsr1'),
               limit: {
                   min: 12000,
                   max: 16000,
