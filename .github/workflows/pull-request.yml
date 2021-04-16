@@ -1,0 +1,25 @@
+name: Test pull request
+
+on:
+  pull_request:
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: yarn install --frozen-lockfile
+      - run: yarn test
+  lib-size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+      - run: echo "LIB_SIZE=$(stat --printf="%s" ./build/index.js)" >> $GITHUB_ENV
+      - if: ${{ env.LIB_SIZE > 30000 }}
+        run: |
+          echo "Library size exceeded maximum of 30kB"
+          exit 1
