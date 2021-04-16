@@ -8,16 +8,30 @@ import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
 import { assert, isFunction } from '@/validation/assert';
 
-interface Settings {
+export interface ModuleLabelSettings {
+  /** Formatter used to format values before rendering them as text */
   formatter: (realValue: number) => string;
 }
 
+/**
+ * Module showing labels, that are displaying current value as text (by default beneath values).
+ * - draggable, but not clickable
+ * - labels merge, when overlapping each-other
+ * - merged labels are moveable by dragging individual values
+ * - labels never exceed parent, sticking to one of it's sides
+ *
+ * Uses `.jsr_label` CSS class for each label. Hidden labels use `.is-hidden` class.
+ *
+ * @note At any point of time, all possible label combinations (single and merged labels) are rendered.
+ * This is necessary for simpler code, but also for performance reasons. Merging labels is complex topic.
+ * Those labels, that are computed to not be visible, have `.is-hidden` class appended.
+ */
 export class ModuleLabel extends Module {
   private labels: Map<string, Label> = new Map();
   private primaryLabels: string[] = [];
-  private settings: Settings;
+  private settings: ModuleLabelSettings;
 
-  constructor (settings: Partial<Settings> = {}) {
+  constructor (settings: Partial<ModuleLabelSettings> = {}) {
     super();
 
     this.assertSettings(settings);
@@ -151,7 +165,7 @@ export class ModuleLabel extends Module {
     return firstRect.right > secondRect.left;
   }
 
-  private assertSettings (settings: Partial<Settings>) {
+  private assertSettings (settings: Partial<ModuleLabelSettings>) {
     settings.formatter && assert('Label.formatter', settings.formatter, isFunction);
   }
 }

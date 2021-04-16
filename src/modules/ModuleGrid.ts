@@ -4,21 +4,40 @@ import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
 import { assert, isFunction, isNumber, isString } from '@/validation/assert';
 
-interface Settings {
+export interface ModuleGridSettings {
+  /** Color of grid text and lines. Can be any CSS valid color string */
   color: string;
+
+  /** Height of grid lines (in pixels, no unit) */
   height: number;
+
+  /** Font size of grid text (in pixels, no unit) */
   fontSize: number;
+
+  /** Font family of grid text (should be supported by the browser) */
   fontFamily: string;
+
+  /** Vertical distance between text and lines (in pixels, no unit) */
   textPadding: number;
+
+  /** Formatter used to format values before rendering them as text */
   formatter: (realValue: number) => string;
 }
 
+/**
+ * Module showing grid (by default beneath rail) giving overview
+ * what values are where.
+ * - clickable
+ * - uses canvas for rendering, to not pollute DOM
+ *
+ * Uses `.jsr_grid` as grid parent CSS class.
+ */
 export class ModuleGrid extends Module {
   private grid!: HTMLCanvasElement;
   private context!: CanvasRenderingContext2D;
-  private settings: Settings;
+  private settings: ModuleGridSettings;
 
-  constructor (settings: Partial<Settings> = {}) {
+  constructor (settings: Partial<ModuleGridSettings> = {}) {
     super();
 
     this.assertSettings(settings);
@@ -124,7 +143,7 @@ export class ModuleGrid extends Module {
     this.input.setClosestRatioValue(this.renderer.positionToRelative(e.clientX));
   }
 
-  private assertSettings (settings: Partial<Settings>) {
+  private assertSettings (settings: Partial<ModuleGridSettings>) {
     settings.formatter && assert('Grid.formatter', settings.formatter, isFunction);
     settings.color && assert('Grid.color', settings.color, isString);
     settings.height && assert('Grid.height', settings.height, isNumber);

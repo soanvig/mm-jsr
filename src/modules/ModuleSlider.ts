@@ -1,8 +1,14 @@
 import { useOnMove } from '@/events/useOnMove';
-import { useOnTouch } from '@/events/useOnTouch';
 import { StateDto } from '@/models/State';
 import { Module } from '@/modules/Module';
 
+/**
+ * Module showing points (shape depends on CSS) where values should be.
+ * - draggable
+ * - adds keyboard support
+ *
+ * Uses `.jsr_slider` CSS class for each slider. Additional styles may be applied for `.jsr_slider:focus`
+ */
 export class ModuleSlider extends Module {
   private sliders: HTMLElement[] = [];
   private destroyEvents: VoidFunction[] = [];
