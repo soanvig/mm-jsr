@@ -1,16 +1,38 @@
 import { assert, isArray, isInstanceOf, isNumber, isPlainObject } from '@/validation/assert';
 
 export interface ConfigAttrs {
-  // core
+  /** Minimum value JSR can accept */
   min: number;
+
+  /** Maximum value JSR can accept */
   max: number;
+
+  /**
+   * Step between values (can be float)
+   *
+   * @example
+   * for min: 0, and max: 100, and step: 1 it gives you 101 possible values
+   *
+   * @example
+   * for step: 0.1 it gives you 1001 possible values
+   */
   step: number;
+
+  /**
+   * Initial values for JSR. Determines number of supported values at all.
+   */
   initialValues: number[];
 
-  // limit
+  /**
+   * Limit, that allows values to move vary between `limit.min` and `limit.max`.
+   * In opposite to required root `min` and `max`, limit can be changed dynamically.
+   * Can be displayed visually using {@link ModuleLimit}.
+   */
   limit?: { min?: number; max?: number };
 
-  // renderer
+  /**
+   * Container, that will contain all the modules.
+   */
   container: HTMLElement;
 }
 

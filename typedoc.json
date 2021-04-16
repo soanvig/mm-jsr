@@ -1,3 +1,5 @@
 {
-  "out": "apiDocs"
+  "out": "docs/api",
+  "excludeProtected": true,
+  "excludePrivate": true
 }

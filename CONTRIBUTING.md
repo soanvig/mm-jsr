@@ -61,6 +61,8 @@ See some modules that already are in application for inspiration, how to write t
 
 After creating a module it can be added to JSR init configuration, and everything should launch.
 
+See also abstract `Module` [class documentation](https://soanvig.github.io/mm-jsr/api/classes/module.html).
+
 ## v1 contributors
 
 Thanks to all contributors, which made v1 better version:

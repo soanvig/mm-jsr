@@ -92,9 +92,7 @@ LGPLv3 license doubts are [explained here](#license-explanation)
 
 ## Configuration and API
 
-See docs (@TODO)
-
-For now You may like to reference code: [JSR.ts](./src/JSR.ts)
+[See docs](https://soanvig.github.io/mm-jsr/api/index.html)
 
 ## Important notes
 
@@ -105,7 +103,7 @@ Touch event on mobile devices is supported by JSR. Because moving the finger aro
 **Known issues**:
 1. it may cause screen jump on mobile screens, because after locking screen the top address bar may disappear.
 
-## Keyboard support
+### Keyboard support
 
 JSR supports keyboard control. First of all one of sliders needs to be focused (by TAB or by click).
 
@@ -118,16 +116,17 @@ NOTE: In case of `SHIFT` and `CTRL` keys pressed simultaneously, `SHIFT` takes p
 ## Modules
 
 Modules are HTML elements rendered into JSR container.
+They provide HTML representation of JSR state or config, and allow to provide input back to JSR state.
 All modules are optional. The most basic slider is built of Slider and Rail modules.
 
 name | description | invocation | options
 --- | --- | --- | ---
-slider | moveable dots/points | new JSR.Slider() | -
-rail | horizontal clickable bar behind sliders | new JSR.Rail() | -
-bar | moveable bar between sliders (moving adjacent sliders) | new JSR.Bar() | -
-label | moveable labels beneath sliders  | new JSR.Label() | -
-grid | vertical bar beneath sliders | new JSR.Grid(options) | @TODO
-limit | visual representation of limit configuration | new JSR.Limit() | -
+slider | moveable dots/points | new JSR.Slider() | [docs](https://soanvig.github.io/mm-jsr/api/classes/moduleslider.html)
+rail | horizontal clickable bar behind sliders | new JSR.Rail() | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulerail.html)
+bar | moveable bar between sliders (moving adjacent sliders) | new JSR.Bar() | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulebar.html)
+label | moveable labels beneath sliders  | new JSR.Label(options) | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulelabel.html)
+grid | vertical bar beneath sliders | new JSR.Grid(options) | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulegrid.html)
+limit | visual representation of limit configuration | new JSR.Limit() | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulelabel.html)
 
 If You don't see a module here, that suits your case, **You can create one by yourself**.
 Modules created that way are applicable via configuration option, so You don't have to make changes to library code.
@@ -147,10 +146,10 @@ This way library legally always stays open source and free.
 
 The best way to make changes is to create public fork of the library.
 
-If You don't plan to add any malicious behavior to the library, this license should not be harmful for You in any way.
+If You don't plan to add any malicious behaviour to the library, this license should not be harmful for You in any way.
 
 It is also *expected*, that any plugins (extensions or modules) added to library via configuration, are respecting final user freedom,
-and are not spying on his actions perfomed over such module without his knowledge and approval.
+and are not spying on his actions performed over such module without his knowledge and approval.
 
 ## Migration guide: v1 -> v2
 

@@ -9,8 +9,11 @@ import { ModuleRail } from '@/modules/ModuleRail';
 import { ModuleSlider } from '@/modules/ModuleSlider';
 import { assert, isArray, isInstanceOf, isNumber, isPlainObject } from '@/validation/assert';
 
-export interface Ctor {
+export interface JsrConstructor {
+  /** Configuration */
   config: ConfigAttrs;
+
+  /** List of modules to use - without them, JSR shows nothing in HTML, but is still usable via API */
   modules: Module[];
 }
 
@@ -19,7 +22,7 @@ export type ChangeLimitCommand = { min?: number; max?: number; }
 export class JSR {
   private engine: Engine;
 
-  public constructor (ctor: Ctor) {
+  public constructor (ctor: JsrConstructor) {
     assert('JSR.modules', ctor.modules, isArray(isInstanceOf(Module)));
 
     this.engine = new Engine({
@@ -126,16 +129,31 @@ export class JSR {
    * @NOTE this function does not remove the instance of JSR itself, therefore
    * it does not remove handler already added to JSR, but one can simple forget about this instance,
    * and let garbage-collector to collect it.
+   *
+   * It does not removes original container element.
    */
   public destroy (): void {
     this.engine.modules.forEach(m => m.destroy());
   }
 
+  /** Base module used for creating user's own modules */
   public static Module = Module;
+
+  /** Bar module */
   public static Bar = ModuleBar;
+
+  /** Grid module */
   public static Grid = ModuleGrid;
+
+  /** Label module */
   public static Label = ModuleLabel;
+
+  /** Limit module */
   public static Limit = ModuleLimit;
+
+  /** Rail module */
   public static Rail = ModuleRail;
+
+  /** Slider module */
   public static Slider = ModuleSlider;
 }

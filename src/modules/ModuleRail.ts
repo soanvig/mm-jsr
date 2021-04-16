@@ -1,6 +1,12 @@
 import { StateDto } from '@/models/State';
 import { Module } from '@/modules/Module';
 
+/**
+ * Module showing horizontal bar.
+ * - clickable
+ *
+ * Uses `.jsr_rail` CSS class.
+ */
 export class ModuleRail extends Module {
   private rail!: HTMLElement;
 

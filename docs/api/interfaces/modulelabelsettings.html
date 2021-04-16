@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Ctor | mm-jsr</title>
+	<title>ModuleLabelSettings | mm-jsr</title>
 	<meta name="description" content="Documentation for mm-jsr">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">mm-jsr</a>
 				</li>
 				<li>
-					<a href="ctor.html">Ctor</a>
+					<a href="modulelabelsettings.html">ModuleLabelSettings</a>
 				</li>
 			</ul>
-			<h1>Interface Ctor</h1>
+			<h1>Interface ModuleLabelSettings</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Ctor</span>
+						<span class="target">ModuleLabelSettings</span>
 					</li>
 				</ul>
 			</section>
@@ -80,8 +80,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ctor.html#config" class="tsd-kind-icon">config</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ctor.html#modules" class="tsd-kind-icon">modules</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modulelabelsettings.html#formatter" class="tsd-kind-icon">formatter</a></li>
 							</ul>
 						</section>
 					</div>
@@ -90,24 +89,40 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="config" class="tsd-anchor"></a>
-					<h3>config</h3>
-					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConfigAttrs</span></div>
+					<a name="formatter" class="tsd-anchor"></a>
+					<h3>formatter</h3>
+					<div class="tsd-signature tsd-kind-icon">formatter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>realValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/0cb367e/src/JSR.ts#L13">JSR.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/soanvig/jsr/blob/9d0074b/src/modules/ModuleLabel.ts#L13">modules/ModuleLabel.ts:13</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="modules" class="tsd-anchor"></a>
-					<h3>modules</h3>
-					<div class="tsd-signature tsd-kind-icon">modules<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Module</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/0cb367e/src/JSR.ts#L14">JSR.ts:14</a></li>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Formatter used to format values before rendering them as text</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>realValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>realValue: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+									</li>
+								</ul>
+							</li>
 						</ul>
-					</aside>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -124,16 +139,43 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/jsr.html" class="tsd-kind-icon">JSR</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/module.html" class="tsd-kind-icon">Module</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/modulebar.html" class="tsd-kind-icon">Module<wbr>Bar</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/modulegrid.html" class="tsd-kind-icon">Module<wbr>Grid</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/modulelabel.html" class="tsd-kind-icon">Module<wbr>Label</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/modulelimit.html" class="tsd-kind-icon">Module<wbr>Limit</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/modulerail.html" class="tsd-kind-icon">Module<wbr>Rail</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/moduleslider.html" class="tsd-kind-icon">Module<wbr>Slider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="configattrs.html" class="tsd-kind-icon">Config<wbr>Attrs</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="jsrconstructor.html" class="tsd-kind-icon">Jsr<wbr>Constructor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="modulegridsettings.html" class="tsd-kind-icon">Module<wbr>Grid<wbr>Settings</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="ctor.html" class="tsd-kind-icon">Ctor</a>
+						<a href="modulelabelsettings.html" class="tsd-kind-icon">Module<wbr>Label<wbr>Settings</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ctor.html#config" class="tsd-kind-icon">config</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ctor.html#modules" class="tsd-kind-icon">modules</a>
+								<a href="modulelabelsettings.html#formatter" class="tsd-kind-icon">formatter</a>
 							</li>
 						</ul>
 					</li>
@@ -159,7 +201,7 @@
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
