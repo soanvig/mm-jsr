@@ -150,8 +150,7 @@
 				<a href="#configuration-and-api" id="configuration-and-api" style="color: inherit; text-decoration: none;">
 					<h2>Configuration and API</h2>
 				</a>
-				<p>See docs (@TODO)</p>
-				<p>For now You may like to reference code: <a href="./src/JSR.ts">JSR.ts</a></p>
+				<p><a href="https://soanvig.github.io/mm-jsr/api/index.html">See docs</a></p>
 				<a href="#important-notes" id="important-notes" style="color: inherit; text-decoration: none;">
 					<h2>Important notes</h2>
 				</a>
@@ -164,7 +163,7 @@
 					<li>it may cause screen jump on mobile screens, because after locking screen the top address bar may disappear.</li>
 				</ol>
 				<a href="#keyboard-support" id="keyboard-support" style="color: inherit; text-decoration: none;">
-					<h2>Keyboard support</h2>
+					<h3>Keyboard support</h3>
 				</a>
 				<p>JSR supports keyboard control. First of all one of sliders needs to be focused (by TAB or by click).</p>
 				<ul>
@@ -177,6 +176,7 @@
 					<h2>Modules</h2>
 				</a>
 				<p>Modules are HTML elements rendered into JSR container.
+					They provide HTML representation of JSR state or config, and allow to provide input back to JSR state.
 				All modules are optional. The most basic slider is built of Slider and Rail modules.</p>
 				<table>
 					<thead>
@@ -191,37 +191,37 @@
 							<td>slider</td>
 							<td>moveable dots/points</td>
 							<td>new JSR.Slider()</td>
-							<td>-</td>
+							<td><a href="https://soanvig.github.io/mm-jsr/api/classes/moduleslider.html">docs</a></td>
 						</tr>
 						<tr>
 							<td>rail</td>
 							<td>horizontal clickable bar behind sliders</td>
 							<td>new JSR.Rail()</td>
-							<td>-</td>
+							<td><a href="https://soanvig.github.io/mm-jsr/api/classes/modulerail.html">docs</a></td>
 						</tr>
 						<tr>
 							<td>bar</td>
 							<td>moveable bar between sliders (moving adjacent sliders)</td>
 							<td>new JSR.Bar()</td>
-							<td>-</td>
+							<td><a href="https://soanvig.github.io/mm-jsr/api/classes/modulebar.html">docs</a></td>
 						</tr>
 						<tr>
 							<td>label</td>
 							<td>moveable labels beneath sliders</td>
-							<td>new JSR.Label()</td>
-							<td>-</td>
+							<td>new JSR.Label(options)</td>
+							<td><a href="https://soanvig.github.io/mm-jsr/api/classes/modulelabel.html">docs</a></td>
 						</tr>
 						<tr>
 							<td>grid</td>
 							<td>vertical bar beneath sliders</td>
 							<td>new JSR.Grid(options)</td>
-							<td>@TODO</td>
+							<td><a href="https://soanvig.github.io/mm-jsr/api/classes/modulegrid.html">docs</a></td>
 						</tr>
 						<tr>
 							<td>limit</td>
 							<td>visual representation of limit configuration</td>
 							<td>new JSR.Limit()</td>
-							<td>-</td>
+							<td><a href="https://soanvig.github.io/mm-jsr/api/classes/modulelabel.html">docs</a></td>
 						</tr>
 				</tbody></table>
 				<p>If You don&#39;t see a module here, that suits your case, <strong>You can create one by yourself</strong>.
@@ -239,9 +239,9 @@
 				<p>However, if you decide to make changes to the library code, You <strong>has to</strong> publish them under LGPLv3 license.
 				This way library legally always stays open source and free.</p>
 				<p>The best way to make changes is to create public fork of the library.</p>
-				<p>If You don&#39;t plan to add any malicious behavior to the library, this license should not be harmful for You in any way.</p>
+				<p>If You don&#39;t plan to add any malicious behaviour to the library, this license should not be harmful for You in any way.</p>
 				<p>It is also <em>expected</em>, that any plugins (extensions or modules) added to library via configuration, are respecting final user freedom,
-				and are not spying on his actions perfomed over such module without his knowledge and approval.</p>
+				and are not spying on his actions performed over such module without his knowledge and approval.</p>
 				<a href="#migration-guide-v1--gt-v2" id="migration-guide-v1--gt-v2" style="color: inherit; text-decoration: none;">
 					<h2>Migration guide: v1 -&gt; v2</h2>
 				</a>
