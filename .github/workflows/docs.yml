@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - ./**/*.ts
 
 jobs:
   docs:
@@ -19,6 +17,7 @@ jobs:
       - run: yarn docs
       - run: git config --global user.email "actions@github.com"
       - run: git config --global user.name "GH Actions"
+      - run: git add docs/api
       - run: git commit -m "Update API documentation"
       - name: Push changes
         uses: ad-m/github-push-action@master
