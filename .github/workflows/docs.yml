@@ -1,0 +1,27 @@
+name: Create API documentation
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ./**/*.ts
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+      - run: yarn install --frozen-lockfile
+      - run: yarn docs
+      - run: git config --global user.email "actions@github.com"
+      - run: git config --global user.name "GH Actions"
+      - run: git commit -m "Update API documentation"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
