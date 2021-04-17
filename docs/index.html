@@ -7,180 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script src="https://unpkg.com/mm-jsr/build/index.js"></script>
-    <link href="assets/plugins/prism.css" rel="stylesheet">
-    <link href="assets/css/main.css" rel="stylesheet">
-    
-    
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
-    <link rel="manifest" href="/assets/images/site.webmanifest">
-    <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="/assets/images/favicon.ico">
+    <link href="../plugins/prism.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+    <link rel="manifest" href="./images/site.webmanifest">
+    <link rel="mask-icon" href="./images/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="./images/favicon.ico">
     <meta name="msapplication-TileColor" content="#181818">
-    <meta name="msapplication-config" content="/assets/images/browserconfig.xml">
+    <meta name="msapplication-config" content="./images/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     
 </head>
 <body class="page-body">
-    <div class="page-section page-section--start" id="start">
-        <header class="page-header">
-            <h1 class="page-header_inner">
-                <a href="/">
-                    <span class="page-header_name page-header_name--red">M</span>
-                    <span class="page-header_name_ampersand">&</span>
-                    <span class="page-header_name page-header_name--black">M</span>
-                    <span class="page-header_subname">JS Range</span>
-                </a>
-            </h1>
-        </header>
-        
-        <nav class="nav" id="menu">
-            <a class="menu-close" href="#" aria-hidden="true">X</a>
-            <ul class="menu">
-                <li class="menu_item"><a href="#start">Start</a></li>
-                <li class="menu_item"><a href="#about">About</a></li>
-                <!-- <li class="menu_item"><a href="#comparison">Comparison</a></li> -->
-                <li class="menu_item"><a href="#demo">Demo</a></li>
-                <li class="menu_item"><a href="https://github.com/soanvig/mm-jsr">Github Repo</a></li>
-            </ul>
-        </nav>
-        <a class="menu-open" href="#menu" aria-hidden="true">Menu</a>
-        
-        <div class="page-section--start_content">
-            <span class="page-section--start_name">Mort&amp;Mortis</span>
-            <span class="page-section--start_subname">presents</span>
-            <span class="page-section--start_app">JS Range</span>
-        </div>
-        
-        <div class="page-section--start_demo">
-            <div id="startDemo"></div>
-            <script>
-                new JSR({
-                    modules: [
-                        new JSR.Rail(),
-                        new JSR.Slider(),
-                        new JSR.Bar(),
-                        new JSR.Label(),
-                        new JSR.Grid({
-                            color: '#777'
-                        }),
-                    ],
-                    config: {
-                        min: 0,
-                        max: 100,
-                        step: 1,
-                        initialValues: [25,75],
-                        container: document.getElementById('startDemo'),
-                    }
-                });
-            </script>
-        </div>
-        
-        <a class="button button--download" href="https://github.com/soanvig/mm-jsr">Get started</a>
-    </div>
+    
     
     <main class="page-main">
-        <section class="page-section" id="about">
-            <h2 class="header">About M&amp;M JSR</h2>
-            <p class="paragraph">
-                M&M JS Range (M&M JSR v2) provides You with excellent solution for creating so-called range-inputs.
-            </p>
-            <p class="paragraph">
-                Range input is form's field where one can choose a value from min-max range.
-                Although HTML 5 comes with input[type="range"] its functionality lacks a lot of features.
-                M&M JSR gives You anything You may need.
-                
-                For more information see <a class="link" href="https://github.com/soanvig/mm-jsr">README</a>
-            </p>
-        </section>
+       
         
-        <!-- <section class="page-section" id="comparison">
-            <h2 class="header">Comparison</h2>
-            <div class="comparison_wrapper">
-                <table class="comparison">
-                    <caption>Comparison of some features of M&amp;M JSR v1.1.1 with other range scripts</caption>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th scope="col">M&amp;M JSR</th>
-                            <th scope="col">ion.rangeSlider</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Dependencies</th>
-                            <td class="comparison_positive">None</td>
-                            <td class="comparison_negative">jQuery</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Size of minified version</th>
-                            <td class="comparison_positive">19.6 KB</td>
-                            <td class="comparison_negative">39.9 KB (126.6 KB with jQ)</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Any number of sliders</th>
-                            <td class="comparison_positive">Yes</td>
-                            <td class="comparison_negative">No (maximum 2)</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Support for touch</th>
-                            <td class="comparison_positive">Yes</td>
-                            <td class="comparison_negative">Yes, laggy</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Support for keyboard</th>
-                            <td class="comparison_positive">Yes</td>
-                            <td class="comparison_negative">Yes, laggy</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Collapsing labels</th>
-                            <td class="comparison_positive">Yes</td>
-                            <td class="comparison_positive">Yes</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Support for &lt;label&gt;</th>
-                            <td class="comparison_positive">Yes</td>
-                            <td class="comparison_negative">No</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Bar drag</th>
-                            <td class="comparison_positive">Yes</td>
-                            <td class="comparison_negative">No</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Grid</th>
-                            <td class="comparison_positive">Yes (canvas)</td>
-                            <td class="comparison_positive">Yes (DOM)</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Label formatting</th>
-                            <td class="comparison_positive">Yes</td>
-                            <td class="comparison_negative">No</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Limit values</th>
-                            <td class="comparison_positive">Yes</td>
-                            <td class="comparison_positive">Yes</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Modular</th>
-                            <td class="comparison_positive">Yes</td>
-                            <td class="comparison_negative">No</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section> -->
+      
         
-        <section class="page-section" id="demo">
-            <h2 class="header">Demo</h2>
-            <p class="paragraph">These demos represents usage of different JSR functions and settings. See <a href="https://github.com/soanvig/mm-jsr" class="link">README</a> for more details.</p>
-            <p class="paragraph">Feel free to play with sliders, and try to find bugs :-) If you find any, let me know!</p>
             <div class="demo">
                 <p class="paragraph">Basic usage, multiple sliders, labels.</p>
                 <div id="demo1"></div>
-                <pre class="demo_code line-numbers"><code class="language-markup">&#x3C;div id=&#x22;demo1&#x22;&#x3E;&#x3C;/div&#x3E;</code></pre>
                     <pre class="demo_code line-numbers"><code class="language-javascript">new JSR({
     modules: [
         new JSR.Rail(),
@@ -414,133 +263,10 @@
             </section>
         </main>
         
-        <a href="#menu" class="menu-link" title="Back to menu" aria-label="Back to menu">^</a>
-        
-        <footer class="page-footer">
-            &copy; <a href="http://mortmortis.pl" class="link">Mort&amp;Mortis</a>, since 2017
-        </footer>
         
         
         <style>
-            [class^="jsr"] {
-                box-sizing: border-box;
-            }
             
-            .jsr {
-                display: block;
-                
-                position: relative;
-                
-                padding-top: 10px;
-                
-                width: 100%;
-                
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                
-                -webkit-touch-callout: none;
-                -khtml-user-select: none;
-                
-                font: 14px sans-serif;
-            }
-            
-            .jsr.is-disabled {
-                background: grey;
-            }
-            
-            .jsr_rail {
-                height: 5px;
-                background: #444;
-            }
-            
-            .jsr_slider {
-                position: absolute;
-                top: calc(5px / 2 + 10px);
-                left: 0;
-                
-                transform: translate(-50%, -50%);
-                
-                width: 25px;
-                height: 25px;
-                
-                cursor: col-resize;
-                transition: background 0.1s ease-in-out;
-                
-                outline: 0;
-                
-                z-index: 3;
-            }
-            
-            .jsr_slider:focus {
-                z-index: 4;
-            }
-            
-            .jsr_slider::before {
-                content: '';
-                width: 15px;
-                height: 15px;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: #999;
-                border-radius: 50%;
-            }
-            
-            .jsr_slider:focus::before {
-                background: #c00;
-            }
-            
-            .jsr_label {
-                position: absolute;
-                top: calc(10px + 5px + 15px / 1.5);
-                transform: translateX(-50%);
-                padding: 0.2em 0.4em;
-                background: #444;
-                color: #fff;
-                font-size: 0.9em;
-                white-space: nowrap;
-                border-radius: 0.3em;
-                z-index: 2;
-                cursor: col-resize;
-                opacity: 1;
-            }
-            
-            .jsr_label.is-hidden {
-                opacity: 0;
-                pointer-events: none;
-            }
-            
-            .jsr_bar {
-                position: absolute;
-                height: 5px;
-                background-color: #999;
-                z-index: 2;
-                cursor: move;
-                top: 10px;
-            }
-            
-            .jsr_limit {
-                position: absolute;
-                z-index: 1;
-                pointer-events: none;
-                height: 5px;
-                top: 10px;
-                background-color: #727272;
-            }
-            
-            .jsr_grid {
-                margin-top: 5px;
-                width: 100%;
-            }
-            
-            .jsr_lockscreen {
-                overflow: hidden;
-                height: 100%;
-                width: 100%;
-            }
         </style>
         <script src="assets/plugins/prism.js"></script>
         <script src="assets/js/main.js"></script>
