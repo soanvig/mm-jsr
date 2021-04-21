@@ -12,7 +12,7 @@
 <style>
 .page-header {
 	width: 250px;
-	background: url("../images/name-background.png") center top no-repeat;
+	background: url("./images/name-background.png") center top no-repeat;
 	background-size: contain;
 	position: absolute;
 	top: 0;

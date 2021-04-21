@@ -21,31 +21,31 @@
 <style>
   @font-face {
     font-family: "PT Sans";
-    src: url("../fonts/pt-sans-regular.woff");
+    src: url("./fonts/pt-sans-regular.woff");
   }
 
   @font-face {
     font-family: "PT Sans";
     font-style: italic;
-    src: url("../fonts/pt-sans-italic.woff");
+    src: url("./fonts/pt-sans-italic.woff");
   }
 
   @font-face {
     font-family: "PT Sans";
     font-weight: bold;
-    src: url("../fonts/pt-sans-bold.woff");
+    src: url("./fonts/pt-sans-bold.woff");
   }
 
   @font-face {
     font-family: "PT Sans";
     font-weight: bold;
     font-style: italic;
-    src: url("../fonts/pt-sans-bold-italic.woff");
+    src: url("./fonts/pt-sans-bold-italic.woff");
   }
 
   @font-face {
     font-family: "Elementary Gothic";
-    src: url("../fonts/elementary-gothic.woff");
+    src: url("./fonts/elementary-gothic.woff");
   }
 
   :global(*) {
@@ -61,7 +61,7 @@
 
   :global(html) {
     scroll-behavior: smooth;
-    background: #000 url("../images/page-background.jpg") fixed;
+    background: #000 url("./images/page-background.jpg") fixed;
     background-size: 100% 100%;
     color: #fff;
     font-family: "PT Sans";
