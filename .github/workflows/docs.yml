@@ -13,12 +13,15 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v2
-      - run: yarn install --frozen-lockfile
-      - run: yarn docs
       - run: git config --global user.email "actions@github.com"
       - run: git config --global user.name "GH Actions"
-      - run: git add docs/api
-      - run: git commit -m "Update API documentation"
+      - run: yarn install --frozen-lockfile
+      - run: rm -rf docs && mkdir docs
+      - run: yarn webpage:build
+      - run: cp -r docs-src/public/* docs/
+      - run: yarn docs
+      - run: git add docs
+      - run: git commit -m "Update docs and website"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
