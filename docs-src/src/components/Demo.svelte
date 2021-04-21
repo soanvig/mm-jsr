@@ -1,8 +1,13 @@
 <script>
   import { onMount } from "svelte";
   export let config;
+  export let description;
+  export let customClass;
+  export let customCss;
 
   let jsrNode;
+
+  let wrappedCss = customCss ? `<style>${customCss}</style>` : '';
 
   const parsedConfig = new Function(`return ${config}`)();
 
@@ -19,14 +24,27 @@
   });
 </script>
 
-<div class="demo">
-  <p class="paragraph">Basic usage, multiple sliders, labels.</p>
+<svelte:head>
+  {#if wrappedCss}
+    {@html wrappedCss}
+  {/if}
+</svelte:head>
+
+<div class="demo {customClass ?? ''}">
+  <p class="paragraph">{description}</p>
   <div class="jsr" bind:this={jsrNode} />
   <pre
     class="demo_code line-numbers">
     <code class="language-javascript">new JSR({config});
     </code>
   </pre>
+  {#if customCss}
+    <pre
+      class="demo_code line-numbers">
+      <code class="language-css">{customCss}
+      </code>
+    </pre>
+  {/if}
 </div>
 
 <style>

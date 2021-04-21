@@ -18,7 +18,8 @@
     right: 2vh;
     padding: 2vh 0 0 10vw;
     font-size: 1.3rem;
-    border-bottom: 1px solid #eee
+    border-bottom: 1px solid #eee;
+    z-index: 1;
   }
 
   .menu-close {
