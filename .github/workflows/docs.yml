@@ -20,6 +20,8 @@ jobs:
       - run: yarn webpage:build
       - run: cp -r docs-src/public/* docs/
       - run: yarn docs
+        working-directory: ./packages/mm-jsr
+      - run: cp -r packages/mm-jsr/api ./docs
       - run: git add docs
       - run: git commit -m "Update docs and website"
       - name: Push changes

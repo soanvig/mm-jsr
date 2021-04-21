@@ -1,4 +1,9 @@
 {
   "private": true,
-  "workspaces": ["packages/*"]
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "webpage:start": "serve ./docs-src/public",
+    "webpage:build": "rollup --config docs-src/rollup.config.js",
+    "webpage:watch": "rollup --watch --config docs-src/rollup.config.js"
+  }
 }
