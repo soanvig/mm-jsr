@@ -62,7 +62,7 @@ LGPLv3 license doubts are [explained here](#license-explanation)
   (which makes variable JSR available globally)
   ```
 
-3. Add CSS (you can use basic styles from [here](./styles.css))
+3. Add CSS (you can use basic styles from [here](https://github.com/soanvig/mm-jsr/blob/master/packages/mm-jsr/styles.css))
 
 4. Instantiate JSR
 
