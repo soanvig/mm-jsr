@@ -13,6 +13,10 @@ export interface Props {
   onChange?: ((v: { index: number, real: number, ratio: number }) => void);
 }
 
+export {
+  JSR,
+};
+
 export const ReactJSR = ({
   className,
   config,
@@ -62,5 +66,5 @@ export const ReactJSR = ({
   return React.createElement('div', {
     className,
     ref: containerRef,
-  });
+  }, null);
 };
