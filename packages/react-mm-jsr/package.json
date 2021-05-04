@@ -36,9 +36,7 @@
   },
   "peerDependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
-  },
-  "dependencies": {
+    "react-dom": "^17.0.2",
     "mm-jsr": "^2.0.4"
   }
 }

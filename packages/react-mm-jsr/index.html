@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JSR</title>
   <style>
+    body {
+      max-width: 800px;
+      margin: 30px auto;
+    }
+
     [class^="jsr"] {
       box-sizing: border-box;
     }
@@ -130,25 +135,30 @@
 <body style="height: 120vh;">
   <div id="app">
   </div>
+  <script src="https://unpkg.com/mm-jsr/build/index.js"></script>
   <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script src="./build/index.js"></script>
   <script>
     ReactDOM.render(
-      React.createElement(ReactJSR.ReactJSR, {
-        modules: [
-          new ReactJSR.JSR.Rail(),
-          new ReactJSR.JSR.Slider(),
-          new ReactJSR.JSR.Bar(),
-          new ReactJSR.JSR.Label(),
-        ],
-        config: {
-          min: 0,
-          max: 100,
-          step: 1,
-          initialValues: [25, 75],
-        }
-      }, null),
+      React.createElement(() => {
+        const { JSR: JSRComponent } = ReactJSR.useJSR({
+          modules: [
+            new JSR.Rail(),
+            new JSR.Slider(),
+            new JSR.Bar(),
+            new JSR.Label(),
+          ],
+          config: {
+            min: 0,
+            max: 100,
+            step: 1,
+            initialValues: [25, 75],
+          }
+        });
+
+        return JSRComponent
+      }, null, null),
       app
     );
   </script>

@@ -5,7 +5,10 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import pkg from './package.json';
 
-const external = Object.keys(pkg.peerDependencies || {});
+const external = [
+  ...Object.keys(pkg.peerDependencies || {}),
+  'mm-jsr',
+];
 
 const outputCommons = {
   format: 'umd',

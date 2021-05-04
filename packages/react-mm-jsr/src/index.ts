@@ -13,11 +13,7 @@ export interface Props {
   onChange?: ((v: { index: number, real: number, ratio: number }) => void);
 }
 
-export {
-  JSR,
-};
-
-export const ReactJSR = ({
+export const useJSR = ({
   className,
   config,
   modules,
@@ -27,12 +23,14 @@ export const ReactJSR = ({
   const containerRef = useRef<HTMLElement>();
   const jsrRef = useRef<JSR>();
 
+  /** Destroy on unmount */
   useEffect(() => {
     if (jsrRef.current) {
       jsrRef.current.destroy();
     }
   }, []);
 
+  /** Register JSR */
   useEffect(() => {
     if (containerRef.current) {
       jsrRef.current = new JSR({
@@ -49,8 +47,11 @@ export const ReactJSR = ({
         }
       });
     }
-  }, [containerRef.current]);
+  }, []);
 
+  /**
+   * Add disabled handler
+   */
   useEffect(() => {
     if (!jsrRef.current) {
       return;
@@ -63,8 +64,12 @@ export const ReactJSR = ({
     }
   }, [disabled, jsrRef.current]);
 
-  return React.createElement('div', {
-    className,
-    ref: containerRef,
-  }, null);
+  return {
+    JSR: React.createElement('div', {
+      className,
+      ref: containerRef,
+    }, null),
+    instance: jsrRef.current,
+  };
 };
+
