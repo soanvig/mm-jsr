@@ -9,14 +9,12 @@ export interface Props {
   className?: string;
   config: Config;
   modules: Modules;
-  onChange?: ((v: { index: number, real: number, ratio: number }) => void);
 }
 
 export const useJSR = ({
   className,
   config,
   modules,
-  onChange,
 }: Props) => {
   const containerRef = useRef<HTMLElement>();
   const [jsr, setJsr] = useState<JSR>();
@@ -34,15 +32,6 @@ export const useJSR = ({
       jsr!.destroy();
     };
   }, []);
-
-  /** Register JSR */
-  useEffect(() => {
-    if (jsr && onChange) {
-      return jsr.onValueChange(v => {
-        onChange(v);
-      });
-    }
-  }, [jsr, onChange]);
 
   return {
     JSR: React.createElement('div', {

@@ -168,6 +168,12 @@
           },
           onChange: console.log,
         });
+
+        React.useEffect(() => {
+          if (instance) {
+            return instance.onValueChange(console.log);
+          }
+        }, [instance]);
         
         return React.createElement(
           React.Fragment,
