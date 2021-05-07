@@ -33,7 +33,7 @@ Although HTML 5 comes with input[type="range"] its functionality lacks a lot of 
   import { useJSR } from 'react-mm-jsr';
 
   function MyComponent () {
-    const { JSR: JSRComponent, instance } = ReactJSR.useJSR({
+    const { JSR: JSRComponent, instance } = useJSR({
       modules: [
         new JSR.Rail(),
         new JSR.Slider(),
