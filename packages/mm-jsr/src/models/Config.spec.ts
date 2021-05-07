@@ -32,6 +32,13 @@ test('input validation', t => {
     }),
     { instanceOf: AssertError },
   );
+
+  t.throws(
+    () => getConfig({
+      container: undefined as any,
+    }),
+    { instanceOf: AssertError },
+  );
 });
 
 test('stepDecimals', t => {

@@ -17,19 +17,26 @@ export const useJSR = ({
   modules,
 }: Props) => {
   const containerRef = useRef<HTMLElement>();
-  const [jsr, setJsr] = useState<JSR>();
+  const [jsr, setJsr] = useState<JSR | null>(null);
 
   useEffect(() => {
-    setJsr(new JSR({
-      config: {
-        container: containerRef.current!,
-        ...config,
-      },
-      modules,
-    }));
+    if (containerRef.current && !jsr) {
+      setJsr(new JSR({
+        config: {
+          container: containerRef.current,
+          ...config,
+        },
+        modules,
+      }));
+    }
+  }, [containerRef.current]);
 
+  useEffect(() => {
     return () => {
-      jsr!.destroy();
+      if (jsr) {
+        jsr.destroy();
+        setJsr(null);
+      }
     };
   }, []);
 
