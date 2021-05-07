@@ -4,11 +4,11 @@ For v1 (old version) documentation see [v1 branch](https://github.com/soanvig/mm
 
 ---
 
-M&M JS Range (M&M JSR v2) provides You with excellent solution for creating so-called range-inputs.
+**mm-jsr** provides You with excellent solution for creating so-called range-inputs.
 
 Range input is form's field where one can choose a value from min-max range.
 Although HTML 5 comes with input[type="range"] its functionality lacks a lot of features.
-M&M JSR gives You anything You may need.
+**mm-jsr** gives You anything You may need.
 
 Homepage and demo: https://soanvig.github.io/mm-jsr/
 
