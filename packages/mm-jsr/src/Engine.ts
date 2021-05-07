@@ -20,7 +20,7 @@ export class Engine {
   public readonly renderer!: Renderer;
   public readonly modules!: Module[];
 
-  private valueChageHandlers: ValueChangeHandler[] = [];
+  private valueChangeHandlers: ValueChangeHandler[] = [];
   private enabled = true;
 
   public constructor (setup: SetupCommand) {
@@ -51,8 +51,10 @@ export class Engine {
     this.initView();
   }
 
-  public addValueChangeHandler (handler: ValueChangeHandler) {
-    this.valueChageHandlers.push(handler);
+  public addValueChangeHandler (handler: ValueChangeHandler): VoidFunction {
+    this.valueChangeHandlers.push(handler);
+
+    return () => this.valueChangeHandlers = this.valueChangeHandlers.filter(h => h !== handler);
   }
 
   public enable () {
@@ -98,7 +100,7 @@ export class Engine {
 
     this.renderState(state);
 
-    this.valueChageHandlers.forEach(handler => {
+    this.valueChangeHandlers.forEach(handler => {
       handler({
         index,
         ratio: state.values[index].asRatio(),

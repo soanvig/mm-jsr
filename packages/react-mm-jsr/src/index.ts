@@ -1,5 +1,5 @@
 import JSR from 'mm-jsr';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 type Ctor = ConstructorParameters<typeof JSR>[0];
 type Config = Omit<Ctor['config'], 'container'>;
@@ -9,7 +9,6 @@ export interface Props {
   className?: string;
   config: Config;
   modules: Modules;
-  disabled?: boolean;
   onChange?: ((v: { index: number, real: number, ratio: number }) => void);
 }
 
@@ -17,59 +16,40 @@ export const useJSR = ({
   className,
   config,
   modules,
-  disabled,
   onChange,
 }: Props) => {
   const containerRef = useRef<HTMLElement>();
-  const jsrRef = useRef<JSR>();
+  const [jsr, setJsr] = useState<JSR>();
 
-  /** Destroy on unmount */
   useEffect(() => {
-    if (jsrRef.current) {
-      jsrRef.current.destroy();
-    }
+    setJsr(new JSR({
+      config: {
+        container: containerRef.current!,
+        ...config,
+      },
+      modules,
+    }));
+
+    return () => {
+      jsr!.destroy();
+    };
   }, []);
 
   /** Register JSR */
   useEffect(() => {
-    if (containerRef.current) {
-      jsrRef.current = new JSR({
-        config: {
-          container: containerRef.current,
-          ...config,
-        },
-        modules,
-      });
-
-      jsrRef.current.onValueChange(v => {
-        if (onChange) {
-          onChange(v);
-        }
+    if (jsr && onChange) {
+      return jsr.onValueChange(v => {
+        onChange(v);
       });
     }
-  }, []);
-
-  /**
-   * Add disabled handler
-   */
-  useEffect(() => {
-    if (!jsrRef.current) {
-      return;
-    }
-
-    if (disabled) {
-      jsrRef.current.disable();
-    } else {
-      jsrRef.current.enable();
-    }
-  }, [disabled, jsrRef.current]);
+  }, [jsr, onChange]);
 
   return {
     JSR: React.createElement('div', {
       className,
       ref: containerRef,
     }, null),
-    instance: jsrRef.current,
+    instance: jsr,
   };
 };
 

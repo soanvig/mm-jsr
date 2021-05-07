@@ -140,9 +140,20 @@
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script src="./build/index.js"></script>
   <script>
+    const toggleButton = (instance) => {
+      const clickHandler = () => {
+        if (instance.isEnabled()) {
+          instance.disable();
+        } else {
+          instance.enable();
+        }
+      }
+      return React.createElement('button', { onClick: clickHandler }, 'toggle');
+    }
+
     ReactDOM.render(
       React.createElement(() => {
-        const { JSR: JSRComponent } = ReactJSR.useJSR({
+        const { JSR: JSRComponent, instance } = ReactJSR.useJSR({
           modules: [
             new JSR.Rail(),
             new JSR.Slider(),
@@ -154,10 +165,16 @@
             max: 100,
             step: 1,
             initialValues: [25, 75],
-          }
+          },
+          onChange: console.log,
         });
-
-        return JSRComponent
+        
+        return React.createElement(
+          React.Fragment,
+          null,
+          toggleButton(instance),
+          JSRComponent
+        );
       }, null, null),
       app
     );

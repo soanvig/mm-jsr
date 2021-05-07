@@ -75,9 +75,10 @@ export class JSR {
    * Add handler listening of any value change.
    *
    * @param handler - handler listening for value change
+   * @returns - returns function that allows to remove handler
    */
-  public onValueChange (handler: ValueChangeHandler) {
-    this.engine.addValueChangeHandler(handler);
+  public onValueChange (handler: ValueChangeHandler): VoidFunction {
+    return this.engine.addValueChangeHandler(handler);
   }
 
   /**
