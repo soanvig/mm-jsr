@@ -1,3 +1,3 @@
 const browserEnv = require('browser-env');
 
-browserEnv();
+browserEnv({ pretendToBeVisual: true });

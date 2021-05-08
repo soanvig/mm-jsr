@@ -16,7 +16,7 @@ export const assert = (valueName: string, value: AssertionValue, assertFunction:
 };
 
 export const isInstanceOf = (klass: any): AssertFunction => v =>
-  (v instanceof klass ? false : { error: `expected instance of ${klass.name}`, value: v.constructor.name });
+  (v instanceof klass ? false : { error: `expected instance of ${klass.name}`, value: v });
 
 export const isNumber: AssertFunction = v =>
   (Number.isFinite(v) ? false : { error: 'expected number', value: v });

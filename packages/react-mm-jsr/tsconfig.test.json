@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS"
+  },
+  "ts-node": {
+    "compiler": "ttypescript"
+  }
+}

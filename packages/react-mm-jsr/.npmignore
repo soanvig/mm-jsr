@@ -1,0 +1,4 @@
+*
+!build/index.js
+!build/index.js.map
+!build/**/*.ts
