@@ -33,7 +33,7 @@ Although HTML 5 comes with input[type="range"] its functionality lacks a lot of 
   import { useJSR } from 'react-mm-jsr';
 
   function MyComponent () {
-    const { JSR: JSRComponent, instance } = useJSR({
+    const { ref: jsrRef, instance: jsrInstance } = useJSR({
       modules: [
         new JSR.Rail(),
         new JSR.Slider(),
@@ -48,7 +48,7 @@ Although HTML 5 comes with input[type="range"] its functionality lacks a lot of 
       },
     });
 
-    return (<JSRComponent />);
+    return (<div ref={jsrRef} />);
   }
   ```
 
@@ -57,7 +57,7 @@ Although HTML 5 comes with input[type="range"] its functionality lacks a lot of 
 `instance` returned from `useJSR` is not available immediately, because JSR mounts itself after component.
 Underhood it uses `useState` for storing instance.
 
-Therefore each usage must check for instance existance, and usage in hooks have to use instance as dependency.
+Therefore each usage must check for instance existence, and usage in hooks have to use instance as dependency.
 
 ## Handling onValueChange
 
@@ -65,10 +65,41 @@ To handle onValueChange you may use this code
 
 ```js
 useEffect(() => {
-  if (instance) {
-    return instance.onValueChange(console.log);
+  if (jsrInstance) {
+    return jsrInstance.onValueChange(console.log);
   }
-}, [instance]);
+}, [jsrInstance]);
 ```
 
 As `onValueChange` returns function, that will unsubscribe the handler, it can be used naturally with React's `useEffect`.
+
+## Styling
+
+Because you mount JSR by using `ref`, you have full control over JSR parent element.
+
+So by applying class to that element, and then wrapping [default styles](../mm-jsr/styles.css) with applied class,
+you can have styled and scoped JSR.
+
+The same works for `styled-components`:
+
+```js
+const JsrContainer = styled.div`
+    display: block;
+    position: relative;
+    padding-top: 10px;
+    width: 100%;
+    ...
+
+    .jsr_rail {
+      height: 5px;
+      background: #444;
+    }
+
+    ...
+`;
+```
+
+**NOTE**: `.jsr` class is the container element itself.
+
+**NOTE**: `.jsr_lockscreen` is applied to body, so it should be global.
+See [docs on locking screen on touchevent](https://github.com/soanvig/mm-jsr#locking-screen-on-touchevent) for more info.

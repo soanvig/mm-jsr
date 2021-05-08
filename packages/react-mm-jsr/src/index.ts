@@ -1,5 +1,5 @@
 import JSR from 'mm-jsr';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Ctor = ConstructorParameters<typeof JSR>[0];
 type Config = Omit<Ctor['config'], 'container'>;
@@ -8,10 +8,6 @@ type Modules = Ctor['modules'];
 export interface ReactJSRParams {
   config: Config;
   modules: Modules;
-}
-
-export interface ReactJSRProps {
-  className?: string;
 }
 
 export const useJSR = ({
@@ -43,10 +39,7 @@ export const useJSR = ({
   }, []);
 
   return {
-    JSR: ({ className }: ReactJSRProps) => React.createElement('div', {
-      className,
-      ref: containerRef,
-    }, null),
+    ref: containerRef,
     instance: jsr,
   };
 };

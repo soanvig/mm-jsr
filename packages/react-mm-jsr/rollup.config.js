@@ -31,6 +31,10 @@ export default {
   output: [
     {
       ...outputCommons,
+      globals: {
+        'react': 'React',
+        'mm-jsr': 'JSR',
+      },
       dir: './build',
       sourcemap: true,
       plugins: [

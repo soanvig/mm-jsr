@@ -153,7 +153,7 @@
 
     ReactDOM.render(
       React.createElement(() => {
-        const { JSR: JSRComponent, instance } = ReactJSR.useJSR({
+        const { ref: jsrRef, instance } = ReactJSR.useJSR({
           modules: [
             new JSR.Rail(),
             new JSR.Slider(),
@@ -178,7 +178,11 @@
           React.Fragment,
           null,
           toggleButton(instance),
-          JSRComponent({})
+          React.createElement(
+            'div',
+            { ref: jsrRef },
+            null,
+          )
         );
       }, null, null),
       app
