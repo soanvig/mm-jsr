@@ -14,7 +14,7 @@
     "build": "rollup --config rollup.config.js",
     "watch": "rollup --watch --config rollup.config.js",
     "play": "ts-node -P tsconfig.test.json ./src/index.ts",
-    "test": "cross-env TS_NODE_PROJECT=tsconfig.test.json ava"
+    "test": "cross-env TS_NODE_PROJECT=tsconfig.test.json ava --verbose"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^18.0.0",
