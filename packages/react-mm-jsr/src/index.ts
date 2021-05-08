@@ -5,17 +5,19 @@ type Ctor = ConstructorParameters<typeof JSR>[0];
 type Config = Omit<Ctor['config'], 'container'>;
 type Modules = Ctor['modules'];
 
-export interface Props {
-  className?: string;
+export interface ReactJSRParams {
   config: Config;
   modules: Modules;
 }
 
+export interface ReactJSRProps {
+  className?: string;
+}
+
 export const useJSR = ({
-  className,
   config,
   modules,
-}: Props) => {
+}: ReactJSRParams) => {
   const containerRef = useRef<HTMLElement>();
   const [jsr, setJsr] = useState<JSR | null>(null);
 
@@ -41,7 +43,7 @@ export const useJSR = ({
   }, []);
 
   return {
-    JSR: React.createElement('div', {
+    JSR: ({ className }: ReactJSRProps) => React.createElement('div', {
       className,
       ref: containerRef,
     }, null),
