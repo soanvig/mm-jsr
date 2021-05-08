@@ -3,7 +3,7 @@ name: Test react-mm-jsr pull request
 on:
   pull_request:
     paths:
-      - './packages/react-mm-jsr/**'
+      - './packages/react-mm-jsr/**.ts'
 
 jobs:
   unit-tests:
