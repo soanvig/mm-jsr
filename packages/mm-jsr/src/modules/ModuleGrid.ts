@@ -4,6 +4,19 @@ import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
 import { assert, isFunction, isNumber, isString } from '@/validation/assert';
 
+export interface ModuleGridGetLinesCountParams {
+  /** Width of the container */
+  containerWidth: number;
+}
+
+export interface ModuleGridShouldShowLabelParams {
+  /** Line number currently displayed */
+  i: number;
+
+  /** Number of all lines */
+  linesCount: number;
+}
+
 export interface ModuleGridSettings {
   /** Color of grid text and lines. Can be any CSS valid color string */
   color: string;
@@ -22,6 +35,12 @@ export interface ModuleGridSettings {
 
   /** Formatter used to format values before rendering them as text */
   formatter: (realValue: number) => string;
+
+  /** Returns count of lines, that should be rendered for grid */
+  getLinesCount: (opt: ModuleGridGetLinesCountParams) => number;
+
+  /** Function that determines whether line label should be drawn or not */
+  shouldShowLabel: (params: ModuleGridShouldShowLabelParams) => boolean;
 }
 
 /**
@@ -49,7 +68,12 @@ export class ModuleGrid extends Module {
       fontFamily: 'sans-serif',
       textPadding: 5,
       formatter: String,
-    }, settings);
+      getLinesCount: ({ containerWidth }) => Math.min(
+        100,
+        Math.floor(containerWidth / 10),
+      ),
+      shouldShowLabel: ({ i }) => i % 10 === 0,
+    } as ModuleGridSettings, settings);
   }
 
   public destroy () {
@@ -84,8 +108,10 @@ export class ModuleGrid extends Module {
     const pixelRatio = window.devicePixelRatio || 1;
 
     const context = this.context;
-    const numberOfLines = 100;
-    const ratio = 1 / numberOfLines;
+    const linesCount = this.settings.getLinesCount({
+      containerWidth: width,
+    });
+    const ratio = 1 / linesCount;
 
     this.grid.style.width = `${width}px`;
     this.grid.width = width * pixelRatio;
@@ -100,26 +126,31 @@ export class ModuleGrid extends Module {
     context.font = `${this.settings.fontSize}px ${this.settings.fontFamily}`;
     context.textBaseline = 'top';
 
-    for (let i = 0; i <= numberOfLines; i += 1) {
+    for (let i = 0; i <= linesCount; i += 1) {
       // Draw line
       let left = i * ratio * width;
       left = Math.round(left * 100.0) / 100.0;
       context.moveTo(left, 0);
       context.lineTo(left, this.settings.height);
 
+      const shouldShowLabel = this.settings.shouldShowLabel({
+        i,
+        linesCount,
+      });
+
       // Draw text
-      if (i % 10 === 0) {
+      if (shouldShowLabel) {
         // Determine the position of text
         if (i === 0) {
           context.textAlign = 'left';
-        } else if (i === numberOfLines) {
+        } else if (i === linesCount) {
           context.textAlign = 'right';
         } else {
           context.textAlign = 'center';
         }
 
         const value = Value.fromRatio({
-          ratio: i / numberOfLines,
+          ratio: i / linesCount,
           max: this.config.max,
           min: this.config.min,
         });
