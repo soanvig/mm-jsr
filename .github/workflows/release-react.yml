@@ -36,6 +36,7 @@ jobs:
       - run: git config --global user.name "GH Actions"
       - run: yarn version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
         working-directory: ./packages/react-mm-jsr
+      - run: git commit -a -m "[react-mm-jsr] v${{ github.event.inputs.version }}"
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
       - run: npm publish
         working-directory: ./packages/react-mm-jsr
