@@ -1,6 +1,6 @@
 {
   "name": "react-mm-jsr",
-  "version": "2.0.0",
+  "version": "2.0.4",
   "author": "Mateusz Koteja <soanvig@gmail.com>",
   "description": "React adapter to pure JS range input solution",
   "license": "LGPLv3",
@@ -31,7 +31,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^7.19.0",
     "eslint-plugin-import-quotes": "^0.0.1",
-    "mm-jsr": "^2.0.4",
+    "mm-jsr": "^2.0.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rollup": "^2.38.5",
