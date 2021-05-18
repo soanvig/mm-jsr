@@ -81,6 +81,55 @@ const demo5 = `{
     initialValues: [30,70],
   }
 }`;
+
+const demo6 = `{
+  modules: [
+    new JSR.Slider(),
+    new JSR.Rail(),
+    new JSR.Bar(),
+    new JSR.Label(),
+  ],
+  config: {
+    min: 0,
+    max: 100,
+    step: 1,
+    initialValues: [15, 30, 45, 60],
+  }
+}`;
+
+const demo6css = `.demo6 .jsr_bar:nth-child(6) {
+  background: linear-gradient(90deg, rgba(106,97,255,1) 0%, rgba(0,212,255,1) 100%);
+}
+
+.demo6 .jsr_bar:nth-child(7) {
+  background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(215,0,255,1) 100%);
+}
+
+.demo6 .jsr_bar:nth-child(8) {
+  background: linear-gradient(90deg, rgba(215,0,255,1) 0%, rgba(72,255,0,1) 100%);
+}
+
+.demo6 .jsr_slider:nth-child(1)::before {
+  background: rgba(106,97,255,1);
+  box-shadow: 0 0 8px rgba(106,97,255,1);
+}
+
+.demo6 .jsr_slider:nth-child(2)::before {
+  background: rgba(0,212,255,1);
+  box-shadow: 0 0 8px rgba(0,212,255,1);
+}
+
+.demo6 .jsr_slider:nth-child(3)::before {
+  background: rgba(215,0,255,1);
+  box-shadow: 0 0 8px rgba(215,0,255,1);
+}
+
+.demo6 .jsr_slider:nth-child(4)::before {
+  background: rgba(72,255,0,1);
+  box-shadow: 0 0 8px rgba(72,255,0,1);
+}
+`;
+
 </script>
 <section class="page-section" id="demo">
 
@@ -92,7 +141,8 @@ const demo5 = `{
   <Demo config={demo2} description='Visible limit.' />
   <Demo config={demo3} description='Single value, formatter, grid.' />
   <Demo config={demo4} description='Only offset slider and grid.' customClass='demo4' customCss={demo4css} />
-  <Demo config={demo5} description='Only rail and bar + labels' customClass='demo4' customCss={demo4css} />
+  <Demo config={demo5} description='Only rail and bar + labels' />
+  <Demo config={demo6} description='Colorful bars' customClass='demo6' customCss={demo6css} />
 </section>
 
 <style>
