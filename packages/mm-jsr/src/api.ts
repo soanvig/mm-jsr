@@ -11,7 +11,7 @@ export { JSR, JsrConstructor, ChangeLimitCommand } from '@/JSR';
 export { ConfigAttrs } from './models/Config';
 export { Module } from '@/modules/Module';
 export { ModuleBar } from '@/modules/ModuleBar';
-export { ModuleGrid, ModuleGridSettings } from '@/modules/ModuleGrid';
+export { ModuleGrid, ModuleGridSettings, ModuleGridGetLinesCountParams, ModuleGridShouldShowLabelParams } from '@/modules/ModuleGrid';
 export { ModuleLabel, ModuleLabelSettings } from '@/modules/ModuleLabel';
 export { ModuleLimit } from '@/modules/ModuleLimit';
 export { ModuleRail } from '@/modules/ModuleRail';

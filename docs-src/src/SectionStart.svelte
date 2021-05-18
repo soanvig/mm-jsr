@@ -1,3 +1,30 @@
+<script>
+  import { onMount } from "svelte";
+
+  let jsrNode;
+
+  onMount(() => {
+    new window.JSR({
+      modules: [
+          new JSR.Rail(),
+          new JSR.Slider(),
+          new JSR.Bar(),
+          new JSR.Label(),
+          new JSR.Grid({
+              color: '#777'
+          }),
+      ],
+      config: {
+          min: 0,
+          max: 100,
+          step: 1,
+          initialValues: [25,75],
+          container: jsrNode,
+      }
+    });
+  })
+</script>
+
 <div class="page-section page-section--start" id="start">
         
   <div class="page-section--start_content">
@@ -7,27 +34,7 @@
   </div>
   
   <div class="page-section--start_demo">
-      <div id="startDemo"></div>
-      <script>
-          new JSR({
-              modules: [
-                  new JSR.Rail(),
-                  new JSR.Slider(),
-                  new JSR.Bar(),
-                  new JSR.Label(),
-                  new JSR.Grid({
-                      color: '#777'
-                  }),
-              ],
-              config: {
-                  min: 0,
-                  max: 100,
-                  step: 1,
-                  initialValues: [25,75],
-                  container: document.getElementById('startDemo'),
-              }
-          });
-      </script>
+      <div class="jsr" bind:this={jsrNode} />
   </div>
   
   <a class="button button--download" href="https://github.com/soanvig/mm-jsr">Get started</a>
