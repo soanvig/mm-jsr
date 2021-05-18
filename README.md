@@ -100,7 +100,7 @@ For **framework adapters** see: [adapters section](#adapters)
 
 JSR supports official adapters:
 
-- [React](../react-mm-jsr)
+- [React](https://github.com/soanvig/mm-jsr/tree/master/packages/react-mm-jsr)
 
 ## Important notes
 
