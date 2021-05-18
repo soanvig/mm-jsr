@@ -10,11 +10,13 @@ Range input is form's field where one can choose a value from min-max range.
 Although HTML 5 comes with input[type="range"] its functionality lacks a lot of features.
 **mm-jsr** gives You anything You may need.
 
-Homepage and demo: https://soanvig.github.io/mm-jsr/
+Homepage and **demo**: https://soanvig.github.io/mm-jsr/
 
 Browser support: Firefox, Chrome (and Chromium forks, like: Brave, Edge, Opera, Vivaldi)
 
 LGPLv3 license doubts are [explained here](#license-explanation)
+
+For **framework adapters** see: [adapters section](#adapters)
 
 ## Features
 
@@ -93,6 +95,12 @@ LGPLv3 license doubts are [explained here](#license-explanation)
 ## Configuration and API
 
 [See docs](https://soanvig.github.io/mm-jsr/api/index.html)
+
+## Adapters
+
+JSR supports official adapters:
+
+- [React](../react-mm-jsr)
 
 ## Important notes
 
