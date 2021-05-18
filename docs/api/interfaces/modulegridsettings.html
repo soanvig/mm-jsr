@@ -84,7 +84,9 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modulegridsettings.html#fontfamily" class="tsd-kind-icon">font<wbr>Family</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modulegridsettings.html#fontsize" class="tsd-kind-icon">font<wbr>Size</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modulegridsettings.html#formatter" class="tsd-kind-icon">formatter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modulegridsettings.html#getlinescount" class="tsd-kind-icon">get<wbr>Lines<wbr>Count</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modulegridsettings.html#height" class="tsd-kind-icon">height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modulegridsettings.html#shouldshowlabel" class="tsd-kind-icon">should<wbr>Show<wbr>Label</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modulegridsettings.html#textpadding" class="tsd-kind-icon">text<wbr>Padding</a></li>
 							</ul>
 						</section>
@@ -99,7 +101,7 @@
 					<div class="tsd-signature tsd-kind-icon">color<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/6fddc7a/packages/mm-jsr/src/modules/ModuleGrid.ts#L9">modules/ModuleGrid.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/18f7de8/packages/mm-jsr/src/modules/ModuleGrid.ts#L22">modules/ModuleGrid.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -114,7 +116,7 @@
 					<div class="tsd-signature tsd-kind-icon">font<wbr>Family<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/6fddc7a/packages/mm-jsr/src/modules/ModuleGrid.ts#L18">modules/ModuleGrid.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/18f7de8/packages/mm-jsr/src/modules/ModuleGrid.ts#L31">modules/ModuleGrid.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -129,7 +131,7 @@
 					<div class="tsd-signature tsd-kind-icon">font<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/6fddc7a/packages/mm-jsr/src/modules/ModuleGrid.ts#L15">modules/ModuleGrid.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/18f7de8/packages/mm-jsr/src/modules/ModuleGrid.ts#L28">modules/ModuleGrid.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -144,7 +146,7 @@
 					<div class="tsd-signature tsd-kind-icon">formatter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>realValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/6fddc7a/packages/mm-jsr/src/modules/ModuleGrid.ts#L24">modules/ModuleGrid.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/18f7de8/packages/mm-jsr/src/modules/ModuleGrid.ts#L37">modules/ModuleGrid.ts:37</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -175,12 +177,48 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="getlinescount" class="tsd-anchor"></a>
+					<h3>get<wbr>Lines<wbr>Count</h3>
+					<div class="tsd-signature tsd-kind-icon">get<wbr>Lines<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>opt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ModuleGridGetLinesCountParams</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/18f7de8/packages/mm-jsr/src/modules/ModuleGrid.ts#L40">modules/ModuleGrid.ts:40</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Returns count of lines, that should be rendered for grid</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>opt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ModuleGridGetLinesCountParams</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>opt: <span class="tsd-signature-type">ModuleGridGetLinesCountParams</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="height" class="tsd-anchor"></a>
 					<h3>height</h3>
 					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/6fddc7a/packages/mm-jsr/src/modules/ModuleGrid.ts#L12">modules/ModuleGrid.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/18f7de8/packages/mm-jsr/src/modules/ModuleGrid.ts#L25">modules/ModuleGrid.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -190,12 +228,48 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="shouldshowlabel" class="tsd-anchor"></a>
+					<h3>should<wbr>Show<wbr>Label</h3>
+					<div class="tsd-signature tsd-kind-icon">should<wbr>Show<wbr>Label<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ModuleGridShouldShowLabelParams</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/18f7de8/packages/mm-jsr/src/modules/ModuleGrid.ts#L43">modules/ModuleGrid.ts:43</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Function that determines whether line label should be drawn or not</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ModuleGridShouldShowLabelParams</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>params: <span class="tsd-signature-type">ModuleGridShouldShowLabelParams</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="textpadding" class="tsd-anchor"></a>
 					<h3>text<wbr>Padding</h3>
 					<div class="tsd-signature tsd-kind-icon">text<wbr>Padding<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/6fddc7a/packages/mm-jsr/src/modules/ModuleGrid.ts#L21">modules/ModuleGrid.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/soanvig/mm-jsr/blob/18f7de8/packages/mm-jsr/src/modules/ModuleGrid.ts#L34">modules/ModuleGrid.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -264,7 +338,13 @@
 								<a href="modulegridsettings.html#formatter" class="tsd-kind-icon">formatter</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="modulegridsettings.html#getlinescount" class="tsd-kind-icon">get<wbr>Lines<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="modulegridsettings.html#height" class="tsd-kind-icon">height</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="modulegridsettings.html#shouldshowlabel" class="tsd-kind-icon">should<wbr>Show<wbr>Label</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="modulegridsettings.html#textpadding" class="tsd-kind-icon">text<wbr>Padding</a>
