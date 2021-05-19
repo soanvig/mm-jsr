@@ -3,7 +3,7 @@ name: Test mm-jsr pull request
 on:
   pull_request:
     paths:
-      - './packages/mm-jsr/**.ts'
+      - 'packages/mm-jsr/**.ts'
 
 jobs:
   unit-tests:
