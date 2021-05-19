@@ -97,34 +97,34 @@ const demo6 = `{
   }
 }`;
 
-const demo6css = `.demo6 .jsr_bar:nth-child(6) {
+const demo6css = `.demo6 .jsr_bar[data-key="0"] {
   background: linear-gradient(90deg, rgba(106,97,255,1) 0%, rgba(0,212,255,1) 100%);
 }
 
-.demo6 .jsr_bar:nth-child(7) {
+.demo6 .jsr_bar[data-key="1"] {
   background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(215,0,255,1) 100%);
 }
 
-.demo6 .jsr_bar:nth-child(8) {
+.demo6 .jsr_bar[data-key="2"] {
   background: linear-gradient(90deg, rgba(215,0,255,1) 0%, rgba(72,255,0,1) 100%);
 }
 
-.demo6 .jsr_slider:nth-child(1)::before {
+.demo6 .jsr_slider[data-key="0"]::before {
   background: rgba(106,97,255,1);
   box-shadow: 0 0 8px rgba(106,97,255,1);
 }
 
-.demo6 .jsr_slider:nth-child(2)::before {
+.demo6 .jsr_slider[data-key="1"]::before {
   background: rgba(0,212,255,1);
   box-shadow: 0 0 8px rgba(0,212,255,1);
 }
 
-.demo6 .jsr_slider:nth-child(3)::before {
+.demo6 .jsr_slider[data-key="2"]::before {
   background: rgba(215,0,255,1);
   box-shadow: 0 0 8px rgba(215,0,255,1);
 }
 
-.demo6 .jsr_slider:nth-child(4)::before {
+.demo6 .jsr_slider[data-key="3"]::before {
   background: rgba(72,255,0,1);
   box-shadow: 0 0 8px rgba(72,255,0,1);
 }
