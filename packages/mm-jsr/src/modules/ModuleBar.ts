@@ -24,6 +24,7 @@ export class ModuleBar extends Module {
     this.bars = times(this.config.valuesCount - 1, index => {
       const bar = document.createElement('div');
       bar.classList.add('jsr_bar');
+      bar.dataset.key = (index - 1).toString();
       bar.style.left = '0';
       bar.style.width = '0';
 
