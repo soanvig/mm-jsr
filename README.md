@@ -32,7 +32,7 @@ For **framework adapters** see: [adapters section](#adapters)
 
 ## Advantages
 
-- lightweight (~16kB of minified, not-gzipped code),
+- [lightweight (~18kB of minified, ~5kB of gzipped code)](https://bundlephobia.com/result?p=mm-jsr),
 - performant,
 - customizable,
 - no dependencies.
