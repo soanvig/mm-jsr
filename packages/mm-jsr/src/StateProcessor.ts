@@ -50,14 +50,19 @@ export class StateProcessor {
     return this.state.toDto();
   }
 
-  public updateValue (index: number, value: Value): StateDto {
+  public updateValue (index: number, value: Value): { newState: StateDto, oldState: StateDto } {
+    const oldState = this.state.toDto();
+
     const updatedState = this.state.updateValues(
       mapChanged(this.state.values, [index], _ => value),
     );
 
     this.state = this.process(updatedState);
 
-    return this.state.toDto();
+    return {
+      newState: this.state.toDto(),
+      oldState,
+    };
   }
 
   public getState (): StateDto {

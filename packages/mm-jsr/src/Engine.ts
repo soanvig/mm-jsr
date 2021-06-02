@@ -96,17 +96,21 @@ export class Engine {
       return;
     }
 
-    const state = this.stateProcessor.updateValue(index, value);
+    const { oldState, newState } = this.stateProcessor.updateValue(index, value);
 
-    this.renderState(state);
+    this.renderState(newState);
 
-    this.valueChangeHandlers.forEach(handler => {
-      handler({
-        index,
-        ratio: state.values[index].asRatio(),
-        real: state.values[index].asReal(),
+    const isValueSame = (newState.values[index].isExact(oldState.values[index]));
+
+    if (!isValueSame) {
+      this.valueChangeHandlers.forEach(handler => {
+        handler({
+          index,
+          ratio: newState.values[index].asRatio(),
+          real: newState.values[index].asReal(),
+        });
       });
-    });
+    }
   }
 
   private renderState (state: StateDto): void {

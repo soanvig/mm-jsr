@@ -52,6 +52,10 @@ export class Value {
     return finite as RatioValue;
   }
 
+  public isExact (value: Value): boolean {
+    return this.real === value.real;
+  }
+
   public static fromReal (data: Data): Value {
     return new Value(data);
   }
