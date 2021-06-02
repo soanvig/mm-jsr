@@ -72,7 +72,7 @@ export class ModuleGrid extends Module {
         100,
         Math.floor(containerWidth / 10),
       ),
-      shouldShowLabel: ({ i }) => i % 10 === 0,
+      shouldShowLabel: ({ i }) => i % 9 === 0,
     } as ModuleGridSettings, settings);
   }
 
