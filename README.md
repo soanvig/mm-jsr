@@ -1,16 +1,24 @@
-# mm-jsr
+<div align="center">
+  <img src="./logo.png" width="140px" align="right">
+  <div align="left" font="16px">
+    <h1>mm-jsr</h1>
+    <div>
+      <b>mm-jsr</b> provides You with excellent solution for creating so-called range-inputs.
+    </div>
+    <br>
+    <div>
+      Homepage and <strong>demo</strong>: https://soanvig.github.io/mm-jsr/
+    </div>
+  </div>
+</div>
 
-For v1 (old version) documentation see [v1 branch](https://github.com/soanvig/mm-jsr/tree/v1)
+## Information
 
----
-
-**mm-jsr** provides You with excellent solution for creating so-called range-inputs.
+<i>For v1 (old version) documentation see [v1 branch](https://github.com/soanvig/mm-jsr/tree/v1)</i>
 
 Range input is form's field where one can choose a value from min-max range.
 Although HTML 5 comes with input[type="range"] its functionality lacks a lot of features.
 **mm-jsr** gives You anything You may need.
-
-Homepage and **demo**: https://soanvig.github.io/mm-jsr/
 
 Browser support: Firefox, Chrome (and Chromium forks, like: Brave, Edge, Opera, Vivaldi)
 
