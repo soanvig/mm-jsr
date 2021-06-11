@@ -72,7 +72,9 @@ export class ModuleGrid extends Module {
         100,
         Math.floor(containerWidth / 10),
       ),
-      shouldShowLabel: ({ i }) => i % 9 === 0,
+      shouldShowLabel: ({ i, linesCount }) => {
+        return i === 0 || i === linesCount || i % 10 === 0;
+      },
     } as ModuleGridSettings, settings);
   }
 
