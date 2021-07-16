@@ -14,8 +14,6 @@
 
 ## Information
 
-<i>For v1 (old version) documentation see [v1 branch](https://github.com/soanvig/mm-jsr/tree/v1)</i>
-
 Range input is form's field where one can choose a value from min-max range.
 Although HTML 5 comes with input[type="range"] its functionality lacks a lot of features.
 **mm-jsr** gives You anything You may need.
