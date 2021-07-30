@@ -30,8 +30,6 @@ export class ModuleBar extends Module {
 
       this.addMoveHandler(bar, index - 1);
 
-      bar.addEventListener('click', this.handleClick);
-
       return bar;
     });
 
@@ -53,6 +51,7 @@ export class ModuleBar extends Module {
     let setOffsetRatioLeft = (() => {}) as (o: number) => void;
     let setOffsetRatioRight = (() => {}) as (o: number) => void;
     let startX: number = 0;
+    let isMoved: boolean = false;
 
     useOnMouse(bar, {
       onMouseDown: e => {
@@ -61,20 +60,23 @@ export class ModuleBar extends Module {
         startX = e.clientX;
       },
       onMouseMove: e => {
+        isMoved = true;
+
         const ratioDistance = this.renderer.distanceToRelative(e.clientX - startX);
 
         setOffsetRatioLeft(ratioDistance);
         setOffsetRatioRight(ratioDistance);
       },
       onMouseUp: () => {
+        if (!isMoved) {
+          this.input.setClosestRatioValue(this.renderer.positionToRelative(startX));
+        }
+
         setOffsetRatioLeft = () => {};
         setOffsetRatioRight = () => {};
         startX = 0;
+        isMoved = false;
       },
     });
-  }
-
-  private handleClick = (e: MouseEvent) => {
-    this.input.setClosestRatioValue(this.renderer.positionToRelative(e.clientX));
   }
 }
