@@ -1,6 +1,6 @@
 # react-mm-jsr
 
-Official adapter for [mm-jsr](https://github.com/soanvig/mm-jsr). Visit link for more information about library.
+Official React adapter for [mm-jsr](https://github.com/soanvig/mm-jsr). Visit link for more information about library.
 
 ---
 
