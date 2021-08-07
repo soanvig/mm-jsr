@@ -104,9 +104,10 @@ For **framework adapters** see: [adapters section](#adapters)
 
 ## Adapters
 
-JSR supports official adapters:
+JSR supports official adapters/implementation guides:
 
 - [React](https://github.com/soanvig/mm-jsr/tree/master/packages/react-mm-jsr)
+- [Svelte](https://github.com/soanvig/mm-jsr/tree/master/packages/svelte-mm-jsr)
 
 ## Important notes
 
