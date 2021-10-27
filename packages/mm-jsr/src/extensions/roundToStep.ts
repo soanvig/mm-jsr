@@ -1,6 +1,9 @@
 import { Extension } from '@/extensions/types';
 import { mapChanged } from '@/helpers/mapChanged';
 
+/**
+ * Extension responsible for rounding all values to closest to configured step multiplier.
+ */
 export const extensionRoundToStep: Extension = (config, state, changelog) => {
   const { values } = state;
   const { step } = config;

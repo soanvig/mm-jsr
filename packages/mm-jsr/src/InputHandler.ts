@@ -10,6 +10,11 @@ interface Ctor {
   onChange: (index: number, value: Value) => void;
 }
 
+/**
+ * InputHandler is class responsible for manipulating values.
+ * Any values, that are modified in the system, should be modified
+ * through the InputHandler.
+ */
 export class InputHandler {
   private config: ConfigDto;
   private onChange: (index: number, value: Value) => void;
@@ -21,6 +26,9 @@ export class InputHandler {
     this.getState = ctor.getState;
   }
 
+  /**
+   * Set real value of value at given index.
+   */
   public setRealValue (index: number, value: number) {
     this.onChange(index, Value.fromReal({
       max: this.config.max,
@@ -29,6 +37,9 @@ export class InputHandler {
     }));
   }
 
+  /**
+   * Set ratio value of value at given index.
+   */
   public setRatioValue (index: number, value: number) {
     this.onChange(index, Value.fromRatio({
       max: this.config.max,
@@ -37,6 +48,13 @@ export class InputHandler {
     }));
   }
 
+  /**
+   * Set ratio value of value closest to the value, that is being set.
+   * 
+   * @example
+   * For values [0, 100] if we want to set value 30, the closest value to 30 is 0
+   * at index 0. Therefore after this operation we will have values [30, 100]
+   */
   public setClosestRatioValue (valueToSet: number) {
     const values = this.getState().values;
 
@@ -61,6 +79,12 @@ export class InputHandler {
     }));
   }
 
+  /**
+   * Change ratio value as given index by given ratio value.
+   * 
+   * @example
+   * newValue = oldValue + value
+   */
   public changeRatioBy (index: number, value: number) {
     const currentValue = this.getState().values[index];
 
@@ -71,6 +95,12 @@ export class InputHandler {
     }));
   }
 
+  /**
+   * Change real value as given index by given real value.
+   * 
+   * @example
+   * newValue = oldValue + value
+   */
   public changeRealBy (index: number, value: number) {
     const currentValue = this.getState().values[index];
     this.onChange(index, Value.fromReal({
@@ -81,9 +111,19 @@ export class InputHandler {
   }
 
   /**
-   * Creates setter, that allows to change value
+   * Create setter, that allows to change value
    * by a offset, relative to value in the moment
-   * of creating the setter
+   * of creating the setter.
+   * 
+   * It allows user to not know current value, yet create a hook
+   * that will modify value always relatively to the original value.
+   * 
+   * @example
+   * values = [25, 75]
+   * setter = makeValueRatioOffsetModifier(0)
+   * setter(10) -> [35, 75]
+   * setter(20) -> [45, 75]
+   * setter(-10) -> [25, 75]
    */
   public makeValueRatioOffsetModifier (index: number) {
     const currentValue = this.getState().values[index].asRatio();

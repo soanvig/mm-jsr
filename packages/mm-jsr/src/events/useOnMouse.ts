@@ -4,6 +4,9 @@ interface Options {
   onMouseUp: (e: MouseEvent) => void;
 }
 
+/**
+ * Helper for handling down/up/move events.
+ */
 export const useOnMouse = (el: HTMLElement, { onMouseDown, onMouseMove, onMouseUp }: Options) => {
   const handleDown = (e: MouseEvent) => {
     document.addEventListener('mouseup', handleUp);

@@ -13,6 +13,9 @@ interface SetupCommand {
 
 export type ValueChangeHandler = (v: { index: number, real: number, ratio: number }) => void;
 
+/**
+ * Engine initializes and connects all modules together.
+ */
 export class Engine {
   public readonly config!: Config;
   public readonly stateProcessor!: StateProcessor;
@@ -20,7 +23,10 @@ export class Engine {
   public readonly renderer!: Renderer;
   public readonly modules!: Module[];
 
+  /** Store for handlers for value change event */
   private valueChangeHandlers: ValueChangeHandler[] = [];
+
+  /** Disabled Engine doesn't react on value change events */
   private enabled = true;
 
   public constructor (setup: SetupCommand) {
@@ -71,12 +77,18 @@ export class Engine {
     return this.enabled;
   }
 
+  /**
+   * Dynamically change limit in which values can operate.
+   */
   public changeLimit (command: ChangeLimitCommand) {
     const state = this.stateProcessor.changeLimit(command);
 
     this.renderState(state);
   }
 
+  /**
+   * Create Value object from real value.
+   */
   public produceRealValue (value: number): Value {
     return Value.fromReal({
       real: value,
@@ -85,12 +97,19 @@ export class Engine {
     });
   }
 
+  /**
+   * Initialize views of all modules.
+   */
   private initView () {
     this.modules.forEach(m => m.initView());
 
     this.renderState(this.stateProcessor.getState());
   }
 
+  /**
+   * Internal handler for reacting on any value changed.
+   * Updates the state, triggers value change event handlers.
+   */
   private onValueChange (index: number, value: Value) {
     if (!this.enabled) {
       return;

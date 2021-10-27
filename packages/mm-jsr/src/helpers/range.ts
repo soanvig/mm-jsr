@@ -1,3 +1,6 @@
+/**
+ * Compute list of numbers between `a` and `b`.
+ */
 export const range = (a: number, b: number = 0): number[] => {
   if (a === 0 && b === 0) {
     return [];

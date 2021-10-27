@@ -1,3 +1,6 @@
+/**
+ * Throttling function.
+ */
 export const throttle = <P, T extends (...args: any[]) => P>(f: T, time: number) => {
   let isLocked = false;
 
