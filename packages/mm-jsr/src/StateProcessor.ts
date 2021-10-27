@@ -12,6 +12,11 @@ interface Ctor {
   config: ConfigDto;
 }
 
+/**
+ * StateProcessor is responsible for State object manipulation.
+ * 
+ * It uses *extensions* to manipulate the state each time, something changes.
+ */
 export class StateProcessor {
   private state: State;
   private config: ConfigDto;
@@ -69,6 +74,9 @@ export class StateProcessor {
     return this.state.toDto();
   }
 
+  /**
+   * Apply all extensions to state.
+   */
   private process (state: State): State {
     const changedValues = this.state.findChangedValues(state);
     const extensions = [
@@ -88,6 +96,9 @@ export class StateProcessor {
     return updatedState;
   }
 
+  /**
+   * Internal process function used by `process` function.
+   */
   private internalProcess (extensions: Extension[], state: State, changelog: Changelog): State {
     const [extension, ...nextExtensions] = extensions;
 

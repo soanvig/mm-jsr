@@ -1,6 +1,9 @@
 import { Extension } from '@/extensions/types';
 import { mapChanged } from '@/helpers/mapChanged';
 
+/**
+ * Extension responsible for limiting values so they never exceed neighbour values.
+ */
 export const extensionNeighbourLimit: Extension = (config, state, changelog) => {
   const { values } = state;
 

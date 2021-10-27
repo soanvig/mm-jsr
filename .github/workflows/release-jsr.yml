@@ -35,6 +35,8 @@ jobs:
       - run: git commit -a -m "[mm-jsr] v${{ github.event.inputs.version }}"
       - run: git tag v${{ github.event.inputs.version }}
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      - run: cp ../../README.md .
+        working-directory: ./packages/mm-jsr
       - run: npm publish
         working-directory: ./packages/mm-jsr
       - name: Push changes

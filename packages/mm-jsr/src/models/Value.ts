@@ -13,6 +13,16 @@ interface FromRatio {
   ratio: RatioValue;
 }
 
+/**
+ * Value-object representing single value stored in memory.
+ * For example: each slider corresponds to one value.
+ * 
+ * Value allows for seamless transition between "real" and "ratio" representation.
+ * - Real represents value, that is between config.min and config.max limit,
+ * and it is the value end user is interested in.
+ * - Ratio represents value relative to config.min and config.max limit: between 0 and 1.
+ * It is used mostly internally for computations of slider position and so on.
+ */
 export class Value {
   private real: RealValue;
   private min: RealValue;
@@ -24,6 +34,9 @@ export class Value {
     this.max = ctor.max;
   }
 
+  /**
+   * Limit this value to min-max range (real)
+   */
   public clampReal (min: RealValue, max: RealValue) {
     return new Value({
       ...this.toData(),

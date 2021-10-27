@@ -68,6 +68,9 @@ export class Config {
     return this.attrs.step;
   }
 
+  /**
+   * Return how many decimal places the step has.
+   */
   public get stepDecimals (): number {
     const compute = (n: number): number => {
       if (n === 0) {

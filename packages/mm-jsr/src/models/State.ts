@@ -10,6 +10,10 @@ export interface StateDto extends Data {}
 
 export type ChangeLimitCommand = { min?: Value, max?: Value };
 
+/**
+ * State object stores information about values, and limits,
+ * and any other values, that can be dynamically changed in the system.
+ */
 export class State {
   public readonly values: Value[];
   public readonly limit?: { min?: Value; max?: Value };
