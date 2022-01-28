@@ -36,9 +36,10 @@ export class JSR {
    *
    * @param index - index of value to set
    * @param value - real value to set
+   * @param options - additional options for external handling
    */
-  public setRealValue (index: number, value: number): void {
-    this.engine.inputHandler.setRealValue(index, value);
+  public setRealValue (index: number, value: number, options: unknown): void {
+    this.engine.inputHandler.setRealValue(index, value, options);
   }
 
   /**
@@ -46,9 +47,10 @@ export class JSR {
    *
    * @param index - index of value to set
    * @param value - ratio value to set
+   * @param options - additional options for external handling
    */
-  public setRatioValue (index: number, value: number): void {
-    this.engine.inputHandler.setRatioValue(index, value);
+  public setRatioValue (index: number, value: number, options: unknown): void {
+    this.engine.inputHandler.setRatioValue(index, value, options);
   }
 
   /**

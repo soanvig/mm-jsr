@@ -17,7 +17,7 @@ interface Ctor {
  */
 export class InputHandler {
   private config: ConfigDto;
-  private onChange: (index: number, value: Value) => void;
+  private onChange: (index: number, value: Value, options?: unknown) => void;
   private getState: () => StateDto;
 
   private constructor (ctor: Ctor) {
@@ -29,23 +29,23 @@ export class InputHandler {
   /**
    * Set real value of value at given index.
    */
-  public setRealValue (index: number, value: number) {
+  public setRealValue (index: number, value: number, options: unknown) {
     this.onChange(index, Value.fromReal({
       max: this.config.max,
       min: this.config.min,
       real: value,
-    }));
+    }), options);
   }
 
   /**
    * Set ratio value of value at given index.
    */
-  public setRatioValue (index: number, value: number) {
+  public setRatioValue (index: number, value: number, options: unknown) {
     this.onChange(index, Value.fromRatio({
       max: this.config.max,
       min: this.config.min,
       ratio: value,
-    }));
+    }), options);
   }
 
   /**
