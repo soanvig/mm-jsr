@@ -1,4 +1,3 @@
-import { StateDto } from '@/models/State';
 import { Module } from '@/modules/Module';
 
 /**
@@ -22,10 +21,6 @@ export class ModuleRail extends Module {
     this.renderer.addChild(this.rail);
 
     this.rail.addEventListener('click', this.handleClick);
-  }
-
-  public render (_: StateDto): VoidFunction {
-    return () => {};
   }
 
   private handleClick = (e: MouseEvent) => {
