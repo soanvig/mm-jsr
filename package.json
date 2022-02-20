@@ -6,7 +6,8 @@
   "scripts": {
     "webpage:serve": "serve ./docs-src/public",
     "webpage:build": "rollup --config docs-src/rollup.config.js",
-    "webpage:watch": "rollup --watch --config docs-src/rollup.config.js"
+    "webpage:watch": "rollup --watch --config docs-src/rollup.config.js",
+    "build": "yarn --cwd packages/mm-jsr build"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "13.1.3",
