@@ -94,6 +94,72 @@ export class JSR {
    *
    * @param command - limit object, that should be applied as new limit
    */
+  public changeLimit2 (command: ChangeLimitCommand): void {
+    assert('limit object', command, isPlainObject);
+
+    if (command.min) {
+      assert('limit.min', command.min, isNumber);
+    }
+
+    if (command.max) {
+      assert('limit.max', command.max, isNumber);
+    }
+
+    this.engine.changeLimit({
+      min: command.min !== undefined ? this.engine.produceRealValue(command.min) : undefined,
+      max: command.max !== undefined ? this.engine.produceRealValue(command.max) : undefined,
+    });
+  }
+
+  /**
+   * Dynamically change limit.
+   *
+   * @param command - limit object, that should be applied as new limit
+   */
+  public changeLimit3 (command: ChangeLimitCommand): void {
+    assert('limit object', command, isPlainObject);
+
+    if (command.min) {
+      assert('limit.min', command.min, isNumber);
+    }
+
+    if (command.max) {
+      assert('limit.max', command.max, isNumber);
+    }
+
+    this.engine.changeLimit({
+      min: command.min !== undefined ? this.engine.produceRealValue(command.min) : undefined,
+      max: command.max !== undefined ? this.engine.produceRealValue(command.max) : undefined,
+    });
+  }
+
+  /**
+   * Dynamically change limit.
+   *
+   * @param command - limit object, that should be applied as new limit
+   */
+  public changeLimit4 (command: ChangeLimitCommand): void {
+    assert('limit object', command, isPlainObject);
+
+    if (command.min) {
+      assert('limit.min', command.min, isNumber);
+    }
+
+    if (command.max) {
+      assert('limit.max', command.max, isNumber);
+    }
+
+    this.engine.changeLimit({
+      min: command.min !== undefined ? this.engine.produceRealValue(command.min) : undefined,
+      max: command.max !== undefined ? this.engine.produceRealValue(command.max) : undefined,
+    });
+  }
+
+  /**
+   * Dynamically change limit.
+   *
+   * @param command - limit object, that should be applied as new limit
+   */
   public changeLimit (command: ChangeLimitCommand): void {
     assert('limit object', command, isPlainObject);
 
