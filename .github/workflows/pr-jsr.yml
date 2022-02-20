@@ -22,9 +22,3 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn build
         working-directory: ./packages/mm-jsr
-      - run: echo "LIB_SIZE=$(stat --printf="%s" ./build/index.js)" >> $GITHUB_ENV
-        working-directory: ./packages/mm-jsr
-      - if: ${{ env.LIB_SIZE > 30000 }}
-        run: |
-          echo "Library size exceeded maximum of 30kB"
-          exit 1
