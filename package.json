@@ -6,16 +6,25 @@
   "scripts": {
     "webpage:serve": "serve ./docs-src/public",
     "webpage:build": "rollup --config docs-src/rollup.config.js",
-    "webpage:watch": "rollup --watch --config docs-src/rollup.config.js"
+    "webpage:watch": "rollup --watch --config docs-src/rollup.config.js",
+    "build": "yarn --cwd packages/mm-jsr build"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "13.1.3",
     "@rollup/plugin-typescript": "8.3.0",
+    "@size-limit/preset-small-lib": "^7.0.8",
     "rollup": "2.67.3",
     "rollup-plugin-svelte": "7.1.0",
     "rollup-plugin-terser": "7.0.2",
+    "size-limit": "^7.0.8",
     "svelte": "3.46.4",
     "ttypescript": "1.5.13",
     "typescript": "4.4.3"
-  }
+  },
+  "size-limit": [
+    {
+      "path": "packages/mm-jsr/build/index.js",
+      "limit": "20 kB"
+    }
+  ]
 }
