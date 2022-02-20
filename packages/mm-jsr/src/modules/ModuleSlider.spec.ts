@@ -78,6 +78,7 @@ const testKeyboard = async (opts: KeyboardEventInit, test: (index: number, value
       renderer,
       input: inputHandler,
       config: input.config,
+      name: 'ModuleSlider',
     });
 
     sliderModule.initView();

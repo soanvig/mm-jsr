@@ -1,25 +1,23 @@
 import { ChangeLimitCommand, State, StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
-import type { Extension, Changelog } from '@/extensions/types';
 import { ConfigDto } from '@/models/Config';
-import { extensionNeighbourLimit } from '@/extensions/neighbourLimit';
-import { extensionRoundToStep } from '@/extensions/roundToStep';
 import { mapChanged } from '@/helpers/mapChanged';
-import { extensionPerformanceEnd, extensionPerformanceStart } from '@/extensions/performance';
-import { extensionLimit } from '@/extensions/limit';
+import { Changelog, Module } from '@/modules/Module';
 
 interface Ctor {
   config: ConfigDto;
+  modules: Module[];
 }
 
 /**
  * StateProcessor is responsible for State object manipulation.
- * 
+ *
  * It uses *extensions* to manipulate the state each time, something changes.
  */
 export class StateProcessor {
   private state: State;
   private config: ConfigDto;
+  private modules: Module[];
 
   private constructor (ctor: Ctor) {
     const configDto = ctor.config;
@@ -39,18 +37,19 @@ export class StateProcessor {
       : undefined;
 
     this.config = ctor.config;
+    this.modules = ctor.modules;
     this.state = State.fromData({
       values,
       limit,
     });
 
-    this.state = this.process(this.state);
+    this.state = this.process(this.state, this.modules);
   }
 
   public changeLimit (command: ChangeLimitCommand): StateDto {
     const updatedState = this.state.changeLimit(command);
 
-    this.state = this.process(updatedState);
+    this.state = this.process(updatedState, this.modules);
 
     return this.state.toDto();
   }
@@ -62,7 +61,7 @@ export class StateProcessor {
       mapChanged(this.state.values, [index], _ => value),
     );
 
-    this.state = this.process(updatedState);
+    this.state = this.process(updatedState, this.modules);
 
     return {
       newState: this.state.toDto(),
@@ -77,18 +76,11 @@ export class StateProcessor {
   /**
    * Apply all extensions to state.
    */
-  private process (state: State): State {
+  private process (state: State, modules: Module[]): State {
     const changedValues = this.state.findChangedValues(state);
-    const extensions = [
-      // extensionPerformanceStart,
-      extensionNeighbourLimit,
-      extensionLimit,
-      extensionRoundToStep,
-      // extensionPerformanceEnd,
-    ];
 
     const updatedState = this.internalProcess(
-      extensions,
+      modules,
       state,
       { changedValues },
     );
@@ -99,16 +91,20 @@ export class StateProcessor {
   /**
    * Internal process function used by `process` function.
    */
-  private internalProcess (extensions: Extension[], state: State, changelog: Changelog): State {
-    const [extension, ...nextExtensions] = extensions;
+  private internalProcess (modules: Module[], state: State, changelog: Changelog): State {
+    const [mod, ...rest] = modules;
 
-    const updatedState = extension(this.config, state, changelog);
-
-    if (nextExtensions.length) {
-      return this.internalProcess(nextExtensions, updatedState, changelog);
-    } else {
-      return updatedState;
+    if (rest.length === 0) {
+      return state;
     }
+
+    if (!mod.update) {
+      return this.internalProcess(rest, state, changelog);
+    }
+
+    const updatedState = mod.update(this.config, state, changelog);
+
+    return this.internalProcess(rest, updatedState, changelog);
   }
 
   public static init (ctor: Ctor) {

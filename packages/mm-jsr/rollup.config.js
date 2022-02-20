@@ -23,7 +23,9 @@ export default {
       dir: './build',
       sourcemap: true,
       plugins: [
-        terser(),
+        terser({
+          keep_classnames: true,
+        }),
       ],
     },
   ],

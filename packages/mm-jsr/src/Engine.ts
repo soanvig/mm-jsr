@@ -5,6 +5,7 @@ import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
 import { Renderer } from '@/Renderer';
 import { StateProcessor } from '@/StateProcessor';
+import { isTruthy } from './helpers/guards';
 
 interface SetupCommand {
   config: ConfigAttrs;
@@ -34,10 +35,6 @@ export class Engine {
 
     const config = this.config.toDto();
 
-    this.stateProcessor = StateProcessor.init({
-      config,
-    });
-
     this.renderer = Renderer.init({
       container: config.container,
     });
@@ -45,14 +42,20 @@ export class Engine {
     this.inputHandler = InputHandler.init({
       config,
       onChange: this.onValueChange.bind(this),
-      getState: this.stateProcessor.getState.bind(this.stateProcessor),
+      getState: () => this.stateProcessor.getState(),
     });
 
     this.modules = setup.modules.map(M => M.init({
       config,
       renderer: this.renderer,
       input: this.inputHandler,
+      name: M.constructor.name,
     }));
+
+    this.stateProcessor = StateProcessor.init({
+      config,
+      modules: this.modules,
+    });
 
     this.initView();
   }
@@ -101,7 +104,7 @@ export class Engine {
    * Initialize views of all modules.
    */
   private initView () {
-    this.modules.forEach(m => m.initView());
+    this.modules.forEach(m => m.initView && m.initView());
 
     this.renderState(this.stateProcessor.getState());
   }
@@ -133,7 +136,8 @@ export class Engine {
   }
 
   private renderState (state: StateDto): void {
-    const renderFunctions = this.modules.map(m => m.render(state));
-    this.renderer.render(renderFunctions);
+    const renderFunctions = this.modules.map(m => m.render && m.render(state));
+
+    this.renderer.render(renderFunctions.filter(isTruthy));
   }
 }

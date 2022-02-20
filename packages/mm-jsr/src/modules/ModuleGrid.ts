@@ -1,5 +1,4 @@
 import { debounce } from '@/helpers/debounce';
-import { StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
 import { assert, isFunction, isNumber, isString } from '@/validation/assert';
@@ -98,10 +97,6 @@ export class ModuleGrid extends Module {
     window.addEventListener('resize', this.handleWindowResize);
 
     this.grid.addEventListener('click', this.handleClick);
-  }
-
-  public render (_: StateDto): VoidFunction {
-    return () => {};
   }
 
   private drawGrid () {

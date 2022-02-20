@@ -1,4 +1,4 @@
-import { extensionRoundToStep } from '@/extensions/roundToStep';
+import { ModuleRound } from '@/modules/ModuleRound';
 import { getInput } from '@/testHelpers/getInput';
 import test from 'ava';
 
@@ -19,7 +19,7 @@ test('round to full value', t => {
 
 const roundToStep = (value: number, step: number): number => {
   const { config, state } = getInput({ initialValues: [value], step });
-  const updatedState = extensionRoundToStep(config, state, { changedValues: [0] });
+  const updatedState = new ModuleRound().update(config, state, { changedValues: [0] });
 
   return updatedState.values[0].asReal();
 };

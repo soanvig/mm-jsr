@@ -5,7 +5,9 @@ import { ModuleBar } from '@/modules/ModuleBar';
 import { ModuleGrid } from '@/modules/ModuleGrid';
 import { ModuleLabel } from '@/modules/ModuleLabel';
 import { ModuleLimit } from '@/modules/ModuleLimit';
+import { ModuleNeighourLimit } from '@/modules/ModuleNeighbourLimit';
 import { ModuleRail } from '@/modules/ModuleRail';
+import { ModuleRound } from '@/modules/ModuleRound';
 import { ModuleSlider } from '@/modules/ModuleSlider';
 import { assert, isArray, isInstanceOf, isNumber, isPlainObject } from '@/validation/assert';
 
@@ -25,9 +27,15 @@ export class JSR {
   public constructor (ctor: JsrConstructor) {
     assert('JSR.modules', ctor.modules, isArray(isInstanceOf(Module)));
 
+    const modules = removeDuplicatedModules([
+      new ModuleNeighourLimit(),
+      new ModuleRound(),
+      ...ctor.modules,
+    ]);
+
     this.engine = new Engine({
       config: ctor.config,
-      modules: ctor.modules,
+      modules,
     });
   }
 
@@ -134,7 +142,7 @@ export class JSR {
    * It does not removes original container element.
    */
   public destroy (): void {
-    this.engine.modules.forEach(m => m.destroy());
+    this.engine.modules.forEach(m => m.destroy && m.destroy());
   }
 
   /** Base module used for creating user's own modules */
@@ -158,3 +166,6 @@ export class JSR {
   /** Slider module */
   public static Slider = ModuleSlider;
 }
+
+const removeDuplicatedModules = (modules: Module[]): Module[] =>
+  modules.filter((m1, i1) => !modules.some((m2, i2) => m1.constructor === m2.constructor && i1 !== i2));

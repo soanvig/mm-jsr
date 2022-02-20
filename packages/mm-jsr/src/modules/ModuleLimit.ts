@@ -1,8 +1,9 @@
-import { StateDto } from '@/models/State';
-import { Module } from '@/modules/Module';
+import { State, StateDto } from '@/models/State';
+import { Changelog, Module } from '@/modules/Module';
+import { ConfigDto } from '@/models/Config';
 
 /**
- * Module visualising the limit applied via {@link ConfigAttrs.limit}.
+ * Module for limiting values applied via {@link ConfigAttrs.limit}.
  *
  * Uses `.jsr_limit` CSS class.
  */
@@ -41,5 +42,19 @@ export class ModuleLimit extends Module {
         this.limit.style.right = '0%';
       }
     };
+  }
+
+  public update (config: ConfigDto, state: State, changelog: Changelog) {
+    const { values } = state;
+
+    // @NOTE this modified all values. Should changelog include these values then??
+    const limitedValues = values.map(value => (
+      value.clampReal(
+        state.limit?.min?.asReal() ?? -Infinity,
+        state.limit?.max?.asReal() ?? +Infinity,
+      )
+    ));
+
+    return state.updateValues(limitedValues);
   }
 }

@@ -41,7 +41,8 @@ For **framework adapters** see: [adapters section](#adapters)
 - [lightweight (~18kB of minified, ~5kB of gzipped code)](https://bundlephobia.com/result?p=mm-jsr),
 - performant,
 - customizable,
-- no dependencies.
+- no dependencies,
+- easy to wrap with UI library (React, Vue, Angular, Svelte, etc.) - see [adapters section](#adapters)
 
 ## Quick-start
 
@@ -132,6 +133,7 @@ NOTE: In case of `SHIFT` and `CTRL` keys pressed simultaneously, `SHIFT` takes p
 
 Modules are HTML elements rendered into JSR container.
 They provide HTML representation of JSR state or config, and allow to provide input back to JSR state.
+Also, they can manipulate state values.
 All modules are optional. The most basic slider is built of Slider and Rail modules.
 
 name | description | invocation | options
@@ -146,7 +148,7 @@ limit | visual representation of limit configuration | new JSR.Limit() | [docs](
 If You don't see a module here, that suits your case, **You can create one by yourself**.
 Modules created that way are applicable via configuration option, so You don't have to make changes to library code.
 
-You may want to see [./CONTRIBUTING.md](./CONTRIBUTING.md#creating-new-modules) for more information.
+You may want to see [./CONTRIBUTING.md](./CONTRIBUTING.md#creating-new-modules) for more information about creating new modules.
 
 ## License explanation
 

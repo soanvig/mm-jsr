@@ -52,10 +52,14 @@ It would be very nice if Your changes are covered by some reasonable unit tests.
 ## Creating new modules
 
 As JSR is almost entirely modular, it is easy to add new modules! As described in [architecture.drawio](./architecture.drawio)
-JSR uses two types of plugins: *extensions* and *modules*. As for now, user cannot add custom *extensions* via API, but can add custom *modules*.
 
-Modules are classes, that implements `Module` interface, and their responsibility is to render state - usually by applying HTML changes.
+Modules are classes, that implements `Module` interface (all methods are optional),
+and their responsibility is usually to render state - usually by applying HTML changes.
 They can apply event listeners, and publish changes back to state.
+
+Also, they are able to manipulate state with `.update()` method.
+Update method is supposed to update state, and return new version of it. This is powerful method for adding custom behavior,
+like customized uneven steps (e.g. for logarithmic scale).
 
 See some modules that already are in application for inspiration, how to write them. This is really simple API.
 
