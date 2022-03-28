@@ -2,4 +2,4 @@
 
 This is package source code.
 
-See [core README](../..) for documentation.
+See [core README](https://github.com/soanvig/mm-jsr) for documentation.
