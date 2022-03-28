@@ -28,6 +28,7 @@ export class JSR {
     assert('JSR.modules', ctor.modules, isArray(isInstanceOf(Module)));
 
     const modules = removeDuplicatedModules([
+      new ModuleLimit(),
       new ModuleNeighourLimit(),
       new ModuleRound(),
       ...ctor.modules,
@@ -168,4 +169,4 @@ export class JSR {
 }
 
 const removeDuplicatedModules = (modules: Module[]): Module[] =>
-  modules.filter((m1, i1) => !modules.some((m2, i2) => m1.constructor === m2.constructor && i1 !== i2));
+  modules.filter((m1, i1) => !modules.some((m2, i2) => m1.constructor === m2.constructor && i2 < i1));
