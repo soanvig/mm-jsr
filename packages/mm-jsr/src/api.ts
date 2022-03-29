@@ -16,3 +16,5 @@ export { ModuleLabel, ModuleLabelSettings } from '@/modules/ModuleLabel';
 export { ModuleLimit } from '@/modules/ModuleLimit';
 export { ModuleRail } from '@/modules/ModuleRail';
 export { ModuleSlider } from '@/modules/ModuleSlider';
+export { ModuleNeighourLimit } from '@/modules/ModuleNeighbourLimit';
+export { ModuleRound } from '@/modules/ModuleRound';
