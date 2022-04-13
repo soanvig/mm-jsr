@@ -1,13 +1,13 @@
 export type RealValue = number;
 export type RatioValue = number;
 
-interface Data {
+export interface ValueData {
   min: RealValue;
   max: RealValue;
   real: RealValue;
 }
 
-interface FromRatio {
+export interface FromRatio {
   min: RealValue;
   max: RealValue;
   ratio: RatioValue;
@@ -16,7 +16,7 @@ interface FromRatio {
 /**
  * Value-object representing single value stored in memory.
  * For example: each slider corresponds to one value.
- * 
+ *
  * Value allows for seamless transition between "real" and "ratio" representation.
  * - Real represents value, that is between config.min and config.max limit,
  * and it is the value end user is interested in.
@@ -28,7 +28,7 @@ export class Value {
   private min: RealValue;
   private max: RealValue;
 
-  private constructor (ctor: Data) {
+  private constructor (ctor: ValueData) {
     this.real = ctor.real as RealValue;
     this.min = ctor.min;
     this.max = ctor.max;
@@ -69,7 +69,7 @@ export class Value {
     return this.real === value.real;
   }
 
-  public static fromReal (data: Data): Value {
+  public static fromReal (data: ValueData): Value {
     return new Value(data);
   }
 

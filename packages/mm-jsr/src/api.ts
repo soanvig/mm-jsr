@@ -9,7 +9,7 @@
 
 export { JSR, JsrConstructor } from '@/JSR';
 export { ConfigAttrs } from './models/Config';
-export { Module } from '@/modules/Module';
+export { Module, Changelog } from '@/modules/Module';
 export { ModuleBar } from '@/modules/ModuleBar';
 export { ModuleGrid, ModuleGridSettings, ModuleGridGetLinesCountParams, ModuleGridShouldShowLabelParams } from '@/modules/ModuleGrid';
 export { ModuleLabel, ModuleLabelSettings } from '@/modules/ModuleLabel';
@@ -18,3 +18,7 @@ export { ModuleRail } from '@/modules/ModuleRail';
 export { ModuleSlider } from '@/modules/ModuleSlider';
 export { ModuleNeighourLimit } from '@/modules/ModuleNeighbourLimit';
 export { ModuleRound } from '@/modules/ModuleRound';
+export { State, StateDto, StateData } from '@/models/State';
+export { ConfigDto, Config } from '@/models/Config';
+export { ValueChangeHandler } from '@/Engine';
+export { Value, ValueData, FromRatio } from '@/models/Value';

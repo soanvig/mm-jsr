@@ -1,11 +1,11 @@
 
 import { Value } from '@/models/Value';
 
-interface Data {
+export interface StateData {
   values: Value[];
 }
 
-export interface StateDto extends Data {}
+export interface StateDto extends StateData {}
 
 
 /**
@@ -15,7 +15,7 @@ export interface StateDto extends Data {}
 export class State {
   public readonly values: Value[];
 
-  private constructor (ctor: Data) {
+  private constructor (ctor: StateData) {
     this.values = ctor.values;
   }
 
@@ -41,7 +41,7 @@ export class State {
     }, [] as number[]).sort();
   }
 
-  public static fromData (data: Data): State {
+  public static fromData (data: StateData): State {
     return new State(data);
   }
 
@@ -49,7 +49,7 @@ export class State {
     return this.toData();
   }
 
-  private toData (): Data {
+  private toData (): StateData {
     return {
       values: this.values,
     };
