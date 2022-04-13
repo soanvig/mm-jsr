@@ -4,13 +4,13 @@
   let jsrNode;
 
   onMount(() => {
-    new window.JSR({
+    new window.JSR.JSR({
       modules: [
-          new JSR.Rail(),
-          new JSR.Slider(),
-          new JSR.Bar(),
-          new JSR.Label(),
-          new JSR.Grid({
+          new JSR.ModuleRail(),
+          new JSR.ModuleSlider(),
+          new JSR.ModuleBar(),
+          new JSR.ModuleLabel(),
+          new JSR.ModuleGrid({
               color: '#777'
           }),
       ],

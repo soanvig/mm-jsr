@@ -9,7 +9,7 @@
 
   let wrappedCss = customCss ? `<style>${customCss}</style>` : '';
 
-  const parsedConfig = new Function(`return ${config}`)();
+  const parsedConfig = new Function(`return ${config.replaceAll('Module', 'JSR.Module')}`)();
 
   onMount(() => {
     const configWithContainer = {
@@ -20,7 +20,7 @@
       },
     };
 
-    new window.JSR(configWithContainer);
+    new window.JSR.JSR(configWithContainer);
   });
 </script>
 
@@ -33,17 +33,17 @@
 <div class="demo {customClass ?? ''}">
   <p class="paragraph">{description}</p>
   <div class="jsr" bind:this={jsrNode} />
-  <pre
-    class="demo_code line-numbers">
-    <code class="language-javascript">new JSR({config});
+  <pre class="demo_code"><code class="language-javascript">
+import { '{ JSR, ModuleRail, ModuleSlider, [...] }' } from 'mm-jsr';
+
+new JSR({config});
     </code>
   </pre>
   {#if customCss}
     <pre
-      class="demo_code line-numbers">
-      <code class="language-css">{customCss}
-      </code>
-    </pre>
+      class="demo_code">
+<code class="language-css">{customCss}
+</code></pre>
   {/if}
 </div>
 
@@ -62,5 +62,6 @@
   .demo_code {
     margin: 1em 0;
     font-size: 0.8em;
+    padding: 0 2em;
   }
 </style>

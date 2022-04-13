@@ -22,23 +22,23 @@ Although HTML 5 comes with input[type="range"] its functionality lacks a lot of 
   yarn add mm-jsr react-mm-jsr
   ```
 
-  (it is also available in [unpkg](https://unpkg.com/react-mm-jsr/build/index.js) with variable name `ReactJSR`. Remember to include `mm-jsr` (JSR) as well)
+  (it is also available in [unpkg](https://unpkg.com/react-mm-jsr/build/index.js) with variable name `ReactJSR`. Remember to include `mm-jsr` (JSR) as well, and lock version)
 
 2. Add CSS (you can use basic styles from [here](../mm-jsr/styles.css))
 
 3. Instantiate (see [docs](https://soanvig.github.io/mm-jsr/api/index.html) for more information about configuration and modules)
 
   ```jsx
-  import JSR from 'mm-jsr';
+  import { ModuleRail, ModuleSlider, ModuleBar, ModuleLabel } from 'mm-jsr';
   import { useJSR } from 'react-mm-jsr';
 
   function MyComponent () {
     const { ref: jsrRef, instance: jsrInstance } = useJSR({
       modules: [
-        new JSR.Rail(),
-        new JSR.Slider(),
-        new JSR.Bar(),
-        new JSR.Label(),
+        new ModuleRail(),
+        new ModuleSlider(),
+        new ModuleBar(),
+        new ModuleLabel(),
       ],
       config: {
         min: 0,

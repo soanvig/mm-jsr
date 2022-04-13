@@ -2,26 +2,26 @@
 import Demo from './components/Demo.svelte';
 
 const demo1 = `{
-    modules: [
-      new JSR.Rail(),
-      new JSR.Slider(),
-      new JSR.Bar(),
-      new JSR.Label(),
-    ],
-    config: {
-      min: 0,
-      max: 100,
-      step: 1,
-      initialValues: [25, 75],
-    }
-  }`;
+  modules: [
+    new ModuleRail(),
+    new ModuleSlider(),
+    new ModuleBar(),
+    new ModuleLabel(),
+  ],
+  config: {
+    min: 0,
+    max: 100,
+    step: 1,
+    initialValues: [25, 75],
+  }
+}`;
 
 const demo2 = `{
   modules: [
-    new JSR.Rail(),
-    new JSR.Slider(),
-    new JSR.Label(),
-    new JSR.Limit()
+    new ModuleRail(),
+    new ModuleSlider(),
+    new ModuleLabel(),
+    new ModuleLimit()
   ],
   config: {
     min: 0,
@@ -37,10 +37,10 @@ const demo2 = `{
 
 const demo3 = `{
   modules: [
-    new JSR.Rail(),
-    new JSR.Slider(),
-    new JSR.Label({ formatter: v => \`\${v}°C\` }),
-    new JSR.Grid({ formatter: v => \`\${v}°C\`, color: '#999' }),
+    new ModuleRail(),
+    new ModuleSlider(),
+    new ModuleLabel({ formatter: v => \`\${v}°C\` }),
+    new ModuleGrid({ formatter: v => \`\${v}°C\`, color: '#999' }),
   ],
   config: {
     min: 0,
@@ -52,8 +52,8 @@ const demo3 = `{
 
 const demo4 = `{
   modules: [
-    new JSR.Slider(),
-    new JSR.Grid({ color: '#999' }),
+    new ModuleSlider(),
+    new ModuleGrid({ color: '#999' }),
   ],
   config: {
     min: 0,
@@ -70,9 +70,9 @@ const demo4css = `.demo4 .jsr_slider {
 
 const demo5 = `{
   modules: [
-    new JSR.Rail(),
-    new JSR.Bar(),
-    new JSR.Label(),
+    new ModuleRail(),
+    new ModuleBar(),
+    new ModuleLabel(),
   ],
   config: {
     min: 0,
@@ -84,10 +84,10 @@ const demo5 = `{
 
 const demo6 = `{
   modules: [
-    new JSR.Slider(),
-    new JSR.Rail(),
-    new JSR.Bar(),
-    new JSR.Label(),
+    new ModuleSlider(),
+    new ModuleRail(),
+    new ModuleBar(),
+    new ModuleLabel(),
   ],
   config: {
     min: 0,

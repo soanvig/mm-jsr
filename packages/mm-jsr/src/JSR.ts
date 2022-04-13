@@ -145,27 +145,6 @@ export class JSR {
   public destroy (): void {
     this.engine.modules.forEach(m => m.destroy && m.destroy());
   }
-
-  /** Base module used for creating user's own modules */
-  public static Module = Module;
-
-  /** Bar module */
-  public static Bar = ModuleBar;
-
-  /** Grid module */
-  public static Grid = ModuleGrid;
-
-  /** Label module */
-  public static Label = ModuleLabel;
-
-  /** Limit module */
-  public static Limit = ModuleLimit;
-
-  /** Rail module */
-  public static Rail = ModuleRail;
-
-  /** Slider module */
-  public static Slider = ModuleSlider;
 }
 
 const removeDuplicatedModules = (modules: Module[]): Module[] =>

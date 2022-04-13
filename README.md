@@ -59,16 +59,17 @@ For **framework adapters** see: [adapters section](#adapters)
 2. Include
 
   ```
-  import JSR from 'mm-jsr';
+  import { JSR } from 'mm-jsr';
   
   or
 
-  const JSR = require('mm-jsr');
+  const { JSR } = require('mm-jsr');
 
   or
 
   <script src="https://unpkg.com/mm-jsr/build/index.js"></script>
-  (which makes variable JSR available globally)
+  (which makes variable JSR available globally - REMEMBER to lock the version by suffixing address with @version e.g.
+  https://unpkg.com/mm-jsr/build/index.js@2.1.0)
   ```
 
 3. Add CSS (you can use basic styles from [here](https://github.com/soanvig/mm-jsr/blob/master/packages/mm-jsr/styles.css))
@@ -76,14 +77,15 @@ For **framework adapters** see: [adapters section](#adapters)
 4. Instantiate JSR
 
   ```js
+    // NOTE: for unpkg skip import, and use `window.JSR.JSR`/`window.JSR.ModuleXXX`
+    import { JSR, ModuleRail, ModuleSlider, ModuleBar, ModuleLabel } from 'mm-jsr';
+
     const jsr = new JSR({
       modules: [
-        new JSR.Rail(),
-        new JSR.Slider(),
-        new JSR.Bar(),
-        new JSR.Label(),
-        new JSR.Grid(),
-        new JSR.Limit(),
+        new ModuleRail(),
+        new ModuleSlider(),
+        new ModuleBar(),
+        new ModuleLabel(),
       ],
       config: {
         min: 0,
@@ -167,6 +169,12 @@ If You don't plan to add any malicious behaviour to the library, this license sh
 
 It is also *expected*, that any plugins (extensions or modules) added to library via configuration, are respecting final user freedom,
 and are not spying on his actions performed over such module without his knowledge and approval.
+
+## Migration guide: v2 -> v3
+
+Accidentally in v2.2.2 breaking change was introduced which changed exports from package.
+
+Please use `import { JSR, ModuleRail, ModuleXXX } from 'mm-jsr` or `window.JSR.JSR`/`window.JSR.ModuleXXX` (for unpkg import).
 
 ## Migration guide: v1 -> v2
 

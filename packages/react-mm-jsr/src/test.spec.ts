@@ -2,15 +2,15 @@ import test from 'ava';
 import React, { useState } from 'react';
 import { render, waitFor } from '@testing-library/react';
 import { useJSR } from './index';
-import JSR from 'mm-jsr';
+import { JSR, ModuleRail, ModuleSlider, ModuleBar, ModuleLabel } from 'mm-jsr';
 
 const Component = () => {
   const { ref: jsrRef, instance } = useJSR({
     modules: [
-      new JSR.Rail(),
-      new JSR.Slider(),
-      new JSR.Bar(),
-      new JSR.Label(),
+      new ModuleRail(),
+      new ModuleSlider(),
+      new ModuleBar(),
+      new ModuleLabel(),
     ],
     config: {
       min: 0,

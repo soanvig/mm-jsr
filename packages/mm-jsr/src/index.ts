@@ -1,8 +1,7 @@
-import { JSR } from './JSR';
 import { closest } from './helpers/closest';
 import { mapChanged } from './helpers/mapChanged';
 
-export { JsrConstructor } from './JSR';
+export * from './JSR';
 
 export * from './modules/Module';
 export * from './modules/ModuleBar';
@@ -22,5 +21,3 @@ export const helpers = {
   closest,
   mapChanged,
 };
-
-export default JSR;
