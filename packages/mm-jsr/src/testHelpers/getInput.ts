@@ -7,7 +7,6 @@ export const getInput = ({
   min = 0,
   max = 100,
   step = 1,
-  limit,
   ...configInput
 }: Partial<ConfigAttrs>) => {
   const config = Config.createFromInput({
@@ -16,7 +15,6 @@ export const getInput = ({
     max,
     step,
     container: document.body,
-    limit,
     ...configInput,
   }).toDto();
 
@@ -24,10 +22,6 @@ export const getInput = ({
     values: initialValues.map(v => (
       Value.fromReal({ min, max, real: v })
     )),
-    limit: {
-      min: limit?.min !== undefined ? Value.fromReal({ min, max, real: limit.min }) : undefined,
-      max: limit?.max !== undefined ? Value.fromReal({ min, max, real: limit.max }) : undefined,
-    },
   });
 
   return { config, state };

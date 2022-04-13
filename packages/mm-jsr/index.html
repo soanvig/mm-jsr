@@ -37,6 +37,10 @@
 
     const jsr = new JSR.JSR({
           modules: [
+              new JSR.ModuleLimit({
+                min: 12000,
+                max: 16000,
+              }),
               new JSR.ModuleRail(),
               new JSR.ModuleSlider(),
               new JSR.ModuleBar(),
@@ -44,7 +48,6 @@
                   formatter: (v) => `$${v}`
               }),
               new JSR.ModuleGrid(),
-              new JSR.ModuleLimit(),
           ],
           config: {
               min: 10000,
@@ -52,10 +55,6 @@
               step: 1,
               initialValues: [15000, 17500],
               container: document.getElementById('jsr1'),
-              limit: {
-                  min: 12000,
-                  max: 16000,
-              }
           }
       });
 

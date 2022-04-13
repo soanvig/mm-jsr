@@ -1,6 +1,6 @@
 import { InputHandler } from '@/InputHandler';
 import { Config, ConfigAttrs } from '@/models/Config';
-import { ChangeStateLimitCommand, StateDto } from '@/models/State';
+import { StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
 import { Module } from '@/modules/Module';
 import { Renderer } from '@/Renderer';
@@ -78,15 +78,6 @@ export class Engine {
 
   public isEnabled () {
     return this.enabled;
-  }
-
-  /**
-   * Dynamically change limit in which values can operate.
-   */
-  public changeLimit (command: ChangeStateLimitCommand) {
-    const state = this.stateProcessor.changeLimit(command);
-
-    this.renderState(state);
   }
 
   /**

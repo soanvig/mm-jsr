@@ -2,7 +2,6 @@ import { closest } from '@/helpers/closest';
 import { ConfigDto } from '@/models/Config';
 import { StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
-import { StateProcessor } from '@/StateProcessor';
 
 interface Ctor {
   config: ConfigDto;
@@ -50,7 +49,7 @@ export class InputHandler {
 
   /**
    * Set ratio value of value closest to the value, that is being set.
-   * 
+   *
    * @example
    * For values [0, 100] if we want to set value 30, the closest value to 30 is 0
    * at index 0. Therefore after this operation we will have values [30, 100]
@@ -81,7 +80,7 @@ export class InputHandler {
 
   /**
    * Change ratio value as given index by given ratio value.
-   * 
+   *
    * @example
    * newValue = oldValue + value
    */
@@ -97,7 +96,7 @@ export class InputHandler {
 
   /**
    * Change real value as given index by given real value.
-   * 
+   *
    * @example
    * newValue = oldValue + value
    */
@@ -114,10 +113,10 @@ export class InputHandler {
    * Create setter, that allows to change value
    * by a offset, relative to value in the moment
    * of creating the setter.
-   * 
+   *
    * It allows user to not know current value, yet create a hook
    * that will modify value always relatively to the original value.
-   * 
+   *
    * @example
    * values = [25, 75]
    * setter = makeValueRatioOffsetModifier(0)

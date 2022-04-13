@@ -1,4 +1,4 @@
-import { ChangeStateLimitCommand, State, StateDto } from '@/models/State';
+import { State, StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
 import { ConfigDto } from '@/models/Config';
 import { mapChanged } from '@/helpers/mapChanged';
@@ -29,29 +29,14 @@ export class StateProcessor {
       ...minMax,
       real: v,
     }));
-    const limit = configDto.limit
-      ? {
-        min: configDto.limit.min ? Value.fromReal({ ...minMax, real: configDto.limit.min }) : undefined,
-        max: configDto.limit.max ? Value.fromReal({ ...minMax, real: configDto.limit.max }) : undefined,
-      }
-      : undefined;
 
     this.config = ctor.config;
     this.modules = ctor.modules;
     this.state = State.fromData({
       values,
-      limit,
     });
 
     this.state = this.process(this.state, this.modules);
-  }
-
-  public changeLimit (command: ChangeStateLimitCommand): StateDto {
-    const updatedState = this.state.changeLimit(command);
-
-    this.state = this.process(updatedState, this.modules);
-
-    return this.state.toDto();
   }
 
   public updateValue (index: number, value: Value): { newState: StateDto, oldState: StateDto } {
