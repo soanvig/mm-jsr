@@ -2,7 +2,7 @@
   <h2 class="header">Comparison</h2>
   <div class="comparison_wrapper">
     <table class="comparison">
-      <caption>Comparison of some features of M&amp;M JSR v1.1.1 with other</caption>
+      <caption>Comparison of some features of M&amp;M JSR with other tools</caption>
       <thead>
         <tr>
           <th />

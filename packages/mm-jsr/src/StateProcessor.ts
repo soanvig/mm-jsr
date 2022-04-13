@@ -1,4 +1,4 @@
-import { ChangeLimitCommand, State, StateDto } from '@/models/State';
+import { ChangeStateLimitCommand, State, StateDto } from '@/models/State';
 import { Value } from '@/models/Value';
 import { ConfigDto } from '@/models/Config';
 import { mapChanged } from '@/helpers/mapChanged';
@@ -46,7 +46,7 @@ export class StateProcessor {
     this.state = this.process(this.state, this.modules);
   }
 
-  public changeLimit (command: ChangeLimitCommand): StateDto {
+  public changeLimit (command: ChangeStateLimitCommand): StateDto {
     const updatedState = this.state.changeLimit(command);
 
     this.state = this.process(updatedState, this.modules);

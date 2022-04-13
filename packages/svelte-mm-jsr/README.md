@@ -32,7 +32,7 @@ See [JSR.svelte](./src/JSR.svelte) component for yourself how easy this is!
 
   ```html
   <script lang="ts">
-  import JSR from "mm-jsr";
+  import { JSR, ModuleRail, ModuleSlider, ModuleBar, ModuleLabel } from "mm-jsr";
   import { onMount } from 'svelte';
 
   let jsrContainer;
@@ -41,10 +41,10 @@ See [JSR.svelte](./src/JSR.svelte) component for yourself how easy this is!
   onMount(() => {
     jsr = new JSR({
       modules: [
-        new JSR.Rail(),
-        new JSR.Slider(),
-        new JSR.Bar(),
-        new JSR.Label(),
+        new ModuleRail(),
+        new ModuleSlider(),
+        new ModuleBar(),
+        new ModuleLabel(),
       ],
       config: {
         min: 0,

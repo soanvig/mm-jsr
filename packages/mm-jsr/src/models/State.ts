@@ -8,7 +8,7 @@ interface Data {
 
 export interface StateDto extends Data {}
 
-export type ChangeLimitCommand = { min?: Value, max?: Value };
+export type ChangeStateLimitCommand = { min?: Value, max?: Value };
 
 /**
  * State object stores information about values, and limits,
@@ -30,7 +30,7 @@ export class State {
     });
   }
 
-  public changeLimit (command: ChangeLimitCommand) {
+  public changeLimit (command: ChangeStateLimitCommand) {
     return new State({
       ...this.toData(),
       limit: command,

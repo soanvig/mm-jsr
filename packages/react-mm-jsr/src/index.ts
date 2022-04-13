@@ -1,4 +1,4 @@
-import JSR from 'mm-jsr';
+import { JSR } from 'mm-jsr';
 import { useEffect, useRef, useState } from 'react';
 
 type Ctor = ConstructorParameters<typeof JSR>[0];
