@@ -1,12 +1,7 @@
 name: Create API documentation
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - '**.ts'
-      - '**.svelte'
+  workflow_call:
 
 jobs:
   docs:
