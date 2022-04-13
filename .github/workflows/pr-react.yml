@@ -15,6 +15,6 @@ jobs:
       - run: yarn link
         working-directory: ./packages/mm-jsr
       - run: yarn link mm-jsr
-        worikng-directory: ./package/react-mm-jsr
+        working-directory: ./package/react-mm-jsr
       - run: yarn test
         working-directory: ./packages/react-mm-jsr
