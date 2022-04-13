@@ -24,13 +24,6 @@ export interface ConfigAttrs {
   initialValues: number[];
 
   /**
-   * Limit, that allows values to move vary between `limit.min` and `limit.max`.
-   * In opposite to required root `min` and `max`, limit can be changed dynamically.
-   * Can be displayed visually using {@link ModuleLimit}.
-   */
-  limit?: { min?: number; max?: number };
-
-  /**
    * Container, that will contain all the modules.
    */
   container: HTMLElement;
@@ -93,13 +86,6 @@ export class Config {
     assert('step', attrs.step, isNumber);
     assert('initialValues', attrs.initialValues, isArray(isNumber));
     assert('container', attrs.container, isInstanceOf(window.HTMLElement));
-
-    if (attrs.limit) {
-      assert('limit', attrs.limit, isPlainObject);
-
-      attrs.limit.min && assert('limit.min', attrs.limit.min, isNumber);
-      attrs.limit.max && assert('limit.min', attrs.limit.max, isNumber);
-    }
 
     return new Config(attrs);
   }

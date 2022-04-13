@@ -169,7 +169,7 @@ export class ModuleGrid extends Module {
 
   private handleClick = (e: MouseEvent) => {
     this.input.setClosestRatioValue(this.renderer.positionToRelative(e.clientX));
-  }
+  };
 
   private assertSettings (settings: Partial<ModuleGridSettings>) {
     settings.formatter && assert('Grid.formatter', settings.formatter, isFunction);

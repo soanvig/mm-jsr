@@ -18,20 +18,19 @@ const demo1 = `{
 
 const demo2 = `{
   modules: [
+    new ModuleLimit({
+      min: 25,
+      max: 75
+    }),
     new ModuleRail(),
     new ModuleSlider(),
     new ModuleLabel(),
-    new ModuleLimit()
   ],
   config: {
     min: 0,
     max: 100,
     step: 1,
     initialValues: [35, 65],
-    limit: {
-      min: 25,
-      max: 75
-    },
   }
 }`;
 

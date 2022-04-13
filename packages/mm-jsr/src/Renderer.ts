@@ -37,9 +37,9 @@ export class Renderer {
   }
 
   /**
-   * Compute relative x in global coordinates relative to 
+   * Compute relative x in global coordinates relative to
    * container position.
-   * 
+   *
    * @example for container exactly in the middle of the page
    * and cursor excatly in the middle of the container
    * cursor global position put as `x` will return `0.5` as a result.
@@ -50,7 +50,7 @@ export class Renderer {
 
   /**
    * Compute ratio of `distance` against container size.
-   * 
+   *
    * @example for distance `200` if container has width `400`
    * it will return `0.5` as a result.
    */

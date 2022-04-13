@@ -78,10 +78,14 @@ For **framework adapters** see: [adapters section](#adapters)
 
   ```js
     // NOTE: for unpkg skip import, and use `window.JSR.JSR`/`window.JSR.ModuleXXX`
-    import { JSR, ModuleRail, ModuleSlider, ModuleBar, ModuleLabel } from 'mm-jsr';
+    import { JSR, ModuleRail, ModuleSlider, ModuleBar, ModuleLabel, ModuleLimit } from 'mm-jsr';
 
     const jsr = new JSR({
       modules: [
+        new ModuleLimit({
+          min: 15,
+          max: 90,
+        }),
         new ModuleRail(),
         new ModuleSlider(),
         new ModuleBar(),
@@ -91,10 +95,6 @@ For **framework adapters** see: [adapters section](#adapters)
         min: 0,
         max: 100,
         step: 0.01,
-        limit: {
-          min: 15,
-          max: 90,
-        },
         initialValues: [25, 50, 75],
         container: document.getElementById('jsr'),
       }
@@ -145,7 +145,7 @@ rail | horizontal clickable bar behind sliders | new JSR.Rail() | [docs](https:/
 bar | moveable bar between sliders (moving adjacent sliders) | new JSR.Bar() | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulebar.html)
 label | moveable labels beneath sliders  | new JSR.Label(options) | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulelabel.html)
 grid | vertical bar beneath sliders | new JSR.Grid(options) | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulegrid.html)
-limit | visual representation of limit configuration | new JSR.Limit() | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulelabel.html)
+limit | visual representation of limit configuration (needs to be first in the list of modules) | new JSR.Limit(options) | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulelabel.html)
 
 If You don't see a module here, that suits your case, **You can create one by yourself**.
 Modules created that way are applicable via configuration option, so You don't have to make changes to library code.
@@ -172,9 +172,9 @@ and are not spying on his actions performed over such module without his knowled
 
 ## Migration guide: v2 -> v3
 
-Accidentally in v2.2.2 breaking change was introduced which changed exports from package.
-
-Please use `import { JSR, ModuleRail, ModuleXXX } from 'mm-jsr` or `window.JSR.JSR`/`window.JSR.ModuleXXX` (for unpkg import).
+1. Accidentally in v2.2.2 breaking change was introduced which changed exports from package.
+  Please use `import { JSR, ModuleRail, ModuleXXX } from 'mm-jsr` or `window.JSR.JSR`/`window.JSR.ModuleXXX` (for unpkg import).
+2. Cannot configure limit through options. Limit module is now required to do it. Also, it has to be first in the list.
 
 ## Migration guide: v1 -> v2
 

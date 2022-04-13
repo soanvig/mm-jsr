@@ -25,5 +25,5 @@ export class ModuleRail extends Module {
 
   private handleClick = (e: MouseEvent) => {
     this.input.setClosestRatioValue(this.renderer.positionToRelative(e.clientX));
-  }
+  };
 }

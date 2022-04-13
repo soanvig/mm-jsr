@@ -3,12 +3,10 @@ import { Value } from '@/models/Value';
 
 interface Data {
   values: Value[];
-  limit?: { min?: Value; max?: Value };
 }
 
 export interface StateDto extends Data {}
 
-export type ChangeStateLimitCommand = { min?: Value, max?: Value };
 
 /**
  * State object stores information about values, and limits,
@@ -16,24 +14,15 @@ export type ChangeStateLimitCommand = { min?: Value, max?: Value };
  */
 export class State {
   public readonly values: Value[];
-  public readonly limit?: { min?: Value; max?: Value };
 
   private constructor (ctor: Data) {
     this.values = ctor.values;
-    this.limit = ctor.limit;
   }
 
   public updateValues (values: Value[]) {
     return new State({
       ...this.toData(),
       values,
-    });
-  }
-
-  public changeLimit (command: ChangeStateLimitCommand) {
-    return new State({
-      ...this.toData(),
-      limit: command,
     });
   }
 
@@ -63,7 +52,6 @@ export class State {
   private toData (): Data {
     return {
       values: this.values,
-      limit: this.limit,
     };
   }
 }

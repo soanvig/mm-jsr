@@ -1,15 +1,9 @@
 import { Engine, ValueChangeHandler } from '@/Engine';
 import { ConfigAttrs } from '@/models/Config';
 import { Module } from '@/modules/Module';
-import { ModuleBar } from '@/modules/ModuleBar';
-import { ModuleGrid } from '@/modules/ModuleGrid';
-import { ModuleLabel } from '@/modules/ModuleLabel';
-import { ModuleLimit } from '@/modules/ModuleLimit';
 import { ModuleNeighourLimit } from '@/modules/ModuleNeighbourLimit';
-import { ModuleRail } from '@/modules/ModuleRail';
 import { ModuleRound } from '@/modules/ModuleRound';
-import { ModuleSlider } from '@/modules/ModuleSlider';
-import { assert, isArray, isInstanceOf, isNumber, isPlainObject } from '@/validation/assert';
+import { assert, isArray, isInstanceOf } from '@/validation/assert';
 
 export interface JsrConstructor {
   /** Configuration */
@@ -19,8 +13,6 @@ export interface JsrConstructor {
   modules: Module[];
 }
 
-export type ChangeLimitCommand = { min?: number; max?: number; }
-
 export class JSR {
   private engine: Engine;
 
@@ -28,7 +20,6 @@ export class JSR {
     assert('JSR.modules', ctor.modules, isArray(isInstanceOf(Module)));
 
     const modules = removeDuplicatedModules([
-      new ModuleLimit(),
       new ModuleNeighourLimit(),
       new ModuleRound(),
       ...ctor.modules,
@@ -88,28 +79,6 @@ export class JSR {
    */
   public onValueChange (handler: ValueChangeHandler): VoidFunction {
     return this.engine.addValueChangeHandler(handler);
-  }
-
-  /**
-   * Dynamically change limit.
-   *
-   * @param command - limit object, that should be applied as new limit
-   */
-  public changeLimit (command: ChangeLimitCommand): void {
-    assert('limit object', command, isPlainObject);
-
-    if (command.min) {
-      assert('limit.min', command.min, isNumber);
-    }
-
-    if (command.max) {
-      assert('limit.max', command.max, isNumber);
-    }
-
-    this.engine.changeLimit({
-      min: command.min !== undefined ? this.engine.produceRealValue(command.min) : undefined,
-      max: command.max !== undefined ? this.engine.produceRealValue(command.max) : undefined,
-    });
   }
 
   /**
