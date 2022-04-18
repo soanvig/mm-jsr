@@ -4,9 +4,6 @@
     "packages/*"
   ],
   "scripts": {
-    "webpage:serve": "serve ./docs-src/public",
-    "webpage:build": "rollup --config docs-src/rollup.config.js",
-    "webpage:watch": "rollup --watch --config docs-src/rollup.config.js",
     "build": "yarn workspace mm-jsr build"
   },
   "devDependencies": {

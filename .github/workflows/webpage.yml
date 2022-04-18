@@ -1,0 +1,26 @@
+name: Deploy webpage
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - './packages/webpage/**'
+
+jobs:
+  webpage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: |
+          git checkout gh-pages
+          git reset --hard origin/master
+      - run: yarn workspace webpage build
+      - run: |
+          rm -rf ./docs
+          cp -r packages/webpage/public ./docs
+      - run: |
+          git add ./docs
+          git add --force ./docs/build
+          git commit -m "Update webpage"
+          git push origin gh-pages

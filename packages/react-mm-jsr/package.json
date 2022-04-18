@@ -33,7 +33,7 @@
     "cross-env": "7.0.3",
     "eslint": "8.13.0",
     "eslint-plugin-import-quotes": "0.0.1",
-    "mm-jsr": "3.0.2",
+    "mm-jsr": "workspace:*",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "rollup": "2.70.2",
