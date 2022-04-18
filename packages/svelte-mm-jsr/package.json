@@ -6,7 +6,8 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "serve public",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "manual-test": "yarn build && yarn serve -l 3001 public"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "21.1.0",

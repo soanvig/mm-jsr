@@ -14,7 +14,8 @@
     "build": "rollup --config rollup.config.js",
     "watch": "rollup --watch --config rollup.config.js",
     "test": "cross-env TS_NODE_PROJECT=tsconfig.test.json ava --verbose",
-    "docs": "typedoc ./src/api.ts"
+    "docs": "typedoc ./src/api.ts",
+    "manual-test": "yarn build && yarn serve -l 3000 ."
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "13.2.1",
