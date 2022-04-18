@@ -5,6 +5,7 @@
       <li class="menu_item"><a href="#about">About</a></li>
       <!-- <li class="menu_item"><a href="#comparison">Comparison</a></li> -->
       <li class="menu_item"><a href="#demo">Demo</a></li>
+      <li class="menu_item"><a href="https://soanvig.github.io/mm-jsr/api/index.html">API docs</a></li>
       <li class="menu_item"><a href="https://github.com/soanvig/mm-jsr">Github Repo</a></li>
   </ul>
 </nav>
