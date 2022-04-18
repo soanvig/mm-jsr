@@ -145,7 +145,7 @@ rail | horizontal clickable bar behind sliders | new JSR.Rail() | [docs](https:/
 bar | moveable bar between sliders (moving adjacent sliders) | new JSR.Bar() | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulebar.html)
 label | moveable labels beneath sliders  | new JSR.Label(options) | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulelabel.html)
 grid | vertical bar beneath sliders | new JSR.Grid(options) | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulegrid.html)
-limit | visual representation of limit configuration (needs to be first in the list of modules) | new JSR.Limit(options) | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulelabel.html)
+limit | applies limit for values that can be set (needs to be first in list of modules) | new JSR.Limit(options) | [docs](https://soanvig.github.io/mm-jsr/api/classes/modulelimit.html)
 
 If You don't see a module here, that suits your case, **You can create one by yourself**.
 Modules created that way are applicable via configuration option, so You don't have to make changes to library code.
