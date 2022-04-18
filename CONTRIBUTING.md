@@ -21,19 +21,20 @@ Test tool | Ava
 
 ## Installation
 
-After cloning the repository run:
+Yarn is required to work with monorepo architecture.
 
-```
-yarn install
-```
+@TODO - add information about development flow
 
-Then You can run *watch* mode, so Rollup rebuilds the code on each change
+### Note on Yarn v2
 
-```
-yarn watch
-```
+I decided to experimentally switch to Yarn v2 (or Yarn Berry), because of its interesting features like Plun'n'Play or zero install.
 
-Now You can open `index.html` file, and test changes there.
+Therefore no `yarn install` is needed.
+
+### Non-upgradeable versions
+
+1. `typescript` has to be `4.4.3` - version `4.5` breaks various used packages
+2. `ava` has to be `3.15.0` - version `4.x` introduces `chalk@5` which uses Node's subimports, that are [not supported by Yarn PnP](https://github.com/yarnpkg/berry/issues/3843)
 
 ## Pull Requests, open source, LGPL philosophy
 
