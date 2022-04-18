@@ -11,30 +11,35 @@ There are two ways, that You can help:
   if You want to help with a code directly. Open source is a great way to learn working in group, learn some coding practices and so on,
   and I'm eager to help everybody. If you cannot solve some problem, just reference me in the issue or send me an e-mail on soanvig@gmail.com.
 
-## Toolchain
-
-. | .
---|--
-Typing | TypeScript
-Build tool | Rollup
-Test tool | Ava
-
 ## Installation
 
 Yarn is required to work with monorepo architecture.
 
-@TODO - add information about development flow
+It uses zero-install, therefore no `yarn install` is needed. Dependencies are stored in repository.
 
-### Note on Yarn v2
+## Development
 
-I decided to experimentally switch to Yarn v2 (or Yarn Berry), because of its interesting features like Plun'n'Play or zero install.
+**Always write strongly-typed code.**
 
-Therefore no `yarn install` is needed.
+### Toolchain
+
+. | .
+--|--
+Package manager | Yarn v2+
+Typing | TypeScript
+Build tool | Rollup
+Test tool | Ava
+
 
 ### Non-upgradeable versions
 
 1. `typescript` has to be `4.4.3` - version `4.5` breaks various used packages
 2. `ava` has to be `3.15.0` - version `4.x` introduces `chalk@5` which uses Node's subimports, that are [not supported by Yarn PnP](https://github.com/yarnpkg/berry/issues/3843)
+
+### Testing
+
+1. `mm-jsr` provides `yarn test` command to run init tests
+2. For manual testing startup `mm-jsr`, `svelte-mm-jsr` and `webpage` with `yarn manual-test` in root of repository
 
 ## Pull Requests, open source, LGPL philosophy
 
