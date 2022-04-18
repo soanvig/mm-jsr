@@ -1,9 +1,9 @@
-<script lang="ts">
+<script>
 import { JSR, ModuleRail, ModuleSlider, ModuleBar, ModuleLabel } from "mm-jsr";
 import { onMount } from 'svelte';
 
-let jsrContainer: HTMLElement;
-let jsr: JSR;
+let jsrContainer;
+let jsr;
 
 onMount(() => {
 	jsr = new JSR({
