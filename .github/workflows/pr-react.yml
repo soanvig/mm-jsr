@@ -10,11 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
-      - run: yarn install --frozen-lockfile
       - run: yarn build
-      - run: yarn link
-        working-directory: ./packages/mm-jsr
-      - run: yarn link mm-jsr
-        working-directory: ./package/react-mm-jsr
       - run: yarn test
         working-directory: ./packages/react-mm-jsr
