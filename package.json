@@ -4,7 +4,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn workspace mm-jsr build"
+    "build": "yarn workspace mm-jsr build",
+    "manual-test": "yarn workspaces foreach -p -v -i run manual-test"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "7.0.8",
