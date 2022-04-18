@@ -155,7 +155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-commonjs@npm:21.1.0":
+"@rollup/plugin-commonjs@npm:21.1.0, @rollup/plugin-commonjs@npm:^21.1.0":
   version: 21.1.0
   resolution: "@rollup/plugin-commonjs@npm:21.1.0"
   dependencies:
@@ -172,7 +172,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-node-resolve@npm:13.2.1":
+"@rollup/plugin-node-resolve@npm:13.2.1, @rollup/plugin-node-resolve@npm:^13.2.1":
   version: 13.2.1
   resolution: "@rollup/plugin-node-resolve@npm:13.2.1"
   dependencies:
@@ -3971,7 +3971,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mm-jsr@*, mm-jsr@3.0.2, mm-jsr@workspace:packages/mm-jsr":
+"mm-jsr@*, mm-jsr@workspace:*, mm-jsr@workspace:packages/mm-jsr":
   version: 0.0.0-use.local
   resolution: "mm-jsr@workspace:packages/mm-jsr"
   dependencies:
@@ -4679,7 +4679,7 @@ __metadata:
     cross-env: 7.0.3
     eslint: 8.13.0
     eslint-plugin-import-quotes: 0.0.1
-    mm-jsr: 3.0.2
+    mm-jsr: "workspace:*"
     react: 18.0.0
     react-dom: 18.0.0
     rollup: 2.70.2
@@ -4993,7 +4993,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-svelte@npm:7.1.0":
+"rollup-plugin-svelte@npm:7.1.0, rollup-plugin-svelte@npm:^7.1.0":
   version: 7.1.0
   resolution: "rollup-plugin-svelte@npm:7.1.0"
   dependencies:
@@ -5006,7 +5006,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-terser@npm:7.0.2":
+"rollup-plugin-terser@npm:7.0.2, rollup-plugin-terser@npm:^7.0.2":
   version: 7.0.2
   resolution: "rollup-plugin-terser@npm:7.0.2"
   dependencies:
@@ -5029,7 +5029,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:2.70.2":
+"rollup@npm:2.70.2, rollup@npm:^2.70.2":
   version: 2.70.2
   resolution: "rollup@npm:2.70.2"
   dependencies:
@@ -5205,7 +5205,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"serve@npm:13.0.2":
+"serve@npm:13.0.2, serve@npm:^13.0.2":
   version: 13.0.2
   resolution: "serve@npm:13.0.2"
   dependencies:
@@ -5683,7 +5683,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:3.47.0":
+"svelte@npm:3.47.0, svelte@npm:^3.47.0":
   version: 3.47.0
   resolution: "svelte@npm:3.47.0"
   checksum: 247892585543ab0fc4781e36d5469ad0ce8afd4c6c440639cb0c99564a0b435ee0838482443665a905e11b7f500a1cf68475bec6a938b668e1e73c2e0badfc4e
@@ -6178,6 +6178,21 @@ __metadata:
   checksum: c93d8dfe908a0140a4ae9c0ebc87a33805b416a33ee638a605b551523eec94a9632165e54632f6d57a39c5f948c4bab10e0e066525e9a4b87a79f0d04fbca374
   languageName: node
   linkType: hard
+
+"webpage@workspace:packages/webpage":
+  version: 0.0.0-use.local
+  resolution: "webpage@workspace:packages/webpage"
+  dependencies:
+    "@rollup/plugin-commonjs": ^21.1.0
+    "@rollup/plugin-node-resolve": ^13.2.1
+    mm-jsr: "workspace:*"
+    rollup: ^2.70.2
+    rollup-plugin-svelte: ^7.1.0
+    rollup-plugin-terser: ^7.0.2
+    serve: ^13.0.2
+    svelte: ^3.47.0
+  languageName: unknown
+  linkType: soft
 
 "well-known-symbols@npm:^2.0.0":
   version: 2.0.0

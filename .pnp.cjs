@@ -31,6 +31,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "svelte-mm-jsr",\
         "reference": "workspace:packages/svelte-mm-jsr"\
+      },\
+      {\
+        "name": "webpage",\
+        "reference": "workspace:packages/webpage"\
       }\
     ],\
     "enableTopLevelFallback": true,\
@@ -39,7 +43,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["mm-jsr", ["workspace:packages/mm-jsr"]],\
       ["react-mm-jsr", ["workspace:packages/react-mm-jsr"]],\
       ["root-workspace-0b6124", ["workspace:."]],\
-      ["svelte-mm-jsr", ["workspace:packages/svelte-mm-jsr"]]\
+      ["svelte-mm-jsr", ["workspace:packages/svelte-mm-jsr"]],\
+      ["webpage", ["workspace:packages/webpage"]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -7351,6 +7356,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["webidl-conversions", "npm:4.0.2"]\
           ],\
           "linkType": "HARD"\
+        }]\
+      ]],\
+      ["webpage", [\
+        ["workspace:packages/webpage", {\
+          "packageLocation": "./packages/webpage/",\
+          "packageDependencies": [\
+            ["webpage", "workspace:packages/webpage"],\
+            ["@rollup/plugin-commonjs", "virtual:7f55c8b19fa443b03c07dd64d8ba68d16c33ceac222bcc8ce897768b86b6f60d47998bf195255aa1e8ac8a51380840f97195030c2a45297725da0ebeec73531d#npm:21.1.0"],\
+            ["@rollup/plugin-node-resolve", "virtual:b052cfcadeab3ff189d66bd9d1e057c9be2c9fca47b5a65eff0c0c8c301963fadcc36b84aea0427d4b00d2f02db1a7cc31d23e97999abb1bbfc2167c6ae5cf46#npm:13.2.1"],\
+            ["mm-jsr", "workspace:packages/mm-jsr"],\
+            ["rollup", "npm:2.70.2"],\
+            ["rollup-plugin-svelte", "virtual:dfe7903db0b6732b3785128c2df0e36d7a19fb05799826acfb54005adeb2115ca1e118ba9a0db3ed8b9617a8f16eeedf36d11a95f60f3dcb48a42e2ceb7a65cf#npm:7.1.0"],\
+            ["rollup-plugin-terser", "virtual:b052cfcadeab3ff189d66bd9d1e057c9be2c9fca47b5a65eff0c0c8c301963fadcc36b84aea0427d4b00d2f02db1a7cc31d23e97999abb1bbfc2167c6ae5cf46#npm:7.0.2"],\
+            ["serve", "npm:13.0.2"],\
+            ["svelte", "npm:3.47.0"]\
+          ],\
+          "linkType": "SOFT"\
         }]\
       ]],\
       ["well-known-symbols", [\
