@@ -2,10 +2,9 @@
   "private": true,
   "name": "webpage",
   "scripts": {
-    "serve": "serve ./public",
     "build": "rollup --config ./rollup.config.js",
     "watch": "rollup --watch --config ./rollup.config.js",
-    "manual-test": "yarn build && yarn serve -l 3002 ."
+    "manual-test": "yarn build && yarn serve -l 3002 public"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "21.1.0",

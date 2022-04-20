@@ -16,6 +16,7 @@ jobs:
           git config --global user.name "GH Actions"
           git checkout gh-pages
           git reset --hard origin/master
+      - run: yarn workspace mm-jsr build
       - run: yarn workspace webpage build
       - run: yarn workspace mm-jsr docs
       - name: Copy resources
