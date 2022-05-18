@@ -77,7 +77,7 @@ For **framework adapters** see: [adapters section](#adapters)
 4. Instantiate JSR
 
   ```js
-    // NOTE: for unpkg skip import, and use `window.JSR.JSR`/`window.JSR.ModuleXXX`
+    // NOTE: for unpkg skip import, and use `const { JSR, ModuleRail, ModuleSlider, ModuleBar, ModuleLabel, ModuleLimit } = window.JSR` instead.
     import { JSR, ModuleRail, ModuleSlider, ModuleBar, ModuleLabel, ModuleLimit } from 'mm-jsr';
 
     const jsr = new JSR({
