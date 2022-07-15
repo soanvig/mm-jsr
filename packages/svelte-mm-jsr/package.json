@@ -17,6 +17,6 @@
     "rollup": "2.70.2",
     "rollup-plugin-svelte": "7.1.0",
     "serve": "13.0.2",
-    "svelte": "3.47.0"
+    "svelte": "3.49.0"
   }
 }
