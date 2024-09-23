@@ -3900,7 +3900,7 @@ __metadata:
     cross-env: 7.0.3
     eslint: 8.13.0
     eslint-plugin-import-quotes: 0.0.1
-    rollup: 2.70.2
+    rollup: 3.29.5
     rollup-plugin-terser: 7.0.2
     serve: 13.0.2
     ts-node: 10.7.0
@@ -4582,7 +4582,7 @@ __metadata:
     mm-jsr: "workspace:*"
     react: 18.0.0
     react-dom: 18.0.0
-    rollup: 2.70.2
+    rollup: 3.29.5
     rollup-plugin-terser: 7.0.2
     ts-node: 10.7.0
     tslib: 2.3.1
@@ -4898,9 +4898,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:2.70.2":
-  version: 2.70.2
-  resolution: "rollup@npm:2.70.2"
+"rollup@npm:3.29.5":
+  version: 3.29.5
+  resolution: "rollup@npm:3.29.5"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -4908,7 +4908,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: eb04eb9b87b30517308cb41018d57a23976f42b269c3229e4124746d3136a77aa16ba8b891a3fa571931dd72419eea40642a334835fe4f33161fea30d0b803f7
+  checksum: 6f8304e58ac8170a715e61e46c4aa674b2ae2587ed2a712dab58f72e5e54803ae40b485fbe6b3e6a694f4c8f7a59ab936ccf9f6b686c7cfd1f1970fa9ecadf1a
   languageName: node
   linkType: hard
 
@@ -5433,7 +5433,7 @@ __metadata:
     "@rollup/plugin-node-resolve": 13.2.1
     "@rollup/plugin-typescript": 8.3.2
     mm-jsr: "workspace:*"
-    rollup: 2.70.2
+    rollup: 3.29.5
     rollup-plugin-svelte: 7.1.0
     serve: 13.0.2
     svelte: 3.47.0
@@ -5943,7 +5943,7 @@ __metadata:
     "@rollup/plugin-commonjs": 21.1.0
     "@rollup/plugin-node-resolve": 13.2.1
     mm-jsr: "workspace:*"
-    rollup: 2.70.2
+    rollup: 3.29.5
     rollup-plugin-svelte: 7.1.0
     rollup-plugin-terser: 7.0.2
     serve: 13.0.2
