@@ -10,7 +10,7 @@
     "@rollup/plugin-commonjs": "21.1.0",
     "@rollup/plugin-node-resolve": "13.2.1",
     "mm-jsr": "workspace:*",
-    "rollup": "2.70.2",
+    "rollup": "2.79.2",
     "rollup-plugin-svelte": "7.1.0",
     "rollup-plugin-terser": "7.0.2",
     "serve": "13.0.2",

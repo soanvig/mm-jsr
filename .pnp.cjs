@@ -251,7 +251,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["is-reference", "npm:1.2.1"],\
             ["magic-string", "npm:0.25.9"],\
             ["resolve", "patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"],\
-            ["rollup", "npm:2.70.2"]\
+            ["rollup", "npm:2.79.2"]\
           ],\
           "packagePeers": [\
             "@types/rollup",\
@@ -279,7 +279,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["deepmerge", "npm:4.2.2"],\
             ["is-module", "npm:1.0.0"],\
             ["resolve", "patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"],\
-            ["rollup", "npm:2.70.2"]\
+            ["rollup", "npm:2.79.2"]\
           ],\
           "packagePeers": [\
             "@types/rollup",\
@@ -305,7 +305,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/tslib", null],\
             ["@types/typescript", null],\
             ["resolve", "patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"],\
-            ["rollup", "npm:2.70.2"],\
+            ["rollup", "npm:2.79.2"],\
             ["tslib", "npm:2.3.1"],\
             ["typescript", "patch:typescript@npm%3A4.4.3#~builtin<compat/typescript>::version=4.4.3&hash=bda367"]\
           ],\
@@ -328,7 +328,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/tslib", null],\
             ["@types/typescript", null],\
             ["resolve", "patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"],\
-            ["rollup", "npm:2.70.2"],\
+            ["rollup", "npm:2.79.2"],\
             ["tslib", null],\
             ["typescript", null]\
           ],\
@@ -359,7 +359,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/rollup", null],\
             ["estree-walker", "npm:1.0.1"],\
             ["picomatch", "npm:2.3.1"],\
-            ["rollup", "npm:2.70.2"]\
+            ["rollup", "npm:2.79.2"]\
           ],\
           "packagePeers": [\
             "@types/rollup",\
@@ -4688,7 +4688,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cross-env", "npm:7.0.3"],\
             ["eslint", "npm:8.13.0"],\
             ["eslint-plugin-import-quotes", "npm:0.0.1"],\
-            ["rollup", "npm:2.70.2"],\
+            ["rollup", "npm:2.79.2"],\
             ["rollup-plugin-terser", "virtual:b052cfcadeab3ff189d66bd9d1e057c9be2c9fca47b5a65eff0c0c8c301963fadcc36b84aea0427d4b00d2f02db1a7cc31d23e97999abb1bbfc2167c6ae5cf46#npm:7.0.2"],\
             ["serve", "npm:13.0.2"],\
             ["ts-node", "virtual:b052cfcadeab3ff189d66bd9d1e057c9be2c9fca47b5a65eff0c0c8c301963fadcc36b84aea0427d4b00d2f02db1a7cc31d23e97999abb1bbfc2167c6ae5cf46#npm:10.7.0"],\
@@ -5498,7 +5498,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mm-jsr", "workspace:packages/mm-jsr"],\
             ["react", "npm:18.0.0"],\
             ["react-dom", "virtual:7f55c8b19fa443b03c07dd64d8ba68d16c33ceac222bcc8ce897768b86b6f60d47998bf195255aa1e8ac8a51380840f97195030c2a45297725da0ebeec73531d#npm:18.0.0"],\
-            ["rollup", "npm:2.70.2"],\
+            ["rollup", "npm:2.79.2"],\
             ["rollup-plugin-terser", "virtual:b052cfcadeab3ff189d66bd9d1e057c9be2c9fca47b5a65eff0c0c8c301963fadcc36b84aea0427d4b00d2f02db1a7cc31d23e97999abb1bbfc2167c6ae5cf46#npm:7.0.2"],\
             ["ts-node", "virtual:b052cfcadeab3ff189d66bd9d1e057c9be2c9fca47b5a65eff0c0c8c301963fadcc36b84aea0427d4b00d2f02db1a7cc31d23e97999abb1bbfc2167c6ae5cf46#npm:10.7.0"],\
             ["tslib", "npm:2.3.1"],\
@@ -5801,10 +5801,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["rollup", [\
-        ["npm:2.70.2", {\
-          "packageLocation": "./.yarn/cache/rollup-npm-2.70.2-1f9eb89050-eb04eb9b87.zip/node_modules/rollup/",\
+        ["npm:2.79.2", {\
+          "packageLocation": "./.yarn/cache/rollup-npm-2.79.2-1b08e69c0e-df7aa4c8b9.zip/node_modules/rollup/",\
           "packageDependencies": [\
-            ["rollup", "npm:2.70.2"],\
+            ["rollup", "npm:2.79.2"],\
             ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"]\
           ],\
           "linkType": "HARD"\
@@ -5825,7 +5825,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/rollup", null],\
             ["@types/svelte", null],\
             ["require-relative", "npm:0.8.7"],\
-            ["rollup", "npm:2.70.2"],\
+            ["rollup", "npm:2.79.2"],\
             ["rollup-pluginutils", "npm:2.8.2"],\
             ["svelte", "npm:3.47.0"]\
           ],\
@@ -5853,7 +5853,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/code-frame", "npm:7.16.7"],\
             ["@types/rollup", null],\
             ["jest-worker", "npm:26.6.2"],\
-            ["rollup", "npm:2.70.2"],\
+            ["rollup", "npm:2.79.2"],\
             ["serialize-javascript", "npm:4.0.0"],\
             ["terser", "npm:5.12.1"]\
           ],\
@@ -6450,7 +6450,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@rollup/plugin-node-resolve", "virtual:b052cfcadeab3ff189d66bd9d1e057c9be2c9fca47b5a65eff0c0c8c301963fadcc36b84aea0427d4b00d2f02db1a7cc31d23e97999abb1bbfc2167c6ae5cf46#npm:13.2.1"],\
             ["@rollup/plugin-typescript", "virtual:dfe7903db0b6732b3785128c2df0e36d7a19fb05799826acfb54005adeb2115ca1e118ba9a0db3ed8b9617a8f16eeedf36d11a95f60f3dcb48a42e2ceb7a65cf#npm:8.3.2"],\
             ["mm-jsr", "workspace:packages/mm-jsr"],\
-            ["rollup", "npm:2.70.2"],\
+            ["rollup", "npm:2.79.2"],\
             ["rollup-plugin-svelte", "virtual:dfe7903db0b6732b3785128c2df0e36d7a19fb05799826acfb54005adeb2115ca1e118ba9a0db3ed8b9617a8f16eeedf36d11a95f60f3dcb48a42e2ceb7a65cf#npm:7.1.0"],\
             ["serve", "npm:13.0.2"],\
             ["svelte", "npm:3.47.0"]\
@@ -7035,7 +7035,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@rollup/plugin-commonjs", "virtual:7f55c8b19fa443b03c07dd64d8ba68d16c33ceac222bcc8ce897768b86b6f60d47998bf195255aa1e8ac8a51380840f97195030c2a45297725da0ebeec73531d#npm:21.1.0"],\
             ["@rollup/plugin-node-resolve", "virtual:b052cfcadeab3ff189d66bd9d1e057c9be2c9fca47b5a65eff0c0c8c301963fadcc36b84aea0427d4b00d2f02db1a7cc31d23e97999abb1bbfc2167c6ae5cf46#npm:13.2.1"],\
             ["mm-jsr", "workspace:packages/mm-jsr"],\
-            ["rollup", "npm:2.70.2"],\
+            ["rollup", "npm:2.79.2"],\
             ["rollup-plugin-svelte", "virtual:dfe7903db0b6732b3785128c2df0e36d7a19fb05799826acfb54005adeb2115ca1e118ba9a0db3ed8b9617a8f16eeedf36d11a95f60f3dcb48a42e2ceb7a65cf#npm:7.1.0"],\
             ["rollup-plugin-terser", "virtual:b052cfcadeab3ff189d66bd9d1e057c9be2c9fca47b5a65eff0c0c8c301963fadcc36b84aea0427d4b00d2f02db1a7cc31d23e97999abb1bbfc2167c6ae5cf46#npm:7.0.2"],\
             ["serve", "npm:13.0.2"],\
