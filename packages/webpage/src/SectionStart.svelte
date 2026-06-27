@@ -27,17 +27,17 @@
 </script>
 
 <div class="page-section page-section--start" id="start">
-        
+
   <div class="page-section--start_content">
       <span class="page-section--start_name">Mort&amp;Mortis</span>
       <span class="page-section--start_subname">presents</span>
       <span class="page-section--start_app">JS Range</span>
   </div>
-  
+
   <div class="page-section--start_demo">
-      <div class="jsr" bind:this={jsrNode} />
+      <div class="jsr" bind:this={jsrNode}></div>
   </div>
-  
+
   <a class="button button--download" href="https://github.com/soanvig/mm-jsr">Get started</a>
 </div>
 

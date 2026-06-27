@@ -5,7 +5,7 @@
       <caption>Comparison of some features of M&amp;M JSR with other tools</caption>
       <thead>
         <tr>
-          <th />
+          <th></th>
           <th scope="col">M&amp;M JSR</th>
           <th scope="col">ion.rangeSlider</th>
         </tr>

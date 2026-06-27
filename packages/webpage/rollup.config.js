@@ -5,12 +5,14 @@ import terser from '@rollup/plugin-terser';
 export default {
   input: 'src/main.js',
   output: {
-    file: 'public/bundle.js',
+    file: 'public/build/bundle.js',
     format: 'iife'
   },
   plugins: [
     svelte({
       emitCss: false,
+      compilerOptions: {
+      }
     }),
     resolve({
       browser: true,

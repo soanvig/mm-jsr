@@ -47,5 +47,5 @@
 </script>
 
 <Demo config={stringifiedConfig} description='Limit'>
-  <div class="jsr" bind:this={container} />
+  <div class="jsr" bind:this={container}></div>
 </Demo>

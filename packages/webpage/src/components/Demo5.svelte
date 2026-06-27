@@ -39,5 +39,5 @@
 </script>
 
 <Demo config={stringifiedConfig} description='Only rail and bar + labels'>
-  <div class="jsr" bind:this={container} />
+  <div class="jsr" bind:this={container}></div>
 </Demo>

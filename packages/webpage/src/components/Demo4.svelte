@@ -42,5 +42,5 @@
 </script>
 
 <Demo config={stringifiedConfig} customCss={css} description='Only offset slider and grid'>
-  <div class="jsr is-demo-4" bind:this={container} />
+  <div class="jsr is-demo-4" bind:this={container}></div>
 </Demo>

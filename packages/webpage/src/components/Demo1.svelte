@@ -34,12 +34,12 @@
         max: 100,
         step: 1,
         initialValues: [25, 75],
-        container: container,
+        container,
       }
     })
   });
 </script>
 
 <Demo config={stringifiedConfig} description='Basic usage, multiple sliders, labels'>
-  <div class="jsr" bind:this={container} />
+  <div class="jsr" bind:this={container}></div>
 </Demo>

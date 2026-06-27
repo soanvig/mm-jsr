@@ -41,5 +41,5 @@
 </script>
 
 <Demo config={stringifiedConfig} description='Single value, formatter, grid'>
-  <div class="jsr" bind:this={container} />
+  <div class="jsr" bind:this={container}></div>
 </Demo>

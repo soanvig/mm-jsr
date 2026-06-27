@@ -74,5 +74,5 @@
 </script>
 
 <Demo config={stringifiedConfig} customCss={css} description='Colorful bars'>
-  <div class="jsr is-demo-6" bind:this={container} />
+  <div class="jsr is-demo-6" bind:this={container}></div>
 </Demo>
