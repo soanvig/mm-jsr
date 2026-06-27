@@ -1,6 +1,6 @@
 {
   "name": "react-mm-jsr",
-  "version": "2.0.4",
+  "version": "3.0.0",
   "description": "React adapter to mm-jsr: pure JS range input solution",
   "license": "LGPLv3",
   "author": "Mateusz Koteja <soanvig@gmail.com>",
