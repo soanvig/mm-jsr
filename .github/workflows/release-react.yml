@@ -17,6 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
+        with:
+          node-version: '24.x' # required for trusted publishing
       - uses: pnpm/action-setup@v6
         with:
           version: 10
