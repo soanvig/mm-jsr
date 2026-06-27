@@ -44,9 +44,8 @@ jobs:
         working-directory: ./packages/mm-jsr
       - run: git commit -a -m "[mm-jsr] v${{ github.event.inputs.version }}"
       - run: git tag v${{ github.event.inputs.version }}
-      - run: cp ../../README.md .
-        working-directory: ./packages/mm-jsr
-      - run: pnpm -F mm-jsr publish
+      - run: cp ./README.md ./packages/mm-jsr/README.md
+      - run: pnpm -F mm-jsr publish --no-git-checks # we copied readme so need to disable check - we do not want to commit README though
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
