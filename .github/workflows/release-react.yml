@@ -7,6 +7,10 @@ on:
         description: 'Version of release'
         required: true
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
@@ -38,7 +42,6 @@ jobs:
       - run: pnpm version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
         working-directory: ./packages/react-mm-jsr
       - run: git commit -a -m "[react-mm-jsr] v${{ github.event.inputs.version }}"
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
       - run: pnpm -F react-mm-jsr publish
       - name: Push changes
         uses: ad-m/github-push-action@master

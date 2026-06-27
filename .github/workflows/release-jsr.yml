@@ -7,6 +7,10 @@ on:
         description: 'Version of release'
         required: true
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
@@ -39,7 +43,6 @@ jobs:
       - run: pnpm -F mm-jsr version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
       - run: git commit -a -m "[mm-jsr] v${{ github.event.inputs.version }}"
       - run: git tag v${{ github.event.inputs.version }}
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
       - run: cp ../../README.md .
         working-directory: ./packages/mm-jsr
       - run: pnpm -F mm-jsr publish
