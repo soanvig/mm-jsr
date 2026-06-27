@@ -58,16 +58,8 @@ For **framework adapters** see: [adapters section](#adapters)
   or
 
   pnpm add mm-jsr
-  ```
 
-2. Include
-
-  ```
-  import { JSR } from 'mm-jsr';
-  
-  or
-
-  # Directly in the browser without any bundler, using this method your instation script needs to be in <script type="module">
+  or directly in the browser without any bundler (remember: using this method your import 'mm-jsr' script needs to be in <script type="module">)
   <script type="importmap">
   {
     "imports": {
@@ -76,7 +68,12 @@ For **framework adapters** see: [adapters section](#adapters)
     }
   }
   </script>
-  
+  ```
+
+2. Include
+
+  ```
+  import { JSR } from 'mm-jsr';
   ```
 
 3. Add CSS (you can use basic styles from [here](https://github.com/soanvig/mm-jsr/blob/master/packages/mm-jsr/styles.css))
