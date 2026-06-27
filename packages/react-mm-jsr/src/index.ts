@@ -10,22 +10,21 @@ export interface ReactJSRParams {
   modules: Modules;
 }
 
-export const useJSR = ({
-  config,
-  modules,
-}: ReactJSRParams) => {
-  const containerRef = useRef<HTMLElement>();
+export const useJSR = ({ config, modules }: ReactJSRParams) => {
+  const containerRef = useRef<HTMLElement | null>(null);
   const [jsr, setJsr] = useState<JSR | null>(null);
 
   useEffect(() => {
     if (containerRef.current && !jsr) {
-      setJsr(new JSR({
-        config: {
-          container: containerRef.current,
-          ...config,
-        },
-        modules,
-      }));
+      setJsr(
+        new JSR({
+          config: {
+            container: containerRef.current,
+            ...config,
+          },
+          modules,
+        }),
+      );
     }
   }, [containerRef.current]);
 
@@ -43,4 +42,3 @@ export const useJSR = ({
     instance: jsr,
   };
 };
-

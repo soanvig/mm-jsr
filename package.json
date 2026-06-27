@@ -1,22 +1,20 @@
 {
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22.21.1",
+    "pnpm": ">=10.0.0"
+  },
   "scripts": {
-    "build": "yarn workspace mm-jsr build",
-    "manual-test": "yarn workspaces foreach -p -v -i run manual-test"
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "serve": "pnpm -r serve",
+    "lint": "pnpm oxlint ./packages/mm-jsr ./packages/react-mm-jsr && pnpm oxfmt ./packages/mm-jsr ./packages/react-mm-jsr"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "7.0.8",
-    "size-limit": "7.0.8",
-    "typescript": "4.6.3"
-  },
-  "size-limit": [
-    {
-      "path": "packages/mm-jsr/build/index.js",
-      "limit": "20 kB"
-    }
-  ],
-  "packageManager": "yarn@3.2.0"
+    "oxfmt": "0.56.0",
+    "oxlint": "1.71.0",
+    "oxlint-tsgolint": "0.23.0",
+    "typescript": "6.0.3"
+  }
 }

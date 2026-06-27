@@ -1,25 +1,23 @@
-// rollup.config.js
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
-import { terser } from 'rollup-plugin-terser';
-import commonjs from '@rollup/plugin-commonjs';
+import terser from '@rollup/plugin-terser';
 
 export default {
-  input: __dirname + '/src/main.js',
+  input: 'src/main.js',
   output: {
-    file: __dirname + '/public/build/bundle.js',
-    format: 'iife',
-    plugins: [
-      terser(),
-    ],
+    file: 'public/bundle.js',
+    format: 'iife'
   },
   plugins: [
     svelte({
       emitCss: false,
     }),
-    // see NOTICE below
-    resolve({ browser: true }),
-    commonjs()
-    // ...
-  ],
-};
+    resolve({
+      browser: true,
+      exportConditions: ['svelte'],
+      extensions: ['.svelte']
+    }),
+    terser({
+    }),
+  ]
+}

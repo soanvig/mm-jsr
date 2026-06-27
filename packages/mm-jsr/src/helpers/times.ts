@@ -1,4 +1,4 @@
-import { range } from '@/helpers/range';
+import { range } from '../helpers/range';
 
 /**
  * Execute `cb` `n` times.

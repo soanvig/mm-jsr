@@ -1,32 +1,22 @@
 import typescript from '@rollup/plugin-typescript';
-import ttypescript from 'ttypescript';
-import { terser } from 'rollup-plugin-terser';
-
-const outputCommons = {
-  format: 'umd',
-  name: 'JSR',
-};
+import terser from '@rollup/plugin-terser';
 
 export default {
   input: 'src/index.ts',
-  plugins: [
-    typescript({
-      typescript: ttypescript,
-      declaration: true,
-      declarationDir: './build/types',
-      rootDir: 'src/',
-    }),
-  ],
   output: [
     {
-      ...outputCommons,
-      dir: './build',
+      format: 'es',
+      file: './build/index.js',
       sourcemap: true,
-      plugins: [
-        terser({
-          keep_classnames: true,
-        }),
-      ],
     },
+  ],
+  plugins: [
+    typescript({
+      declaration: true,
+      rootDir: 'src/',
+    }),
+    terser({
+      keep_classnames: true,
+    }),
   ],
 };

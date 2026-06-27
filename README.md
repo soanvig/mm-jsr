@@ -54,6 +54,10 @@ For **framework adapters** see: [adapters section](#adapters)
   or
 
   yarn add mm-jsr
+
+  or
+
+  pnpm add mm-jsr
   ```
 
 2. Include
@@ -63,13 +67,16 @@ For **framework adapters** see: [adapters section](#adapters)
   
   or
 
-  const { JSR } = require('mm-jsr');
-
-  or
-
-  <script src="https://unpkg.com/mm-jsr/build/index.js"></script>
-  (which makes variable JSR available globally - REMEMBER to lock the version by suffixing address with @version e.g.
-  https://unpkg.com/mm-jsr/build/index.js@2.1.0)
+  # Directly in the browser without any bundler, using this method your instation script needs to be in <script type="module">
+  <script type="importmap">
+  {
+    "imports": {
+      // (REMEMBER to lock the version by suffixing address with @version e.g. https://esm.sh/mm-jsr@4.0.0)
+      "mm-jsr": "https://esm.sh/mm-jsr",
+    }
+  }
+  </script>
+  
   ```
 
 3. Add CSS (you can use basic styles from [here](https://github.com/soanvig/mm-jsr/blob/master/packages/mm-jsr/styles.css))
@@ -77,7 +84,6 @@ For **framework adapters** see: [adapters section](#adapters)
 4. Instantiate JSR
 
   ```js
-    // NOTE: for unpkg skip import, and use `const { JSR, ModuleRail, ModuleSlider, ModuleBar, ModuleLabel, ModuleLimit } = window.JSR` instead.
     import { JSR, ModuleRail, ModuleSlider, ModuleBar, ModuleLabel, ModuleLimit } from 'mm-jsr';
 
     const jsr = new JSR({
@@ -169,6 +175,10 @@ If You don't plan to add any malicious behaviour to the library, this license sh
 
 It is also *expected*, that any plugins (extensions or modules) added to library via configuration, are respecting final user freedom,
 and are not spying on his actions performed over such module without his knowledge and approval.
+
+## Migration guide: v3 -> v4
+
+1. UMD support has been dropped in favor of ES modules (see [#Quick-start](#Quick-start) again)
 
 ## Migration guide: v2 -> v3
 

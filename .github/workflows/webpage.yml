@@ -9,16 +9,20 @@ jobs:
   webpage:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
       - name: Prepare Git
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GH Actions"
           git checkout gh-pages
           git reset --hard origin/master
-      - run: yarn workspace mm-jsr build
-      - run: yarn workspace webpage build
-      - run: yarn workspace mm-jsr docs
+      - run: pnpm install
+      - run: pnpm build
+      - run: pnpm -F mm-jsr docs-build
       - name: Copy resources
         run: |
           rm -rf ./docs

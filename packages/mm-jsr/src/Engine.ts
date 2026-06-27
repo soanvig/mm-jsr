@@ -1,10 +1,10 @@
-import { InputHandler } from '@/InputHandler';
-import { Config, ConfigAttrs } from '@/models/Config';
-import { StateDto } from '@/models/State';
-import { Value } from '@/models/Value';
-import { Module } from '@/modules/Module';
-import { Renderer } from '@/Renderer';
-import { StateProcessor } from '@/StateProcessor';
+import { InputHandler } from './InputHandler';
+import { Config, ConfigAttrs } from './models/Config';
+import { StateDto } from './models/State';
+import { Value } from './models/Value';
+import { Module } from './modules/Module';
+import { Renderer } from './Renderer';
+import { StateProcessor } from './StateProcessor';
 import { isTruthy } from './helpers/guards';
 
 interface SetupCommand {
@@ -12,7 +12,7 @@ interface SetupCommand {
   modules: Module[];
 }
 
-export type ValueChangeHandler = (v: { index: number, real: number, ratio: number }) => void;
+export type ValueChangeHandler = (v: { index: number; real: number; ratio: number }) => void;
 
 /**
  * Engine initializes and connects all modules together.
@@ -30,7 +30,7 @@ export class Engine {
   /** Disabled Engine doesn't react on value change events */
   private enabled = true;
 
-  public constructor (setup: SetupCommand) {
+  public constructor(setup: SetupCommand) {
     this.config = Config.createFromInput(setup.config);
 
     const config = this.config.toDto();
@@ -45,12 +45,14 @@ export class Engine {
       getState: () => this.stateProcessor.getState(),
     });
 
-    this.modules = setup.modules.map(M => M.init({
-      config,
-      renderer: this.renderer,
-      input: this.inputHandler,
-      name: M.constructor.name,
-    }));
+    this.modules = setup.modules.map((M) =>
+      M.init({
+        config,
+        renderer: this.renderer,
+        input: this.inputHandler,
+        name: M.constructor.name,
+      }),
+    );
 
     this.stateProcessor = StateProcessor.init({
       config,
@@ -60,30 +62,30 @@ export class Engine {
     this.initView();
   }
 
-  public addValueChangeHandler (handler: ValueChangeHandler): VoidFunction {
+  public addValueChangeHandler(handler: ValueChangeHandler): VoidFunction {
     this.valueChangeHandlers.push(handler);
 
-    return () => this.valueChangeHandlers = this.valueChangeHandlers.filter(h => h !== handler);
+    return () => (this.valueChangeHandlers = this.valueChangeHandlers.filter((h) => h !== handler));
   }
 
-  public enable () {
+  public enable() {
     this.renderer.getContainer().classList.remove('is-disabled');
     this.enabled = true;
   }
 
-  public disable () {
+  public disable() {
     this.renderer.getContainer().classList.add('is-disabled');
     this.enabled = false;
   }
 
-  public isEnabled () {
+  public isEnabled() {
     return this.enabled;
   }
 
   /**
    * Create Value object from real value.
    */
-  public produceRealValue (value: number): Value {
+  public produceRealValue(value: number): Value {
     return Value.fromReal({
       real: value,
       max: this.config.max,
@@ -94,8 +96,8 @@ export class Engine {
   /**
    * Initialize views of all modules.
    */
-  private initView () {
-    this.modules.forEach(m => m.initView && m.initView());
+  private initView() {
+    this.modules.forEach((m) => m.initView && m.initView());
 
     this.renderState(this.stateProcessor.getState());
   }
@@ -104,7 +106,7 @@ export class Engine {
    * Internal handler for reacting on any value changed.
    * Updates the state, triggers value change event handlers.
    */
-  private onValueChange (index: number, value: Value) {
+  private onValueChange(index: number, value: Value) {
     if (!this.enabled) {
       return;
     }
@@ -113,10 +115,10 @@ export class Engine {
 
     this.renderState(newState);
 
-    const isValueSame = (newState.values[index].isExact(oldState.values[index]));
+    const isValueSame = newState.values[index].isExact(oldState.values[index]);
 
     if (!isValueSame) {
-      this.valueChangeHandlers.forEach(handler => {
+      this.valueChangeHandlers.forEach((handler) => {
         handler({
           index,
           ratio: newState.values[index].asRatio(),
@@ -126,8 +128,8 @@ export class Engine {
     }
   }
 
-  private renderState (state: StateDto): void {
-    const renderFunctions = this.modules.map(m => m.render && m.render(state));
+  private renderState(state: StateDto): void {
+    const renderFunctions = this.modules.map((m) => m.render && m.render(state));
 
     this.renderer.render(renderFunctions.filter(isTruthy));
   }

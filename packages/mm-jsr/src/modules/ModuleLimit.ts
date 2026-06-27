@@ -1,14 +1,14 @@
-import { State, StateDto } from '@/models/State';
-import { Changelog, Module } from '@/modules/Module';
-import { ConfigDto } from '@/models/Config';
-import { assert, isNumber, isPlainObject } from '@/validation/assert';
+import { State, StateDto } from '../models/State';
+import { Changelog, Module } from '../modules/Module';
+import { ConfigDto } from '../models/Config';
+import { assert, isNumber, isPlainObject } from '../validation/assert';
 
 export interface ModuleLimitSettings {
   min?: number;
   max?: number;
 }
 
-export type ChangeLimitCommand = { min?: number, max?: number };
+export type ChangeLimitCommand = { min?: number; max?: number };
 
 /**
  * Module for limiting values.
@@ -20,13 +20,13 @@ export class ModuleLimit extends Module {
   private limit!: HTMLElement;
   private settings!: ModuleLimitSettings;
 
-  constructor (settings: ModuleLimitSettings = {}) {
+  constructor(settings: ModuleLimitSettings = {}) {
     super();
 
     this.changeLimit(settings);
   }
 
-  public destroy () {
+  public destroy() {
     this.limit.remove();
   }
 
@@ -35,7 +35,7 @@ export class ModuleLimit extends Module {
    *
    * @param command - limit object, that should be applied as new limit
    */
-  public changeLimit (command: ChangeLimitCommand) {
+  public changeLimit(command: ChangeLimitCommand) {
     assert('limit object', command, isPlainObject);
 
     if (command.min) {
@@ -49,7 +49,7 @@ export class ModuleLimit extends Module {
     this.settings = command;
   }
 
-  public initView () {
+  public initView() {
     this.limit = document.createElement('div');
 
     this.limit.classList.add('jsr_limit');
@@ -57,7 +57,7 @@ export class ModuleLimit extends Module {
     this.renderer.addChild(this.limit);
   }
 
-  public render (state: StateDto): VoidFunction {
+  public render(state: StateDto): VoidFunction {
     return () => {
       if (this.settings.min === undefined && this.settings.max === undefined) {
         this.limit.style.left = '0%';
@@ -81,16 +81,13 @@ export class ModuleLimit extends Module {
     };
   }
 
-  public update (config: ConfigDto, state: State, changelog: Changelog) {
+  public update(_config: ConfigDto, state: State, _changelog: Changelog) {
     const { values } = state;
 
     // @NOTE this modified all values. Should changelog include these values then??
-    const limitedValues = values.map(value => (
-      value.clampReal(
-        this.settings.min ?? -Infinity,
-        this.settings.max ?? +Infinity,
-      )
-    ));
+    const limitedValues = values.map((value) =>
+      value.clampReal(this.settings.min ?? -Infinity, this.settings.max ?? +Infinity),
+    );
 
     return state.updateValues(limitedValues);
   }

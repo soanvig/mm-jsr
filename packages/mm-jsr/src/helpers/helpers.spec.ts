@@ -1,59 +1,66 @@
-import { avg } from '@/helpers/avg';
-import { closest } from '@/helpers/closest';
-import { neighbourGroup } from '@/helpers/neighbourGroup';
-import { range } from '@/helpers/range';
-import { times } from '@/helpers/times';
-import { uniq } from '@/helpers/uniq';
-import test from 'ava';
+import { avg } from '../helpers/avg';
+import { closest } from '../helpers/closest';
+import { neighbourGroup } from '../helpers/neighbourGroup';
+import { range } from '../helpers/range';
+import { times } from '../helpers/times';
+import { uniq } from '../helpers/uniq';
+import { expect, test } from 'vitest';
 
-test('neighbourGroup', t => {
-  t.deepEqual(neighbourGroup([]), []);
-  t.deepEqual(neighbourGroup([1]), []);
-  t.deepEqual(neighbourGroup([1, 2]), [[1, 2]]);
-  t.deepEqual(neighbourGroup([1, 2, 3]), [[1, 2], [2, 3]]);
-  t.deepEqual(neighbourGroup([1, 2, 3, 4]), [[1, 2], [2, 3], [3, 4]]);
+test('neighbourGroup', () => {
+  expect(neighbourGroup([])).toEqual([]);
+  expect(neighbourGroup([1])).toEqual([]);
+  expect(neighbourGroup([1, 2])).toEqual([[1, 2]]);
+  expect(neighbourGroup([1, 2, 3])).toEqual([
+    [1, 2],
+    [2, 3],
+  ]);
+  expect(neighbourGroup([1, 2, 3, 4])).toEqual([
+    [1, 2],
+    [2, 3],
+    [3, 4],
+  ]);
 });
 
-test('range', t => {
-  t.deepEqual(range(0), []);
+test('range', () => {
+  expect(range(0)).toEqual([]);
 
-  t.deepEqual(range(1, 1), [1]);
-  t.deepEqual(range(1, 2), [1, 2]);
-  t.deepEqual(range(1, 3), [1, 2, 3]);
+  expect(range(1, 1)).toEqual([1]);
+  expect(range(1, 2)).toEqual([1, 2]);
+  expect(range(1, 3)).toEqual([1, 2, 3]);
 
-  t.deepEqual(range(3), [0, 1, 2, 3]);
+  expect(range(3)).toEqual([0, 1, 2, 3]);
 
-  t.deepEqual(range(2, 1), [1, 2]);
+  expect(range(2, 1)).toEqual([1, 2]);
 
-  t.deepEqual(range(-2), [-2, -1, 0]);
+  expect(range(-2)).toEqual([-2, -1, 0]);
 });
 
-test('times', t => {
-  t.deepEqual(times(1, n => n), [1]);
-  t.deepEqual(times(2, n => n), [1, 2]);
-  t.deepEqual(times(3, n => n), [1, 2, 3]);
+test('times', () => {
+  expect(times(1, (n) => n)).toEqual([1]);
+  expect(times(2, (n) => n)).toEqual([1, 2]);
+  expect(times(3, (n) => n)).toEqual([1, 2, 3]);
 
-  t.deepEqual(times(0, n => n), []);
+  expect(times(0, (n) => n)).toEqual([]);
 });
 
-test('helpers', t => {
-  t.deepEqual(uniq([]), []);
-  t.deepEqual(uniq([1]), [1]);
-  t.deepEqual(uniq([1, 2]), [1, 2]);
-  t.deepEqual(uniq([1, 1, 2]), [1, 2]);
-  t.deepEqual(uniq([1, 2, 1]), [1, 2]);
+test('helpers', () => {
+  expect(uniq([])).toEqual([]);
+  expect(uniq([1])).toEqual([1]);
+  expect(uniq([1, 2])).toEqual([1, 2]);
+  expect(uniq([1, 1, 2])).toEqual([1, 2]);
+  expect(uniq([1, 2, 1])).toEqual([1, 2]);
 });
 
-test('avg', t => {
-  t.deepEqual(avg(1, 2, 3), 2);
-  t.deepEqual(avg(5), 5);
-  t.deepEqual(avg(10, 20), 15);
+test('avg', () => {
+  expect(avg(1, 2, 3)).toEqual(2);
+  expect(avg(5)).toEqual(5);
+  expect(avg(10, 20)).toEqual(15);
 });
 
-test('closest', t => {
+test('closest', () => {
   const arr = [0, 20, 50, 100];
 
-  t.is(closest(25, arr), 1);
-  t.is(closest(50, arr), 2);
-  t.is(closest(35, arr), 2);
+  expect(closest(25, arr)).toEqual(1);
+  expect(closest(50, arr)).toEqual(2);
+  expect(closest(35, arr)).toEqual(2);
 });

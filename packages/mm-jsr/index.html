@@ -1,87 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSR</title>
-  <link rel="stylesheet" href="./styles.css">
-</head>
-<body style="height: 120vh;">
-  <div style="width: 900px; max-width: 100%; margin: 30px auto; position: relative;">
-    <div id="jsr1"></div>
-    <div id="jsr2"></div>
-  </div>
-  <button id="changeLimit">Randomize limit</button>
-  <button id="toogleEnabled">Toogle enabled</button>
-  <button id="setValue">Set first value</button>
-  <button id="destroy">Destroy</button>
-  <script src="./build/index.js"></script>
-  <script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSR</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body style="height: 120vh; padding-top: 100px">
+    <div style="width: 900px; max-width: 100%; margin: 30px auto; position: relative">
+      <div id="jsr1"></div>
+      <div id="jsr2"></div>
+    </div>
+    <button id="changeLimit">Randomize limit</button>
+    <button id="toogleEnabled">Toogle enabled</button>
+    <button id="setValue">Set first value</button>
+    <button id="destroy">Destroy</button>
+    <script src="./build/index.js" type="module"></script>
+    <script type="module">
+      import * as JSR from './build/index.js';
 
-    const jsr2 = new JSR.JSR({
+      const jsr2 = new JSR.JSR({
         modules: [
-            new JSR.ModuleRail(),
-            new JSR.ModuleSlider(),
-            new JSR.ModuleBar(),
-            new JSR.ModuleLabel(),
+          new JSR.ModuleRail(),
+          new JSR.ModuleSlider(),
+          new JSR.ModuleBar(),
+          new JSR.ModuleLabel(),
         ],
         config: {
-            min: 0,
-            max: 100,
-            step: 1,
-            initialValues: [25,75, 90],
-            container: document.getElementById('jsr2'),
-        }
-    });
-
-    const jsr = new JSR.JSR({
-          modules: [
-              new JSR.ModuleLimit({
-                min: 12000,
-                max: 16000,
-              }),
-              new JSR.ModuleRail(),
-              new JSR.ModuleSlider(),
-              new JSR.ModuleBar(),
-              new JSR.ModuleLabel({
-                  formatter: (v) => `$${v}`
-              }),
-              new JSR.ModuleGrid(),
-          ],
-          config: {
-              min: 10000,
-              max: 20000,
-              step: 1,
-              initialValues: [15000, 17500],
-              container: document.getElementById('jsr1'),
-          }
+          min: 0,
+          max: 100,
+          step: 1,
+          initialValues: [25, 75, 90],
+          container: document.getElementById('jsr2'),
+        },
       });
 
-    changeLimit.addEventListener('click', () => {
-      jsr.changeLimit({
-        min: Math.floor(Math.random() * 50),
-        max: Math.floor(Math.random() * 50) + 50,
-      })
-    });
+      const jsr = new JSR.JSR({
+        modules: [
+          new JSR.ModuleLimit({
+            min: 12000,
+            max: 16000,
+          }),
+          new JSR.ModuleRail(),
+          new JSR.ModuleSlider(),
+          new JSR.ModuleBar(),
+          new JSR.ModuleLabel({
+            formatter: (v) => `$${v}`,
+          }),
+          new JSR.ModuleGrid(),
+        ],
+        config: {
+          min: 10000,
+          max: 20000,
+          step: 1,
+          initialValues: [15000, 17500],
+          container: document.getElementById('jsr1'),
+        },
+      });
 
-    toogleEnabled.addEventListener('click', () => {
-      if (jsr.isEnabled()) {
-        jsr.disable();
-      } else {
-        jsr.enable();
-      }
-    });
+      changeLimit.addEventListener('click', () => {
+        jsr.changeLimit({
+          min: Math.floor(Math.random() * 50),
+          max: Math.floor(Math.random() * 50) + 50,
+        });
+      });
 
-    setValue.addEventListener('click', () => {
-      jsr.setRealValue(0, Math.floor(Math.random() * 50));
-    });
+      toogleEnabled.addEventListener('click', () => {
+        if (jsr.isEnabled()) {
+          jsr.disable();
+        } else {
+          jsr.enable();
+        }
+      });
 
-    destroy.addEventListener('click', () => {
-      jsr.destroy();
-    });
+      setValue.addEventListener('click', () => {
+        jsr.setRealValue(0, Math.floor(Math.random() * 50));
+      });
 
-    jsr.onValueChange(console.log)
-  </script>
-</body>
+      destroy.addEventListener('click', () => {
+        jsr.destroy();
+      });
+
+      jsr.onValueChange(console.log);
+    </script>
+  </body>
 </html>

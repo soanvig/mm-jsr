@@ -1,8 +1,8 @@
-import { State, StateDto } from '@/models/State';
-import { Value } from '@/models/Value';
-import { ConfigDto } from '@/models/Config';
-import { mapChanged } from '@/helpers/mapChanged';
-import { Changelog, Module } from '@/modules/Module';
+import { State, StateDto } from './models/State';
+import { Value } from './models/Value';
+import { ConfigDto } from './models/Config';
+import { mapChanged } from './helpers/mapChanged';
+import { Changelog, Module } from './modules/Module';
 
 interface Ctor {
   config: ConfigDto;
@@ -19,16 +19,18 @@ export class StateProcessor {
   private config: ConfigDto;
   private modules: Module[];
 
-  private constructor (ctor: Ctor) {
+  private constructor(ctor: Ctor) {
     const configDto = ctor.config;
     const minMax = {
       min: configDto.min,
       max: configDto.max,
     };
-    const values = configDto.initialValues.map(v => Value.fromReal({
-      ...minMax,
-      real: v,
-    }));
+    const values = configDto.initialValues.map((v) =>
+      Value.fromReal({
+        ...minMax,
+        real: v,
+      }),
+    );
 
     this.config = ctor.config;
     this.modules = ctor.modules;
@@ -39,11 +41,11 @@ export class StateProcessor {
     this.state = this.process(this.state, this.modules);
   }
 
-  public updateValue (index: number, value: Value): { newState: StateDto, oldState: StateDto } {
+  public updateValue(index: number, value: Value): { newState: StateDto; oldState: StateDto } {
     const oldState = this.state.toDto();
 
     const updatedState = this.state.updateValues(
-      mapChanged(this.state.values, [index], _ => value),
+      mapChanged(this.state.values, [index], (_) => value),
     );
 
     this.state = this.process(updatedState, this.modules);
@@ -54,21 +56,17 @@ export class StateProcessor {
     };
   }
 
-  public getState (): StateDto {
+  public getState(): StateDto {
     return this.state.toDto();
   }
 
   /**
    * Apply all extensions to state.
    */
-  private process (state: State, modules: Module[]): State {
+  private process(state: State, modules: Module[]): State {
     const changedValues = this.state.findChangedValues(state);
 
-    const updatedState = this.internalProcess(
-      modules,
-      state,
-      { changedValues },
-    );
+    const updatedState = this.internalProcess(modules, state, { changedValues });
 
     return updatedState;
   }
@@ -76,7 +74,7 @@ export class StateProcessor {
   /**
    * Internal process function used by `process` function.
    */
-  private internalProcess (modules: Module[], state: State, changelog: Changelog): State {
+  private internalProcess(modules: Module[], state: State, changelog: Changelog): State {
     const [mod, ...rest] = modules;
 
     if (rest.length === 0) {
@@ -92,7 +90,7 @@ export class StateProcessor {
     return this.internalProcess(rest, updatedState, changelog);
   }
 
-  public static init (ctor: Ctor) {
+  public static init(ctor: Ctor) {
     return new StateProcessor(ctor);
   }
 }

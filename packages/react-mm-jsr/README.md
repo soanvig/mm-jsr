@@ -14,43 +14,42 @@ Although HTML 5 comes with input[type="range"] its functionality lacks a lot of 
 
 1. Install packages
 
-  ```
-  npm install --save mm-jsr react-mm-jsr
+```
+npm install --save mm-jsr react-mm-jsr
 
-  or
+or
 
-  yarn add mm-jsr react-mm-jsr
-  ```
+yarn add mm-jsr react-mm-jsr
 
-  (it is also available in [unpkg](https://unpkg.com/react-mm-jsr/build/index.js) with variable name `ReactJSR`. Remember to include `mm-jsr` (JSR) as well, and lock version)
+or
+
+pnpm add mm-jsr react-mm-jsr
+```
+
+(it is also available in [unpkg](https://unpkg.com/react-mm-jsr/build/index.js) with variable name `ReactJSR`. Remember to include `mm-jsr` (JSR) as well, and lock version)
 
 2. Add CSS (you can use basic styles from [here](../mm-jsr/styles.css))
 
 3. Instantiate (see [docs](https://soanvig.github.io/mm-jsr/api/index.html) for more information about configuration and modules)
 
-  ```jsx
-  import { ModuleRail, ModuleSlider, ModuleBar, ModuleLabel } from 'mm-jsr';
-  import { useJSR } from 'react-mm-jsr';
+```jsx
+import { ModuleRail, ModuleSlider, ModuleBar, ModuleLabel } from 'mm-jsr';
+import { useJSR } from 'react-mm-jsr';
 
-  function MyComponent () {
-    const { ref: jsrRef, instance: jsrInstance } = useJSR({
-      modules: [
-        new ModuleRail(),
-        new ModuleSlider(),
-        new ModuleBar(),
-        new ModuleLabel(),
-      ],
-      config: {
-        min: 0,
-        max: 100,
-        step: 1,
-        initialValues: [25, 75],
-      },
-    });
+function MyComponent() {
+  const { ref: jsrRef, instance: jsrInstance } = useJSR({
+    modules: [new ModuleRail(), new ModuleSlider(), new ModuleBar(), new ModuleLabel()],
+    config: {
+      min: 0,
+      max: 100,
+      step: 1,
+      initialValues: [25, 75],
+    },
+  });
 
-    return (<div ref={jsrRef} />);
-  }
-  ```
+  return <div ref={jsrRef} />;
+}
+```
 
 ## Important notes
 

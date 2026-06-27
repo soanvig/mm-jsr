@@ -1,20 +1,20 @@
-import { ModuleRound } from '@/modules/ModuleRound';
-import { getInput } from '@/testHelpers/getInput';
-import test from 'ava';
+import { ModuleRound } from '../modules/ModuleRound';
+import { getInput } from '../testHelpers/getInput';
+import { expect, test } from 'vitest';
 
-test('round to full value', t => {
-  t.is(roundToStep(0, 1), 0);
-  t.is(roundToStep(19.9, 1), 20);
-  t.is(roundToStep(19.999, 1), 20);
-  t.is(roundToStep(20, 1), 20);
-  t.is(roundToStep(20.4, 1), 20);
-  t.is(roundToStep(20.5, 1), 21);
+test('round to full value', () => {
+  expect(roundToStep(0, 1)).toBe(0);
+  expect(roundToStep(19.9, 1)).toBe(20);
+  expect(roundToStep(19.999, 1)).toBe(20);
+  expect(roundToStep(20, 1)).toBe(20);
+  expect(roundToStep(20.4, 1)).toBe(20);
+  expect(roundToStep(20.5, 1)).toBe(21);
 
   //
 
-  t.is(roundToStep(20.5, 2), 20);
-  t.is(roundToStep(21, 2), 22);
-  t.is(roundToStep(22, 2), 22);
+  expect(roundToStep(20.5, 2)).toBe(20);
+  expect(roundToStep(21, 2)).toBe(22);
+  expect(roundToStep(22, 2)).toBe(22);
 });
 
 const roundToStep = (value: number, step: number): number => {

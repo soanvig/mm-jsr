@@ -1,9 +1,9 @@
-import { Engine, ValueChangeHandler } from '@/Engine';
-import { ConfigAttrs } from '@/models/Config';
-import { Module } from '@/modules/Module';
-import { ModuleNeighourLimit } from '@/modules/ModuleNeighbourLimit';
-import { ModuleRound } from '@/modules/ModuleRound';
-import { assert, isArray, isInstanceOf } from '@/validation/assert';
+import { Engine, ValueChangeHandler } from './Engine';
+import { ConfigAttrs } from './models/Config';
+import { Module } from './modules/Module';
+import { ModuleNeighourLimit } from './modules/ModuleNeighbourLimit';
+import { ModuleRound } from './modules/ModuleRound';
+import { assert, isArray, isInstanceOf } from './validation/assert';
 
 export interface JsrConstructor {
   /** Configuration */
@@ -16,7 +16,7 @@ export interface JsrConstructor {
 export class JSR {
   private engine: Engine;
 
-  public constructor (ctor: JsrConstructor) {
+  public constructor(ctor: JsrConstructor) {
     assert('JSR.modules', ctor.modules, isArray(isInstanceOf(Module)));
 
     const modules = removeDuplicatedModules([
@@ -37,7 +37,7 @@ export class JSR {
    * @param index - index of value to set
    * @param value - real value to set
    */
-  public setRealValue (index: number, value: number): void {
+  public setRealValue(index: number, value: number): void {
     this.engine.inputHandler.setRealValue(index, value);
   }
 
@@ -47,7 +47,7 @@ export class JSR {
    * @param index - index of value to set
    * @param value - ratio value to set
    */
-  public setRatioValue (index: number, value: number): void {
+  public setRatioValue(index: number, value: number): void {
     this.engine.inputHandler.setRatioValue(index, value);
   }
 
@@ -57,7 +57,7 @@ export class JSR {
    * @param index - index of value to get
    * @returns - real value
    */
-  public getRealValue (index: number): number {
+  public getRealValue(index: number): number {
     return this.engine.stateProcessor.getState().values[index].asReal();
   }
 
@@ -67,7 +67,7 @@ export class JSR {
    * @param index - index of value to get
    * @returns - ratio value
    */
-  public getRatioValue (index: number): number {
+  public getRatioValue(index: number): number {
     return this.engine.stateProcessor.getState().values[index].asRatio();
   }
 
@@ -77,28 +77,28 @@ export class JSR {
    * @param handler - handler listening for value change
    * @returns - returns function that allows to remove handler
    */
-  public onValueChange (handler: ValueChangeHandler): VoidFunction {
+  public onValueChange(handler: ValueChangeHandler): VoidFunction {
     return this.engine.addValueChangeHandler(handler);
   }
 
   /**
    * Enable JSR by allowing value changes, and removing `.is-disabled` class from the container.
    */
-  public enable (): void {
+  public enable(): void {
     this.engine.enable();
   }
 
   /**
    * Disable JSR by disallowing value changes, and adding `.is-disabled` class to the container.
    */
-  public disable (): void {
+  public disable(): void {
     this.engine.disable();
   }
 
   /**
    * Return whether JSR is enabled or disabled.
    */
-  public isEnabled (): boolean {
+  public isEnabled(): boolean {
     return this.engine.isEnabled();
   }
 
@@ -111,10 +111,12 @@ export class JSR {
    *
    * It does not removes original container element.
    */
-  public destroy (): void {
-    this.engine.modules.forEach(m => m.destroy && m.destroy());
+  public destroy(): void {
+    this.engine.modules.forEach((m) => m.destroy && m.destroy());
   }
 }
 
 const removeDuplicatedModules = (modules: Module[]): Module[] =>
-  modules.filter((m1, i1) => !modules.some((m2, i2) => m1.constructor === m2.constructor && i2 < i1));
+  modules.filter(
+    (m1, i1) => !modules.some((m2, i2) => m1.constructor === m2.constructor && i2 < i1),
+  );

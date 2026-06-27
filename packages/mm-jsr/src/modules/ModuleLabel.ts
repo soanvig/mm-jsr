@@ -1,12 +1,12 @@
-import { useOnMove } from '@/events/useOnMove';
-import { avg } from '@/helpers/avg';
-import { neighbourGroup } from '@/helpers/neighbourGroup';
-import { range } from '@/helpers/range';
-import { uniq } from '@/helpers/uniq';
-import { StateDto } from '@/models/State';
-import { Value } from '@/models/Value';
-import { Module } from '@/modules/Module';
-import { assert, isFunction } from '@/validation/assert';
+import { useOnMove } from '../events/useOnMove';
+import { avg } from '../helpers/avg';
+import { neighbourGroup } from '../helpers/neighbourGroup';
+import { range } from '../helpers/range';
+import { uniq } from '../helpers/uniq';
+import { StateDto } from '../models/State';
+import { Value } from '../models/Value';
+import { Module } from '../modules/Module';
+import { assert, isFunction } from '../validation/assert';
 
 export interface ModuleLabelSettings {
   /** Formatter used to format values before rendering them as text */
@@ -31,48 +31,51 @@ export class ModuleLabel extends Module {
   private primaryLabels: string[] = [];
   private settings: ModuleLabelSettings;
 
-  constructor (settings: Partial<ModuleLabelSettings> = {}) {
+  constructor(settings: Partial<ModuleLabelSettings> = {}) {
     super();
 
     this.assertSettings(settings);
 
-    this.settings = Object.assign({
-      formatter: String,
-    }, settings);
+    this.settings = Object.assign(
+      {
+        formatter: String,
+      },
+      settings,
+    );
   }
 
-  public destroy () {
-    this.labels.forEach(l => l.el.remove());
+  public destroy() {
+    this.labels.forEach((l) => l.el.remove());
   }
 
-  public initView () {
+  public initView() {
     const primaryLabels = getPrimaryLabels(this.config.valuesCount);
 
-    const labelGroups = [
-      primaryLabels,
-      ...getAllNeighourLabels(this.config.valuesCount),
-    ];
+    const labelGroups = [primaryLabels, ...getAllNeighourLabels(this.config.valuesCount)];
 
-    const labels = new Map(labelGroups.flat().map(label => {
-      const el = document.createElement('div');
-      el.classList.add('jsr_label');
-      el.dataset.key = label;
-      el.style.left = '0';
+    const labels = new Map(
+      labelGroups.flat().map((label) => {
+        const el = document.createElement('div');
+        el.classList.add('jsr_label');
+        el.dataset.key = label;
+        el.style.left = '0';
 
-      useOnMove(el, (x, trigger) => this.handleMove(label, x, trigger), this.renderer.getContainer());
+        useOnMove(
+          el,
+          (x, trigger) => this.handleMove(label, x, trigger),
+          this.renderer.getContainer(),
+        );
 
-      return [
-        label,
-        { key: label, el } as Label,
-      ];
-    }));
+        return [label, { key: label, el } as Label];
+      }),
+    );
 
     this.primaryLabels = primaryLabels;
     this.labels = labels;
-    this.labels.forEach(label => this.renderer.addChild(label.el));
+    this.labels.forEach((label) => this.renderer.addChild(label.el));
   }
 
-  public render (state: StateDto): VoidFunction {
+  public render(state: StateDto): VoidFunction {
     return () => {
       this.applyValues(state);
       this.fixExceeding();
@@ -80,37 +83,42 @@ export class ModuleLabel extends Module {
     };
   }
 
-  private applyValues (state: StateDto) {
+  private applyValues(state: StateDto) {
     for (const [key, label] of this.labels) {
-      const labels = uniq(key.split('')).map(singleKey => ({
+      const labels = uniq(key.split('')).map((singleKey) => ({
         key: singleKey,
         value: state.values[Number(singleKey)],
       }));
 
-      const avgLeftRatio = avg(...labels.map(v => v.value.asRatio()));
-      const formatValue = (v: Value) => this.settings.formatter(
-        Number(v.asReal().toFixed(this.config.stepDecimals)),
-      );
+      const avgLeftRatio = avg(...labels.map((v) => v.value.asRatio()));
+      const formatValue = (v: Value) =>
+        this.settings.formatter(Number(v.asReal().toFixed(this.config.stepDecimals)));
 
       label.el.style.left = `${avgLeftRatio * 100}%`;
-      label.el.innerHTML = labels.map(
-        (label, index) => `
+      label.el.innerHTML = labels
+        .map(
+          (label, index) => `
         <span data-key="${label.key}">
           ${formatValue(label.value)}
-          ${index < (labels.length - 1) ? ' - ' : ''}
+          ${index < labels.length - 1 ? ' - ' : ''}
         </span>
       `,
-      ).join('');
+        )
+        .join('');
     }
   }
 
   /**
    * @performance
    */
-  private fixOverlapping () {
-    const verifiedLabels = verifyVisibleLabels([], this.primaryLabels, this.doLabelsOverlap.bind(this));
+  private fixOverlapping() {
+    const verifiedLabels = verifyVisibleLabels(
+      [],
+      this.primaryLabels,
+      this.doLabelsOverlap.bind(this),
+    );
 
-    [...this.labels.values()].forEach(label => {
+    [...this.labels.values()].forEach((label) => {
       if (verifiedLabels.includes(label.key)) {
         label.el.classList.remove('is-hidden');
       } else {
@@ -122,27 +130,30 @@ export class ModuleLabel extends Module {
   /**
    * @performance
    */
-  private fixExceeding () {
+  private fixExceeding() {
     const containerRect = this.renderer.getContainer().getBoundingClientRect();
 
-    [...this.labels.values()].map(l => l.el).forEach(label => {
-      const rect = label.getBoundingClientRect();
+    [...this.labels.values()]
+      .map((l) => l.el)
+      .forEach((label) => {
+        const rect = label.getBoundingClientRect();
 
-      if (rect.left < containerRect.left) {
-        const currentLeft = parseFloat(label.style.left);
-        const correction = this.renderer.distanceToRelative(containerRect.left - rect.left) * 100;
-        label.style.left = `${currentLeft + correction}%`;
-      }
+        if (rect.left < containerRect.left) {
+          const currentLeft = parseFloat(label.style.left);
+          const correction = this.renderer.distanceToRelative(containerRect.left - rect.left) * 100;
+          label.style.left = `${currentLeft + correction}%`;
+        }
 
-      if (rect.right > containerRect.right) {
-        const currentLeft = parseFloat(label.style.left);
-        const correction = this.renderer.distanceToRelative(rect.right - containerRect.right) * 100;
-        label.style.left = `${currentLeft - correction}%`;
-      }
-    });
+        if (rect.right > containerRect.right) {
+          const currentLeft = parseFloat(label.style.left);
+          const correction =
+            this.renderer.distanceToRelative(rect.right - containerRect.right) * 100;
+          label.style.left = `${currentLeft - correction}%`;
+        }
+      });
   }
 
-  private handleMove (labelKey: string, x: number, trigger: HTMLElement) {
+  private handleMove(labelKey: string, x: number, trigger: HTMLElement) {
     const ratio = this.renderer.positionToRelative(x);
 
     if (labelKey.length === 1) {
@@ -158,15 +169,17 @@ export class ModuleLabel extends Module {
     }
   }
 
-  private doLabelsOverlap (first: string, second: string): boolean {
+  private doLabelsOverlap(first: string, second: string): boolean {
     const firstRect = this.labels.get(first)!.el.getBoundingClientRect();
     const secondRect = this.labels.get(second)!.el.getBoundingClientRect();
 
     return firstRect.right > secondRect.left;
   }
 
-  private assertSettings (settings: Partial<ModuleLabelSettings>) {
-    settings.formatter && assert('Label.formatter', settings.formatter, isFunction);
+  private assertSettings(settings: Partial<ModuleLabelSettings>) {
+    if (settings.formatter) {
+      assert('Label.formatter', settings.formatter, isFunction);
+    }
   }
 }
 
@@ -181,19 +194,16 @@ export const getPrimaryLabels = (n: number): string[] => {
     return ['0'];
   }
 
-  return range(n - 1).map(v => v.toString());
+  return range(n - 1).map((v) => v.toString());
 };
 
 export const getAllNeighourLabels = (n: number): string[][] => {
   // [a, b, c] -> [[ab, bc], [abc]]
   const process = (arr: string[]): string[][] => {
     // [a, b, c] -> [ab, bc]
-    const groups = neighbourGroup(arr).map(g => uniqChars(g.join('')));
+    const groups = neighbourGroup(arr).map((g) => uniqChars(g.join('')));
 
-    return [
-      groups,
-      ...groups.length > 1 ? process(groups) : [],
-    ];
+    return [groups, ...(groups.length > 1 ? process(groups) : [])];
   };
 
   return process(getPrimaryLabels(n));
