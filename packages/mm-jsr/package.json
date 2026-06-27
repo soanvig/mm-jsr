@@ -1,6 +1,6 @@
 {
   "name": "mm-jsr",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "description": "Pure JS range input solution",
   "license": "LGPLv3",
   "author": "Mateusz Koteja <soanvig@gmail.com>",
