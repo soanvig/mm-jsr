@@ -9,10 +9,8 @@
   "devDependencies": {
     "mm-jsr": "workspace:*",
     "rollup": "4.62.2",
-    "rollup-plugin-svelte": "7.2.3",
     "@rollup/plugin-terser": "1.0.0",
     "@rollup/plugin-node-resolve": "16.0.3",
-    "serve": "14.2.6",
-    "svelte": "5.56.4"
+    "serve": "14.2.6"
   }
 }
