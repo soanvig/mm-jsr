@@ -42,7 +42,8 @@ jobs:
       - run: pnpm version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
         working-directory: ./packages/react-mm-jsr
       - run: git commit -a -m "[react-mm-jsr] v${{ github.event.inputs.version }}"
-      - run: pnpm -F react-mm-jsr publish
+      - run: npm publish --no-git-checks   # we copied readme so need to disable check - we do not want to commit README though
+        working-directory: ./packages/react-mm-jsr
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
