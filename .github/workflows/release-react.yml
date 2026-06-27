@@ -11,31 +11,35 @@ jobs:
   unit-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-      - run: yarn build
-      - run: yarn test
-        working-directory: ./packages/react-mm-jsr
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+      - run: pnpm install
+      - run: pnpm build
+      - run: pnpm -F react-mm-jsr test
   release:
     needs: unit-tests
     if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v2
-      - run: yarn build
-      - run: yarn build
-        working-directory: ./packages/react-mm-jsr
+      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+      - run: pnpm install
+      - run: pnpm build
       - run: git config --global user.email "actions@github.com"
       - run: git config --global user.name "GH Actions"
-      - run: yarn version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
+      - run: pnpm version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
         working-directory: ./packages/react-mm-jsr
       - run: git commit -a -m "[react-mm-jsr] v${{ github.event.inputs.version }}"
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-      - run: npm publish
-        working-directory: ./packages/react-mm-jsr
+      - run: pnpm -F react-mm-jsr publish
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:

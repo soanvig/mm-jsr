@@ -16,7 +16,7 @@ export class Renderer {
   /** requestAnimationFrame reference */
   private rafId: number | null = null;
 
-  private constructor (ctor: Ctor) {
+  private constructor(ctor: Ctor) {
     this.container = ctor.container;
 
     this.container.classList.add('jsr');
@@ -25,14 +25,14 @@ export class Renderer {
   /**
    * @returns HTML container element
    */
-  public getContainer () {
+  public getContainer() {
     return this.container;
   }
 
   /**
    * Add HTML child to container
    */
-  public addChild (child: HTMLElement) {
+  public addChild(child: HTMLElement) {
     this.container.appendChild(child);
   }
 
@@ -44,7 +44,7 @@ export class Renderer {
    * and cursor excatly in the middle of the container
    * cursor global position put as `x` will return `0.5` as a result.
    */
-  public positionToRelative (x: number): number {
+  public positionToRelative(x: number): number {
     return (x - this.container.getBoundingClientRect().left) / this.container.offsetWidth;
   }
 
@@ -54,25 +54,25 @@ export class Renderer {
    * @example for distance `200` if container has width `400`
    * it will return `0.5` as a result.
    */
-  public distanceToRelative (distance: number): number {
+  public distanceToRelative(distance: number): number {
     return distance / this.container.offsetWidth;
   }
 
   /**
    * Enqueue render operation executing all `renderFunctions`.
    */
-  public render (renderFunctions: VoidFunction[]): void {
+  public render(renderFunctions: VoidFunction[]): void {
     if (this.rafId) {
       window.cancelAnimationFrame(this.rafId);
     }
 
     this.rafId = window.requestAnimationFrame(() => {
-      renderFunctions.forEach(f => f());
+      renderFunctions.forEach((f) => f());
       this.rafId = null;
     });
   }
 
-  public static init (ctor: Ctor) {
+  public static init(ctor: Ctor) {
     return new Renderer(ctor);
   }
 }

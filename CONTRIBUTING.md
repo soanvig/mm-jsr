@@ -13,9 +13,7 @@ There are two ways, that You can help:
 
 ## Installation
 
-Yarn is required to work with monorepo architecture.
-
-It uses zero-install, therefore no `yarn install` is needed. Dependencies are stored in repository.
+mm-jsr uses `pnpm`, therefore `pnpm i` is required.
 
 ## Development
 
@@ -25,21 +23,20 @@ It uses zero-install, therefore no `yarn install` is needed. Dependencies are st
 
 . | .
 --|--
-Package manager | Yarn v2+
+Package manager | pnpm
 Typing | TypeScript
 Build tool | Rollup
-Test tool | Ava
-
-
-### Non-upgradeable versions
-
-1. `typescript` has to be `4.4.3` - version `4.5` breaks various used packages
-2. `ava` has to be `3.15.0` - version `4.x` introduces `chalk@5` which uses Node's subimports, that are [not supported by Yarn PnP](https://github.com/yarnpkg/berry/issues/3843)
+Test tool | Vitest
+Linter | oxlint and oxfmt
 
 ### Testing
 
-1. `mm-jsr` provides `yarn test` command to run init tests
-2. For manual testing startup `mm-jsr`, `svelte-mm-jsr` and `webpage` with `yarn manual-test` in root of repository
+1. `mm-jsr` provides `pnpm test` command to run init tests
+2. For manual testing startup `mm-jsr`, `svelte-mm-jsr` and `webpage` with `pnpm serve` in root of repository
+
+### Linting
+
+1. `pnpm lint`
 
 ## Pull Requests, open source, LGPL philosophy
 

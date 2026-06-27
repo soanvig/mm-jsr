@@ -24,6 +24,10 @@ See [JSR.svelte](./src/JSR.svelte) component for yourself how easy this is!
   or
 
   yarn add mm-jsr
+
+  or
+
+  pnpm add mm-jsr
   ```
 
 2. Add CSS (you can use basic styles from [here](../mm-jsr/styles.css))

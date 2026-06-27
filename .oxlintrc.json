@@ -1,0 +1,94 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [],
+  "options": {
+    "typeAware": true
+  },
+  "env": {
+    "builtin": true,
+    "browser": true
+  },
+  "rules": {
+    "no-dupe-keys": [
+      "error"
+    ],
+    "no-invalid-regexp": [
+      "error"
+    ],
+    "no-sparse-arrays": [
+      "warn"
+    ],
+    "no-template-curly-in-string": [
+      "warn"
+    ],
+    "no-unreachable": [
+      "warn"
+    ],
+    "no-unsafe-finally": [
+      "warn"
+    ],
+    "use-isnan": [
+      "warn"
+    ],
+    "valid-typeof": [
+      "warn"
+    ],
+    "eqeqeq": [
+      "error",
+      "always"
+    ],
+    "no-throw-literal": [
+      "error"
+    ],
+    "no-useless-catch": [
+      "error"
+    ],
+    "no-useless-return": [
+      "error"
+    ],
+    "radix": [
+      "error",
+      "always"
+    ],
+    "require-await": [
+      "warn"
+    ],
+    "require-yield": [
+      "warn"
+    ],
+    "max-params": [
+      "warn",
+      3
+    ],
+    "no-bitwise": [
+      "error"
+    ],
+    "no-nested-ternary": [
+      "error"
+    ],
+    "unicode-bom": [
+      "error"
+    ],
+    "constructor-super": [
+      "error"
+    ],
+    "no-this-before-super": [
+      "error"
+    ],
+    "no-var": [
+      "error"
+    ],
+    "object-shorthand": [
+      "error"
+    ],
+    "prefer-arrow-callback": [
+      "error"
+    ],
+    "prefer-const": [
+      "error"
+    ],
+    "symbol-description": [
+      "error"
+    ]
+  }
+}

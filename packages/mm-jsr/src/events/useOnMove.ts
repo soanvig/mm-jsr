@@ -1,11 +1,15 @@
-import { useOnMouse } from '@/events/useOnMouse';
-import { useOnTouch } from '@/events/useOnTouch';
-import { throttle } from '@/helpers/throttle';
+import { useOnMouse } from '../events/useOnMouse';
+import { useOnTouch } from '../events/useOnTouch';
+import { throttle } from '../helpers/throttle';
 
 /**
  * Helper for handling drag&drop (through both mouse and touch).
  */
-export const useOnMove = (trigger: HTMLElement, cb: (x: number, clickElement: HTMLElement) => void, root: HTMLElement) => {
+export const useOnMove = (
+  trigger: HTMLElement,
+  cb: (x: number, clickElement: HTMLElement) => void,
+  root: HTMLElement,
+) => {
   // relative to trigger center
   let offset = 0;
   let clickElement: HTMLElement | null = null;

@@ -1,6 +1,6 @@
-import { useOnMove } from '@/events/useOnMove';
-import { StateDto } from '@/models/State';
-import { Module } from '@/modules/Module';
+import { useOnMove } from '../events/useOnMove';
+import { StateDto } from '../models/State';
+import { Module } from '../modules/Module';
 
 /**
  * Module showing points (shape depends on CSS) where values should be.
@@ -13,12 +13,12 @@ export class ModuleSlider extends Module {
   private sliders: HTMLElement[] = [];
   private destroyEvents: VoidFunction[] = [];
 
-  public destroy () {
-    this.sliders.forEach(s => s.remove());
-    this.destroyEvents.forEach(f => f());
+  public destroy() {
+    this.sliders.forEach((s) => s.remove());
+    this.destroyEvents.forEach((f) => f());
   }
 
-  public initView () {
+  public initView() {
     this.sliders = this.config.initialValues.map((_, index) => {
       const slider = document.createElement('div');
       slider.classList.add('jsr_slider');
@@ -26,20 +26,22 @@ export class ModuleSlider extends Module {
       slider.dataset.key = index.toString();
       slider.tabIndex = 1;
 
-      useOnMove(slider, x => this.handleMove(index, x), this.renderer.getContainer());
+      useOnMove(slider, (x) => this.handleMove(index, x), this.renderer.getContainer());
 
       return slider;
     });
 
-    this.sliders.forEach(slider => this.renderer.addChild(slider));
+    this.sliders.forEach((slider) => this.renderer.addChild(slider));
 
     // apply keyboard support
     const handleKeyboard = (event: KeyboardEvent) => this.handleKeyboard(event);
     this.config.container.addEventListener('keydown', handleKeyboard);
-    this.destroyEvents.push(() => this.config.container.removeEventListener('keydown', handleKeyboard));
+    this.destroyEvents.push(() =>
+      this.config.container.removeEventListener('keydown', handleKeyboard),
+    );
   }
 
-  public render (state: StateDto): VoidFunction {
+  public render(state: StateDto): VoidFunction {
     return () => {
       state.values.forEach((value, i) => {
         this.sliders[i].style.left = `${value.asRatio() * 100}%`;
@@ -47,11 +49,11 @@ export class ModuleSlider extends Module {
     };
   }
 
-  private handleMove (index: number, x: number) {
+  private handleMove(index: number, x: number) {
     this.input.setRatioValue(index, this.renderer.positionToRelative(x));
   }
 
-  private handleKeyboard (event: KeyboardEvent) {
+  private handleKeyboard(event: KeyboardEvent) {
     const target = event.target;
 
     if (target && isEventTargetSlider(target)) {
@@ -73,15 +75,15 @@ export class ModuleSlider extends Module {
     }
   }
 
-  private handleKeyboardWithShift (index: number, direction: number) {
+  private handleKeyboardWithShift(index: number, direction: number) {
     this.input.changeRatioBy(index, 0.05 * direction);
   }
 
-  private handleKeyboardWithCtrl (index: number, direction: number) {
+  private handleKeyboardWithCtrl(index: number, direction: number) {
     this.input.changeRealBy(index, this.config.step * 10 * direction);
   }
 
-  private handleKeyboardPlain (index: number, direction: number) {
+  private handleKeyboardPlain(index: number, direction: number) {
     this.input.changeRealBy(index, this.config.step * direction);
   }
 }
@@ -92,7 +94,6 @@ const keyDirectionMap = new Map([
   ['ArrowRight', +1],
   ['ArrowDown', -1],
 ]);
-
 
 const isEventTargetSlider = (target: EventTarget): target is HTMLElement => {
   return (target as any).classList?.contains('jsr_slider') ?? false;

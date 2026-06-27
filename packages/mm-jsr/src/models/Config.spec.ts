@@ -1,54 +1,49 @@
-import { Config } from '@/models/Config';
-import { AssertError } from '@/validation/assert';
-import test from 'ava';
+import { Config } from '../models/Config';
+import { AssertError } from '../validation/assert';
+import { expect, test } from 'vitest';
 
-test('input validation', t => {
-  t.assert(getConfig());
+test('input validation', () => {
+  expect(() => getConfig()).not.toThrow();
 
-  t.throws(
-    () => getConfig({
+  expect(() =>
+    getConfig({
       min: '0' as any,
     }),
-    { instanceOf: AssertError },
-  );
+  ).toThrow(AssertError);
 
-  t.throws(
-    () => getConfig({
+  expect(() =>
+    getConfig({
       max: '100' as any,
     }),
-    { instanceOf: AssertError },
-  );
+  ).toThrow(AssertError);
 
-  t.throws(
-    () => getConfig({
+  expect(() =>
+    getConfig({
       initialValues: 50 as any,
     }),
-    { instanceOf: AssertError },
-  );
+  ).toThrow(AssertError);
 
-  t.throws(
-    () => getConfig({
+  expect(() =>
+    getConfig({
       initialValues: ['50', 25] as any,
     }),
-    { instanceOf: AssertError },
-  );
+  ).toThrow(AssertError);
 
-  t.throws(
-    () => getConfig({
+  expect(() =>
+    getConfig({
       container: undefined as any,
     }),
-    { instanceOf: AssertError },
-  );
+  ).toThrow(AssertError);
 });
 
-test('stepDecimals', t => {
-  t.is(getConfig({ step: 1 }).stepDecimals, 0);
-  t.is(getConfig({ step: 0.1 }).stepDecimals, 1);
-  t.is(getConfig({ step: 0.01 }).stepDecimals, 2);
-  t.is(getConfig({ step: 10 }).stepDecimals, 0);
+test('stepDecimals', () => {
+  expect(getConfig({ step: 1 }).stepDecimals).toBe(0);
+  expect(getConfig({ step: 0.1 }).stepDecimals).toBe(1);
+  expect(getConfig({ step: 0.01 }).stepDecimals).toBe(2);
+  expect(getConfig({ step: 10 }).stepDecimals).toBe(0);
 
   // edge case
-  t.is(getConfig({ step: 0 }).stepDecimals, 0);
+  expect(getConfig({ step: 0 }).stepDecimals).toBe(0);
 });
 
 const configDefaults = {
@@ -59,7 +54,8 @@ const configDefaults = {
   container: document.body,
 };
 
-const getConfig = (input?: Partial<typeof configDefaults>) => Config.createFromInput({
-  ...configDefaults,
-  ...input,
-});
+const getConfig = (input?: Partial<typeof configDefaults>) =>
+  Config.createFromInput({
+    ...configDefaults,
+    ...input,
+  });

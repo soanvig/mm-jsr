@@ -1,6 +1,6 @@
 /**
  * Group entries into neighbouring pairs.
- * 
+ *
  * @example
  * [1,2,3] -> [[1,2], [2,3]]
  */
@@ -9,8 +9,5 @@ export const neighbourGroup = <T>(arr: T[]): T[][] => {
     return [];
   }
 
-  return [
-    arr.slice(0, 2),
-    ...neighbourGroup(arr.slice(1)),
-  ];
+  return [arr.slice(0, 2), ...neighbourGroup(arr.slice(1))];
 };

@@ -1,4 +1,4 @@
-import { Module } from '@/modules/Module';
+import { Module } from '../modules/Module';
 
 /**
  * Module showing horizontal bar.
@@ -9,11 +9,11 @@ import { Module } from '@/modules/Module';
 export class ModuleRail extends Module {
   private rail!: HTMLElement;
 
-  public destroy () {
+  public destroy() {
     this.rail.remove();
   }
 
-  public initView () {
+  public initView() {
     this.rail = document.createElement('div');
 
     this.rail.classList.add('jsr_rail');

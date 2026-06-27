@@ -1,27 +1,34 @@
-import { getAllNeighourLabels, getPrimaryLabels, verifyVisibleLabels } from '@/modules/ModuleLabel';
-import test from 'ava';
+import {
+  getAllNeighourLabels,
+  getPrimaryLabels,
+  verifyVisibleLabels,
+} from '../modules/ModuleLabel';
+import { expect, test } from 'vitest';
 
-test('getPrimaryLabels', t => {
-  t.deepEqual(getPrimaryLabels(0), []);
-  t.deepEqual(getPrimaryLabels(1), ['0']);
-  t.deepEqual(getPrimaryLabels(2), ['0', '1']);
-  t.deepEqual(getPrimaryLabels(3), ['0', '1', '2']);
+test('getPrimaryLabels', () => {
+  expect(getPrimaryLabels(0)).toEqual([]);
+  expect(getPrimaryLabels(1)).toEqual(['0']);
+  expect(getPrimaryLabels(2)).toEqual(['0', '1']);
+  expect(getPrimaryLabels(3)).toEqual(['0', '1', '2']);
 });
 
-test('getAllNeighourLabels', t => {
-  t.deepEqual(getAllNeighourLabels(0), [[]]);
-  t.deepEqual(getAllNeighourLabels(1), [[]]);
-  t.deepEqual(getAllNeighourLabels(2), [['01']]);
-  t.deepEqual(getAllNeighourLabels(3), [['01', '12'], ['012']]);
-  t.deepEqual(getAllNeighourLabels(4), [['01', '12', '23'], ['012', '123'], ['0123']]);
+test('getAllNeighourLabels', () => {
+  expect(getAllNeighourLabels(0)).toEqual([[]]);
+  expect(getAllNeighourLabels(1)).toEqual([[]]);
+  expect(getAllNeighourLabels(2)).toEqual([['01']]);
+  expect(getAllNeighourLabels(3)).toEqual([['01', '12'], ['012']]);
+  expect(getAllNeighourLabels(4)).toEqual([['01', '12', '23'], ['012', '123'], ['0123']]);
 });
 
-test('verifyVisibleLabels', t => {
-  t.deepEqual(verifyVisibleLabels([], ['0', '1', '2'], (one, two) => false), ['0', '1', '2']);
-  t.deepEqual(verifyVisibleLabels([], ['0', '1', '2'], (one, two) => one === '0' && two === '1'), ['01', '2']);
-  t.deepEqual(verifyVisibleLabels([], ['0', '1', '2'], (one, two) => true), ['012']);
-  t.deepEqual(verifyVisibleLabels([], ['0', '1', '2'], (one, two) => {
-    return (one === '1' && two === '2')
-      || (one === '0' && two === '12');
-  }), ['012']);
+test('verifyVisibleLabels', () => {
+  expect(verifyVisibleLabels([], ['0', '1', '2'], (_one, _two) => false)).toEqual(['0', '1', '2']);
+  expect(
+    verifyVisibleLabels([], ['0', '1', '2'], (one, two) => one === '0' && two === '1'),
+  ).toEqual(['01', '2']);
+  expect(verifyVisibleLabels([], ['0', '1', '2'], (_one, _two) => true)).toEqual(['012']);
+  expect(
+    verifyVisibleLabels([], ['0', '1', '2'], (one, two) => {
+      return (one === '1' && two === '2') || (one === '0' && two === '12');
+    }),
+  ).toEqual(['012']);
 });

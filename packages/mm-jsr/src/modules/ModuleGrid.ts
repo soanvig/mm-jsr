@@ -1,7 +1,7 @@
-import { debounce } from '@/helpers/debounce';
-import { Value } from '@/models/Value';
-import { Module } from '@/modules/Module';
-import { assert, isFunction, isNumber, isString } from '@/validation/assert';
+import { debounce } from '../helpers/debounce';
+import { Value } from '../models/Value';
+import { Module } from '../modules/Module';
+import { assert, isFunction, isNumber, isString } from '../validation/assert';
 
 export interface ModuleGridGetLinesCountParams {
   /** Width of the container */
@@ -55,35 +55,35 @@ export class ModuleGrid extends Module {
   private context!: CanvasRenderingContext2D;
   private settings: ModuleGridSettings;
 
-  constructor (settings: Partial<ModuleGridSettings> = {}) {
+  constructor(settings: Partial<ModuleGridSettings> = {}) {
     super();
 
     this.assertSettings(settings);
 
-    this.settings = Object.assign({
-      color: 'rgba(0, 0, 0, 0.3)',
-      height: 10,
-      fontSize: 10,
-      fontFamily: 'sans-serif',
-      textPadding: 5,
-      formatter: String,
-      getLinesCount: ({ containerWidth }) => Math.min(
-        100,
-        Math.floor(containerWidth / 10),
-      ),
-      shouldShowLabel: ({ i, linesCount }) => {
-        return i === 0 || i === linesCount || i % 10 === 0;
-      },
-    } as ModuleGridSettings, settings);
+    this.settings = Object.assign(
+      {
+        color: 'rgba(0, 0, 0, 0.3)',
+        height: 10,
+        fontSize: 10,
+        fontFamily: 'sans-serif',
+        textPadding: 5,
+        formatter: String,
+        getLinesCount: ({ containerWidth }) => Math.min(100, Math.floor(containerWidth / 10)),
+        shouldShowLabel: ({ i, linesCount }) => {
+          return i === 0 || i === linesCount || i % 10 === 0;
+        },
+      } as ModuleGridSettings,
+      settings,
+    );
   }
 
-  public destroy () {
+  public destroy() {
     this.grid.remove();
 
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  public initView () {
+  public initView() {
     this.grid = document.createElement('canvas');
 
     this.grid.classList.add('jsr_grid');
@@ -99,7 +99,7 @@ export class ModuleGrid extends Module {
     this.grid.addEventListener('click', this.handleClick);
   }
 
-  private drawGrid () {
+  private drawGrid() {
     const width = this.renderer.getContainer().offsetWidth;
     const height = this.settings.height + this.settings.fontSize + this.settings.textPadding;
     const pixelRatio = window.devicePixelRatio || 1;
@@ -152,10 +152,16 @@ export class ModuleGrid extends Module {
           min: this.config.min,
         });
 
-        const roundedValue = value.changeReal(Math.round(value.asReal() / this.config.step) * this.config.step);
+        const roundedValue = value.changeReal(
+          Math.round(value.asReal() / this.config.step) * this.config.step,
+        );
 
         const text = this.settings.formatter(roundedValue.asReal());
-        context.fillText(text.toString(), i * ratio * width, this.settings.height + this.settings.textPadding);
+        context.fillText(
+          text.toString(),
+          i * ratio * width,
+          this.settings.height + this.settings.textPadding,
+        );
       }
     }
 
@@ -171,12 +177,29 @@ export class ModuleGrid extends Module {
     this.input.setClosestRatioValue(this.renderer.positionToRelative(e.clientX));
   };
 
-  private assertSettings (settings: Partial<ModuleGridSettings>) {
-    settings.formatter && assert('Grid.formatter', settings.formatter, isFunction);
-    settings.color && assert('Grid.color', settings.color, isString);
-    settings.height && assert('Grid.height', settings.height, isNumber);
-    settings.fontSize && assert('Grid.fontSize', settings.fontSize, isNumber);
-    settings.fontFamily && assert('Grid.fontFamily', settings.fontFamily, isString);
-    settings.textPadding && assert('Grid.textPadding', settings.textPadding, isNumber);
+  private assertSettings(settings: Partial<ModuleGridSettings>) {
+    if (settings.formatter) {
+      assert('Grid.formatter', settings.formatter, isFunction);
+    }
+
+    if (settings.color) {
+      assert('Grid.color', settings.color, isString);
+    }
+
+    if (settings.height) {
+      assert('Grid.height', settings.height, isNumber);
+    }
+
+    if (settings.fontSize) {
+      assert('Grid.fontSize', settings.fontSize, isNumber);
+    }
+
+    if (settings.fontFamily) {
+      assert('Grid.fontFamily', settings.fontFamily, isString);
+    }
+
+    if (settings.textPadding) {
+      assert('Grid.textPadding', settings.textPadding, isNumber);
+    }
   }
 }

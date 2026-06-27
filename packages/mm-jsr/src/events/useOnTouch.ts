@@ -10,7 +10,7 @@ type EventCb = (e: Event) => void;
 /**
  * Helper for handling touch events (down, move, up, just like mouse)
  */
-export const useOnTouch = (el: HTMLElement, { onTouchDown, onTouchMove, onTouchUp, root }: Options) => {
+export const useOnTouch = (el: HTMLElement, { onTouchDown, onTouchMove, onTouchUp }: Options) => {
   let touchTarget: EventTarget | null = null;
 
   const handleStart = (e: TouchEvent) => {
