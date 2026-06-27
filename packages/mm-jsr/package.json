@@ -6,7 +6,8 @@
   "author": "Mateusz Koteja <soanvig@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/soanvig/mm-jsr.git"
+    "url": "https://github.com/soanvig/mm-jsr.git",
+    "directory": "packages/mm-jsr"
   },
   "type": "module",
   "main": "./build/index.js",
